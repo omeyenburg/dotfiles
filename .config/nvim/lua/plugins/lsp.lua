@@ -169,13 +169,13 @@ return {
 
             local servers = {
                 clangd = {},
-                pyright = {},
+                -- pyright = {}, -- We don't use this here around. node is slow.
                 rust_analyzer = {
                     on_attach = function(_, bufnr)
                         vim.lsp.inlay_hint.enable(bufnr)
                     end,
                 },
-                tsserver = {},
+                -- tsserver = {}, -- We don't use this here around. node is slow.
                 lua_ls = {
                     settings = {
                         Lua = {
@@ -194,8 +194,8 @@ return {
 
             local ensure_installed = vim.tbl_keys(servers or {})
             vim.list_extend(ensure_installed, {
-                'stylua', -- Used to format Lua code
-                --'jdtls@1.25.0',
+                'stylua', -- Lua formatter
+                'black', -- Python formattter
             })
             require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

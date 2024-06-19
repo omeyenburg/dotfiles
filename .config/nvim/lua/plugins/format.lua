@@ -45,8 +45,12 @@ return {
             end,
             formatters_by_ft = {
                 lua = { 'stylua' },
-                python = { 'black' },
+                python = { 'black' }, -- global config in ~/pyproject.toml
+                rust = { 'rustfmt' },
+                go = { 'goimports', 'gofmt' },
                 java = { 'google_java_format' },
+                ['*'] = { 'codespell' },
+                ['_'] = { 'trim_whitespace' },
             },
         },
     },
@@ -59,6 +63,7 @@ return {
 
     {
         'lukas-reineke/indent-blankline.nvim',
+        enabled = false,
         lazy = true,
         event = { 'BufReadPost', 'BufNewFile' },
         main = 'ibl',

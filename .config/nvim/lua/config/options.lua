@@ -9,9 +9,6 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_python3_provider = 0
 
-vim.g.syntastic_python_pylint_post_args = '--max-line-length=120'
-vim.g.pymode_lint_ignore = 'E501,W'
-
 ------------------------------
 -- Appearence Options
 ------------------------------
