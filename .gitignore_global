@@ -1,0 +1,38 @@
+### Global gitignore file
+# Register file: git config --global core.excludesfile ~/.gitignore_global
+
+# MacOS system files
+.DS_Store
+
+# Build directories
+build/
+
+# VSCode configuration files
+.vscode/
+
+# Python bytecode cache directories
+__pycache__/
+
+# Pytest cache
+.pytest_cache/
+
+# Python virtual environments
+venv/
+.venv/
+
+# Gradle files
+.gradle/
+
+# Node.js dependencies
+node_modules/
+
+# Compiled Python files
+*.pyc
+*.pyo
+
+# Compiled Java bytecode
+*.class
+
+# Compiled C/C++ files
+*.o
+*.out
