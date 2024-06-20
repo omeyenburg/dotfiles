@@ -44,13 +44,22 @@ return {
                 }
             end,
             formatters_by_ft = {
-                lua = { 'stylua' },
-                python = { 'black' }, -- global config in ~/pyproject.toml
-                rust = { 'rustfmt' },
-                go = { 'goimports', 'gofmt' },
-                java = { 'google_java_format' },
-                ['*'] = { 'codespell' },
-                ['_'] = { 'trim_whitespace' },
+                bash = { 'shfmt' }, -- Bash formatter
+                c = { 'clang-format' }, -- C formatter
+                cpp = { 'clang-format' }, -- C++ formatter
+                css = { 'prettier' }, -- CSS formatter
+                go = { 'goimports', 'gofmt' }, -- Go formatters
+                html = { 'prettier' }, -- HTML formatter
+                java = { 'google_java_format' }, -- Java formatter
+                javascript = { 'prettier' }, -- JavaScript formatter
+                json = { 'jq' }, -- JSON formatter
+                lua = { 'stylua' }, -- Lua formatter
+                markdown = { 'prettier' }, -- Markdown formatter
+                python = { 'black' }, -- Python formatter with global config in ~/pyproject.toml
+                rust = { 'rustfmt' }, -- Rust formatter
+                typescript = { 'prettier' }, -- TypeScript formatter
+                yaml = { 'prettier' }, -- YAML formatter
+                ['*'] = { 'codespell' }, -- General spell checking formatter
             },
         },
     },

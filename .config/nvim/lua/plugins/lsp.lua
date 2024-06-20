@@ -168,15 +168,15 @@ return {
             capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
             local servers = {
-                clangd = {},
-                -- pyright = {}, -- We don't use this here around. node is slow.
-                rust_analyzer = {
-                    on_attach = function(_, bufnr)
-                        vim.lsp.inlay_hint.enable(bufnr)
-                    end,
-                },
-                -- tsserver = {}, -- We don't use this here around. node is slow.
-                lua_ls = {
+                bashls = {}, -- Bash LSP
+                clangd = {}, -- C, C++, C#, Objective-C LSP
+                cmake = {}, -- CMake LSP
+                eslint = {}, -- JavaScript, TypeScript linter
+                flake8 = {}, -- Python linter
+                gradle_ls = {}, -- Gradle LSP
+                html = {}, -- HTML LSP
+                java_language_server = {}, -- Java LSP
+                lua_ls = { -- Lua LSP
                     settings = {
                         Lua = {
                             completion = {
@@ -187,16 +187,30 @@ return {
                         },
                     },
                 },
+                pylsp = { -- Python LSP
+                    settings = {
+                        pylsp = {
+                            plugins = { -- Disable linting: flake8 is used instead
+                                pycodestyle = { enabled = false },
+                                pyflakes = { enabled = false },
+                                pylint = { enabled = false },
+                            },
+                        },
+                    },
+                },
+                -- pyright = {}, -- We don't use this here around. Node is slow.
+                rust_analyzer = { -- Rust LSP
+                    on_attach = function(_, bufnr)
+                        vim.lsp.inlay_hint.enable(bufnr)
+                    end,
+                },
+                -- tsserver = {}, -- We don't use this here around. Node is slow.
             }
 
             -- Ensure the servers and tools above are installed
             require('mason').setup()
 
             local ensure_installed = vim.tbl_keys(servers or {})
-            vim.list_extend(ensure_installed, {
-                'stylua', -- Lua formatter
-                'black', -- Python formattter
-            })
             require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
             require('mason-lspconfig').setup {
