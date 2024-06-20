@@ -167,6 +167,19 @@ return {
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+            require('lspconfig').pylsp.setup {
+                capabilities = capabilities,
+                settings = {
+                    pylsp = {
+                        plugins = {
+                            pycodestyle = { enabled = false },
+                            pyflakes = { enabled = false },
+                            pylint = { enabled = false },
+                        },
+                    },
+                },
+            }
+
             local servers = {
                 bashls = {}, -- Bash LSP
                 clangd = {}, -- C, C++, C#, Objective-C LSP
@@ -187,18 +200,21 @@ return {
                         },
                     },
                 },
-                pylsp = { -- Python LSP
-                    settings = {
-                        pylsp = {
-                            plugins = { -- Disable linting: flake8 is used instead
-                                pycodestyle = { enabled = false },
-                                pyflakes = { enabled = false },
-                                pylint = { enabled = false },
-                            },
-                        },
-                    },
-                },
-                -- pyright = {}, -- We don't use this here around. Node is slow.
+                -- pylsp = { -- Python LSP
+                -- settings = {
+                --     pylsp = {
+                --         plugins = { -- Disable linting: flake8 is used instead
+                --             pycodestyle = { enabled = false },
+                --             pyflakes = { enabled = false },
+                --             pylint = { enabled = false },
+                --         },
+                --     },
+                -- },
+                -- },
+                -- pyright = {}, -- Extremely slow, but just works and large user base
+                -- pylyzer = {}, -- Extremely fast, but small docs and no completion with imports
+                -- basedpyright = {}, -- According to docs, node is not used; cannot get it to run
+                jedi_language_server = {}, -- Python LSP; Quick autocompletion, including from other modules and files
                 rust_analyzer = { -- Rust LSP
                     on_attach = function(_, bufnr)
                         vim.lsp.inlay_hint.enable(bufnr)
