@@ -24,6 +24,9 @@ return {
             table.insert(lint.linters.flake8.args, 1, '--config') -- Add path to global config file for flake8
             table.insert(lint.linters.flake8.args, 2, vim.fn.expand '~/.config/flake8')
 
+            table.insert(lint.linters.vale.args, 1, '--config') -- Add path to global config file for flake8
+            table.insert(lint.linters.vale.args, 2, vim.fn.expand '~/.config/vale/.vale.ini')
+
             -- Create autocommand which carries out the actual linting on the specified events.
             local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
             vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }, {
