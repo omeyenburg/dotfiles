@@ -22,7 +22,7 @@ return {
             }
 
             table.insert(lint.linters.flake8.args, 1, '--config') -- Add path to global config file for flake8
-            table.insert(lint.linters.flake8.args, 2, vim.fn.expand '~/.config/flake8')
+            table.insert(lint.linters.flake8.args, 2, vim.fn.expand '~/.config/flake8/setup.cfg')
 
             table.insert(lint.linters.vale.args, 1, '--config') -- Add path to global config file for flake8
             table.insert(lint.linters.vale.args, 2, vim.fn.expand '~/.config/vale/.vale.ini')

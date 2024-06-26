@@ -254,10 +254,11 @@ return {
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-nvim-lua',
-            'hrsh7th/cmp-nvim-lsp-signature-help',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-calc',
+            'hrsh7th/cmp-nvim-lsp-signature-help',
+            'ray-x/lsp_signature.nvim',
             --'onsails/lspkind.nvim',
         },
         config = function()
@@ -412,6 +413,14 @@ return {
                 },
                 sources = cmp.config.sources { -- See :h cmp-config.sources
                     {
+                        name = 'nvim_lsp',
+                        priority = 8,
+                        group_index = 1,
+                        entry_filter = function(entry, _)
+                            return cmp.lsp.CompletionItemKind.Snippet ~= entry:get_kind()
+                        end,
+                    },
+                    {
                         name = 'path',
                         priority = 9,
                         group_index = 1,
@@ -427,15 +436,6 @@ return {
                             return not context.in_treesitter_capture 'string' and not context.in_syntax_group 'String'
                         end,
                     },
-                    {
-                        name = 'nvim_lsp',
-                        priority = 7,
-                        group_index = 2,
-                        entry_filter = function(entry, _)
-                            return cmp.lsp.CompletionItemKind.Snippet ~= entry:get_kind()
-                        end,
-                    },
-                    -- { name = 'nvim_lsp_signature_help', },
                     {
                         name = 'nvim_lua',
                         priority = 6,
@@ -523,6 +523,15 @@ return {
                     cmp.mapping.close()
                 end
             end)]]
+
+            -- require('lsp_signature').setup {
+            --     bind = true,
+            --     floating_window = true,
+            --     hint_enable = false,
+            --     handler_opts = {
+            --         border = 'rounded',
+            --     },
+            -- }
 
             --@diagnostic disable-next-line: undefined-field
             cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())

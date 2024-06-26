@@ -85,6 +85,8 @@ vim.keymap.set('n', 'J', 'mzJ`z')
 -- use Option+Shift+n for case toggle without moving
 vim.keymap.set('n', '›', '~h')
 
+vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help)
+
 -- Keep cursor centered when half page jumping
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
