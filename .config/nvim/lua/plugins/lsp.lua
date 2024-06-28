@@ -68,6 +68,9 @@ return {
             -- used for completion, annotations and signatures of Neovim apis
             { 'folke/neodev.nvim', opts = {} },
         },
+        opts = {
+            inlay_hints = { enabled = true },
+        },
         config = function()
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
@@ -215,11 +218,7 @@ return {
                 -- pylyzer = {}, -- Extremely fast, but small docs and no completion with imports
                 -- basedpyright = {}, -- According to docs, node is not used; cannot get it to run
                 jedi_language_server = {}, -- Python LSP; Quick autocompletion, including from other modules and files
-                rust_analyzer = { -- Rust LSP
-                    on_attach = function(_, bufnr)
-                        vim.lsp.inlay_hint.enable(bufnr)
-                    end,
-                },
+                rust_analyzer = {}, -- Rust LSP
                 -- tsserver = {}, -- We don't use this here around. Node is slow.
             }
 

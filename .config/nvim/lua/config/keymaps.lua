@@ -78,13 +78,15 @@ vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { desc = 'Goto [E]xplorer' })
 -- Move selected content with "J" and "K"
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+-- vim.keymap.set('v', 'J', ":m '>+1<CR>gv") -- don't fix indentation without =gv
 
 -- Prevent cursor from moving when deleting trailing "\n"
 vim.keymap.set('n', 'J', 'mzJ`z')
 
--- use Option+Shift+n for case toggle without moving
+-- Use Option+Shift+n for case toggle without moving
 vim.keymap.set('n', '›', '~h')
 
+-- Show function signature help with Ctrl+s
 vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help)
 
 -- Keep cursor centered when half page jumping

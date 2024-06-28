@@ -15,7 +15,7 @@ return {
             local lint = require 'lint'
             lint.linters_by_ft = {
                 python = { 'flake8' },
-                rust = { 'rust_analyzer' },
+                -- rust = { 'rust_analyzer' },
                 javascript = { 'eslint' },
                 markdown = { 'vale' },
                 text = { 'vale' },

@@ -10,7 +10,7 @@ https://github.com/simrat39/rust-tools.nvim
 https://github.com/rust-lang/rust-analyzer
 
 
-# Crate
+# Create
 
 https://github.com/Saecki/crates.nvim
 
@@ -21,18 +21,12 @@ return { -- Rust
         'simrat39/rust-tools.nvim',
         lazy = true,
         ft = { 'rust' },
-        config = function()
-            vim.notify 'Loaded rust-tools'
-        end,
     },
 
     {
         'rust-lang/rust-analyzer',
         lazy = true,
         ft = { 'rust' },
-        config = function()
-            vim.notify 'Loaded rust-analyzer'
-        end,
     },
 
     {
