@@ -36,3 +36,13 @@ node_modules/
 # Compiled C/C++ files
 *.o
 *.out
+
+# Others
+.pypirc
+.env*
+env*
+*auth*
+*.log
+*.tmp
+*.temp
+*.swp

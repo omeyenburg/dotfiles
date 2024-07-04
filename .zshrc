@@ -5,6 +5,7 @@ export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.0.2.jdk/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH
 export PATH="$HOME/Library/Python/3.11/bin:$PATH"
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+export PATH="$HOME/.luarocks/bin:$PATH"
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 alias vim="nvim"
@@ -14,3 +15,4 @@ alias vim="nvim"
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+export PATH=$PATH:/Users/oskar/.pixi/bin

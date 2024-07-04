@@ -218,7 +218,34 @@ return {
                 -- pylyzer = {}, -- Extremely fast, but small docs and no completion with imports
                 -- basedpyright = {}, -- According to docs, node is not used; cannot get it to run
                 jedi_language_server = {}, -- Python LSP; Quick autocompletion, including from other modules and files
-                rust_analyzer = {}, -- Rust LSP
+
+                -- Rust LSP; Automtically done by rust-tools
+                -- rust_analyzer = {
+                --     on_attach = function(client, bufnr)
+                --         -- Add your on_attach code here if needed
+                --     end,
+                --     flags = {
+                --         debounce_text_changes = 150,
+                --     },
+                --     settings = {
+                --         ['rust-analyzer'] = {
+                --             diagnostics = {
+                --                 enable = true,
+                --                 disabled = {},
+                --                 enableExperimental = true,
+                --             },
+                --             cargo = {
+                --                 allFeatures = true,
+                --             },
+                --             checkOnSave = {
+                --                 command = 'clippy',
+                --             },
+                --             procMacro = {
+                --                 enable = true,
+                --             },
+                --         },
+                --     },
+                -- },
                 -- tsserver = {}, -- We don't use this here around. Node is slow.
             }
 

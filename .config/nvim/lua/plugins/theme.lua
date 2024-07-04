@@ -8,8 +8,9 @@ https://github.com/nvim-tree/nvim-web-devicons
 
 # Nvim Colorizer
 Draws the colors hex color strings in their matching color.
+Abonded version: https://github.com/norcalli/nvim-colorizer.lua
 
-https://github.com/norcalli/nvim-colorizer.lua
+https://github.com/NvChad/nvim-colorizer.lua
 
 
 # Twilight
@@ -56,7 +57,7 @@ return {
     },
 
     { -- Draws the colors hex color strings in their matching color.
-        'norcalli/nvim-colorizer.lua',
+        'NvChad/nvim-colorizer.lua',
         lazy = true,
         event = { 'BufReadPre', 'BufNewFile' },
         priority = 800, -- load after airline theme, before TreeSitter/LSP
