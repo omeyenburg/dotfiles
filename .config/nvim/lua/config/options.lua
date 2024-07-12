@@ -10,7 +10,7 @@ vim.g.loaded_node_provider = 0
 vim.g.loaded_python3_provider = 0
 
 ------------------------------
--- Appearence Options
+-- Appearance Options
 ------------------------------
 
 -- If some icons are displayed incorrectly, you need to install a nerd font
@@ -25,7 +25,7 @@ vim.opt.cursorline = true -- Highlight line of cursor
 vim.opt.inccommand = 'split' -- Live view of all substitutions
 vim.opt.signcolumn = 'yes' -- Enable git signs near line numbers
 vim.opt.showtabline = 1 -- Show a buffer headline when there are at least two tabs opened
-vim.opt.termguicolors = true -- Make sure termial colors are enabled
+vim.opt.termguicolors = true -- Make sure terminal colors are enabled
 
 -- Configure leading and trailing spaces rendering
 -- vim.opt.list = true -- Enable list for next option
@@ -48,7 +48,7 @@ vim.api.nvim_command 'highlight WinSeparator guifg=#A9B2D5' -- Set color of spli
 vim.opt.laststatus = 3 -- Enables horizontal split lines by disabling status lines for each buffer (must run after plugins)
 
 ------------------------------
--- Indention Options
+-- Indentation Options
 ------------------------------
 
 local tab_size = 4
@@ -91,7 +91,7 @@ vim.opt.mouse = 'a' -- Enable mouse mode
 
 vim.opt.lazyredraw = false -- Don’t update screen during macro and script execution
 vim.opt.updatetime = 250 -- Decrease update time
-vim.opt.timeoutlen = 300 -- Decrease mapped sequence wait time
+vim.opt.timeoutlen = 1000 -- Mapped sequence wait time
 
 ------------------------------
 -- Scrolling Options

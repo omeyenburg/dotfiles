@@ -21,6 +21,12 @@ return {
         lazy = true,
         event = { 'BufReadPre', 'BufNewFile' },
         opts = {},
+
+        -- Use gc instead of gcc (Answer to https://github.com/numToStr/Comment.nvim/issues/471)
+        -- config = function()
+        --     vim.keymap.del('n', 'gcc')
+        --     vim.keymap.set('n', 'gc', require('Comment.api').toggle.linewise.current)
+        -- end,
     },
 
     {
