@@ -1,7 +1,7 @@
 --[[
 
 # Persistence
-Automatically saves sessions
+Automated session management
 
 https://github.com/folke/persistence.nvim
 

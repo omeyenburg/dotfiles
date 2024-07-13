@@ -15,25 +15,17 @@ return {
             local lint = require 'lint'
             lint.linters_by_ft = {
                 python = { 'flake8' },
-                -- rust = { 'rust_analyzer' }, -- has its own implementation
+                -- rust = { 'rust_analyzer' },
                 javascript = { 'eslint' },
                 markdown = { 'vale' },
                 text = { 'vale' },
             }
 
-            local function set_config(linter, path)
-                table.insert(lint.linters[linter].args, 1, '--config')
-                table.insert(lint.linters[linter].args, 2, vim.fn.expand(path))
-            end
+            table.insert(lint.linters.flake8.args, 1, '--config') -- Add path to global config file for flake8
+            table.insert(lint.linters.flake8.args, 2, vim.fn.expand '~/.config/flake8/setup.cfg')
 
-            -- Add path to global config file for flake8
-            set_config('flake8', '~/.config/flake8/setup.cfg')
-            set_config('vale', '~/.config/vale/.vale.ini')
-
-            -- table.insert(lint.linters.flake8.args, 1, '--config') -- Add path to global config file for flake8
-            -- table.insert(lint.linters.flake8.args, 2, vim.fn.expand '~/.config/flake8/setup.cfg')
-            -- table.insert(lint.linters.vale.args, 1, '--config') -- Add path to global config file for flake8
-            -- table.insert(lint.linters.vale.args, 2, vim.fn.expand '~/.config/vale/.vale.ini')
+            table.insert(lint.linters.vale.args, 1, '--config') -- Add path to global config file for flake8
+            table.insert(lint.linters.vale.args, 2, vim.fn.expand '~/.config/vale/.vale.ini')
 
             -- Create autocommand which carries out the actual linting on the specified events.
             local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })

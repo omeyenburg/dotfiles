@@ -39,12 +39,6 @@ Greeting interface
 https://github.com/goolord/alpha-nvim
 
 
-# Which-Key
-Shows pending keybinds in a window at the bottom
-
-https://github.com/folke/which-key.nvim
-
-
 # Other cool colorschemes
 - Mofiqul/vscode.nvim
 - martinsione/darkplus.nvim
@@ -121,12 +115,7 @@ return {
                 sections = {
                     lualine_a = { 'mode' },
                     lualine_b = { 'branch', 'diff', 'diagnostics' },
-                    lualine_c = {
-                        {
-                            'filename',
-                            path = 1,
-                        },
-                    },
+                    lualine_c = { 'filename' },
                     lualine_x = { 'encoding', 'fileformat', 'filetype' },
                     lualine_y = { 'progress' },
                     lualine_z = { 'location' },
@@ -193,30 +182,6 @@ return {
             })
 
             alpha.setup(dashboard.opts)
-        end,
-    },
-
-    {
-        'folke/which-key.nvim',
-        lazy = true,
-        event = 'VeryLazy',
-        config = function()
-            require('which-key').setup()
-
-            -- Document existing key chains
-            require('which-key').register {
-                ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-                ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-                ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-                ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-                ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-                ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-                ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-            }
-            -- Visual mode
-            require('which-key').register({
-                ['<leader>h'] = { 'Git [H]unk' },
-            }, { mode = 'v' })
         end,
     },
 }
