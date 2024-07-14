@@ -19,8 +19,9 @@ return {
     {
         'williamboman/mason.nvim',
         lazy = true,
+        priority = 1000,
         cmd = 'Mason',
-        event = 'BufReadPre',
+        event = { 'BufReadPost', 'BufNewFile' },
         opts = {
             ui = {
                 icons = {
@@ -35,17 +36,23 @@ return {
     {
         'williamboman/mason-lspconfig.nvim',
         lazy = true,
-        event = 'BufReadPre',
+        priority = 900,
+        event = { 'BufReadPost', 'BufNewFile' },
     },
 
     { -- LSP Configuration & Plugins
         'neovim/nvim-lspconfig',
         lazy = true,
+        priority = 800,
         event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
             { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
+
+            -- Useful status updates for LSP.
+            -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+            { 'j-hui/fidget.nvim', opts = {} },
         },
         opts = {
             inlay_hints = { enabled = true },
@@ -142,6 +149,7 @@ return {
 
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+            capabilities.textDocument.signatureHelp = nil
 
             -- Enable the following language servers
             -- Add any additional override configuration in the following tables. Available keys are:
@@ -172,7 +180,8 @@ return {
                 -- pyright = {}, -- Extremely slow, but just works and large user base
                 -- pylyzer = {}, -- Extremely fast, but small docs and no completion with imports
                 -- basedpyright = {}, -- According to docs, node is not used; cannot get it to run
-                jedi_language_server = {
+                rust_analyzer = {},
+                jedi_language_server = {--[[
                     settings = {
                         jedi = {
                             autoImportModules = {
@@ -203,6 +212,10 @@ return {
                             },
                         },
                     },
+                    ]]
+                    -- handlers = {
+                    --     ['textDocument/signatureHelp'] = vim.lsp.handlers.signature_help,
+                    -- },
                 }, -- Python LSP; Quick autocompletion, including from other modules and files
             }
 

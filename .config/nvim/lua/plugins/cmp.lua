@@ -16,7 +16,8 @@ https://github.com/hrsh7th/nvim-cmp
 return {
     { -- Signature
         'ray-x/lsp_signature.nvim',
-        lazy = false,
+        lazy = true,
+        event = { 'BufReadPost', 'BufNewFile' },
         opts = {
             bind = true,
             doc_lines = 0,
@@ -34,7 +35,7 @@ return {
     { -- Autocompletion
         'hrsh7th/nvim-cmp',
         lazy = true,
-        event = { 'InsertEnter', 'CmdlineEnter' },
+        event = { 'BufReadPost', 'BufNewFile' },
         dependencies = {
             { -- Snippet Engine & its associated nvim-cmp source
                 'L3MON4D3/LuaSnip',
@@ -53,6 +54,7 @@ return {
             local luasnip = require('luasnip').config.setup {}
 
             cmp.setup {
+                preselect = cmp.PreselectMode.None, -- Forces rust-analyzer not to use preselection
                 snippet = {
                     expand = function(args)
                         luasnip.lsp_expand(args.body)
@@ -61,7 +63,7 @@ return {
                 completion = {
                     keyword_pattern = [[\k\+]],
                     completeopt = 'menu,menuone,noinsert,noselect',
-                    keyword_length = 1,
+                    keyword_length = 0, -- Allow completions for lua tables, testing if this even works otherwise
                 },
                 mapping = cmp.mapping.preset.insert {
                     -- Select next and complete
@@ -106,7 +108,7 @@ return {
                 },
                 enabled = function()
                     local context = require 'cmp.config.context'
-                    if context.in_treesitter_capture 'comment' or context.in_syntax_group 'Comment' then -- Disable in comment
+                    if context.in_treesitter_capture 'comment' or context.in_syntax_group 'Comment' then -- Disable completion in comment
                         return false
                     end
 
@@ -117,27 +119,26 @@ return {
                     comparators = {
                         cmp.config.compare.offset,
                         cmp.config.compare.exact,
+                        cmp.config.compare.kind,
                         cmp.config.compare.score,
                         cmp.config.compare.recently_used,
-                        function(entry1, entry2)
-                            local _, entry1_under = entry1.completion_item.label:find '^_+'
-                            local _, entry2_under = entry2.completion_item.label:find '^_+'
-                            entry1_under = entry1_under or 0
-                            entry2_under = entry2_under or 0
-                            if entry1_under > entry2_under then
-                                return false
-                            elseif entry1_under < entry2_under then
-                                return true
-                            end
-                        end,
-                        cmp.config.compare.kind,
+                        -- function(entry1, entry2)
+                        --     local _, entry1_under = entry1.completion_item.label:find '^_+'
+                        --     local _, entry2_under = entry2.completion_item.label:find '^_+'
+                        --     entry1_under = entry1_under or 0
+                        --     entry2_under = entry2_under or 0
+                        --     if entry1_under > entry2_under then
+                        --         return false
+                        --     elseif entry1_under < entry2_under then
+                        --         return true
+                        --     end
+                        -- end,
                         cmp.config.compare.sort_text,
                         cmp.config.compare.length,
                         cmp.config.compare.order,
                     },
                 },
                 sources = cmp.config.sources({
-                    { name = 'lazydev' },
                     {
                         name = 'path',
                         priority = 9,
