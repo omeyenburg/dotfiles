@@ -19,6 +19,11 @@ https://github.com/lukas-reineke/indent-blankline.nvim
 
 --]]
 
+local function script_path()
+    local str = debug.getinfo(2, 'S').source:sub(2)
+    return str:match '(.*/)'
+end
+
 return {
     {
         'stevearc/conform.nvim',
@@ -59,7 +64,15 @@ return {
                 rust = { 'rustfmt' }, -- Rust formatter
                 typescript = { 'prettier' }, -- TypeScript formatter
                 yaml = { 'prettier' }, -- YAML formatter
+                dosini = { 'config_format' },
                 ['*'] = { 'codespell' }, -- General spell checking formatter
+            },
+            formatters = {
+                config_format = {
+                    command = 'python3',
+                    args = { script_path() .. '/../formatter/config_format.py', '$FILENAME' },
+                    stdin = false,
+                },
             },
         },
     },

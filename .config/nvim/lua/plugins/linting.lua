@@ -17,7 +17,7 @@ return {
                 python = { 'flake8' },
                 -- rust = { 'rust_analyzer' }, -- has its own implementation
                 javascript = { 'eslint' },
-                markdown = { 'vale' },
+                -- markdown = { 'vale' },
                 text = { 'vale' },
             }
 

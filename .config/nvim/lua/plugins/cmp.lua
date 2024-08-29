@@ -119,9 +119,9 @@ return {
                     comparators = {
                         cmp.config.compare.offset,
                         cmp.config.compare.exact,
-                        cmp.config.compare.kind,
                         cmp.config.compare.score,
                         cmp.config.compare.recently_used,
+                        cmp.config.compare.kind,
                         -- function(entry1, entry2)
                         --     local _, entry1_under = entry1.completion_item.label:find '^_+'
                         --     local _, entry2_under = entry2.completion_item.label:find '^_+'
