@@ -8,4 +8,3 @@ with open(sys.argv[1], "r") as file:
 
 with open(sys.argv[1], "w") as file:
     file.write(formatted)
-
