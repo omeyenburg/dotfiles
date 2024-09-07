@@ -160,7 +160,7 @@ return {
             local ensure_installed = {
                 stylua = {}, -- Lua formatter
                 black = {}, -- Python formatter
-                ['clangd-format'] = {}, -- C, C++, C#, Objective-C formatter
+                --clangd_format = {}, -- C, C++, C#, Objective-C formatter
                 ['google-java-format'] = {}, -- Java formatter
                 prettier = {}, -- General formatter
                 rustfmt = {}, -- Rust formatter
@@ -175,7 +175,6 @@ return {
                 cmake = {}, -- CMake LSP
                 gradle_ls = {}, -- Gradle LSP
                 html = {}, -- HTML LSP
-                java_language_server = {}, -- Java LSP
                 rust_analyzer = {}, -- Rust LSP
                 lua_ls = { -- Lua LSP
                     settings = {
@@ -195,7 +194,7 @@ return {
             }
 
             require('mason').setup()
-            require('mason-tool-installer').setup { ensure_installed = vim.tbl.keys(ensure_installed) }
+            require('mason-tool-installer').setup { ensure_installed = vim.tbl_keys(ensure_installed) }
             require('mason-lspconfig').setup {
                 handlers = {
                     function(server_name)
