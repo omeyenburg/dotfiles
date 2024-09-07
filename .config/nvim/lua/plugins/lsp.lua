@@ -157,15 +157,26 @@ return {
             --  - filetypes (table): Override the default list of associated filetypes for the server
             --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
             --  - settings (table): Override the default settings passed when initializing the server.
-            local servers = {
+            local ensure_installed = {
+                stylua = {}, -- Lua formatter
+                black = {}, -- Python formatter
+                ['clangd-format'] = {}, -- C, C++, C#, Objective-C formatter
+                ['google-java-format'] = {}, -- Java formatter
+                prettier = {}, -- General formatter
+                rustfmt = {}, -- Rust formatter
+                shfmt = {}, -- Shell script formatter
+                codespell = {}, -- Linter checking for common misspellings
+                eslint = {}, -- JavaScript, TypeScript linter
+                flake8 = {}, -- Python linter
+                codelldb = {}, -- C, C++, Rust Debugger
+                cpptools = {}, -- Debugger and code browser for C, C++
                 bashls = {}, -- Bash LSP
                 clangd = {}, -- C, C++, C#, Objective-C LSP
                 cmake = {}, -- CMake LSP
-                eslint = {}, -- JavaScript, TypeScript linter
-                flake8 = {}, -- Python linter
                 gradle_ls = {}, -- Gradle LSP
                 html = {}, -- HTML LSP
                 java_language_server = {}, -- Java LSP
+                rust_analyzer = {}, -- Rust LSP
                 lua_ls = { -- Lua LSP
                     settings = {
                         Lua = {
@@ -177,61 +188,18 @@ return {
                         },
                     },
                 },
+                jedi_language_server = {}, -- Python LSP; Quick autocompletion, including from other modules and files
                 -- pyright = {}, -- Extremely slow, but just works and large user base
                 -- pylyzer = {}, -- Extremely fast, but small docs and no completion with imports
                 -- basedpyright = {}, -- According to docs, node is not used; cannot get it to run
-                rust_analyzer = {},
-                jedi_language_server = {--[[
-                    settings = {
-                        jedi = {
-                            autoImportModules = {
-                                'numpy',
-                                'pygame',
-                            },
-                            jediSettings = {
-                                autoImportModules = {
-                                    'numpy',
-                                    'pygame',
-                                },
-                            },
-                            initializationOptions = {
-                                jediSettings = {
-                                    autoImportModules = {
-                                        'numpy',
-                                        'pygame',
-                                    },
-                                },
-                            },
-                            environment = {
-                                -- Specify the path to your Python interpreter
-                                pythonPath = vim.fn.exepath 'python3',
-                            },
-                            completion = {
-                                disableSnippets = false,
-                                resolveEagerly = true,
-                            },
-                        },
-                    },
-                    ]]
-                    -- handlers = {
-                    --     ['textDocument/signatureHelp'] = vim.lsp.handlers.signature_help,
-                    -- },
-                }, -- Python LSP; Quick autocompletion, including from other modules and files
             }
 
-            -- Other tools which mason should install
-            local ensure_installed = {
-                'stylua', -- Used to format Lua code
-            }
-
-            -- Ensure the servers and tools above are installed
-            vim.list_extend(ensure_installed, vim.tbl_keys(servers or {}))
             require('mason').setup()
-            require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+            require('mason-tool-installer').setup { ensure_installed = vim.tbl.keys(ensure_installed) }
             require('mason-lspconfig').setup {
                 handlers = {
                     function(server_name)
-                        local server = servers[server_name] or {}
+                        local server = ensure_installed[server_name] or {}
                         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
                         require('lspconfig')[server_name].setup(server)
                     end,
