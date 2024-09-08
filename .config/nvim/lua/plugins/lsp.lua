@@ -160,7 +160,11 @@ return {
             local ensure_installed = {
                 stylua = {}, -- Lua formatter
                 black = {}, -- Python formatter
+<<<<<<< HEAD
                 --clangd_format = {}, -- C, C++, C#, Objective-C formatter
+=======
+                ['clang-format'] = {}, -- C, C++, C#, Objective-C formatter
+>>>>>>> 8053f2de95 (Fix clang-format name typo)
                 ['google-java-format'] = {}, -- Java formatter
                 prettier = {}, -- General formatter
                 rustfmt = {}, -- Rust formatter
