@@ -13,12 +13,14 @@ return {
         event = { 'BufReadPost', 'BufNewFile' },
         config = function()
             local lint = require 'lint'
+
             lint.linters_by_ft = {
+                -- c = { 'clangd' },
                 python = { 'flake8' },
-                -- rust = { 'rust_analyzer' }, -- has its own implementation
                 javascript = { 'eslint' },
-                -- markdown = { 'vale' },
                 text = { 'vale' },
+                markdown = { 'vale' },
+                -- rust = { 'rust_analyzer' }, -- has its own implementation
             }
 
             local function set_config(linter, path)
