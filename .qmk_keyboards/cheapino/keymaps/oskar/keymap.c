@@ -149,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TO(0), KC_BSPC, K_ESC, K_ENTER, KC_SPC, TO(3)                                                     // thumb keys
     ),
     [2] = LAYOUT_split_3x5_3(                                                                     // Symbols
-        KC_NO, DE_HASH, DE_DLR, DE_PERC, DE_AMPR, RALT(KC_N), K_TILDE, K_GRAVE, K_CARET, KC_NO,   // first row
+        KC_NO, DE_HASH, DE_DLR, DE_PERC, DE_AMPR, RALT(KC_L), K_TILDE, K_GRAVE, K_CARET, KC_NO,   // first row
         KC_NO, DE_PLUS, DE_ASTR, DE_EQL, DE_EXLM, DE_QUES, DE_SLSH, RALT(KC_7), RSA(KC_7), KC_NO, // second row
         KC_NO, DE_MINS, DE_UNDS, DE_LABK, DE_COLN, DE_SCLN, DE_RABK, DE_DOT, DE_COMM, KC_NO,      // third row
         TO(0), KC_BSPC, K_ESC, K_TAB, KC_SPC, TO(4)                                               // thumb keys
