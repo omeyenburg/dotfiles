@@ -165,7 +165,6 @@ return {
                 prettier = {}, -- General formatter
                 rustfmt = {}, -- Rust formatter
                 shfmt = {}, -- Shell script formatter
-                codespell = {}, -- Linter checking for common misspellings
                 eslint = {}, -- JavaScript, TypeScript linter
                 flake8 = {}, -- Python linter
                 codelldb = {}, -- C, C++, Rust Debugger

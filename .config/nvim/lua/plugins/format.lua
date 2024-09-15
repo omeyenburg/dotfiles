@@ -65,7 +65,6 @@ return {
                 typescript = { 'prettier' }, -- TypeScript formatter
                 yaml = { 'prettier' }, -- YAML formatter
                 dosini = { 'config_format' },
-                ['*'] = { 'codespell' }, -- General spell checking formatter
             },
             formatters = {
                 config_format = {
