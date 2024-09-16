@@ -7,6 +7,12 @@
 # Build directories
 build/
 
+# Binaries
+bin/
+include/
+lib/
+lib64
+
 # VSCode configuration files
 .vscode/
 
@@ -19,6 +25,7 @@ __pycache__/
 # Python virtual environments
 venv/
 .venv/
+pyvenv.cfg
 
 # Gradle files
 .gradle/
