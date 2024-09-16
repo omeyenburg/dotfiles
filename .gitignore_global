@@ -9,7 +9,6 @@ build/
 
 # Binaries
 bin/
-include/
 lib/
 lib64
 

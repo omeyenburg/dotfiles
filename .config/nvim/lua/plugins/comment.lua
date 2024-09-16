@@ -18,9 +18,15 @@ https://github.com/folke/todo-comments.nvim
 return {
     {
         'numToStr/Comment.nvim',
+        enabled = false,
         lazy = true,
         event = { 'BufReadPre', 'BufNewFile' },
-        opts = {},
+        opts = {
+            mappings = {
+                basic = true,
+                extra = false, -- Disable extra features like commenting new lines
+            },
+        },
     },
 
     {

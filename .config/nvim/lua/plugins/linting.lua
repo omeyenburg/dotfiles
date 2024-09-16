@@ -18,7 +18,7 @@ return {
                 -- c = { 'clangd' },
                 python = { 'flake8' },
                 javascript = { 'eslint' },
-                text = { 'vale' },
+                -- text = { 'vale' },
                 markdown = { 'vale' },
                 -- rust = { 'rust_analyzer' }, -- has its own implementation
             }
