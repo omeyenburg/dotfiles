@@ -160,11 +160,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_HOME, KC_END, KC_PGUP, KC_PGDN, KC_NO, KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT,     // second row
         TO(0), KC_BSPC, K_ESC, TO(5), KC_SPC, TO(4)                                             // thumb keys
     ),
-    [4] = LAYOUT_split_3x5_3(                                                 // Function keys and media control
-        KC_F1, KC_F2, KC_F3, KC_F4, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, // first row
-        KC_F5, KC_F6, KC_F7, KC_F8, KC_NO, KC_PSCR, KC_MPLY, KC_MSTP, KC_NO,  // second row
-        KC_NO, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, KC_VOLU, KC_VOLD, // third row
-        KC_NO, KC_NO, TO(0), KC_BSPC, K_ESC, TO(5), KC_SPC, KC_NO             // thumb keys
+    [4] = LAYOUT_split_3x5_3(                                                               // Function keys and media control
+        KC_F1, KC_F2, KC_F3, KC_F4, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,               // first row
+        KC_F5, KC_F6, KC_F7, KC_F8, KC_NO, KC_PSCR, KC_MPLY, KC_MSTP, KC_NO,                // second row
+        KC_NO, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, KC_VOLU, KC_VOLD, KC_NO, KC_NO, // third row
+        TO(0), KC_BSPC, K_ESC, TO(5), KC_SPC, KC_NO                                         // thumb keys
     ),
     [5] = LAYOUT_split_3x5_3(                                                                  // Settings
         QK_RBT, KC_NO, KC_BRIU, GU_OFF, CG_SWAP, RGB_VAI, RGB_SAI, RGB_HUI, RGB_MOD, KC_NO,    // first row
