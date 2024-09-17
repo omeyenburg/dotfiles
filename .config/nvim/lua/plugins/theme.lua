@@ -62,14 +62,24 @@ return {
         lazy = true,
     },
 
-    { -- Draws the colors hex color strings in their matching color.
+    { -- Draws the hex strings in their matching color.
         'NvChad/nvim-colorizer.lua',
         lazy = true,
         event = { 'BufReadPre', 'BufNewFile' },
         priority = 800, -- load after airline theme, before TreeSitter/LSP
-        config = function()
-            require('colorizer').setup()
-        end,
+        opts = {
+            filetypes = {
+                '*',
+                '!c',
+                'cpp',
+                html = { RGB = true },
+                css = { RGB = true, names = true },
+            },
+            user_default_options = {
+                RGB = false,
+                names = false,
+            },
+        },
     },
 
     { -- Dims inactive parts of the code. Toggle using :Twilight
