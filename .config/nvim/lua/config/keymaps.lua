@@ -38,15 +38,15 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Disable arrow keys in normal mode
-vim.keymap.set('n', '<left>', '<nop>')
-vim.keymap.set('n', '<right>', '<nop>')
-vim.keymap.set('n', '<up>', '<nop>')
-vim.keymap.set('n', '<down>', '<nop>')
-
-vim.keymap.set('i', '<left>', '<nop>')
-vim.keymap.set('i', '<right>', '<nop>')
-vim.keymap.set('i', '<up>', '<nop>')
-vim.keymap.set('i', '<down>', '<nop>')
+-- vim.keymap.set('n', '<left>', '<nop>')
+-- vim.keymap.set('n', '<right>', '<nop>')
+-- vim.keymap.set('n', '<up>', '<nop>')
+-- vim.keymap.set('n', '<down>', '<nop>')
+--
+-- vim.keymap.set('i', '<left>', '<nop>')
+-- vim.keymap.set('i', '<right>', '<nop>')
+-- vim.keymap.set('i', '<up>', '<nop>')
+-- vim.keymap.set('i', '<down>', '<nop>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows

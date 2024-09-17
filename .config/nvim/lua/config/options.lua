@@ -83,7 +83,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>') -- Clear search highlight on
 ------------------------------
 
 vim.opt.clipboard = 'unnamedplus' -- Sync clipboard between OS and Neovim
--- vim.opt.mouse = 'a' -- Enable mouse mode
+vim.opt.mouse = '' -- Disable mouse mode (except scrolling)
 
 ------------------------------
 -- Performance Options
