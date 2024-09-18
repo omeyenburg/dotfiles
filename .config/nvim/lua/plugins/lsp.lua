@@ -174,15 +174,39 @@ return {
                 cmake = {}, -- CMake LSP
                 gradle_ls = {}, -- Gradle LSP
                 html = {}, -- HTML LSP
-                rust_analyzer = {}, -- Rust LSP
+                rust_analyzer = { -- Rust LSP
+                    on_attach = function(client, bufnr)
+                        require('completion').on_attach(client)
+                        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    end,
+                    settings = {
+                        ['rust-analyzer'] = {
+                            imports = {
+                                granularity = {
+                                    group = 'module',
+                                },
+                                prefix = 'self',
+                            },
+                            cargo = {
+                                buildScripts = {
+                                    enable = true,
+                                },
+                            },
+                            procMacro = {
+                                enable = true,
+                            },
+                        },
+                    },
+                },
                 lua_ls = { -- Lua LSP
                     settings = {
-                        Lua = {
+                        Lua = { -- https://github.com/LuaLS/vscode-lua/blob/master/setting/schema.json
                             completion = {
                                 callSnippet = 'Replace',
                             },
-                            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                            -- diagnostics = { disable = { 'missing-fields' } },
+                            diagnostics = {
+                                globals = { 'vim' },
+                            },
                         },
                     },
                 },

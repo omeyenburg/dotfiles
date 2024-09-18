@@ -5,12 +5,7 @@
 https://github.com/simrat39/rust-tools.nvim
 
 
-# Rust Analyzer
-
-https://github.com/rust-lang/rust-analyzer
-
-
-# Create
+# Crates
 
 https://github.com/Saecki/crates.nvim
 
@@ -49,11 +44,22 @@ return {
                         buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
                         buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
                         buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-                        buf_set_keymap(bufnr, 'n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-                        buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-                        buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-                        buf_set_keymap(bufnr, 'n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-                        buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+                        -- Depricated
+                        -- buf_set_keymap(bufnr, 'n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+                        -- buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+                        -- buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+                        -- buf_set_keymap(bufnr, 'n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+                        -- buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+                        local move_item = require('rust-tools').move_item.move_item
+                        buf_set_keymap(bufnr, 'v', 'K', function()
+                            vim.print 'oh'
+                            move_item(true)
+                        end, { noremap = true, silent = true })
+                        buf_set_keymap(bufnr, 'v', 'J', function()
+                            move_item(false)
+                        end, { noremap = false, silent = true })
                     end,
                     settings = {
                         ['rust-analyzer'] = {
@@ -76,12 +82,6 @@ return {
                 },
             }
         end,
-    },
-
-    {
-        'rust-lang/rust-analyzer',
-        lazy = true,
-        ft = { 'rust' },
     },
 
     {
