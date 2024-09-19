@@ -15,11 +15,11 @@ return {
             local lint = require 'lint'
 
             lint.linters_by_ft = {
-                -- c = { 'clangd' },
-                python = { 'flake8' },
-                javascript = { 'eslint' },
+                c = { 'clangd' }, -- Mason install
+                python = { 'flake8' }, -- Mason install
+                javascript = { 'eslint' }, -- Mason install
                 -- text = { 'vale' },
-                markdown = { 'vale' },
+                -- markdown = { 'vale' },
                 -- rust = { 'rust_analyzer' }, -- has its own implementation
             }
 
@@ -30,7 +30,7 @@ return {
 
             -- Add path to global config file for flake8
             set_config('flake8', '~/.config/flake8/setup.cfg')
-            set_config('vale', '~/.config/vale/.vale.ini')
+            -- set_config('vale', '~/.config/vale/.vale.ini')
 
             -- table.insert(lint.linters.flake8.args, 1, '--config') -- Add path to global config file for flake8
             -- table.insert(lint.linters.flake8.args, 2, vim.fn.expand '~/.config/flake8/setup.cfg')

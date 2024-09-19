@@ -151,77 +151,23 @@ return {
             capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
             capabilities.textDocument.signatureHelp = nil
 
-            -- Enable the following language servers
-            -- Add any additional override configuration in the following tables. Available keys are:
-            --  - cmd (table): Override the default command used to start the server
-            --  - filetypes (table): Override the default list of associated filetypes for the server
-            --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-            --  - settings (table): Override the default settings passed when initializing the server.
-            local ensure_installed = {
-                stylua = {}, -- Lua formatter
-                black = {}, -- Python formatter
-                ['clang-format'] = {}, -- C, C++, C#, Objective-C formatter
-                ['google-java-format'] = {}, -- Java formatter
-                prettier = {}, -- General formatter
-                rustfmt = {}, -- Rust formatter
-                shfmt = {}, -- Shell script formatter
-                eslint = {}, -- JavaScript, TypeScript linter
-                flake8 = {}, -- Python linter
-                codelldb = {}, -- C, C++, Rust Debugger
-                cpptools = {}, -- Debugger and code browser for C, C++
-                bashls = {}, -- Bash LSP
-                clangd = {}, -- C, C++, C#, Objective-C LSP
-                cmake = {}, -- CMake LSP
-                gradle_ls = {}, -- Gradle LSP
-                html = {}, -- HTML LSP
-                rust_analyzer = { -- Rust LSP
-                    on_attach = function(client, bufnr)
-                        require('completion').on_attach(client)
-                        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-                    end,
-                    settings = {
-                        ['rust-analyzer'] = {
-                            imports = {
-                                granularity = {
-                                    group = 'module',
-                                },
-                                prefix = 'self',
-                            },
-                            cargo = {
-                                buildScripts = {
-                                    enable = true,
-                                },
-                            },
-                            procMacro = {
-                                enable = true,
-                            },
-                        },
-                    },
-                },
-                lua_ls = { -- Lua LSP
-                    settings = {
-                        Lua = { -- https://github.com/LuaLS/vscode-lua/blob/master/setting/schema.json
-                            completion = {
-                                callSnippet = 'Replace',
-                            },
-                            diagnostics = {
-                                globals = { 'vim' },
-                            },
-                        },
-                    },
-                },
-                jedi_language_server = {}, -- Python LSP; Quick autocompletion, including from other modules and files
-                -- pyright = {}, -- Extremely slow, but just works and large user base
-                -- pylyzer = {}, -- Extremely fast, but small docs and no completion with imports
-                -- basedpyright = {}, -- According to docs, node is not used; cannot get it to run
-            }
+            local mason_tools = require 'config.mason_tools'
+            local mason_servers = require 'config.mason_servers'
 
             require('mason').setup()
-            require('mason-tool-installer').setup { ensure_installed = vim.tbl_keys(ensure_installed) }
+
+            require('mason-tool-installer').setup {
+                ensure_installed = mason_tools,
+                auto_update = true, -- Automatically update on startup
+                run_on_start = true, -- Run update on Neovim startup
+            }
+
             require('mason-lspconfig').setup {
+                ensure_installed = vim.tbl_keys(mason_servers),
+                automatic_installation = true,
                 handlers = {
                     function(server_name)
-                        local server = ensure_installed[server_name] or {}
+                        local server = mason_servers[server_name] or {}
                         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
                         require('lspconfig')[server_name].setup(server)
                     end,
