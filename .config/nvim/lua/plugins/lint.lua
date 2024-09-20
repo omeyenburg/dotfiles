@@ -15,7 +15,7 @@ return {
             local lint = require 'lint'
 
             lint.linters_by_ft = {
-                c = { 'clangd' }, -- Mason install
+                -- c = { 'clangd' }, -- Mason install, automatic
                 python = { 'flake8' }, -- Mason install
                 javascript = { 'eslint' }, -- Mason install
                 -- text = { 'vale' },
