@@ -26,6 +26,15 @@ end
 
 return {
     {
+        'windwp/nvim-autopairs',
+        lazy = true,
+        event = { 'BufReadPost', 'BufNewFile' },
+        config = function()
+            require('nvim-autopairs').setup { map_cr = true }
+        end,
+    },
+
+    {
         'stevearc/conform.nvim',
         lazy = true,
         event = { 'BufReadPost', 'BufNewFile' },
