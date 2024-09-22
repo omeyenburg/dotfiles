@@ -88,3 +88,11 @@ create_autocmd {
         end
     end,
 }
+
+-- Disable automatic comments
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = '*',
+    callback = function()
+        vim.opt.formatoptions:remove { 'r', 'o' }
+    end,
+})
