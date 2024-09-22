@@ -3,7 +3,9 @@
 ------------------------------
 
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+-- vim.g.maplocalleader = ' ' -- NOTE: probably not needed
+
+-- Theoretical speed up; not noticable
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
@@ -27,10 +29,6 @@ vim.opt.signcolumn = 'yes' -- Enable git signs near line numbers
 vim.opt.showtabline = 1 -- Show a buffer headline when there are at least two tabs opened
 vim.opt.termguicolors = true -- Make sure terminal colors are enabled
 
--- Configure leading and trailing spaces rendering
--- vim.opt.list = true -- Enable list for next option
--- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
 ------------------------------
 -- Split Options
 ------------------------------
@@ -44,8 +42,6 @@ vim.opt.termguicolors = true -- Make sure terminal colors are enabled
 
 vim.opt.splitright = true -- open vertical split windows on the right
 vim.opt.splitbelow = true -- open horizontal split windows on the left
-vim.api.nvim_command 'highlight WinSeparator guifg=#A9B2D5' -- Set color of split lines
-vim.opt.laststatus = 3 -- Enables horizontal split lines by disabling status lines for each buffer (must run after plugins)
 
 ------------------------------
 -- Indentation Options
