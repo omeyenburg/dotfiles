@@ -94,7 +94,7 @@ return {
         lazy = true,
         init = function()
             vim.cmd.colorscheme 'tokyonight-night'
-            vim.cmd.hi 'Comment gui=none'
+            vim.cmd.hi 'Comment gui=none guifg=#8C7DA6'
         end,
     },
 
