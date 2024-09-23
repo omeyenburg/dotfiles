@@ -65,7 +65,7 @@ return {
                     completeopt = 'menu,menuone,noinsert,noselect',
                     keyword_length = 0, -- Allow completions for lua tables, testing if this even works otherwise
                 },
-                mapping = cmp.mapping.preset.insert {
+                mapping = {
                     -- Select next and complete
                     ['<Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
