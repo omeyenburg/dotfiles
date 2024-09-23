@@ -7,6 +7,7 @@ vim.opt.runtimepath:prepend(config_path)
 
 require 'config.options'
 require 'config.keymaps'
+require 'config.colemak'
 require 'config.autocmds'
 require 'config.lazy'
 
