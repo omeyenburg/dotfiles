@@ -14,7 +14,7 @@ return {
         lazy = true,
         cmd = 'UndotreeToggle',
         keys = {
-            { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'Undo tree', mode = 'n' },
+            { '<leader>u', '<cmd>UndotreeToggle<cr>', desc = 'Undo tree', mode = 'n' },
         },
     },
 }

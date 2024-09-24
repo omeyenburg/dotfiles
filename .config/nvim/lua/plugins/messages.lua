@@ -21,7 +21,7 @@ return {
         lazy = true,
         cmd = 'Bmessages',
         keys = {
-            { '<leader>bm', 'Bmessages', mode = 'n' },
+            { '<leader>m', '<cmd>Bmessages<cr>', mode = 'n' },
         },
         opts = {
             keep_focus = true, -- Don't focus the bmessages window after opening.
