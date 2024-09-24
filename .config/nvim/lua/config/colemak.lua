@@ -46,26 +46,44 @@ local remap = {
     { 'n', 'q', 'm' }, -- Map macro to m
 }
 
--- Iterate through the remap table using ipairs
-for _, mapping in ipairs(remap) do
-    local mode = mapping[1]
-    local old = mapping[2]
+local function apply_colemak()
+    -- Iterate through the remap table using ipairs
+    for _, mapping in ipairs(remap) do
+        local mode = mapping[1]
+        local old = mapping[2]
 
-    -- Unmap the old key
-    vim.keymap.set(mode, old, '<nop>', { noremap = true, silent = true })
-end
-
--- Iterate through the remap table using ipairs
-for _, mapping in ipairs(remap) do
-    local mode = mapping[1]
-    local old = mapping[2]
-    local new = mapping[3]
-    local custom = mapping[4] or false
-
-    if custom then
-        old = custom_map[custom]
+        -- Unmap the old key
+        vim.keymap.set(mode, old, '<nop>', { noremap = true, silent = true, desc = 'Unset' })
     end
 
-    -- Remap the new key; not recursively (noremap)
-    vim.keymap.set(mode, new, old, { noremap = true, silent = true })
+    -- Iterate through the remap table using ipairs
+    for _, mapping in ipairs(remap) do
+        local mode = mapping[1]
+        local old = mapping[2]
+        local new = mapping[3]
+        local custom = mapping[4] or false
+
+        if custom then
+            old = custom_map[custom]
+        end
+
+        -- Remap the new key; not recursively (noremap)
+        vim.print(vim.keymap.set(mode, new, old, { noremap = true, silent = true }))
+    end
 end
+
+-- Create a command called SetLayout with completable arguments
+vim.api.nvim_create_user_command(
+    'SetLayout', -- Command name
+    function(opts) -- Function to execute
+        local layout = opts.args -- Get the argument
+        print('Layout set to: ' .. layout) -- Print the selected layout
+        apply_colemak()
+    end,
+    {
+        nargs = 1, -- Expect one argument
+        complete = function(_)
+            return { 'Colemak', 'Qwerty' } -- Return the choices
+        end, -- Use the completion function
+    }
+)
