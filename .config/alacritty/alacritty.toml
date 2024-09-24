@@ -4,3 +4,11 @@ style = "Bold"
 
 [font.normal]
 family = "Ubuntu Mono Nerd Font"
+
+[window]
+startup_mode = "Maximized"
+decorations_theme_variant = "Dark"
+opacity = 0.9
+
+[mouse]
+hide_when_typing = true
