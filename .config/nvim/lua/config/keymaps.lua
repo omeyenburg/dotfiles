@@ -1,6 +1,6 @@
 -- Mappings to be disabled
 -- { mode, key }
-local mapping_disable = {
+local disabled_mappings = {
     { 'x', 'Q' },
 }
 
@@ -15,7 +15,7 @@ local layouts = {
 -- Upper row:   /, w, e, b, g, /, n, u, /, /
 -- Home row:    a, r, i, v, d, o, h, j, k, l
 -- Lower row:   y, p, x, v, /, /, q, ., /, /
-local mapping = {
+local mappings = {
     -- Movement keys
     {
         { 'n', 'x', 'o', 'v' },
@@ -64,18 +64,6 @@ local mapping = {
         { 'B', 'P' },
         'B',
         'Last WORD ',
-    },
-    {
-        'n',
-        'n',
-        'l',
-        'Search forward',
-    },
-    {
-        'n',
-        'N',
-        'L',
-        'Search backward',
     },
 
     -- Edit keys
@@ -349,80 +337,74 @@ local mapping = {
 -- vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
 -- vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
 
-local colemak = {
-    -- Movement keys
-    { { 'n', 'x', 'o', 'v' }, 'h', 'n' }, -- Map left to n
-    { { 'n', 'x', 'o', 'v' }, 'j', 'e' }, -- Map down to e
-    { { 'n', 'x', 'o', 'v' }, 'k', 'i' }, -- Map up to i
-    { { 'n', 'x', 'o', 'v' }, 'l', 'o' }, -- Map right to o
+-- Disable unwanted mappings
+for _, mapping in pairs(disabled_mappings) do
+    local modes = {}
+    local lhs = mapping[2]
 
-    { { 'n', 'x', 'o', 'v' }, 'e', 'f' }, -- Map end of word to f
-    { { 'n', 'x', 'o', 'v' }, 'E', 'F' }, -- Map end of WORD (punctuation) to F
-    { { 'n', 'x', 'o', 'v' }, 'b', 'p' }, -- Map previous word to p
-    { { 'n', 'x', 'o', 'v' }, 'B', 'P' }, -- Map previous WORD (punctuation) to P
-
-    { 'n', 'n', 'l' }, -- Map find next to l
-    { 'n', 'N', 'L' }, -- Map find previous to L
-
-    -- Edit keys
-    { { 'n', 'x', 'o', 'v' }, 'i', 's' }, -- Map insert to s
-    { { 'n', 'x', 'o', 'v' }, 'I', 'S' }, -- Map beginning insert to S
-    { 'n', 'o', 'h' }, -- Map new line below to h
-    { 'n', 'O', 'H' }, -- Map new line above to H
-
-    { { 'n', 'x', 'o', 'v' }, 's', 'z' }, -- Map cut and insert to z
-    { { 'n', 'x', 'o', 'v' }, 'S', 'Z' }, -- Map cut line and insert to Z
-    { { 'n', 'x', 'o', 'v' }, 'x', 'c' }, -- Map cut to c
-    { { 'n', 'x', 'o', 'v' }, 'X', 'C' }, -- Map cut to C
-
-    { 'n', 'p', 'x' }, -- Map paste to x
-    { 'n', 'P', 'X' }, -- Map unchanged paste to X
-
-    { 'v', 'J', 'E', 'move_down' }, -- Map move selection down to E
-    { 'v', 'K', 'I', 'move_up' }, -- Map move selection up to I
-
-    -- Others
-    { 'n', 'q', 'm' }, -- Map macro to m
-}
-
-local function apply_colemak()
-    -- Iterate through the remap table using ipairs
-    for _, mapping in ipairs(remap) do
-        local mode = mapping[1]
-        local old = mapping[2]
-
-        -- Unmap the old key
-        vim.keymap.set(mode, old, '<nop>', { noremap = true, silent = true, desc = 'Unset' })
+    if type(mapping[1]) == 'string' then
+        modes = { mapping[1] }
+    else
+        modes = mapping[1]
     end
 
-    -- Iterate through the remap table using ipairs
-    for _, mapping in ipairs(remap) do
-        local mode = mapping[1]
-        local old = mapping[2]
-        local new = mapping[3]
-        local custom = mapping[4] or false
-
-        if custom then
-            old = custom_map[custom]
+    for _, mode in pairs(modes) do
+        if vim.fn.mapcheck(lhs, mode) ~= '' then
+            vim.keymap.del(mode, lhs)
+        else
+            vim.keymap.set(mode, lhs, '<nop>')
         end
-
-        -- Remap the new key; not recursively (noremap)
-        vim.print(vim.keymap.set(mode, new, old, { noremap = true, silent = true }))
     end
 end
 
--- Create a command called SetLayout with completable arguments
-vim.api.nvim_create_user_command(
-    'SetLayout', -- Command name
-    function(opts) -- Function to execute
-        local layout = opts.args -- Get the argument
-        print('Layout set to: ' .. layout) -- Print the selected layout
-        apply_colemak()
+local function switch_layout(layout)
+    local index = nil
+    for i, name in ipairs(layouts) do
+        if name == layout then
+            index = i
+        else
+            -- Disable mappings of other layout
+            for _, mapping in pairs(mappings) do
+                local modes = {}
+                local lhs = mapping[2][i]
+
+                if type(mapping[1]) == 'string' then
+                    modes = { mapping[1] }
+                else
+                    modes = mapping[1]
+                end
+
+                for _, mode in pairs(modes) do
+                    if vim.fn.mapcheck(lhs, mode) ~= '' then
+                        vim.keymap.del(mode, lhs)
+                    end
+                    vim.keymap.set(mode, lhs, '<nop>')
+                end
+            end
+        end
+    end
+
+    assert(index ~= nil, 'Invalid layout "' .. layout .. '"')
+
+    -- Apply new mappings
+    for _, mapping in pairs(mappings) do
+        local modes = mapping[1]
+        local key = mapping[2][index]
+        local action = mapping[3]
+
+        -- Remap the new key; not recursively (noremap)
+        vim.print(vim.keymap.set(modes, key, action, { noremap = true, silent = true }))
+    end
+end
+
+vim.api.nvim_create_user_command('Layout', function(opts)
+    local layout = opts.args
+    switch_layout(layout)
+end, {
+    nargs = 1,
+    complete = function(_)
+        return layouts
     end,
-    {
-        nargs = 1, -- Expect one argument
-        complete = function(_)
-            return { 'Colemak', 'Qwerty' } -- Return the choices
-        end, -- Use the completion function
-    }
-)
+})
+
+switch_layout 'Normal'
