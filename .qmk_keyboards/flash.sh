@@ -2,7 +2,7 @@
 
 # Set constants
 KEYBOARD="cheapino"
-KEYMAP="oskar"
+KEYMAP="colemak"
 
 # Flash keyboard layout onto keyboard using QMK.
 qmk flash -kb $KEYBOARD -km $KEYMAP
