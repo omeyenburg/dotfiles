@@ -4,7 +4,7 @@
 
 // Home row mods pressing time
 #undef TAPPING_TERM
-#define TAPPING_TERM 500
+#define TAPPING_TERM 200
 
 //#define RGBLIGHT_USE_TIMER
 //#define RGBLIGHT_EFFECT_STATIC_GRADIENT
