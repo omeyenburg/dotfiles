@@ -1,12 +1,22 @@
 #include "wait.h"
 #include "quantum.h"
 
-#define LAYER0 1, 17, 8
-#define LAYER1 21, 11, 0
-#define LAYER2 14, 2, 19
-#define LAYER3 9, 1, 13
-#define LAYER4 1, 9, 10
-#define LAYER5 15, 2, 5
+/*#define LAYER0 1, 17, 8*/
+/*#define LAYER1 21, 11, 0*/
+/*#define LAYER2 14, 2, 19*/
+/*#define LAYER3 9, 1, 13*/
+/*#define LAYER4 1, 9, 10*/
+/*#define LAYER5 15, 2, 5*/
+/*#define LAYER6 15, 2, 5*/
+/*#define LAYER7 15, 2, 5*/
+#define LAYER0 0, 20, 0
+#define LAYER1 20, 0, 0
+#define LAYER2 0, 0, 20
+#define LAYER3 20, 20, 0
+#define LAYER4 0, 20, 20
+#define LAYER5 20, 0, 20
+#define LAYER6 5, 15, 5
+#define LAYER7 15, 5, 5
 #define DEFAULT 0, 0, 0
 
 
@@ -49,6 +59,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             break;
         case 5:
             rgblight_setrgb(LAYER5);
+            break;
+        case 6:
+            rgblight_setrgb(LAYER6);
+            break;
+        case 7:
+            rgblight_setrgb(LAYER7);
             break;
         default:
             rgblight_setrgb(DEFAULT); // Turn off if not in a known layer

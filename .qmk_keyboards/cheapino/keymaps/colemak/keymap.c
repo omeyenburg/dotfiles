@@ -110,17 +110,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     return true;
 }
 
-/*
- NOTE: Ideas
-- Use combos (two keys at once) to utilize ,.ß¨
-*/
-
 // Define the keymap using LAYOUT_split_3x5_3
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_split_3x5_3(                                                                                                                            // Colemak letters
-        KC_Q, KC_W, KC_F, KC_P, KC_G, KC_J, KC_L, KC_U, KC_Y, MT(MOD_LGUI, DE_COLN),                                                                     // first row
+        KC_Q, KC_W, KC_F, KC_P, KC_G, KC_J, KC_L, KC_U, KC_Y, DE_COLN,                                                                                   // first row
         KC_A, KC_R, KC_S, KC_T, KC_D, KC_H, KC_N, KC_E, KC_I, KC_O,                                                                                      // second row
-        KC_Z, KC_X, KC_C, KC_V, KC_B, KC_K, KC_M, KC_DOT, KC_COMM, MT(MOD_RALT, DE_SCLN),                                                                // third row
+        KC_Z, KC_X, KC_C, KC_V, KC_B, KC_K, KC_M, MT(MOD_LGUI, KC_DOT), MT(MOD_RALT, KC_COMM), DE_SCLN,                                                  // third row
         TD(TD_SHIFT_CAPS), KC_BSPC, K_CTRL, TD(TD_ENTER_TAB), KC_SPC, K_LAYER1                                                                           // thumb keys
     ),                                                                                                                                                   //
     [1] = LAYOUT_split_3x5_3(                                                                                                                            // Numbers and brackets
@@ -139,24 +134,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_ACL0, KC_ACL1, KC_ACL2, KC_NO, KC_NO, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,                                                              // first row
         KC_BTN1, KC_BTN2, KC_BTN3, KC_BTN4, KC_BTN5, KC_NO, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R,                                                          // third row
         KC_HOME, KC_END, KC_PGUP, KC_PGDN, KC_NO, KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT,                                                              // second row
-        TO(0), KC_BSPC, KC_NO, KC_NO, KC_SPC, TO(4)                                                                                                      // thumb keys
+        TO(0), KC_NO, KC_NO, KC_NO, KC_NO, TO(4)                                                                                                         // thumb keys
     ),                                                                                                                                                   //
     [4] = LAYOUT_split_3x5_3(                                                                                                                            // Function keys and media control
         KC_F1, KC_F2, KC_F3, KC_F4, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                                                            // first row
-        KC_F5, KC_F6, KC_F7, KC_F8, KC_NO, KC_PSCR, KC_MPLY, KC_MSTP, KC_NO,                                                                             // second row
-        KC_NO, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, KC_VOLU, KC_VOLD, KC_NO, KC_NO,                                                              // third row
-        TO(0), KC_BSPC, KC_NO, KC_NO, KC_SPC, TO(5)                                                                                                      // thumb keys
+        KC_F5, KC_F6, KC_F7, KC_F8, KC_NO, KC_PSCR, KC_MPLY, KC_MSTP, KC_NO, KC_NO,                                                                      // second row
+        KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, KC_VOLU, KC_VOLD, KC_NO, KC_NO,                                                                     // third row
+        TO(0), KC_NO, KC_NO, KC_NO, KC_NO, TO(5)                                                                                                         // thumb keys
     ),                                                                                                                                                   //
     [5] = LAYOUT_split_3x5_3(                                                                                                                            // Settings
         QK_RBT, KC_NO, KC_BRIU, GU_OFF, CG_SWAP, RGB_VAI, RGB_SAI, RGB_HUI, RGB_MOD, KC_NO,                                                              // first row
         KC_NO, KC_NO, KC_BRID, GU_ON, CG_NORM, RGB_VAD, RGB_SAD, RGB_HUD, RGB_RMOD, RGB_TOG,                                                             // second row
-        KC_NO, KC_NO, KC_WHOM, KC_WBAK, KC_WFWD, RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_SW, RGB_M_G,                                                           // third row
-        TO(0), KC_BSPC, KC_NO, KC_NO, KC_SPC, KC_NO                                                                                                      // thumb keys
+        KC_NO, KC_NO, KC_WHOM, KC_WBAK, KC_WFWD, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                                                      // third row
+        TO(0), TO(6), KC_NO, KC_NO, KC_NO, KC_NO                                                                                                         // thumb keys
     ),                                                                                                                                                   //
     [6] = LAYOUT_split_3x5_3(                                                                                                                            // QWERTY letters
         KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P,                                                                                      // first row
         KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, RALT(KC_U),                                                                                // second row
-        KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_DOT, KC_COMM, DE_SS,                                                                                // third row
-        TD(TD_SHIFT_CAPS), KC_BSPC, K_LAYER1, K_LAYER2, KC_SPC, K_CTRL                                                                                   // thumb keys
+        KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, MT(MOD_LGUI, KC_DOT), MT(MOD_RALT, KC_COMM), DE_SS,                                                    // third row
+        TD(TD_SHIFT_CAPS), KC_BSPC, K_CTRL, TD(TD_ENTER_TAB), KC_SPC, TO(7)                                                                              // thumb keys
     ),                                                                                                                                                   //
+    [7] = LAYOUT_split_3x5_3(                                                                                                                            // Numbers and brackets
+        RALT(KC_L), RSA(KC_7), RALT(KC_7), DE_SLSH, RALT(KC_8), RALT(KC_9), KC_1, KC_2, KC_3, DE_DOT,                                                    // first row
+        MT(MOD_LSFT, DE_ASTR), MT(MOD_RALT, DE_PLUS), MT(MOD_LGUI, DE_MINS), MT(MOD_LCTL, DE_UNDS), DE_LPRN, DE_RPRN, KC_4, KC_5, KC_6, KC_0,            // second row
+        DE_HASH, K_GRAVE, DE_QUOT, DE_DQUO, RALT(KC_5), RALT(KC_6), KC_7, KC_8, KC_9, DE_COMM,                                                           // third row
+        TO(6), KC_BSPC, KC_DEL, TD(TD_ENTER_TAB), KC_SPC, TO(0)                                                                                          // thumb keys
+    ),
 };
