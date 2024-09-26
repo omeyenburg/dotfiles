@@ -2,23 +2,24 @@
 #include "keymap_german.h"
 #include "quantum.h"
 
+
 #define LAYER_SWITCH_TAPPING_TERM 200
+
 
 enum custom_keycodes {
     K_TILDE = SAFE_RANGE, // Starting point of enum
     K_GRAVE,
     K_CARET,
-    K_ESC,
-    K_OSM_LCTL,
     K_LAYER1,
-    K_LAYER2,
-    K_CTRL,
 };
+
 
 enum {
     TD_SHIFT_CAPS = 0,
+    TD_CTRL_ESC,
     TD_ENTER_TAB,
 };
+
 
 void shift_dance_finished_fn(tap_dance_state_t* state, void* _) {
     if (state->count >= 2) {
@@ -30,20 +31,42 @@ void shift_dance_finished_fn(tap_dance_state_t* state, void* _) {
     }
 }
 
+
 void shift_dance_reset_fn(tap_dance_state_t* state, void* _) {
-    unregister_code(KC_LSFT);
+    unregister_code(KC_LCTL);
 }
 
+
+void ctrl_dance_finished_fn(tap_dance_state_t* state, void* _) {
+    if (state->count >= 2) {
+        tap_code(KC_ESC);
+    } else if (state->pressed) {
+        register_code(KC_LCTL);
+    } else {
+        add_oneshot_mods(MOD_BIT(KC_LCTL));
+    }
+}
+
+
+void ctrl_dance_reset_fn(tap_dance_state_t* state, void* _) {
+    unregister_code(KC_LCTL);
+}
+
+
+// Tap dances
 tap_dance_action_t tap_dance_actions[] = {
     [TD_SHIFT_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED_WITH_RELEASE(NULL, NULL, shift_dance_finished_fn, shift_dance_reset_fn),
+    [TD_CTRL_ESC] = ACTION_TAP_DANCE_FN_ADVANCED_WITH_RELEASE(NULL, NULL, ctrl_dance_finished_fn, ctrl_dance_reset_fn),
     [TD_ENTER_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_ENTER, KC_TAB),
 };
+
 
 void altgr_modifier(uint16_t keycode) {
     register_code(KC_RALT);
     tap_code(keycode);
     unregister_code(KC_RALT);
 }
+
 
 // Custom keycode handler
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
@@ -65,24 +88,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         k_layer1_timer -= LAYER_SWITCH_TAPPING_TERM;
     }
 
-    // Control when held, control for next input when tapped
-    static uint16_t k_ctrl_timer;
-    if (keycode == K_CTRL) {
-        if (record->event.pressed) {
-            k_ctrl_timer = timer_read(); // Start the timer when key is pressed
-            register_code(KC_LCTL);
-        } else {
-            unregister_code(KC_LCTL);
-
-            if (timer_elapsed(k_ctrl_timer) < LAYER_SWITCH_TAPPING_TERM) {
-                add_oneshot_mods(MOD_BIT(KC_LCTL));
-            }
-        }
-        return false;
-    } else {
-        k_ctrl_timer -= LAYER_SWITCH_TAPPING_TERM;
-    }
-
     if (!record->event.pressed)
         return true;
 
@@ -101,11 +106,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             tap_code(DE_CIRC);
             tap_code(KC_SPC);
             return false;
-        case K_ESC: // ESC and return to base layer
-            tap_code(KC_ESC);
-            layer_clear();
-            layer_on(0);
-            return false;
     }
     return true;
 }
@@ -116,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q, KC_W, KC_F, KC_P, KC_G, KC_J, KC_L, KC_U, KC_Y, DE_COLN,                                                                                   // first row
         KC_A, KC_R, KC_S, KC_T, KC_D, KC_H, KC_N, KC_E, KC_I, KC_O,                                                                                      // second row
         KC_Z, KC_X, KC_C, KC_V, KC_B, KC_K, KC_M, MT(MOD_LGUI, KC_DOT), MT(MOD_RALT, KC_COMM), DE_SCLN,                                                  // third row
-        TD(TD_SHIFT_CAPS), KC_BSPC, K_CTRL, TD(TD_ENTER_TAB), KC_SPC, K_LAYER1                                                                           // thumb keys
+        TD(TD_SHIFT_CAPS), KC_BSPC, TD(TD_CTRL_ESC), TD(TD_ENTER_TAB), KC_SPC, K_LAYER1                                                                  // thumb keys
     ),                                                                                                                                                   //
     [1] = LAYOUT_split_3x5_3(                                                                                                                            // Numbers and brackets
         RALT(KC_L), RSA(KC_7), RALT(KC_7), DE_SLSH, RALT(KC_8), RALT(KC_9), KC_1, KC_2, KC_3, DE_DOT,                                                    // first row
@@ -152,7 +152,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P,                                                                                      // first row
         KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, RALT(KC_U),                                                                                // second row
         KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, MT(MOD_LGUI, KC_DOT), MT(MOD_RALT, KC_COMM), DE_SS,                                                    // third row
-        TD(TD_SHIFT_CAPS), KC_BSPC, K_CTRL, TD(TD_ENTER_TAB), KC_SPC, TO(7)                                                                              // thumb keys
+        TD(TD_SHIFT_CAPS), KC_BSPC, TD(TD_CTRL_ESC), TD(TD_ENTER_TAB), KC_SPC, TO(7)                                                                     // thumb keys
     ),                                                                                                                                                   //
     [7] = LAYOUT_split_3x5_3(                                                                                                                            // Numbers and brackets
         RALT(KC_L), RSA(KC_7), RALT(KC_7), DE_SLSH, RALT(KC_8), RALT(KC_9), KC_1, KC_2, KC_3, DE_DOT,                                                    // first row
