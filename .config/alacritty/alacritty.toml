@@ -8,7 +8,7 @@ family = "Ubuntu Mono Nerd Font"
 [window]
 startup_mode = "Maximized"
 decorations_theme_variant = "Dark"
-opacity = 0.9
+opacity = 1.0
 
 [mouse]
-hide_when_typing = true
+hide_when_typing = false
