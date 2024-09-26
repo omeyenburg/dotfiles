@@ -1,12 +1,15 @@
 # Folders
-/.Trash/
-/Applications/
-/Desktop/
-/Documents/
-/Downloads/
-/Dropbox/
-/Library/
-/Movies/
-/Music/
-/Pictures/
-/Public/
+.Trash/
+Applications/
+Desktop/
+Documents/
+Downloads/
+Dropbox/
+Library/
+Movies/
+Music/
+Pictures/
+Public/
+
+# Config files
+.config/tmux/plugins
