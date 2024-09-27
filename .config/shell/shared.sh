@@ -2,17 +2,22 @@
 export EDITOR=nvim
 
 # Aliases for ls cmd
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+alias ll="ls -alF"
+alias la="ls -A"
+alias l="ls -CF"
 
 # Aliases for vim
 alias vim="nvim"
 alias vic="nvim --cmd 'let g:keyboard_layout = \"Colemak\"'"
 alias nvic="nvim --cmd 'let g:keyboard_layout = \"Colemak\"'"
 
+# Aliases for git
+alias git="LANG=en_GB git"
+alias gitlog="python3 ~/.config/shell/gitlog.py"
+# alias gitlog="git log --pretty=format:'%<(20)%an %<(20)%ar %s' -10"
+
 # Add mason packages to path
-export PATH="$PATH:/home/oskar/.local/share/nvim/mason/bin"
+export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
 OS=$(uname)
 if [ "$OS" = "Linux" ]; then
