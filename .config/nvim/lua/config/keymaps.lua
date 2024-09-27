@@ -2,7 +2,7 @@
 -- { mode, key }
 local disabled_mappings = {
     { 'x', 'Q' },
-    { 'n', ':q' }, -- Command history
+    { 'n', 'q:' }, -- Command history
 }
 
 -- Layout names
@@ -350,9 +350,9 @@ for _, mapping in pairs(disabled_mappings) do
     end
 
     for _, mode in pairs(modes) do
-        if vim.fn.mapcheck(lhs, mode) ~= '' then
-            vim.keymap.del(mode, lhs)
-        else
+        local status, _ = pcall(vim.keymap.del, mode, lhs)
+
+        if not status then
             vim.keymap.set(mode, lhs, '<nop>')
         end
     end
@@ -376,9 +376,7 @@ local function switch_layout(layout)
                 end
 
                 for _, mode in pairs(modes) do
-                    if vim.fn.mapcheck(lhs, mode) ~= '' then
-                        vim.keymap.del(mode, lhs)
-                    end
+                    pcall(vim.keymap.del, mode, lhs)
                     vim.keymap.set(mode, lhs, '<nop>')
                 end
             end
