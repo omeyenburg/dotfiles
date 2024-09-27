@@ -100,3 +100,16 @@ vim.api.nvim_create_autocmd('FileType', {
         }
     end,
 })
+
+-- Adjust movement keys in NETRW when using Colemak layout
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'netrw',
+    callback = function()
+        if vim.g.keyboard_layout == 'Colemak' then
+            vim.api.nvim_buf_set_keymap(0, 'n', 'n', 'h', { noremap = true, silent = true })
+            vim.api.nvim_buf_set_keymap(0, 'n', 'e', 'j', { noremap = true, silent = true })
+            vim.api.nvim_buf_set_keymap(0, 'n', 'i', 'k', { noremap = true, silent = true })
+            vim.api.nvim_buf_set_keymap(0, 'n', 'o', 'l', { noremap = true, silent = true })
+        end
+    end,
+})
