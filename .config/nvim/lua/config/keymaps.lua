@@ -2,6 +2,7 @@
 -- { mode, key }
 local disabled_mappings = {
     { 'x', 'Q' },
+    { 'n', ':q' }, -- Command history
 }
 
 -- Layout names
@@ -385,6 +386,7 @@ local function switch_layout(layout)
     end
 
     assert(index ~= nil, 'Invalid layout "' .. layout .. '"')
+    vim.g.keyboard_layout = layout
 
     -- Apply new mappings
     for _, mapping in pairs(mappings) do
@@ -407,4 +409,8 @@ end, {
     end,
 })
 
-switch_layout 'Normal'
+if vim.g.keyboard_layout == nil then
+    vim.g.keyboard_layout = 'Normal'
+end
+
+switch_layout(vim.g.keyboard_layout)
