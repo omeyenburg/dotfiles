@@ -16,6 +16,9 @@ alias git="LANG=en_GB git"
 alias gitlog="python3 ~/.config/shell/gitlog.py"
 # alias gitlog="git log --pretty=format:'%<(20)%an %<(20)%ar %s' -10"
 
+# Alias for neofetch
+alias neofetch="neofetch | sed 's/^/    /;/^[[:space:]]*$/d'"
+
 # Add mason packages to path
 export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
