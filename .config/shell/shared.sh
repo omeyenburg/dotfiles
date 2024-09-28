@@ -1,22 +1,23 @@
-# Make nvim the default editor
+# Default editor
 export EDITOR=nvim
 
-# Aliases for ls cmd
+# ls command
 alias ll="ls -alF"
 alias la="ls -A"
 alias l="ls -CF"
 
-# Aliases for vim
+# Vim
 alias vim="nvim"
 alias vic="nvim --cmd 'let g:keyboard_layout = \"Colemak\"'"
 alias nvic="nvim --cmd 'let g:keyboard_layout = \"Colemak\"'"
 
-# Aliases for git
+# Git
 alias git="LANG=en_GB git"
 alias gitlog="python3 ~/.config/shell/gitlog.py"
-# alias gitlog="git log --pretty=format:'%<(20)%an %<(20)%ar %s' -10"
+git config --global core.excludesfile "$HOME/.config/git/gitignore_global"
+git config --global fetch.autoFetch true
 
-# Alias for neofetch
+# Neofetch
 alias neofetch="neofetch | sed 's/^/    /;/^[[:space:]]*$/d'"
 
 # Add mason packages to path
