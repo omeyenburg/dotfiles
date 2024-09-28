@@ -6,6 +6,12 @@
 
 https://github.com/mbbill/undotree
 
+
+# Persistence
+Automatically saves sessions
+
+https://github.com/folke/persistence.nvim
+
 --]]
 
 return {
@@ -16,5 +22,12 @@ return {
         keys = {
             { '<leader>u', '<cmd>UndotreeToggle<cr>', desc = 'Undo tree', mode = 'n' },
         },
+    },
+
+    {
+        'folke/persistence.nvim',
+        lazy = true,
+        event = { 'BufReadPre', 'BufNewFile' },
+        opts = {},
     },
 }

@@ -45,18 +45,30 @@ Shows pending keybinds in a window at the bottom
 https://github.com/folke/which-key.nvim
 
 
-# Other cool colorschemes
-- Mofiqul/vscode.nvim
-- martinsione/darkplus.nvim
-- rose-pine/neovim
+# Gitsigns
+Adds git related signs to the line numbers, as well as utilities for managing changes
+See `:help gitsigns`
 
-# Other cool statuslines
-- feline-nvim/feline.nvim
-- echasnovski/mini.statusline
+https://github.com/lewis6991/gitsigns.nvim
 
---]]
+]]
 
 return {
+    {
+        'lewis6991/gitsigns.nvim',
+        lazy = true,
+        event = 'BufReadPost',
+        opts = {
+            signs = {
+                add = { text = '+' },
+                change = { text = '~' },
+                delete = { text = '_' },
+                topdelete = { text = '‾' },
+                changedelete = { text = '~' },
+            },
+        },
+    },
+
     {
         'nvim-tree/nvim-web-devicons',
         lazy = true,

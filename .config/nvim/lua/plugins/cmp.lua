@@ -1,9 +1,19 @@
+-- TODO: !!!
+-- No tab if completion window is open (bug fix)
+-- No tab if completion window is not open, but non-whitespace char on left side of cursor (feature to be added)
+
 --[[
 
 # LSP Signature
 Provides function signatures
 
 https://github.com/ray-x/lsp_signature.nvim
+
+
+# Autopairs
+Add closing brackets and quotes & open bracket after function completion
+
+https://github.com/windwp/nvim-autopairs
 
 
 # Cmp
@@ -32,10 +42,22 @@ return {
         end,
     },
 
-    { -- Autocompletion
-        'hrsh7th/nvim-cmp',
+    { -- Auto brackets and quotes
+        'windwp/nvim-autopairs',
         lazy = true,
         event = { 'BufReadPost', 'BufNewFile' },
+        config = function()
+            require('nvim-autopairs').setup { map_cr = true }
+            local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+            local cmp = require 'cmp'
+            cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+        end,
+    },
+
+    { -- Auto completion
+        'hrsh7th/nvim-cmp',
+        lazy = true,
+        event = { 'BufReadPost', 'BufNewFile', 'CmdlineEnter' },
         dependencies = {
             { -- Snippet Engine & its associated nvim-cmp source
                 'L3MON4D3/LuaSnip',
@@ -53,6 +75,12 @@ return {
             local cmp = require 'cmp'
             local luasnip = require('luasnip').config.setup {}
 
+            local has_words_before = function()
+                unpack = unpack or table.unpack
+                local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+                return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+            end
+
             cmp.setup {
                 preselect = cmp.PreselectMode.None, -- Forces rust-analyzer not to use preselection
                 snippet = {
@@ -66,23 +94,43 @@ return {
                     keyword_length = 0, -- Allow completions for lua tables, testing if this even works otherwise
                 },
                 mapping = {
+                    -- ['<Tab>'] = cmp.mapping(function(fallback)
+                    --     if cmp.visible() then
+                    --         cmp.select_next_item()
+                    --     else
+                    --         fallback()
+                    --     end
+                    -- end, { 'i', 's' }),
+                    --
+                    -- ['<S-Tab>'] = cmp.mapping(function(fallback)
+                    --     if cmp.visible() then
+                    --         cmp.select_prev_item()
+                    --     else
+                    --         fallback()
+                    --     end
+                    -- end, { 'i', 's' }),
+
                     -- Select next and complete
-                    ['<Tab>'] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        else
-                            fallback()
+                    ['<Tab>'] = function(fallback)
+                        if not cmp.select_next_item() then
+                            if vim.bo.buftype ~= 'prompt' and has_words_before() then
+                                cmp.complete()
+                            else
+                                fallback()
+                            end
                         end
-                    end, { 'i', 's' }),
+                    end,
 
                     -- Select previous and complete
-                    ['<S-Tab>'] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        else
-                            fallback()
+                    ['<S-Tab>'] = function(fallback)
+                        if not cmp.select_prev_item() then
+                            if vim.bo.buftype ~= 'prompt' and has_words_before() then
+                                cmp.complete()
+                            else
+                                fallback()
+                            end
                         end
-                    end, { 'i', 's' }),
+                    end,
 
                     -- Abort completion
                     ['<C-e>'] = cmp.mapping.abort(),
@@ -106,13 +154,23 @@ return {
                     completion = cmp.config.window.bordered(),
                     documentation = cmp.config.window.bordered(),
                 },
+                -- enabled = function()
+                --     local context = require 'cmp.config.context'
+                --     if context.in_treesitter_capture 'comment' or context.in_syntax_group 'Comment' then -- Disable completion in comment
+                --         return false
+                --     end
+                --
+                --     return true
+                -- end,
                 enabled = function()
+                    -- disable completion in comments
                     local context = require 'cmp.config.context'
-                    if context.in_treesitter_capture 'comment' or context.in_syntax_group 'Comment' then -- Disable completion in comment
-                        return false
+                    -- keep command mode completion enabled when cursor is in a comment
+                    if vim.api.nvim_get_mode().mode == 'c' then
+                        return true
+                    else
+                        return not context.in_treesitter_capture 'comment' and not context.in_syntax_group 'Comment'
                     end
-
-                    return true
                 end,
                 sorting = {
                     priority_weight = 1.0,
@@ -152,15 +210,15 @@ return {
                         end,
                     },
                 }, {
-                    -- {
-                    --     name = 'luasnip',
-                    --     priority = 8,
-                    --     option = { use_show_condition = true },
-                    --     entry_filter = function()
-                    --         local context = require 'cmp.config.context'
-                    --         return not context.in_treesitter_capture 'string' and not context.in_syntax_group 'String'
-                    --     end,
-                    -- },
+                    {
+                        name = 'luasnip',
+                        priority = 8,
+                        option = { use_show_condition = true },
+                        entry_filter = function()
+                            local context = require 'cmp.config.context'
+                            return not context.in_treesitter_capture 'string' and not context.in_syntax_group 'String'
+                        end,
+                    },
                     {
                         name = 'nvim_lua',
                         priority = 6,
