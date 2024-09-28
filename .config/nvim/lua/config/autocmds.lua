@@ -94,7 +94,7 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
     callback = function()
         vim.opt.formatoptions:remove {
-            -- 'r', -- Automatically open comment in insert mode
+            'r', -- Automatically open comment in insert mode
             'o', -- Automatically create comment when starting a new line with o or O
             'c', -- Wrap comments
         }
@@ -111,5 +111,8 @@ vim.api.nvim_create_autocmd('FileType', {
             vim.api.nvim_buf_set_keymap(0, 'n', 'i', 'k', { noremap = true, silent = true })
             vim.api.nvim_buf_set_keymap(0, 'n', 'o', 'l', { noremap = true, silent = true })
         end
+
+        -- Fix netrw deleting clipboard when clipboard is synced between OS and Vim
+        vim.fn.setreg('+', vim.fn.getreg('+'))
     end,
 })
