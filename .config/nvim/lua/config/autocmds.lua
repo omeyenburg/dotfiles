@@ -94,7 +94,7 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
     callback = function()
         vim.opt.formatoptions:remove {
-            'r', -- Automatically open comment in insert mode
+            -- 'r', -- Automatically open comment in insert mode
             'o', -- Automatically create comment when starting a new line with o or O
             'c', -- Wrap comments
         }
