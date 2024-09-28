@@ -1,4 +1,28 @@
 ------------------------------------------------------------
+-- General -------------------------------------------------
+------------------------------------------------------------
+
+-- Disable providers
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_python3_provider = 0
+
+-- Check for vscode
+if vim.env.VSCODE then
+    vim.g.vscode = true
+end
+
+-- Sync clipboard between OS and Neovim
+vim.opt.clipboard = 'unnamedplus'
+
+-- Disable mouse mode (except scrolling)
+vim.opt.mouse = ''
+
+-- Mapped sequence wait time
+vim.opt.timeoutlen = 1000
+
+------------------------------------------------------------
 -- Appearance Options --------------------------------------
 ------------------------------------------------------------
 
@@ -15,6 +39,10 @@ vim.opt.inccommand = 'split' -- Live view of all substitutions
 vim.opt.signcolumn = 'yes' -- Enable git signs near line numbers
 vim.opt.showtabline = 1 -- Show a buffer headline when there are at least two tabs opened
 vim.opt.termguicolors = true -- Make sure terminal colors are enabled
+vim.opt.lazyredraw = false -- Don’t update screen during macro and script execution
+vim.opt.updatetime = 250 -- Decrease update time
+vim.opt.scrolloff = 8 -- Minimal number of screen lines to keep above and below the cursor
+vim.opt.sidescrolloff = 8 -- Minimal number of screen columns either side of cursor if wrap is `false`
 
 ------------------------------------------------------------
 -- Indentation Options -------------------------------------
@@ -37,7 +65,6 @@ vim.opt.smartindent = true -- Adjust indentation based on control flow statement
 vim.opt.ignorecase = true -- Case-insensitive searching
 vim.opt.smartcase = true -- Case-sensitive searching if one or more capital letters are used in the search term
 vim.opt.hlsearch = true -- Set highlight all search results
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>') -- Clear search highlight on pressing <Esc> in normal mode
 
 ------------------------------------------------------------
 -- Split Options -------------------------------------------
@@ -64,32 +91,7 @@ vim.opt.laststatus = 3 -- Enables horizontal split lines by disabling status lin
 vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
 vim.opt.undofile = true
 
-------------------------------------------------------------
--- Editing Options -----------------------------------------
-------------------------------------------------------------
-
-vim.opt.clipboard = 'unnamedplus' -- Sync clipboard between OS and Neovim
-vim.opt.mouse = '' -- Disable mouse mode (except scrolling)
-
-------------------------------------------------------------
--- Performance Options -------------------------------------
-------------------------------------------------------------
-
-vim.opt.lazyredraw = false -- Don’t update screen during macro and script execution
-vim.opt.updatetime = 250 -- Decrease update time
-vim.opt.timeoutlen = 1000 -- Mapped sequence wait time
-
-------------------------------------------------------------
--- Scrolling Options ---------------------------------------
-------------------------------------------------------------
-
-vim.opt.scrolloff = 8 -- Minimal number of screen lines to keep above and below the cursor
-vim.opt.sidescrolloff = 8 -- Minimal number of screen columns either side of cursor if wrap is `false`
-
-------------------------------------------------------------
--- Backup Options ------------------------------------------
-------------------------------------------------------------
-
+-- Disable backups
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
@@ -102,14 +104,10 @@ vim.opt.writebackup = false
 -- s    -> Cycle sorting
 -- a    -> Cycle between: all files, visible files, hidden files
 -- I    -> Toggle header
--- %    -> Create file
--- d    -> Create folder
--- D    -> Delete file or empty folder
--- -    -> Go in parent folder
 -- C-^  -> Enter last buffer
--- x    -> Open file using default application
--- R    -> Rename file
 -- qf   -> Get information about file or directory
+-- x    -> Open file using default application
+-- X    -> Execute file
 
 -- Hide files using regex
 local hide_files = { '../', './', '.git', '__pycache__', '.pytest_cache', '.DS_Store' }
@@ -120,13 +118,3 @@ vim.g.netrw_hide = 1
 vim.g.netrw_liststyle = 4 -- default: 0; file tree: 3
 vim.g.netrw_banner = 0 -- Disable banner
 vim.g.netrw_winsize = 25 -- Sets explorer width/height when using :Vex or :Hex
-
-------------------------------------------------------------
--- Loaded Providers ----------------------------------------
-------------------------------------------------------------
-
--- Disable providers
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_ruby_provider = 0
-vim.g.loaded_node_provider = 0
-vim.g.loaded_python3_provider = 0

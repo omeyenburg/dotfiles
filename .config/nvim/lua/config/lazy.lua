@@ -19,9 +19,6 @@ local opts = {
         rtp = {
             disabled_plugins = {
                 'gzip',
-                --'matchit',
-                --'matchparen',
-                --'netrwPlugin', -- file tree plugin
                 'rplugin',
                 'tarPlugin',
                 'tohtml',
@@ -30,34 +27,10 @@ local opts = {
             },
         },
     },
-
-    -- Detect changes made to plugin files
-    change_detection = {
+    change_detection = { -- Detect changes made to plugin files
         enabled = true,
         notify = false,
     },
-
-    -- This is not needed when using a nerd font (which is recommended)
-    --[[
-    ui = {
-        border = 'rounded',
-        icons = {
-            cmd = '⌘',
-            config = '🛠',
-            event = '📅',
-            ft = '📂',
-            init = '⚙',
-            keys = '🗝',
-            plugin = '🔌',
-            runtime = '💻',
-            require = '🌙',
-            source = '📄',
-            start = '🚀',
-            task = '📌',
-            lazy = '💤 ',
-        },
-    },
-    ]]
 }
 
 require('lazy').setup("plugins", opts)

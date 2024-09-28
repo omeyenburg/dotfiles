@@ -24,6 +24,12 @@ local layouts = {
 local simple_mappings = {
     {
         'n',
+        '<Esc>',
+        '<CMD>nohlsearch<CR>',
+        'Clear search highlight',
+    },
+    {
+        'n',
         '<leader>e',
         vim.cmd.Ex,
         'Goto explorer',
