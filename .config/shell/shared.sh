@@ -40,3 +40,11 @@ elif [ "$OS" = "Darwin" ]; then
     # Enable colors
     [[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
 fi
+
+if [ "$SHELL" = "/bin/bash" ]; then
+    # Ignore duplicate commands in command history
+    export HISTCONTROL=ignoredups:erasedups
+elif [ "$SHELL" = "/bin/zsh" ]; then
+    # Ignore duplicate commands in command history
+    setopt HIST_IGNORE_ALL_DUPS
+fi
