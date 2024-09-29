@@ -8,13 +8,6 @@ Toggle comments
 https://github.com/numToStr/Comment.nvim
 
 
-# Treesitter context comments
-Automatically adjust comment type in different languages in one file
-Example: JavaScript in HTML
-
-https://github.com/JoosepAlviste/nvim-ts-context-commentstring
-
-
 # Todo Comments
 Highlight todo, notes, etc in comments
 
@@ -27,20 +20,6 @@ return {
         'numToStr/Comment.nvim',
         lazy = true,
         event = 'VeryLazy',
-        config = function()
-            require('Comment').setup {
-                pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-            }
-        end,
-    },
-
-    { -- Context dependent comment types
-        'JoosepAlviste/nvim-ts-context-commentstring',
-        lazy = true,
-        event = 'VeryLazy',
-        opts = {
-            enable_autocmd = false,
-        },
     },
 
     { -- Highlight todo, note, bug, fix etc. labels
