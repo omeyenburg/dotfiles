@@ -13,3 +13,7 @@ Public/
 
 # Config files
 .config/tmux/plugins
+
+# Private files
+.ssh/
+.local/

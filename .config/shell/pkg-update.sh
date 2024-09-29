@@ -37,4 +37,10 @@ if is_installed port; then
     user_cmd port upgrade outdated
 fi
 
+# Update pkg packages
+if is_installed pkg; then
+    echo "Updating pkg packages..."
+    pkg update && pkg upgrade
+fi
+
 echo "Update process completed!"
