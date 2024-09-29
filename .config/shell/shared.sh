@@ -1,6 +1,9 @@
 # Default editor
 export EDITOR=nvim
 
+# PKG update alias
+alias pkg-update="sudo $HOME/.config/shell/pkg-update.sh"
+
 # ls command
 alias ll="ls -alF"
 alias la="ls -A"
@@ -18,7 +21,7 @@ git config --global core.excludesfile "$HOME/.config/git/gitignore_global"
 git config --global fetch.autoFetch true
 
 # Neofetch
-alias neofetch="neofetch | sed 's/^/    /;/^[[:space:]]*$/d'"
+alias neofetch="neofetch | sed 's/^/    /;$d'"
 
 # Add mason packages to path
 export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
@@ -26,11 +29,7 @@ export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 OS=$(uname)
 if [ "$OS" = "Linux" ]; then
     # Linux-specific settings
-
-    # Update reminder
-    echo "Reminder: Update your system with:"
-    echo "  sudo apt update && sudo apt upgrade"
-    echo ""
+    true
 elif [ "$OS" = "Darwin" ]; then
     # macOS-specific settings
 
@@ -48,3 +47,6 @@ elif [ "$SHELL" = "/bin/zsh" ]; then
     # Ignore duplicate commands in command history
     setopt HIST_IGNORE_ALL_DUPS
 fi
+
+# Update reminder
+printf "Reminder: Update your system with:    pkg-update\n\n"
