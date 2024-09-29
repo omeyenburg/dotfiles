@@ -6,6 +6,13 @@ Integrates support of nerd fonts
 https://github.com/nvim-tree/nvim-web-devicons
 
 
+# Gitsigns
+Adds git related signs to the line numbers, as well as utilities for managing changes
+See `:help gitsigns`
+
+https://github.com/lewis6991/gitsigns.nvim
+
+
 # Nvim Colorizer
 Draws the colors hex color strings in their matching color.
 Abonded version: https://github.com/norcalli/nvim-colorizer.lua
@@ -45,19 +52,20 @@ Shows pending keybinds in a window at the bottom
 https://github.com/folke/which-key.nvim
 
 
-# Gitsigns
-Adds git related signs to the line numbers, as well as utilities for managing changes
-See `:help gitsigns`
-
-https://github.com/lewis6991/gitsigns.nvim
 
 ]]
 
 return {
-    {
+    { -- Use dev icons font
+        'nvim-tree/nvim-web-devicons',
+        lazy = true,
+        event = 'VeryLazy',
+    },
+
+    { -- Git change symbols
         'lewis6991/gitsigns.nvim',
         lazy = true,
-        event = 'BufReadPost',
+        event = 'VeryLazy',
         opts = {
             signs = {
                 add = { text = '+' },
@@ -69,15 +77,10 @@ return {
         },
     },
 
-    {
-        'nvim-tree/nvim-web-devicons',
-        lazy = true,
-    },
-
-    { -- Draws the hex strings in their matching color.
+    { -- Draw the hex strings in their matching color.
         'NvChad/nvim-colorizer.lua',
         lazy = true,
-        event = { 'BufReadPre', 'BufNewFile' },
+        event = 'VeryLazy',
         priority = 800, -- load after airline theme, before TreeSitter/LSP
         opts = {
             filetypes = {
@@ -94,27 +97,28 @@ return {
         },
     },
 
-    { -- Dims inactive parts of the code. Toggle using :Twilight
+    { -- Dim inactive code parts
         'folke/twilight.nvim',
         lazy = true,
         cmd = 'Twilight',
     },
 
-    {
+    { -- Tokyonight colorscheme
         'folke/tokyonight.nvim',
-        priority = 1000,
         lazy = true,
+        priority = 1000,
+        event = 'VimEnter',
         init = function()
             vim.cmd.colorscheme 'tokyonight-night'
             vim.cmd.hi 'Comment gui=none guifg=#8C7DA6'
         end,
     },
 
-    {
+    { -- Statusbar
         'nvim-lualine/lualine.nvim',
         lazy = true,
-        event = 'VeryLazy',
         priority = 900,
+        event = 'VimEnter',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             require('lualine').setup {
@@ -169,7 +173,7 @@ return {
         end,
     },
 
-    {
+    { -- Startup screen
         'goolord/alpha-nvim',
         lazy = true,
         event = 'VimEnter',
@@ -218,7 +222,7 @@ return {
         end,
     },
 
-    {
+    { -- Shortcut helper
         'folke/which-key.nvim',
         lazy = true,
         event = 'VeryLazy',

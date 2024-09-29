@@ -23,11 +23,10 @@ https://github.com/folke/todo-comments.nvim
 --]]
 
 return {
-    {
+    { -- Comment toggling
         'numToStr/Comment.nvim',
-        enabled = true,
         lazy = true,
-        event = { 'BufReadPre', 'BufNewFile' },
+        event = 'VeryLazy',
         config = function()
             require('Comment').setup {
                 pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
@@ -35,19 +34,19 @@ return {
         end,
     },
 
-    {
+    { -- Context dependent comment types
         'JoosepAlviste/nvim-ts-context-commentstring',
         lazy = true,
-        event = { 'BufReadPre', 'BufNewFile' },
+        event = 'VeryLazy',
         opts = {
             enable_autocmd = false,
         },
     },
 
-    {
+    { -- Highlight todo, note, bug, fix etc. labels
         'folke/todo-comments.nvim',
         lazy = true,
-        event = { 'BufReadPre', 'BufNewFile' },
+        event = 'VeryLazy',
         dependencies = { 'nvim-lua/plenary.nvim' },
         opts = { signs = true },
     },

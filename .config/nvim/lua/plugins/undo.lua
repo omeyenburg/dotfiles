@@ -15,7 +15,7 @@ https://github.com/folke/persistence.nvim
 --]]
 
 return {
-    {
+    { -- Undotree
         'mbbill/undotree',
         lazy = true,
         cmd = 'UndotreeToggle',
@@ -24,7 +24,7 @@ return {
         },
     },
 
-    {
+    { -- Keep cursor position
         'folke/persistence.nvim',
         lazy = true,
         event = { 'BufReadPre', 'BufNewFile' },

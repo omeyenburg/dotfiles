@@ -19,16 +19,16 @@ local function script_path()
 end
 
 return {
-    {
+    { -- Indentation size detection
         'tpope/vim-sleuth',
         lazy = true,
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = 'VeryLazy',
     },
 
-    {
+    { -- Formatting
         'stevearc/conform.nvim',
         lazy = true,
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = 'VeryLazy',
         keys = {
             {
                 '<leader>f',

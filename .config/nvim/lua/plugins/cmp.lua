@@ -24,10 +24,10 @@ https://github.com/hrsh7th/nvim-cmp
 ]]
 
 return {
-    { -- Signature
+    { -- Function signatures
         'ray-x/lsp_signature.nvim',
         lazy = true,
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = 'VeryLazy',
         opts = {
             bind = true,
             doc_lines = 0,
@@ -45,7 +45,7 @@ return {
     { -- Auto brackets and quotes
         'windwp/nvim-autopairs',
         lazy = true,
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = 'InsertEnter',
         config = function()
             require('nvim-autopairs').setup { map_cr = true }
             local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
@@ -57,7 +57,7 @@ return {
     { -- Auto completion
         'hrsh7th/nvim-cmp',
         lazy = true,
-        event = { 'BufReadPost', 'BufNewFile', 'CmdlineEnter' },
+        event = 'VeryLazy',
         dependencies = {
             { -- Snippet Engine & its associated nvim-cmp source
                 'L3MON4D3/LuaSnip',

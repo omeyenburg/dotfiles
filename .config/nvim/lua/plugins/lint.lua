@@ -8,9 +8,9 @@ https://github.com/mfussenegger/nvim-lint
 --]]
 
 return {
-    {
+    { -- Linting
         'mfussenegger/nvim-lint',
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = 'VeryLazy',
         config = function()
             local lint = require 'lint'
 

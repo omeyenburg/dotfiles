@@ -10,7 +10,7 @@ https://github.com/ariel-frischer/bmessages.nvim
 --]]
 
 return {
-    {
+    { -- Messages window
         'ariel-frischer/bmessages.nvim',
         lazy = true,
         cmd = 'Bmessages',

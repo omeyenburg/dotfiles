@@ -14,7 +14,7 @@ https://github.com/nvim-treesitter/nvim-treesitter-context
 --]]
 
 return {
-    {
+    { -- Syntax parser
         'nvim-treesitter/nvim-treesitter',
         lazy = true,
         event = { 'BufReadPost', 'BufNewFile' },
@@ -32,12 +32,11 @@ return {
         },
         config = function(_, opts)
             require('nvim-treesitter.install').prefer_git = true
-            ---@diagnostic disable-next-line: missing-fields
             require('nvim-treesitter.configs').setup(opts)
         end,
     },
 
-    {
+    { -- Current context
         'nvim-treesitter/nvim-treesitter-context',
         lazy = true,
         event = { 'BufReadPost', 'BufNewFile' },

@@ -1,10 +1,14 @@
 --[[
 
 # Mason
-Install language servers
-- :Mason
+Package manager for neovim utilities
 
 https://github.com/williamboman/mason.nvim
+
+
+# Mason-LSPConfig
+closes some gaps that exist between mason.nvim and lspconfig
+
 https://github.com/williamboman/mason-lspconfig.nvim
 
 
@@ -16,10 +20,10 @@ https://github.com/neovim/nvim-lspconfig
 ]]
 
 return {
-    {
+    { -- Package manager
         'williamboman/mason.nvim',
         lazy = true,
-        priority = 1000,
+        priority = 1000, -- Must run before nvim-lspconfig
         cmd = 'Mason',
         event = { 'BufReadPost', 'BufNewFile' },
         opts = {
@@ -33,7 +37,7 @@ return {
         },
     },
 
-    {
+    { -- Setup Mason for lspconfig
         'williamboman/mason-lspconfig.nvim',
         lazy = true,
         priority = 900,
@@ -46,13 +50,12 @@ return {
         priority = 800,
         event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
-            { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+            'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-            -- Useful status updates for LSP.
-            -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-            { 'j-hui/fidget.nvim', opts = {} },
+            -- Useful status updates for LSP
+            -- { 'j-hui/fidget.nvim', opts = {} },
         },
         opts = {
             inlay_hints = { enabled = true },

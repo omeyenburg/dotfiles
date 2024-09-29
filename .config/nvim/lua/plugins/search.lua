@@ -17,6 +17,7 @@ return {
     {
         'theprimeagen/harpoon',
         lazy = true,
+        event = 'VeryLazy',
         keys = {
             {
                 '<leader>a',
