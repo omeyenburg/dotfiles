@@ -1,9 +1,9 @@
 --[[
  NOTE: Colemak layout
 
-Upper row:   /, w, e, b, g, /, n, u, /, /
+Upper row:   /, w, e, b, g, /, p, u, y, /
 Home row:    a, r, i, v, d, o, h, j, k, l
-Lower row:   y, p, x, v, /, /, q, ., /, /
+Lower row:   s, x, n, v, /, /, q, ., /, /
 ]]
 
 -- Mappings to be disabled
@@ -138,13 +138,13 @@ local layout_mappings = {
     },
     {
         'n',
-        { 'n', 'l' },
+        { 'n', 'c' },
         'nzzzv',
         'Search next occurence',
     },
     {
         'n',
-        { 'N', 'L' },
+        { 'N', 'C' },
         'Nzzzv',
         'Search previous occurence',
     },
@@ -202,18 +202,6 @@ local layout_mappings = {
     -- Cutting keys
     {
         { 'n', 'x', 'o', 'v' },
-        { 'x', 'c' },
-        'x',
-        'cut',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'X', 'C' },
-        'X',
-        'cut',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
         { 's', 'z' },
         's',
         'cut and insert',
@@ -228,13 +216,13 @@ local layout_mappings = {
     -- Pasting keys
     {
         { 'n', 'x', 'v' },
-        { 'p', 'x' },
+        { 'p', 'l' },
         'p',
         'Paste after cursor',
     },
     {
         { 'n', 'x', 'v' },
-        { 'P', 'X' },
+        { 'P', 'L' },
         'P',
         'Paste before cursor',
     },
