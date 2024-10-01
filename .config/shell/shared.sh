@@ -22,7 +22,7 @@ git config --global fetch.autoFetch true
 git config status.showUntrackedFiles no
 
 # Neofetch
-alias neofetch="neofetch | sed 's/^/    /;$d'"
+alias neofetch="neofetch | sed 's/^/    /;$d' && echo ''"
 
 # Add mason packages to path
 export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
