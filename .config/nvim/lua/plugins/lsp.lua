@@ -157,6 +157,11 @@ return {
             local mason_tools = require 'config.mason_tools'
             local mason_servers = require 'config.mason_servers'
 
+            if vim.fn.exists("/data/data/com.termux/files") then
+                mason_tools = {}
+                mason_servers = {}
+            end
+
             require('mason').setup()
 
             require('mason-tool-installer').setup {
