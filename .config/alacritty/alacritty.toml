@@ -1,14 +1,15 @@
 [font.bold]
-family = "Ubuntu Mono Nerd Font"
+family = "UbuntuMono Nerd Font Mono"
 style = "Bold"
 
 [font.normal]
-family = "Ubuntu Mono Nerd Font"
+family = "UbuntuMono Nerd Font Mono"
+style = "Regular"
+
+[font.italic]
+family = "UbuntuMono Nerd Font Mono"
+style = "Italic"
 
 [window]
 startup_mode = "Maximized"
 decorations_theme_variant = "Dark"
-opacity = 1.0
-
-[mouse]
-hide_when_typing = false
