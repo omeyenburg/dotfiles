@@ -19,6 +19,10 @@ location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
+[Containments][1][General]
+positions={"1707x1067":["1"\\,"15"\\,"desktop:/trash:⁄.desktop"\\,"0"\\,"0"]}
+sortMode=-1
+
 [Containments][1][Wallpaper][org.kde.image][General]
 Image=/home/oskar/.config/wallpapers/scarlet-tree-dark-5120x2880.png
 SlidePaths=/usr/share/wallpapers/
@@ -36,8 +40,21 @@ wallpaperplugin=org.kde.image
 immutability=1
 plugin=org.kde.plasma.digitalclock
 
+[Containments][2][Applets][19][Configuration]
+PreloadWeight=55
+popupHeight=450
+popupWidth=560
+
 [Containments][2][Applets][19][Configuration][Appearance]
+customDateFormat=d.M.yyyy
+dateFormat=custom
+displayTimezoneFormat=FullText
 fontWeight=400
+use24hFormat=2
+
+[Containments][2][Applets][19][Configuration][ConfigDialog]
+DialogHeight=539
+DialogWidth=720
 
 [Containments][2][Applets][20]
 immutability=1
@@ -46,17 +63,6 @@ plugin=org.kde.plasma.showdesktop
 [Containments][2][Applets][25]
 immutability=1
 plugin=org.kde.plasma.cameraindicator
-
-[Containments][2][Applets][29]
-immutability=1
-plugin=org.kde.plasma.keyboardlayout
-
-[Containments][2][Applets][29][Configuration][ConfigDialog]
-DialogHeight=540
-DialogWidth=720
-
-[Containments][2][Applets][29][Configuration][General]
-displayStyle=LabelOverFlag
 
 [Containments][2][Applets][3]
 immutability=1
@@ -68,7 +74,7 @@ popupHeight=510
 popupWidth=647
 
 [Containments][2][Applets][3][Configuration][ConfigDialog]
-DialogHeight=540
+DialogHeight=539
 DialogWidth=720
 
 [Containments][2][Applets][3][Configuration][General]
@@ -109,7 +115,7 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][2][Applets][33][Configuration]
-PreloadWeight=75
+PreloadWeight=80
 popupHeight=400
 popupWidth=560
 
@@ -118,12 +124,12 @@ immutability=1
 plugin=org.kde.plasma.colorpicker
 
 [Containments][2][Applets][34][Configuration]
-PreloadWeight=90
+PreloadWeight=100
 popupHeight=324
 popupWidth=324
 
 [Containments][2][Applets][34][Configuration][General]
-history=#3d2d3f
+history=#34217a
 
 [Containments][2][Applets][36]
 immutability=1
@@ -132,6 +138,18 @@ plugin=org.kde.plasma.marginsseparator
 [Containments][2][Applets][36][Configuration][ConfigDialog]
 DialogHeight=540
 DialogWidth=720
+
+[Containments][2][Applets][37]
+immutability=1
+plugin=org.kde.plasma.battery
+
+[Containments][2][Applets][37][Configuration]
+PreloadWeight=60
+popupHeight=237
+popupWidth=360
+
+[Containments][2][Applets][37][Configuration][General]
+showPercentage=true
 
 [Containments][2][Applets][5]
 immutability=1
@@ -158,11 +176,11 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][2][Applets][7][Configuration]
-PreloadWeight=90
+PreloadWeight=100
 SystrayContainmentId=8
 
 [Containments][2][General]
-AppletOrder=3;36;5;33;32;6;34;29;7;19;31;25;20
+AppletOrder=3;36;5;33;32;6;34;37;7;19;31;25;20
 
 [Containments][8]
 activityId=
@@ -187,6 +205,9 @@ plugin=org.kde.plasma.keyboardindicator
 immutability=1
 plugin=org.kde.plasma.clipboard
 
+[Containments][8][Applets][12][Configuration]
+PreloadWeight=55
+
 [Containments][8][Applets][13]
 immutability=1
 plugin=org.kde.plasma.manage-inputmethod
@@ -194,6 +215,13 @@ plugin=org.kde.plasma.manage-inputmethod
 [Containments][8][Applets][14]
 immutability=1
 plugin=org.kde.plasma.keyboardlayout
+
+[Containments][8][Applets][14][Configuration][ConfigDialog]
+DialogHeight=539
+DialogWidth=720
+
+[Containments][8][Applets][14][Configuration][General]
+displayStyle=Flag
 
 [Containments][8][Applets][15]
 immutability=1
@@ -208,7 +236,7 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][8][Applets][17][Configuration]
-PreloadWeight=60
+PreloadWeight=70
 
 [Containments][8][Applets][18]
 immutability=1
@@ -219,11 +247,14 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][21][Configuration]
-PreloadWeight=70
+PreloadWeight=75
 
 [Containments][8][Applets][22]
 immutability=1
 plugin=org.kde.plasma.brightness
+
+[Containments][8][Applets][22][Configuration]
+PreloadWeight=55
 
 [Containments][8][Applets][23]
 immutability=1
@@ -257,7 +288,7 @@ PreloadWeight=55
 migrated=true
 
 [Containments][8][ConfigDialog]
-DialogHeight=540
+DialogHeight=539
 DialogWidth=720
 
 [Containments][8][General]
@@ -267,4 +298,4 @@ knownItems=org.kde.plasma.volume,org.kde.plasma.brightness,org.kde.kscreen,org.k
 
 [ScreenMapping]
 itemsOnDisabledScreens=
-screenMapping=desktop:/Home.desktop,0,584ea5d5-583f-4061-9b26-138a6b29dc95,desktop:/trash.desktop,0,584ea5d5-583f-4061-9b26-138a6b29dc95
+screenMapping=desktop:/trash:⁄.desktop,0,584ea5d5-583f-4061-9b26-138a6b29dc95
