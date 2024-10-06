@@ -24,6 +24,9 @@ git config status.showUntrackedFiles no
 # Neofetch
 alias neofetch="neofetch | sed 's/^/    /;$d' && echo ''"
 
+# File explorer
+alias exp='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+
 # Add mason packages to path
 export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
