@@ -1,3 +1,6 @@
+[font]
+size = 16
+
 [font.bold]
 family = "UbuntuMono Nerd Font Mono"
 style = "Bold"
