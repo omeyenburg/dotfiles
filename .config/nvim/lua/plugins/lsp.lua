@@ -157,7 +157,7 @@ return {
             local mason_tools = require 'config.mason_tools'
             local mason_servers = require 'config.mason_servers'
 
-            if vim.fn.exists("/data/data/com.termux/files") then
+            if vim.fn.exists("/data/data/com.termux/files") ~= 0 then
                 mason_tools = {}
                 mason_servers = {}
             end
