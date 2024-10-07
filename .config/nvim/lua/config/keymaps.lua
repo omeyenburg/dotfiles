@@ -82,6 +82,30 @@ local simple_mappings = {
         '<<',
         'Dedent line',
     },
+    {
+        'i',
+        '^f',
+        '⊥ ',
+        'Symbol: False'
+    },
+    {
+        'i',
+        '^n',
+        '¬',
+        'Symbol: No'
+    },
+        {
+        'i',
+        '^a',
+        '∧',
+        'Symbol: And'
+    },
+        {
+        'i',
+        '^o',
+        '∨',
+        'Symbol: Or'
+    }
 }
 
 -- Mappings for each layout
