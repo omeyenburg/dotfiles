@@ -60,10 +60,6 @@ DialogWidth=720
 immutability=1
 plugin=org.kde.plasma.showdesktop
 
-[Containments][2][Applets][25]
-immutability=1
-plugin=org.kde.plasma.cameraindicator
-
 [Containments][2][Applets][3]
 immutability=1
 plugin=org.kde.plasma.kickoff
@@ -90,13 +86,27 @@ plugin=org.kde.plasma.systemmonitor.cpu
 
 [Containments][2][Applets][31][Configuration]
 CurrentPreset=org.kde.plasma.systemmonitor
-PreloadWeight=55
+PreloadWeight=70
 popupHeight=256
 popupWidth=156
 
 [Containments][2][Applets][31][Configuration][Appearance]
 chartFace=org.kde.ksysguard.piechart
 title=Total CPU Use
+
+[Containments][2][Applets][31][Configuration][ConfigDialog]
+DialogHeight=539
+DialogWidth=720
+
+[Containments][2][Applets][31][Configuration][FaceGrid][Appearance]
+chartFace=org.kde.ksysguard.linechart
+showTitle=false
+
+[Containments][2][Applets][31][Configuration][FaceGrid][SensorColors]
+cpu/all/usage=61,174,233
+
+[Containments][2][Applets][31][Configuration][FaceGrid][Sensors]
+highPrioritySensorIds=["cpu/all/usage"]
 
 [Containments][2][Applets][31][Configuration][SensorColors]
 cpu/all/usage=61,174,233
@@ -106,18 +116,12 @@ highPrioritySensorIds=["cpu/all/usage"]
 lowPrioritySensorIds=["cpu/all/cpuCount","cpu/all/coreCount"]
 totalSensors=["cpu/all/usage"]
 
+[Containments][2][Applets][31][Configuration][org.kde.ksysguard.piechart][General]
+showLegend=false
+
 [Containments][2][Applets][32]
 immutability=1
 plugin=org.kde.plasma.trash
-
-[Containments][2][Applets][33]
-immutability=1
-plugin=org.kde.plasma.devicenotifier
-
-[Containments][2][Applets][33][Configuration]
-PreloadWeight=80
-popupHeight=400
-popupWidth=560
 
 [Containments][2][Applets][34]
 immutability=1
@@ -138,18 +142,6 @@ plugin=org.kde.plasma.marginsseparator
 [Containments][2][Applets][36][Configuration][ConfigDialog]
 DialogHeight=540
 DialogWidth=720
-
-[Containments][2][Applets][37]
-immutability=1
-plugin=org.kde.plasma.battery
-
-[Containments][2][Applets][37][Configuration]
-PreloadWeight=60
-popupHeight=237
-popupWidth=360
-
-[Containments][2][Applets][37][Configuration][General]
-showPercentage=true
 
 [Containments][2][Applets][5]
 immutability=1
@@ -180,7 +172,7 @@ PreloadWeight=100
 SystrayContainmentId=8
 
 [Containments][2][General]
-AppletOrder=3;36;5;33;32;6;34;37;7;19;31;25;20
+AppletOrder=3;36;5;32;6;34;31;7;19;20
 
 [Containments][8]
 activityId=
@@ -193,13 +185,11 @@ popupHeight=432
 popupWidth=432
 wallpaperplugin=org.kde.image
 
-[Containments][8][Applets][10]
-immutability=1
-plugin=org.kde.kscreen
+[Containments][8][Applets][10][Configuration]
+PreloadWeight=42
 
-[Containments][8][Applets][11]
-immutability=1
-plugin=org.kde.plasma.keyboardindicator
+[Containments][8][Applets][11][Configuration]
+PreloadWeight=42
 
 [Containments][8][Applets][12]
 immutability=1
@@ -208,9 +198,8 @@ plugin=org.kde.plasma.clipboard
 [Containments][8][Applets][12][Configuration]
 PreloadWeight=55
 
-[Containments][8][Applets][13]
-immutability=1
-plugin=org.kde.plasma.manage-inputmethod
+[Containments][8][Applets][13][Configuration]
+PreloadWeight=42
 
 [Containments][8][Applets][14]
 immutability=1
@@ -227,9 +216,15 @@ displayStyle=Flag
 immutability=1
 plugin=org.kde.plasma.notifications
 
+[Containments][8][Applets][15][Configuration]
+PreloadWeight=55
+
 [Containments][8][Applets][16]
 immutability=1
 plugin=org.kde.plasma.printmanager
+
+[Containments][8][Applets][16][Configuration]
+PreloadWeight=65
 
 [Containments][8][Applets][17]
 immutability=1
@@ -242,26 +237,28 @@ PreloadWeight=70
 immutability=1
 plugin=org.kde.plasma.cameraindicator
 
+[Containments][8][Applets][18][Configuration]
+PreloadWeight=55
+
 [Containments][8][Applets][21]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][21][Configuration]
-PreloadWeight=75
+PreloadWeight=90
 
-[Containments][8][Applets][22]
-immutability=1
-plugin=org.kde.plasma.brightness
+[Containments][8][Applets][21][Configuration][General]
+showPercentage=true
 
 [Containments][8][Applets][22][Configuration]
-PreloadWeight=55
+PreloadWeight=42
 
 [Containments][8][Applets][23]
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][8][Applets][23][Configuration]
-PreloadWeight=80
+PreloadWeight=85
 
 [Containments][8][Applets][24]
 immutability=1
@@ -277,24 +274,22 @@ plugin=org.kde.plasma.mediacontroller
 [Containments][8][Applets][37][Configuration]
 PreloadWeight=2
 
-[Containments][8][Applets][9]
-immutability=1
-plugin=org.kde.plasma.volume
+[Containments][8][Applets][38][Configuration]
+PreloadWeight=42
 
 [Containments][8][Applets][9][Configuration]
-PreloadWeight=55
-
-[Containments][8][Applets][9][Configuration][General]
-migrated=true
+PreloadWeight=42
 
 [Containments][8][ConfigDialog]
 DialogHeight=539
 DialogWidth=720
 
 [Containments][8][General]
-extraItems=org.kde.plasma.volume,org.kde.plasma.brightness,org.kde.kscreen,org.kde.plasma.keyboardindicator,org.kde.plasma.clipboard,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.battery,org.kde.plasma.networkmanagement,org.kde.plasma.keyboardlayout,org.kde.plasma.bluetooth,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.devicenotifier,org.kde.plasma.cameraindicator
+extraItems=org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.networkmanagement,org.kde.plasma.keyboardlayout,org.kde.plasma.bluetooth,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.devicenotifier,org.kde.plasma.cameraindicator
+hiddenItems=org.kde.plasma.cameraindicator
 iconSize=1
 knownItems=org.kde.plasma.volume,org.kde.plasma.brightness,org.kde.kscreen,org.kde.plasma.keyboardindicator,org.kde.plasma.clipboard,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.battery,org.kde.plasma.networkmanagement,org.kde.plasma.keyboardlayout,org.kde.plasma.bluetooth,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.devicenotifier,org.kde.plasma.cameraindicator
+shownItems=org.kde.plasma.battery,org.kde.plasma.networkmanagement,org.kde.plasma.keyboardlayout,org.kde.plasma.devicenotifier,org.kde.plasma.bluetooth,org.kde.plasma.clipboard
 
 [ScreenMapping]
 itemsOnDisabledScreens=
