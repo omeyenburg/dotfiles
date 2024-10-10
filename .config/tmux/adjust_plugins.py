@@ -13,8 +13,9 @@ lines = (
     ),
 )
 
+path = "plugins/tmux/scripts/dracula.sh"
 try:
-    with open(".config/tmux/plugins/tmux-dracula/scripts/dracula.sh", "r+") as f:
+    with open(path, "r+") as f:
         content = f.read()
 
         for line in lines:
