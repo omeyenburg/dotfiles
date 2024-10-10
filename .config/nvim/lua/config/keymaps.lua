@@ -82,30 +82,68 @@ local simple_mappings = {
         '<<',
         'Dedent line',
     },
+
+    -- Escape symbols
     {
         'i',
-        '^f',
-        '⊥ ',
-        'Symbol: False'
+        '\\tr',
+        '⊤',
+        'Symbol: true',
     },
     {
         'i',
-        '^n',
+        '\\fa',
+        '⊥',
+        'Symbol: false',
+    },
+    {
+        'i',
+        '\\no',
         '¬',
-        'Symbol: No'
+        'Symbol: not',
     },
-        {
+    {
         'i',
-        '^a',
+        '\\an',
         '∧',
-        'Symbol: And'
+        'Symbol: and',
     },
-        {
+    {
         'i',
-        '^o',
+        '\\or',
         '∨',
-        'Symbol: Or'
-    }
+        'Symbol: or',
+    },
+    {
+        'i',
+        '\\fi',
+        '⇒',
+        'Symbol: forward implication',
+    },
+    {
+        'i',
+        '\\bi',
+        '⇐',
+        'Symbol: backward implication',
+    },
+    {
+        'i',
+        '\\eq',
+        '⇔',
+        'Symbol: equals',
+    },
+    {
+        'i',
+        '\\al',
+        '∀',
+        'Symbol: all',
+    },
+    {
+        'i',
+        '\\ex',
+        '∃',
+        'Symbol: exists',
+    },
 }
 
 -- Mappings for each layout
