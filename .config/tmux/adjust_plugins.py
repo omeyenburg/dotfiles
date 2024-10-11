@@ -1,3 +1,8 @@
+import os
+
+path = "plugins/tmux/scripts/dracula.sh"
+path = os.path.join(os.path.dirname(__file__), path)
+
 lines = (
     (
         '  tmux set-option -g pane-border-style "fg=${gray}"',
@@ -13,7 +18,6 @@ lines = (
     ),
 )
 
-path = "plugins/tmux/scripts/dracula.sh"
 try:
     with open(path, "r+") as f:
         content = f.read()
