@@ -304,7 +304,7 @@ local function switch_layout(layout)
     for i, name in ipairs(layouts) do
         if name == layout then
             index = i
-        else
+        elseif vim.g.keyboard_disable_other == true then
             -- Disable mappings of other layout
             for _, mapping in pairs(layout_mappings) do
                 local modes = {}
@@ -349,6 +349,7 @@ end, {
     end,
 })
 
+vim.g.keyboard_disable_other = false
 if vim.g.keyboard_layout == nil then
     vim.g.keyboard_layout = 'Normal'
 end
