@@ -1,13 +1,13 @@
 [font.bold]
-family = "UbuntuMono Nerd Font Mono"
+family = "UbuntuMono Nerd Font"
 style = "Bold"
 
 [font.normal]
-family = "UbuntuMono Nerd Font Mono"
+family = "UbuntuMono Nerd Font"
 style = "Regular"
 
 [font.italic]
-family = "UbuntuMono Nerd Font Mono"
+family = "UbuntuMono Nerd Font"
 style = "Italic"
 
 [window]
