@@ -1,0 +1,16 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = omeyenburg
+	email = 135001586+omeyenburg@users.noreply.github.com
+[core]
+	excludesfile = ~/.config/git/gitignore_global
+[fetch]
+	autoFetch = true
+[color]
+	ui = true
+[init]
+	defaultBranch = main
