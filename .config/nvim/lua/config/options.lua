@@ -22,6 +22,9 @@ vim.opt.mouse = ''
 -- Mapped sequence wait time
 vim.opt.timeoutlen = 1000
 
+-- Enable folding
+vim.opt.foldmethod = 'marker'
+
 ------------------------------------------------------------
 -- Appearance Options --------------------------------------
 ------------------------------------------------------------
