@@ -4,13 +4,14 @@
 --  - filetypes (table): Override the default list of associated filetypes for the server
 --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
 --  - settings (table): Override the default settings passed when initializing the server.
+
 return {
     bashls = {}, -- Bash LSP
     clangd = {}, -- C, C++, C#, Objective-C LSP
     cmake = {}, -- CMake LSP
     gradle_ls = {}, -- Gradle LSP
     html = {}, -- HTML LSP
-    rust_analyzer = { -- Rust LSP
+    rust_analyzer = { -- Rust LSP {{{
         on_attach = function(client, bufnr)
             require('completion').on_attach(client)
             vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
@@ -33,8 +34,8 @@ return {
                 },
             },
         },
-    },
-    lua_ls = { -- Lua LSP
+    }, -- }}}
+    lua_ls = { -- Lua LSP {{{
         settings = {
             Lua = { -- https://github.com/LuaLS/vscode-lua/blob/master/setting/schema.json
                 completion = {
@@ -45,7 +46,7 @@ return {
                 },
             },
         },
-    },
+    }, -- }}}
     jedi_language_server = {}, -- Python LSP; Quick autocompletion, including from other modules and files
     -- pyright = {}, -- Extremely slow, but just works and large user base
     -- pylyzer = {}, -- Extremely fast, but small docs and no completion with imports

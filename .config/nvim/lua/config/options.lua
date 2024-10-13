@@ -1,6 +1,4 @@
-------------------------------------------------------------
--- General -------------------------------------------------
-------------------------------------------------------------
+-- General {{{ ---------------------------------------------
 
 -- Disable providers
 vim.g.loaded_perl_provider = 0
@@ -25,9 +23,8 @@ vim.opt.timeoutlen = 1000
 -- Enable folding
 vim.opt.foldmethod = 'marker'
 
-------------------------------------------------------------
--- Appearance Options --------------------------------------
-------------------------------------------------------------
+-- }}}
+-- Appearance Options {{{ ----------------------------------
 
 -- If some icons are displayed incorrectly, you need to install a nerd font
 -- e.g.: https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode
@@ -47,9 +44,8 @@ vim.opt.updatetime = 250 -- Decrease update time
 vim.opt.scrolloff = 8 -- Minimal number of screen lines to keep above and below the cursor
 vim.opt.sidescrolloff = 8 -- Minimal number of screen columns either side of cursor if wrap is `false`
 
-------------------------------------------------------------
--- Indentation Options -------------------------------------
-------------------------------------------------------------
+-- }}}
+-- Indentation Options {{{ ---------------------------------
 
 local tab_size = 4
 vim.opt.tabstop = 8 -- Number of spaces that a <Tab> in the file counts for. Setting 'tabstop' to any other value than 8 can make your file appear wrong in many places.
@@ -61,17 +57,15 @@ vim.opt.wrap = false -- Line wrapping
 vim.opt.breakindent = false -- Wrapped lines will continue visually indented
 vim.opt.smartindent = true -- Adjust indentation based on control flow statements
 
-------------------------------------------------------------
--- Search Options ------------------------------------------
-------------------------------------------------------------
+-- }}}
+-- Search Options {{{ --------------------------------------
 
 vim.opt.ignorecase = true -- Case-insensitive searching
 vim.opt.smartcase = true -- Case-sensitive searching if one or more capital letters are used in the search term
 vim.opt.hlsearch = true -- Set highlight all search results
 
-------------------------------------------------------------
--- Split Options -------------------------------------------
-------------------------------------------------------------
+-- }}}
+-- Split Options {{{ ---------------------------------------
 
 -- C-w + v  -> Vertical split
 -- C-w + s  -> Vertical split
@@ -86,9 +80,8 @@ vim.opt.splitbelow = true -- open horizontal split windows on the left
 vim.api.nvim_command 'highlight WinSeparator guifg=#A9B2D5' -- Set color of split lines
 vim.opt.laststatus = 3 -- Enables horizontal split lines by disabling status lines for each buffer (must run after plugins)
 
-------------------------------------------------------------
--- Undo Options --------------------------------------------
-------------------------------------------------------------
+-- }}}
+-- Undo Options {{{ ----------------------------------------
 
 -- Save undo history
 vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
@@ -99,9 +92,8 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
 
-------------------------------------------------------------
--- File Explorer Options (Netrw) ---------------------------
-------------------------------------------------------------
+-- }}}
+-- File Explorer Options (Netrw) {{{ -----------------------
 
 -- i    -> Cycle list style
 -- s    -> Cycle sorting
@@ -121,3 +113,5 @@ vim.g.netrw_hide = 1
 vim.g.netrw_liststyle = 4 -- default: 0; file tree: 3
 vim.g.netrw_banner = 0 -- Disable banner
 vim.g.netrw_winsize = 25 -- Sets explorer width/height when using :Vex or :Hex
+
+-- }}}

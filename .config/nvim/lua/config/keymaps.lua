@@ -22,6 +22,7 @@ local layouts = {
 -- Simple mappings
 -- { mode, key, action, description }
 local simple_mappings = {
+    -- {{{
     {
         'n',
         '<Esc>',
@@ -82,12 +83,13 @@ local simple_mappings = {
         '<<',
         'Dedent line',
     },
+    -- }}}
 }
 
 -- Mappings for each layout
 -- { mode, keys, action, description }
 local layout_mappings = {
-    -- Movement keys
+    -- Movement keys {{{
     {
         { 'n', 'x', 'o', 'v' },
         { 'h', 'n' },
@@ -172,8 +174,8 @@ local layout_mappings = {
         '<C-w><C-k>',
         'Move focus to the upper window',
     },
-
-    -- Mode switching keys
+    -- }}}
+    -- Mode switching keys {{{
     {
         { 'n', 'x', 'o', 'v' },
         { 'i', 's' },
@@ -198,8 +200,8 @@ local layout_mappings = {
         'O',
         'Insert line above',
     },
-
-    -- Cutting keys
+    -- }}}
+    -- Cutting keys {{{
     {
         { 'n', 'x', 'o', 'v' },
         { 's', 'z' },
@@ -212,8 +214,8 @@ local layout_mappings = {
         'S',
         'cut line and insert',
     },
-
-    -- Pasting keys
+    -- }}}
+    -- Pasting keys {{{
     {
         { 'n', 'x', 'v' },
         { 'p', 'l' },
@@ -232,8 +234,8 @@ local layout_mappings = {
         '"_dP',
         'Paste and keep register',
     },
-
-    -- Editing keys
+    -- }}}
+    -- Editing keys {{{
     {
         'v',
         { 'J', 'E' },
@@ -258,16 +260,16 @@ local layout_mappings = {
         'O<Esc>j',
         'Create line above',
     },
-
-    -- Others
+    -- }}}
+    -- Others {{{
     {
         'n',
         { 'q', 'm' },
         'q',
         'Toggle macro',
     },
+    -- }}}
 }
-
 -- Disable unwanted mappings
 for _, mapping in pairs(disabled_mappings) do
     local modes = {}

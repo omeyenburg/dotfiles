@@ -51,8 +51,6 @@ Shows pending keybinds in a window at the bottom
 
 https://github.com/folke/which-key.nvim
 
-
-
 ]]
 
 return {
