@@ -1,0 +1,27 @@
+## This shall be a comment from now on.
+
+on-touch=none
+default-timeout=10000
+max-visible=6
+font=UbuntuMono Nerd Font 16
+border-radius=10
+text-color=#D8DEE9
+border-color=#40aaff
+background-color=#3B4252
+
+[urgency=normal]
+border-color=#d08770
+
+[urgency=high]
+border-color=#bf616a
+default-timeout=0
+ignore-timeout=1
+
+[app-name=lightcord]
+border-color=#88c0d0
+
+[summary~="log-.*"]
+border-color=#a3be8c
+
+[app-name=lightcord summary~="(.*(^| )orz|ORZ|sto|STO|otl|OTL( |$).*)"]
+invisible=1
