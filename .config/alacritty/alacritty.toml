@@ -10,6 +10,14 @@ style = "Regular"
 family = "UbuntuMono Nerd Font"
 style = "Italic"
 
+[font.bold_italic]
+family = "UbuntuMono Nerd Font"
+style = "Bold Italic"
+
 [window]
 startup_mode = "Maximized"
 decorations_theme_variant = "Dark"
+
+[window.padding]
+x = 5
+y = 5
