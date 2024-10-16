@@ -1,0 +1,23 @@
+---
+Language: Cpp
+ColumnLimit: 88
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+AlignArrayOfStructures: Left
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Attach
+IndentCaseLabels: true
+IndentPPDirectives: AfterHash
+PointerAlignment: Left
+SpaceAfterCStyleCast: true
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesInCStyleCastParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false

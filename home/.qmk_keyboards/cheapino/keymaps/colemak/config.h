@@ -1,0 +1,7 @@
+#pragma once
+
+#define UNICODE_ENABLE
+#undef TAPPING_TERM
+#define TAPPING_TERM 200
+#define LAYER_SWITCH_TAPPING_TERM 200
+#define ONESHOT_TIMEOUT 1000
