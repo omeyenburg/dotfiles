@@ -70,6 +70,23 @@ cat ~/.ssh/id_ed25519.pub
 Verify connection:
 ssh -T git@github.com
 
+### Sleeping issues
+
+Some grub args have to be modified.
+edit with:
+sudo vim /etc/default/grub
+
+Here is a working list of args, most of which are probably not needed or useful
+GRUB_CMDLINE_LINUX_DEFAULT="splash=silent quiet pcie_aspm=force nohibernate=1 acpi=copy_dsdt security=apparmor amd_iommu=off mitigations=auto acpi_osi=Linux"
+
+and update grub with:
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+This might be needed if the error is related to brcmf:
+Run:
+sudo nano /etc/modprobe.d/blacklist-brcmf.conf
+And add:
+blacklist brcmf
+
 ## TODO
 - move app list to separate file
 - interactive app installer
