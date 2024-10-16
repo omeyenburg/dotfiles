@@ -12,11 +12,12 @@
 }
 
 #input {
-    margin: 2px;
-    padding: 6px;
+    margin: 4px;
+    padding: 8px;
     border-radius: 8px;
-    background-color: #2E3440;
+    background-color: #1f2335;
     color: #D8DEE9;
+    border: 0px solid transparent;
     font-size: 18px;
 }
 
@@ -24,7 +25,6 @@
 #entry:selected {
     background-color: rgba(51, 204, 255, 0.2);
     border: 2px solid rgba(51, 204, 255, 0.8);
-    /*color: #bcbc00;*/
 }
 
 #entry {
