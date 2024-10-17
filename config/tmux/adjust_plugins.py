@@ -1,6 +1,6 @@
 import os
 
-path = "plugins/tmux/scripts/dracula.sh"
+path = "~/.tmux/plugins/tmux/scripts/dracula.sh"
 path = os.path.join(os.path.dirname(__file__), path)
 
 lines = (
