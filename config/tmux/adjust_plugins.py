@@ -1,8 +1,5 @@
 import os
 
-path = "~/.tmux/plugins/tmux/scripts/dracula.sh"
-path = os.path.join(os.path.dirname(__file__), path)
-
 lines = (
     (
         '  tmux set-option -g pane-border-style "fg=${gray}"',
@@ -19,6 +16,7 @@ lines = (
 )
 
 try:
+    path = os.path.expanduser("~/.tmux/plugins/tmux/scripts/dracula.sh")
     with open(path, "r+") as f:
         content = f.read()
 
@@ -30,5 +28,5 @@ try:
         f.truncate()
 except FileNotFoundError:
     print(
-        "Could not find dracula tmux plugin. Perhaps it is not installed in .config/tmux/plugins?"
+        "Could not find dracula tmux plugin. Perhaps it is not installed in .tmux/plugins?"
     )

@@ -55,13 +55,7 @@ to give execution permissions to link.sh run chmod +x link.sh
 ## Post-Installation
 
 ### TMUX
-Create a .tmux/plugins folder in your home directory.
-mkdir ~/.tmux
-mkdir ~/.tmux/plugins
-(NOTE: ↑ that can be one line)
-(EDIT#2: actually tpm automatically puts plugins where the config is)
-
-Clone tpm into .tmux.
+mkdir -p ~/.tmux/plugins
 git clone git@github.com:tmux-plugins/tpm .tmux/plugins/tpm
 
 ### SSH
