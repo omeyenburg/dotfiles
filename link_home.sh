@@ -1,11 +1,18 @@
 #!/bin/sh
 
-shopt -s dotglob
 BASEDIR=$(dirname "$0")
 HOMEDIR=$(realpath "$BASEDIR")/home
 
-for path in $HOMEDIR/*; do
-    echo "Linking config: $path"
-    rm -rf "$HOME/$(basename "$path")"
-    ln -sfn $path "$HOME/$(basename "$path")"
+for file in $(ls -a $HOMEDIR); do
+    if [ "$file" = "." ] || [ "$file" = ".." ]; then
+        continue
+    fi
+
+    echo "Linking: $file"
+
+    source="$HOMEDIR/$file"
+    dest="$HOME/$file"
+
+    rm -rf $dest
+    ln -sfn $source $dest
 done
