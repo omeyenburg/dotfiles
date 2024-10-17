@@ -68,13 +68,13 @@ git clone git@github.com:tmux-plugins/tpm .tmux/plugins/tpm
 To use git properly you will need to create an ssh key.
 
 Generate a key with ed25519:
-ssh-keygen -t ed25519 -C "your_email@example.com"
+ssh-keygen -t ed25519 -C "135001586+omeyenburg@users.noreply.github.com"
 
 Add the SSH key to the SSH agent:
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 
-Copy the public key and paste it in Github:
+Copy the public key and paste it in [Github](https://github.com/settings/keys)
 cat ~/.ssh/id_ed25519.pub
 
 Verify connection:
@@ -97,9 +97,16 @@ sudo nano /etc/modprobe.d/blacklist-brcmf.conf
 And add:
 blacklist brcmf
 
+## Installing a nerdfont
+Nerdfonts are adjusted fonts that contain additional unicode symbols that can be rendered in the terminal. For this config, I chose the UbuntuMono Nerd Font. You can find and download nerdfonts [here](https://www.nerdfonts.com/).
+
+curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/UbuntuMono.tar.xz
+unzip UbuntuMono.zip -d UbuntuMono
+
 ## TODO
 - move app list to separate file
 - interactive app installer
 - interactive setup scripts
 - symbolic links
 - global colorscheme
+- easy font switching
