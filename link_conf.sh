@@ -1,7 +1,6 @@
 #!/bin/sh
 
-BASEDIR=$(dirname "$0")
-CONFDIR=$(realpath "$BASEDIR")/config
+CONFDIR="$(cd "$(dirname "$0")" && pwd)"/config
 
 for file in $(ls -a $CONFDIR); do
     if [ "$file" = "." ] || [ "$file" = ".." ]; then
@@ -9,7 +8,6 @@ for file in $(ls -a $CONFDIR); do
     fi
 
     echo "Linking: $file"
-
     source="$CONFDIR/$file"
     dest="$HOME/.config/$file"
 
