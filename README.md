@@ -48,54 +48,82 @@ others:
 
 ## Installation
 To link the config files run:
+```
 ./link.sh
+```
 
-to give execution permissions to link.sh run chmod +x link.sh
+to give execution permissions to link.sh run:
+```
+chmod +x link.sh
+```
 
 ## Post-Installation
 
 ### TMUX
-mkdir -p ~/.tmux/plugins
-git clone git@github.com:tmux-plugins/tpm .tmux/plugins/tpm
+Run `./setup/tmux.sh` install tpm.
+Plugins can be installed with tpm by pressing <leader>+I within tmux.
 
-### SSH
-To use git properly you will need to create an ssh key.
+### Github SSH
+To use Github properly you will need to create an ssh key.
 
 Generate a key with ed25519:
+```
 ssh-keygen -t ed25519 -C "135001586+omeyenburg@users.noreply.github.com"
+```
 
 Add the SSH key to the SSH agent:
+```
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
+```
 
 Copy the public key and paste it in [Github](https://github.com/settings/keys)
+```
 cat ~/.ssh/id_ed25519.pub
+```
 
 Verify connection:
+```
 ssh -T git@github.com
+```
 
 ### Sleeping issues
 
 Some grub args have to be modified.
 edit with:
+```
 sudo vim /etc/default/grub
+```
 
-Here is a working list of args, most of which are probably not needed or useful
+Here is a working list of args, most of which are probably not needed or useful:
+```
 GRUB_CMDLINE_LINUX_DEFAULT="splash=silent quiet pcie_aspm=force nohibernate=1 acpi=copy_dsdt security=apparmor amd_iommu=off mitigations=auto acpi_osi=Linux"
+```
 
-and update grub with:
+Then update grub with:
+```
 sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+```
+
 This might be needed if the error is related to brcmf:
 Run:
+```
 sudo nano /etc/modprobe.d/blacklist-brcmf.conf
+```
+
 And add:
+```
 blacklist brcmf
+```
 
 ## Installing a nerdfont
 Nerdfonts are adjusted fonts that contain additional unicode symbols that can be rendered in the terminal. For this config, I chose the UbuntuMono Nerd Font. You can find and download nerdfonts [here](https://www.nerdfonts.com/).
 
+To download the UbuntuMono Nerd Font run:
+```
 curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/UbuntuMono.tar.xz
 unzip UbuntuMono.zip -d UbuntuMono
+```
 
 ## TODO
 - move app list to separate file
