@@ -58,6 +58,16 @@ chmod +x link.sh
 ```
 
 ## Post-Installation
+### Disable startup sound on mac
+Command to disable macos startup sound:
+```
+sudo nvram StartupMute=%01
+```
+And to enable:
+```
+sudo nvram StartupMute=%00
+```
+https://apple.stackexchange.com/questions/431910/how-to-permanently-disable-the-mac-startup-sound
 
 ### TMUX
 Run `./setup/tmux.sh` install tpm.
