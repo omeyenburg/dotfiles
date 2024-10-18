@@ -11,5 +11,5 @@ PLUGINS=$HOME/.tmux/plugins
 
     echo
     echo Installing plugins
-    . $HOME/.tmux/plugins/tpm/scripts/install_plugins.sh
+    . $HOME/.tmux/plugins/tpm/scripts/install_plugins.sh || err "Failed to install plugins"
 )

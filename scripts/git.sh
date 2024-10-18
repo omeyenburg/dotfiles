@@ -9,7 +9,4 @@ git config --global fetch.autoFetch true
 git config --global color.ui true
 git config --global init.defaultBranch main
 
-# Add other setup commands as needed
-# For example, configuring aliases or other tools
-
 echo "Git configuration applied!"
