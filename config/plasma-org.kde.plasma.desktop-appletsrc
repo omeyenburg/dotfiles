@@ -159,7 +159,7 @@ DialogWidth=720
 
 [Containments][2][Applets][5][Configuration][General]
 highlightWindows=false
-launchers=applications:Alacritty.desktop,applications:brave-browser.desktop,applications:systemsettings.desktop,applications:ranger.desktop,preferred://filemanager,applications:libreoffice-startcenter.desktop,file:///var/lib/flatpak/exports/share/applications/com.discordapp.Discord.desktop
+launchers=applications:Alacritty.desktop,applications:firefox.desktop,applications:systemsettings.desktop,applications:ranger.desktop,preferred://filemanager,applications:libreoffice-startcenter.desktop,file:///var/lib/flatpak/exports/share/applications/com.discordapp.Discord.desktop
 
 [Containments][2][Applets][6]
 immutability=1

@@ -6,11 +6,12 @@
 --  - settings (table): Override the default settings passed when initializing the server.
 
 return {
-    bashls = {}, -- Bash LSP
+    -- bashls = {}, -- Bash LSP
     clangd = {}, -- C, C++, C#, Objective-C LSP
     cmake = {}, -- CMake LSP
     gradle_ls = {}, -- Gradle LSP
-    html = {}, -- HTML LSP
+    -- html = {}, -- HTML LSP
+    texlab = {}, -- LaTeX LSP
     rust_analyzer = { -- Rust LSP {{{
         on_attach = function(client, bufnr)
             require('completion').on_attach(client)

@@ -20,23 +20,25 @@ might be preinstalled:
 - wl-clipboard or smth
 
 zypper:
-- alacritty
 - git
 - curl
-- waybar
-- hyprland
-- hyprpicker
-- wofi
-- mako
+- tmux
 - neovim
-- gimp
 - neofetch
 - ranger
 - rustup
+- gimp
+- wofi
+- mako
+- waybar
+- hyprland
+- hyprpicker
 - whatsapp-for-linux
-- tmux
+- python311-virtualenv
+- texlive-latexmk
+- alacritty
 
-flatpack:
+flatpak:
 - discord
 - spotify
 
