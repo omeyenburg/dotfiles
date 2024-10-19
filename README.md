@@ -128,6 +128,11 @@ And add:
 blacklist brcmf
 ```
 
+### Youtube lagging in dark mode
+1. enter youtube video
+2. click on the video settings
+3. disable ambient mode
+
 ## Installing a nerdfont
 Nerdfonts are adjusted fonts that contain additional unicode symbols that can be rendered in the terminal. For this config, I chose the UbuntuMono Nerd Font. You can find and download nerdfonts [here](https://www.nerdfonts.com/).
 
