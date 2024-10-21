@@ -17,9 +17,6 @@ alias nvic="nvim --cmd 'let g:keyboard_layout = \"Colemak\"'"
 # Git
 alias git="LANG=en_GB git"
 alias gitlog="python3 ~/.config/shell/gitlog.py"
-git config --global core.excludesfile "$HOME/.config/git/gitignore_global"
-git config --global fetch.autoFetch true
-git config status.showUntrackedFiles no
 
 # Neofetch
 alias neofetch="neofetch | sed 's/^/    /;$d' && echo ''"
