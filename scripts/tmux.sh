@@ -1,5 +1,5 @@
 #!/bin/sh
-. ./setup/err.sh
+source scripts/err.sh
 
 SCRIPT_NAME="tmux.sh"
 PLUGINS=$HOME/.tmux/plugins
