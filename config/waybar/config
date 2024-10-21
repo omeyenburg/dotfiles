@@ -62,8 +62,8 @@
     "battery#bat2": {
         "bat": "BAT2"
     },
-    "power-profiles-daemon": { // Broken due to TLP
-      "format": "{icon} ",
+    "power-profiles-daemon": {
+      "format": " {icon} ",
       "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
       "tooltip": true,
       "format-icons": {

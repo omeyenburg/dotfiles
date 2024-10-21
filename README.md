@@ -16,6 +16,7 @@ should be preinstalled with OpenSUSE (KDE):
 zypper:
 - git
 - curl
+- make
 - clang
 - gcc
 - tmux
@@ -29,6 +30,7 @@ zypper:
 - mako
 - waybar
 - hyprland
+- hypridle
 - hyprpicker
 - whatsapp-for-linux
 - python311-virtualenv
@@ -45,35 +47,7 @@ should be shipped with hyprland:
 others:
 - nerdfont: UbuntuMono Nerd Font
 
-## Installation
-To link the config files run:
-```
-./scripts/link_conf.sh
-./scripts/link_home.sh
-```
-
-## Post-Installation
-### Add shell config to .bashrc
-Simply run:
-```
-source scripts/shell.sh
-```
-
-### Disable startup sound on mac
-Command to disable macos startup sound:
-```
-sudo nvram StartupMute=%01
-```
-And to enable:
-```
-sudo nvram StartupMute=%00
-```
-https://apple.stackexchange.com/questions/431910/how-to-permanently-disable-the-mac-startup-sound
-
-### TMUX
-Run `./scripts/tmux.sh` install tpm.
-Plugins can be installed with tpm by pressing <leader>+I within tmux.
-
+## Pre-Installation
 ### Github SSH
 To use Github properly you will need to create an ssh key.
 
@@ -93,14 +67,55 @@ Copy the public key and paste it in [Github](https://github.com/settings/keys)
 cat ~/.ssh/id_ed25519.pub
 ```
 
-Verify connection:
+Verify connection with this command. If asked to continue connecting, enter "yes".
 ```
 ssh -T git@github.com
 ```
 
-### Sleeping issues
+## Installation
+To link the config files run:
+```
+./scripts/link_conf.sh
+./scripts/link_home.sh
+```
 
-Some grub args have to be modified.
+To add the shell config to .bashrc run:
+```
+source scripts/shell.sh
+```
+
+To set up git run:
+```
+. ./scripts/git.sh
+```
+
+
+## Post-Installation
+### Change hostname
+Run this with the desired hostname:
+```
+sudo hostnamectl set-hostname <newhostname>
+```
+
+### Disable startup sound on mac
+Command to disable macos startup sound:
+```
+sudo nvram StartupMute=%01
+```
+And to enable:
+```
+sudo nvram StartupMute=%00
+```
+https://apple.stackexchange.com/questions/431910/how-to-permanently-disable-the-mac-startup-sound
+
+### TMUX
+Run `./scripts/tmux.sh` install tpm.
+Plugins can be installed with tpm by pressing <leader>+I within tmux.
+
+### Sleeping issues
+This might be a problem when booting from an external media on a MacBook.
+
+Some grub args may have to be modified.
 edit with:
 ```
 sudo vim /etc/default/grub
@@ -138,6 +153,12 @@ Nerdfonts are adjusted fonts that contain additional unicode symbols that can be
 To download the UbuntuMono Nerd Font run:
 ```
 curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/UbuntuMono.tar.xz
+tar -xJf UbuntuMono.tar.xz
+```
+
+Or:
+```
+curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/UbuntuMono.zip
 unzip UbuntuMono.zip -d UbuntuMono
 ```
 
