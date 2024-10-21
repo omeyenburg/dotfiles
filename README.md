@@ -8,23 +8,20 @@ QMK has also some configuration, but is only needed for custom keyboards.
 ## Apps
 Here is a list of apps to be installed
 
-should be preinstalled with OpenSUSE:
+should be preinstalled with OpenSUSE (KDE):
 - firefox
 - kde plasma
-- pavucontrol
-
-might be preinstalled:
-- gcc
-- clang
 - python3 (3.11)
-- wl-clipboard or smth
 
 zypper:
 - git
 - curl
+- clang
+- gcc
 - tmux
 - neovim
 - neofetch
+- pavucontrol
 - ranger
 - rustup
 - gimp
@@ -51,15 +48,17 @@ others:
 ## Installation
 To link the config files run:
 ```
-./link.sh
-```
-
-to give execution permissions to link.sh run:
-```
-chmod +x link.sh
+./scripts/link_conf.sh
+./scripts/link_home.sh
 ```
 
 ## Post-Installation
+### Add shell config to .bashrc
+Simply run:
+```
+source scripts/shell.sh
+```
+
 ### Disable startup sound on mac
 Command to disable macos startup sound:
 ```
@@ -72,7 +71,7 @@ sudo nvram StartupMute=%00
 https://apple.stackexchange.com/questions/431910/how-to-permanently-disable-the-mac-startup-sound
 
 ### TMUX
-Run `./setup/tmux.sh` install tpm.
+Run `./scripts/tmux.sh` install tpm.
 Plugins can be installed with tpm by pressing <leader>+I within tmux.
 
 ### Github SSH
@@ -146,6 +145,5 @@ unzip UbuntuMono.zip -d UbuntuMono
 - move app list to separate file
 - interactive app installer
 - interactive setup scripts
-- symbolic links
 - global colorscheme
 - easy font switching
