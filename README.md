@@ -99,6 +99,10 @@ Run this with the desired hostname:
 sudo hostnamectl set-hostname <newhostname>
 ```
 
+### Fix firefox performance
+On some devices hardware acceleration leads to worse performance.
+Try to disable it by disabling recommended performance settings and disabling hardware acceleration.
+
 ### Disable startup sound on mac
 Command to disable macos startup sound:
 ```
