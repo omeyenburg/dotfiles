@@ -1,13 +1,14 @@
 // -*- mode: jsonc -*-
 {
     "layer": "top",
+    "position": "top",
     "height": 30,
     "spacing": 5,
     "reload_style_on_change": true,
     "modules-left": [
         "custom/power",
         "battery",
-        "power-profiles-daemon", // Broken due to TLP
+        "power-profiles-daemon",
         "backlight",
         "pulseaudio",
         "clock"
@@ -17,6 +18,7 @@
     ],
     "modules-right": [
         "network",
+        "bluetooth",
         "hyprland/language",
         "cpu",
         "memory",
@@ -75,12 +77,27 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%)  ",
+        "format-wifi": "{signalStrength}% ",
         "format-ethernet": "{ipaddr}/{cidr}  ",
-        "tooltip-format": "{ifname} via {gwaddr}  ",
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "Disconnected ⚠ ",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "tooltip-format": "{ifname} via {gwaddr} ({essid})  ",
+        // "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "nm-connection-editor"
+    },
+    "bluetooth": {
+        // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+        // "format": "󰂯 {status}",
+        // format-* handles every state, so default format is not necessary.
+        "format-on": "󰂯",
+        "format-off": "󰂲",
+        "format-disabled": "", // an empty format will hide the module
+        "format-connected": "󰂱 {num_connections}",
+        // "tooltip-format": "{controller_alias}\t{controller_address}",
+        // "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+        "tooltip-format-connected": "{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "on-click": "blueman-manager"
     },
     "pulseaudio": {
         "format": "{volume}% {icon}",
@@ -102,5 +119,12 @@
         "format" : " ⏻ ",
         "tooltip": false,
         "on-click": "~/.config/hypr/logout.sh"
+    },
+    "tray": {
+        "icon-size": 16,       // Size of the icons in pixels
+        "scale": false,        // Whether to scale the tray icons based on the output scaling
+        "spacing": 10,         // Space between tray icons
+        "reverse": false,      // Reverse the order of the tray icons
+        "always-show": true    // Always show the tray (even when no icons are present)
     }
 }

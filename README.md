@@ -34,6 +34,8 @@ zypper:
 - hyprpicker
 - whatsapp-for-linux
 - python311-virtualenv
+- NetworkManager-applet
+- blueman
 - texlive-latexmk
 - alacritty
 
