@@ -1,9 +1,11 @@
-## This shall be a comment from now on.
+max-icon-size=32
+width=700
+height=500
 
 on-touch=none
 default-timeout=10000
 max-visible=6
-font=UbuntuMono Nerd Font 16
+font=UbuntuMono Nerd Font 12
 border-radius=8
 text-color=#D8DEE9
 border-color=#40aaff

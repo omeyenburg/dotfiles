@@ -31,7 +31,6 @@ create_autocmd {
         for _, mapping in ipairs(mappings) do
             local symbol = mapping[1]
             local code = mapping[2]
-            print(symbol)
 
             vim.keymap.set('i', code, symbol, { buffer = 0 })
         end
