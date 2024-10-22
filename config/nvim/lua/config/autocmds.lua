@@ -15,15 +15,27 @@ create_autocmd {
         vim.opt_local.wrap = true -- Enable wrapping
         vim.opt_local.breakindent = true -- Indent wrapped lines like parent line
         vim.opt_local.linebreak = true -- Don't split words
+
+        -- Go to next heading
         vim.keymap.set('n', '<C-n>', function()
-            vim.fn.search('^#', '') -- Go to next heading
+            vim.fn.search('^#', '')
         end, { buffer = 0, desc = 'Go to next heading' })
+
+        -- Go to last heading
         vim.keymap.set('n', '<C-S-n>', function()
-            vim.fn.search('^#', 'b') -- Go to last heading
+            vim.fn.search('^#', 'b')
         end, { buffer = 0, desc = 'Go to last heading' })
-        vim.keymap.set('i', '->', '→ ', { buffer = 0 }) -- Create arrow
-        vim.keymap.set('i', '=>', '⟹ ', { buffer = 0 }) -- Create double arrow
-        vim.keymap.set('i', '_>', '󱞩 ', { buffer = 0 }) -- Create sequence arrow
+
+        -- Latex and custom mappings
+        local mappings = require 'config.latex_symbols'
+        for _, mapping in ipairs(mappings) do
+            local symbol = mapping[1]
+            local code = mapping[2]
+            print(symbol)
+
+            vim.keymap.set('i', code, symbol, { buffer = 0 })
+        end
+
     end,
 }
 
