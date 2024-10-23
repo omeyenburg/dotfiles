@@ -19,11 +19,5 @@ border-color=#bf616a
 default-timeout=0
 ignore-timeout=1
 
-[app-name=lightcord]
-border-color=#88c0d0
-
 [summary~="log-.*"]
 border-color=#a3be8c
-
-[app-name=lightcord summary~="(.*(^| )orz|ORZ|sto|STO|otl|OTL( |$).*)"]
-invisible=1
