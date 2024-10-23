@@ -1,23 +1,83 @@
+/* also see:*/
+/* https://github.com/mylinuxforwork/dotfiles/blob/main/share/dotfiles/.config/waybar/themes/ml4w/style.css */
+
+/* -----------------------------------------------------
+ * General 
+ * ----------------------------------------------------- */
+
 * {
     border:        none;
     border-radius: 0;
     font-family:   "UbuntuMono Nerd Font";
-    font-size:     15px;
+    font-size:     14px;
     box-shadow:    none;
     text-shadow:   none;
     transition-duration: 0s;
 }
 
 window#waybar {
-    color: rgba(53, 185, 171, 1);
+    /*color: rgba(53, 185, 171, 1);*/
+    /*background-color: rgba(23, 63, 79, 0.4);*/
+    /*border-bottom: 2px solid rgba(53, 185, 171, 0.4);*/
+    background-color: transparent;
+}
+
+/* Does something when one window is open */
+/*window#waybar.solo {*/
+/*    color: rgba(53, 185, 171, 1);*/
+/*}*/
+
+/* Hide window name if no windows are open */
+window#waybar.empty #window {
+    background-color: transparent;
+    border: none;
+}
+
+/*.modules-left > widget:first-child > #workspaces {*/
+/*    margin-left: 0;*/
+/*}*/
+/**/
+/*.modules-right > widget:last-child > #workspaces {*/
+/*    margin-right: 0;*/
+/*}*/
+
+.module, .custom {
+    border-radius: 8px;
+    border: 2px solid rgba(53, 185, 171, 0.4);
+    padding: 0px 10px;
+    margin: 0px 0px;
     background-color: rgba(23, 63, 79, 0.4);
-    border-bottom: 2px solid rgba(53, 185, 171, 0.4);
-}
-
-window#waybar.solo {
     color: rgba(53, 185, 171, 1);
 }
 
+/* -----------------------------------------------------
+ * Tooltips
+ * ----------------------------------------------------- */
+
+tooltip {
+    border-radius: 8px;
+    background-color: rgba(23, 63, 79, 0.9);
+    border: 2px solid rgba(53, 185, 171, 0.9);
+    padding: 10px;
+    margin: 10px;
+}
+
+/*#window {*/
+/*    background: @backgroundlight;*/
+/*    margin: 5px 15px 5px 0px;*/
+/*    padding: 2px 10px 0px 10px;*/
+/*    border-radius: 12px;*/
+/*    color:@textcolor2;*/
+/*    font-size:16px;*/
+/*    font-weight:normal;*/
+/*    opacity:0.8;*/
+/*}*/
+/**/
+/*window#waybar.empty #window {*/
+/*    background-color:transparent;*/
+/*}*/
+
+/*
 #workspaces {
     margin: 0 5px;
 }
@@ -43,24 +103,39 @@ window#waybar.solo {
 #workspaces button.urgent {
     color: rgba(33, 164, 223, 1);
 }
+*/
 
-#mode, 
-#battery, 
-#cpu, 
-#memory, 
-#network, 
-#bluetooth,
-#pulseaudio, 
-#idle_inhibitor, 
-#temperature,
-#custom-layout,
-#backlight {
-    margin: 0px 6px 0px 10px;
-/*    min-width: 30px;*/
+#custom-power {
+    padding-right: 8px;
 }
 
-#clock {
-    margin: 0px 6px 0px 10px;
+#bluetooth, #backlight {
+    padding-right: 12px;
+}
+
+#battery, #pulseaudio, #cpu, #memory, #idle_inhibitor {
+    padding-right: 17px;
+}
+
+/*#mode, */
+/*#battery, */
+/*#cpu, */
+/*#memory, */
+/*#network, */
+/*#bluetooth,*/
+/*#pulseaudio, */
+/*#idle_inhibitor, */
+/*#temperature,*/
+/*#custom-layout,*/
+/*#backlight {*/
+/*    margin: 0px 6px 0px 10px;*/
+/*    min-width: 30px;*/
+/*}*/
+
+#network.disconnected {
+    border-width: 1px;
+    border-color: rgba(255, 210, 4, 1);
+    color: rgba(255, 210, 4, 1);
 }
 
 #battery.warning {
@@ -85,4 +160,9 @@ window#waybar.solo {
 
 #bluetooth.connected {
     color: rgba(115, 186, 37, 1);
+}
+
+
+#idle_inhibitor.deactivated {
+    color: rgba(128, 128, 128, 1);
 }

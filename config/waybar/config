@@ -5,24 +5,26 @@
     "height": 30,
     "spacing": 5,
     "reload_style_on_change": true,
+    "font": "UbuntuMono Nerd Font 12",
     "modules-left": [
-        "custom/power",
+        "clock",
         "battery",
         "power-profiles-daemon",
         "backlight",
-        "pulseaudio",
-        "clock"
+        "pulseaudio"
     ],
     "modules-center": [
         "hyprland/window"
     ],
     "modules-right": [
+        "idle_inhibitor",
         "network",
         "bluetooth",
         "hyprland/language",
         "cpu",
         "memory",
-        "temperature"
+        "temperature",
+        "custom/power"
     ],
     "include": [
         "~/.config/waybar/modules.json"

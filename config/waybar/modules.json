@@ -12,7 +12,7 @@
     },
     "temperature": {
         "critical-threshold": 80,
-        "format": "{temperatureC}°C {icon} ",
+        "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", "", "", ""],
         "tooltip": false
     },
@@ -28,7 +28,7 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {icon}",
+        "format": "{capacity}% {icon} ",
         "format-full": "{capacity}% {icon}",
         "format-good": "{capacity}% {icon}",
         "format-charging": "{capacity}% ",
@@ -39,7 +39,7 @@
         "bat": "BAT2"
     },
     "power-profiles-daemon": {
-      "format": " {icon} ",
+      "format": "{icon} ",
       "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
       "tooltip": true,
       "format-icons": {
@@ -51,7 +51,7 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{signalStrength}% ",
+        "format-wifi": "{signalStrength}%  ",
         "format-ethernet": "{ipaddr}/{cidr}  ",
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "Disconnected ⚠ ",
@@ -59,18 +59,27 @@
         // "format-alt": "{ifname}: {ipaddr}/{cidr}",
         "on-click": "nm-connection-editor"
     },
+    "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+        "activated": "",
+        "deactivated": ""
+        }
+    },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
         // "format": "󰂯 {status}",
         // format-* handles every state, so default format is not necessary.
         "format-on": "󰂯",
         "format-off": "󰂲",
-        "format-disabled": "", // an empty format will hide the module
+        "format-disabled": "󰂲", // an empty format will hide the module
         "format-connected": "󰂱 {num_connections}",
         // "tooltip-format": "{controller_alias}\t{controller_address}",
         // "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-connected": "{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "show-disabled": true,
+        "interval": 10,
         "on-click": "blueman-manager"
     },
     "pulseaudio": {
@@ -94,8 +103,15 @@
         "format-de": "German",
         "format-en": "English"
     },
+    "hyprland/window": {
+        "format": "{}",
+        "rewrite": {
+                "(.*) - Brave": "$1", // 🌎
+                "(.*)@(.*):(.*)": "$3"
+        }
+    },
     "custom/power": {
-        "format": " ⏻ ",
+        "format": "⏻ ",
         "tooltip": false,
         "on-click": "~/.config/hypr/logout.sh"
     },
