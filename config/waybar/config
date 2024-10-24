@@ -18,9 +18,9 @@
     ],
     "modules-right": [
         "idle_inhibitor",
-        "network",
         "bluetooth",
-        "hyprland/language",
+        "network",
+        // "hyprland/language",
         "cpu",
         "memory",
         "temperature",
