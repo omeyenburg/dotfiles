@@ -13,6 +13,7 @@
     box-shadow:    none;
     text-shadow:   none;
     transition-duration: 0s;
+    margin: 2px 2px 0px 2px;
 }
 
 window#waybar {

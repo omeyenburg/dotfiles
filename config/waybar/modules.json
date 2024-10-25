@@ -113,7 +113,7 @@
     "custom/power": {
         "format": "⏻ ",
         "tooltip": false,
-        "on-click": "~/.config/hypr/logout.sh"
+        "on-click": "~/.config/hypr/scripts/logout.sh"
     },
     "tray": {
         "icon-size": 16,       // Size of the icons in pixels
