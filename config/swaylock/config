@@ -1,6 +1,8 @@
 image=$HOME/.config/wallpapers/scarlet-tree-dark-5120x2880.png
+ignore-empty-password
+indicator-caps-lock
 font=UbuntuMono Nerd Font
-font-size=30
+font-size=40
 scaling=fill
 indicator-x-position=965
 indicator-y-position=540
