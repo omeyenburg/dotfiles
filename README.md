@@ -31,6 +31,7 @@ zypper:
 - waybar
 - hyprland
 - hypridle
+- hyprshot
 - hyprpicker
 - whatsapp-for-linux
 - python311-virtualenv
@@ -38,6 +39,11 @@ zypper:
 - blueman
 - texlive-latexmk
 - alacritty
+- brave-browser
+sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+sudo zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+sudo zypper install brave-browser
+sudo zypper removerepo brave-browser
 
 flatpak:
 - discord
@@ -90,7 +96,6 @@ To set up git run:
 ```
 . ./scripts/git.sh
 ```
-
 
 ## Post-Installation
 ### Change hostname
