@@ -1,6 +1,0 @@
-[wofi]
-prompt=Search...          # Prompt text
-insensitive=true          # Case-insensitive searching
-drun=true                 # Enable desktop entry mode (for launching applications)
-term=foot                 # Set the terminal emulator to use for commands
-single_click=true         # Run with single click

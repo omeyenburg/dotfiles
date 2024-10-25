@@ -1,0 +1,24 @@
+#input {
+    margin: -100px;
+}
+
+#window {
+    border-radius: 8px;
+    background-color: rgba(23, 63, 79, 0.7);
+    font-family: "UbuntuMono Nerd Font";
+    font-size: 16px;
+}
+
+#entry:selected {
+    border: 1px solid rgba(53, 185, 171, 1);
+    background-color: rgba(23, 63, 79, 0.95);
+    color: rgba(53, 185, 171, 1);
+}
+
+#entry {
+    margin: 2px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    color: rgba(53, 185, 171, 1);
+}

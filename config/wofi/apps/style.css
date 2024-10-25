@@ -1,7 +1,7 @@
 #window {
     opacity: 0.9;
-    border-radius: 10px;
-    font-family: monospace;
+    border-radius: 8px;
+    font-family: "UbuntuMono Nerd Font";
     background: linear-gradient(45deg, rgba(51, 204, 255, 0.9), rgba(0, 255, 153, 0.9)) 1;
 }
 
@@ -11,16 +11,19 @@
     background-color: #3B4252;
 }
 
+#text {
+    padding: 0 0 0 15px;
+}
+
 #input {
     margin: 4px;
     padding: 8px;
-    border-radius: 8px;
+    border-radius: 6px;
     background-color: #1f2335;
     color: #D8DEE9;
     border: 0px solid transparent;
     font-size: 18px;
 }
-
 
 #entry:selected {
     background-color: rgba(51, 204, 255, 0.2);
@@ -30,8 +33,13 @@
 #entry {
     margin: 2px;
     padding: 10px;
-    border-radius: 8px;
+    border-radius: 6px;
     font-size: 18px;
     border: 2px solid transparent;
     color: #D8DEE9;
+}
+
+#expander-box {
+    background-color: rgba(51, 204, 255, 0.3);
+    border-radius: 6px;
 }

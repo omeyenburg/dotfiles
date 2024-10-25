@@ -1,0 +1,24 @@
+[wofi]
+# Hide search bar
+hide_search=true
+
+# Hide scroll bar
+hide_scroll=true
+
+# Run with single click
+single_click=true
+
+# Show in top right corner
+location=3
+
+# Offset
+x=-3
+y=4
+
+# Size
+width=150
+height=173
+
+# Bind j and k additionally to arrows
+key_down=j
+key_up=k

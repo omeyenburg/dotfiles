@@ -1,0 +1,24 @@
+[wofi]
+# Prompt text
+prompt=Search...
+
+# Case-insensitive searching
+insensitive=true
+
+# Dynamic number of lines
+dynamic_lines=true
+
+# Enable icons
+allow_images=true
+
+# Enable desktop entry mode (for launching applications)
+drun=true
+
+# Run with single click
+single_click=true
+
+# Remove the rarely used sub menus
+no_actions=true
+
+# if no_actions=false is set, open sub menu with tab
+key_expand=Tab
