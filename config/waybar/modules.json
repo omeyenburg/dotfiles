@@ -5,15 +5,19 @@
     },
     "cpu": {
         "format": "{usage}% ",
+        "on-click": "~/.config/hypr/scripts/processes.sh",
         "tooltip": true
     },
     "memory": {
-        "format": "{}% "
+        "format": "{}% ",
+        "on-click": "~/.config/hypr/scripts/processes.sh",
+        "tooltip": true
     },
     "temperature": {
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", "", "", ""],
+        "on-click": "~/.config/hypr/scripts/processes.sh",
         "tooltip": false
     },
     "backlight": {
@@ -57,7 +61,7 @@
         "format-disconnected": "N/A 󱚵 ",
         "tooltip-format": "{ifname} via {gwaddr} ({essid})  ",
         // "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "nm-connection-editor"
+        "on-click": "killall nm-connection-editor || nm-connection-editor"
     },
     "idle_inhibitor": {
     "format": "{icon}",
@@ -80,7 +84,7 @@
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "show-disabled": true,
         "interval": 10,
-        "on-click": "blueman-manager"
+        "on-click": "killall blueman-manager || blueman-manager"
     },
     "pulseaudio": {
         "format": "{volume}% {icon}",
@@ -96,7 +100,7 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "killall pavucontrol || pavucontrol"
     },
     "hyprland/language": {
         "format": "{}",
