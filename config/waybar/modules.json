@@ -1,4 +1,12 @@
 {
+    "custom/battery": {
+        "exec": "~/.config/waybar/scripts/battery_module.sh",
+        "return-type": "json",
+        "interval": 5,
+        "signal": 8,
+        "tooltip": true,
+        "on-click": "~/.config/waybar/scripts/battery_profile.sh",
+    },
     "clock": {
         "format": "{:%a, %d. %b  %H:%M}",
         "tooltip": false
@@ -110,8 +118,8 @@
     "hyprland/window": {
         "format": "{}",
         "rewrite": {
-                "(.*) - Brave": "$1", // 🌎
-                "(.*)@(.*):(.*)": "$3"
+            //"(.*) - Brave": "$1", // 🌎
+            "(.*)@(.*):(.*)": "$3"
         }
     },
     "custom/power": {

@@ -8,8 +8,9 @@
     "font": "UbuntuMono Nerd Font 12",
     "modules-left": [
         "clock",
-        "battery",
-        "power-profiles-daemon",
+        "custom/battery",
+        // "battery",
+        // "power-profiles-daemon",
         "backlight",
         "pulseaudio"
     ],
