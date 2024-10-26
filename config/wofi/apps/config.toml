@@ -22,3 +22,9 @@ no_actions=true
 
 # if no_actions=false is set, open sub menu with tab
 key_expand=Tab
+
+# Move window to bottom
+location=6
+
+# Shift window upwards
+y=-200

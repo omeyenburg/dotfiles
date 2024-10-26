@@ -1,7 +1,8 @@
 #!/bin/sh
 
 if [ "$(ps -e | grep wofi)" ]; then
-    exit 0;
+    pkill wofi
+    exit 0
 fi
 
 cd $HOME/.config/wofi/apps
