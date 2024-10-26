@@ -28,3 +28,7 @@ location=6
 
 # Shift window upwards
 y=-200
+
+# Size
+width=60%
+height=50%
