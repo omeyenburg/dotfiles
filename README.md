@@ -19,6 +19,7 @@ zypper:
 - make
 - clang
 - gcc
+- btop
 - tmux
 - neovim
 - neofetch
