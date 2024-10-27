@@ -16,10 +16,10 @@ function append {
         local file=$1
         local content=$2
 
-        if [ ! $file ]; then
+        if [ ! "$file" ]; then
             err "No file provided."
         fi
-        if [ ! $content ]; then
+        if [ ! "$content" ]; then
             err "No content provided."
         fi
 
