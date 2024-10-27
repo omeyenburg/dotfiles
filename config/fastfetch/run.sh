@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -n "$ALACRITTY_LOG" ] && [ -z "$TMUX" ] && [ -z "$SSH_TTY" ] && [[ $- == *i* ]]; then
+if [ ${FASTFETCHSTART:-} ]; then
     cols=$(tput cols)
     
     # other logos
