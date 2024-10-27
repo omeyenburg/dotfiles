@@ -1,32 +1,17 @@
 {
+    // Left side
+    "clock": {
+        "format": "<b>{:%H:%M}</b>",
+        "tooltip-format": "{:%A,%n%d. %b %Y%n%Z %z}",
+        "tooltip": true
+    },
     "custom/battery": {
         "exec": "~/.config/waybar/scripts/battery_module.sh",
+        "on-click": "~/.config/waybar/scripts/battery_profile.sh",
         "return-type": "json",
-        "interval": 5,
+        "interval": 10,
         "signal": 8,
         "tooltip": true,
-        "on-click": "~/.config/waybar/scripts/battery_profile.sh",
-    },
-    "clock": {
-        "format": "{:%a, %d. %b  %H:%M}",
-        "tooltip": false
-    },
-    "cpu": {
-        "format": "{usage}% ",
-        "on-click": "~/.config/hypr/scripts/processes.sh",
-        "tooltip": true
-    },
-    "memory": {
-        "format": "{}% ",
-        "on-click": "~/.config/hypr/scripts/processes.sh",
-        "tooltip": true
-    },
-    "temperature": {
-        "critical-threshold": 80,
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", "", "", ""],
-        "on-click": "~/.config/hypr/scripts/processes.sh",
-        "tooltip": false
     },
     "backlight": {
         // "device": "acpi_video1",
@@ -34,48 +19,38 @@
         "format-icons": ["", "", "", "", "", "", "", "", ""],
         "tooltip": false
     },
-    "battery": {
-        "states": {
-            "good": 90,
-            "warning": 30,
-            "critical": 15
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": "{volume}%  {icon}",
+        "format-muted": "{volume}% ",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
         },
-        "format": "{capacity}% {icon} ",
-        "format-full": "{capacity}% {icon}",
-        "format-good": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-icons": ["", "", "", "", ""]
+        "on-click": "killall pavucontrol || pavucontrol"
     },
-    "battery#bat2": {
-        "bat": "BAT2"
+
+    // Center
+    "hyprland/window": {
+        "format": "{}",
+        "rewrite": {
+            //"(.*) - Brave": "$1", // 🌎
+            "(.*)@(.*):(.*)": "$3"
+        }
     },
-    "power-profiles-daemon": {
-      "format": "{icon} ",
-      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-      "tooltip": true,
-      "format-icons": {
-        "default": "",
-        "performance": "",
-        "balanced": "",
-        "power-saver": ""
-      }
-    },
-    "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{signalStrength}% 󰖩 ",
-        "format-ethernet": "{ipaddr}/{cidr}  ",
-        "format-linked": "{ifname} (No IP)  ",
-        "format-disconnected": "N/A 󱚵 ",
-        "tooltip-format": "{ifname} via {gwaddr} ({essid})  ",
-        // "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "killall nm-connection-editor || nm-connection-editor"
-    },
+
+    // Right side
     "idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-        "activated": "",
-        "deactivated": ""
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
         }
     },
     "bluetooth": {
@@ -94,44 +69,75 @@
         "interval": 10,
         "on-click": "killall blueman-manager || blueman-manager"
     },
-    "pulseaudio": {
-        "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}% {icon}",
-        "format-bluetooth-muted": "{volume}%  {icon}",
-        "format-muted": "{volume}% ",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "on-click": "killall pavucontrol || pavucontrol"
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "{signalStrength}% 󰖩 ",
+        "format-ethernet": "{ipaddr}/{cidr}  ",
+        "format-linked": "{ifname} (No IP)  ",
+        "format-disconnected": "N/A 󱚵 ",
+        "tooltip-format": "{ifname} via {gwaddr} ({essid})  ",
+        // "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "killall nm-connection-editor || nm-connection-editor"
     },
-    "hyprland/language": {
-        "format": "{}",
-        "format-de": "German",
-        "format-en": "English"
+    "cpu": {
+        "format": "{usage}% ",
+        "on-click": "~/.config/hypr/scripts/processes.sh",
+        "tooltip": true
     },
-    "hyprland/window": {
-        "format": "{}",
-        "rewrite": {
-            //"(.*) - Brave": "$1", // 🌎
-            "(.*)@(.*):(.*)": "$3"
-        }
+    "memory": {
+        "format": "{}% ",
+        "on-click": "~/.config/hypr/scripts/processes.sh",
+        "tooltip": true
+    },
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", "", "", ""],
+        "on-click": "~/.config/hypr/scripts/processes.sh",
+        "tooltip": false
     },
     "custom/power": {
         "format": "⏻ ",
         "tooltip": false,
         "on-click": "~/.config/hypr/scripts/logout.sh"
     },
-    "tray": {
-        "icon-size": 16,       // Size of the icons in pixels
-        "scale": false,        // Whether to scale the tray icons based on the output scaling
-        "spacing": 10,         // Space between tray icons
-        "reverse": false,      // Reverse the order of the tray icons
-        "always-show": true    // Always show the tray (even when no icons are present)
-    }
+    // "battery": {
+        // "states": {
+            // "good": 90,
+            // "warning": 30,
+            // "critical": 15
+        // },
+        // "format": "{capacity}% {icon} ",
+        // "format-full": "{capacity}% {icon}",
+        // "format-good": "{capacity}% {icon}",
+        // "format-charging": "{capacity}% ",
+        // "format-plugged": "{capacity}% ",
+        // "format-icons": ["", "", "", "", ""]
+    // },
+    // "battery#bat2": {
+        // "bat": "BAT2"
+    // },
+    // "power-profiles-daemon": {
+      // "format": "{icon} ",
+      // "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      // "tooltip": true,
+      // "format-icons": {
+        // "default": "",
+        // "performance": "",
+        // "balanced": "",
+        // "power-saver": ""
+      // }
+    // },
+    // "hyprland/language": {
+        // "format": "{}",
+        // "format-de": "German",
+        // "format-en": "English"
+    // },
+    // "tray": {
+        // "icon-size": 16,       // Size of the icons in pixels
+        // "scale": false,        // Whether to scale the tray icons based on the output scaling
+        // "spacing": 10,         // Space between tray icons
+        // "reverse": false,      // Reverse the order of the tray icons
+        // "always-show": true    // Always show the tray (even when no icons are present)
+    // }
 }

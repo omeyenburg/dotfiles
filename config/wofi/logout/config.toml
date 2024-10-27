@@ -17,8 +17,14 @@ y=4
 
 # Size
 width=150
-height=173
+lines=6
+# height=173
 
-# Bind j and k additionally to arrows
+# Use the predefined order ("alphabetical" is misleading)
+sort_order=alphabetical
+
+# Additional keybinds
 key_down=j
 key_up=k
+key_submit=l
+key_exit=h

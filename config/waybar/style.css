@@ -1,52 +1,44 @@
+/*
+ * __        __          _                  ____  _         _       
+ * \ \      / /_ _ _   _| |__   __ _ _ __  / ___|| |_ _   _| | ___  
+ *  \ \ /\ / / _` | | | | '_ \ / _` | '__| \___ \| __| | | | |/ _ \ 
+ *   \ V  V / (_| | |_| | |_) | (_| | |     ___) | |_| |_| | |  __/ 
+ *    \_/\_/ \__,_|\__, |_.__/ \__,_|_|    |____/ \__|\__, |_|\___| 
+ *                 |___/                              |___/         
+ *  
+ * ----------------------------------------------------- 
+*/
+
 /* also see:*/
 /* https://github.com/mylinuxforwork/dotfiles/blob/main/share/dotfiles/.config/waybar/themes/ml4w/style.css */
+
+/* Other selectors:
+window#waybar.solo
+.modules-left > widget:first-child > #workspaces {
+.modules-right > widget:last-child > #workspaces {
+*/
 
 /* -----------------------------------------------------
  * General 
  * ----------------------------------------------------- */
 
 * {
+    font-size:     14px;
+    font-family:   "UbuntuMono Nerd Font";
     border:        none;
     border-radius: 0;
-    font-family:   "UbuntuMono Nerd Font";
-    font-size:     14px;
-    box-shadow:    none;
-    text-shadow:   none;
-    transition-duration: 0s;
+    /*box-shadow:    none;*/
+    /*text-shadow:   none;*/
+    /*transition-duration: 0s;*/
     margin: 2px 2px 0px 2px;
-}
-
-window#waybar {
-    /*color: rgba(53, 185, 171, 1);*/
-    /*background-color: rgba(23, 63, 79, 0.4);*/
-    /*border-bottom: 2px solid rgba(53, 185, 171, 0.4);*/
     background-color: transparent;
 }
-
-/* Does something when one window is open */
-/*window#waybar.solo {*/
-/*    color: rgba(53, 185, 171, 1);*/
-/*}*/
-
-/* Hide window name if no windows are open */
-window#waybar.empty #window {
-    background-color: transparent;
-    border: none;
-}
-
-/*.modules-left > widget:first-child > #workspaces {*/
-/*    margin-left: 0;*/
-/*}*/
-/**/
-/*.modules-right > widget:last-child > #workspaces {*/
-/*    margin-right: 0;*/
-/*}*/
 
 .module, .custom {
     border-radius: 8px;
     /*border: 2px solid rgba(53, 185, 171, 0.4);*/
     padding: 0px 10px;
-    margin: 0px 0px;
+    margin: 0px 5px;
     background-color: rgba(23, 63, 79, 0.6);
     color: rgba(53, 185, 171, 1);
 }
@@ -58,25 +50,17 @@ window#waybar.empty #window {
 tooltip {
     border-radius: 8px;
     background-color: rgba(23, 63, 79, 0.9);
-    border: 2px solid rgba(53, 185, 171, 0.9);
     padding: 10px;
     margin: 10px;
 }
 
-/*#window {*/
-/*    background: @backgroundlight;*/
-/*    margin: 5px 15px 5px 0px;*/
-/*    padding: 2px 10px 0px 10px;*/
-/*    border-radius: 12px;*/
-/*    color:@textcolor2;*/
-/*    font-size:16px;*/
-/*    font-weight:normal;*/
-/*    opacity:0.8;*/
-/*}*/
-/**/
-/*window#waybar.empty #window {*/
-/*    background-color:transparent;*/
-/*}*/
+tooltip label {
+    color: rgba(53, 185, 171, 1);
+}
+
+/* -----------------------------------------------------
+ * Workspaces 
+ * ----------------------------------------------------- */
 
 /*
 #workspaces {
@@ -106,6 +90,9 @@ tooltip {
 }
 */
 
+/* -----------------------------------------------------
+ * Modules
+ * ----------------------------------------------------- */
 #custom-power {
     padding-right: 8px;
 }
@@ -118,27 +105,39 @@ tooltip {
     padding-right: 17px;
 }
 
-/*#mode, */
-/*#battery, */
-/*#cpu, */
-/*#memory, */
-/*#network, */
-/*#bluetooth,*/
-/*#pulseaudio, */
-/*#idle_inhibitor, */
-/*#temperature,*/
-/*#custom-layout,*/
-/*#backlight {*/
-/*    margin: 0px 6px 0px 10px;*/
-/*    min-width: 30px;*/
-/*}*/
+/* -----------------------------------------------------
+ * CPU, Memory & Temperature
+ * ----------------------------------------------------- */
+#cpu {
+    border-radius: 8px 0 0 8px;
+    margin-right: 0px;
+    padding-right: 5px;
+}
 
+#memory {
+    border-radius: 0;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 5px;
+}
+
+#temperature {
+    border-radius: 0 8px 8px 0;
+    margin-left: 0px;
+}
+
+/* -----------------------------------------------------
+ * Network
+ * ----------------------------------------------------- */
 #network.disconnected {
     border-width: 1px;
     border-color: rgba(255, 210, 4, 1);
     color: rgba(255, 210, 4, 1);
 }
 
+/* -----------------------------------------------------
+ * Battery
+ * ----------------------------------------------------- */
 #battery.warning {
    color: rgba(255, 210, 4, 1);
 }
@@ -151,6 +150,9 @@ tooltip {
     color: rgba(53, 185, 171, 1);
 }
 
+/* -----------------------------------------------------
+ * Bluetooth
+ * ----------------------------------------------------- */
 #bluetooth.disabled {
     color: rgba(128, 128, 128, 1);
 }
@@ -163,7 +165,16 @@ tooltip {
     color: rgba(115, 186, 37, 1);
 }
 
-
+/* -----------------------------------------------------
+ * Idle Inhibator
+ * ----------------------------------------------------- */
 #idle_inhibitor.deactivated {
     color: rgba(128, 128, 128, 1);
+}
+
+/* -----------------------------------------------------
+ * Window (Hide window name if no windows are open)
+ * ----------------------------------------------------- */
+window#waybar.empty #window {
+    background-color: transparent;
 }
