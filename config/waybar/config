@@ -28,6 +28,6 @@
         "custom/power"
     ],
     "include": [
-        "~/.config/waybar/modules.json"
+        "~/.config/waybar/modules.jsonc"
     ]
 }
