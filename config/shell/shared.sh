@@ -48,6 +48,3 @@ elif [ "$SHELL" = "/bin/zsh" ]; then
     # Ignore duplicate commands in command history
     setopt HIST_IGNORE_ALL_DUPS
 fi
-
-# Update reminder
-printf "Reminder: Update your system with:    pkg-update\n\n"

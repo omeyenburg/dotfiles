@@ -22,7 +22,7 @@ zypper:
 - btop
 - tmux
 - neovim
-- neofetch
+- fastfetch
 - pavucontrol
 - ranger
 - rustup
