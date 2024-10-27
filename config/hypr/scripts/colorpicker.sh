@@ -1,7 +1,6 @@
 #!/bin/sh
 
-# busctl --user call org.freedesktop.Notifications /org/freedesktop/Notifications org.freedesktop.Notifications Notify "susssasa{sv}i" "hyprpicker" 0 "icon-name" "Hex color:" "<span background='$color'>$color</span>" 0 0 5000
-
+# Run hyprpicker and copy hex to clipboard
 color=$(hyprpicker -a)
 
 # Remove # from hex
@@ -30,13 +29,8 @@ rgb_percent="RGB: 0.$((r*10000/255)), 0.$((g*10000/255)), 0.$((b*10000/255))"
 hsl_format="HSL: $(printf "%.0f%%" $l_percent) lightness"
 
 # Send notification
-busctl --user call org.freedesktop.Notifications \
-/org/freedesktop/Notifications \
-org.freedesktop.Notifications \
-Notify "susssasa{sv}i" \
-"hyprpicker" 0 "" "" \
-"<span background='$color'>        </span> $hex_format
+~/.config/hypr/scripts/notify.sh "hyprpicker" ""\
+    "<span background='$color'>        </span> $hex_format
 <span background='$color'>        </span> $rgb_format
 <span background='$color'>        </span> $rgb_percent
-<span background='$color'>        </span> $hsl_format" \
-0 0 8000
+<span background='$color'>        </span> $hsl_format" 0
