@@ -27,19 +27,15 @@
             "type": "kernel"
         },
         {
-            "key": "{$2}{#33}{icon}  distro   ",
+            "key": "{$2}{#32}{icon}  distro   ",
             "type": "os"
         },
         {
-            "key": "{$2}{#34}󰇄  desktop  ",
-            "type": "de"
-        },
-        {
-            "key": "{$2}{#36}󱞎  editor   ",
+            "key": "{$2}{#33}󱞎  editor   ",
             "type": "editor"
         },
         {
-            "key": "{$2}{#36}  shell    ",
+            "key": "{$2}{#34}  shell    ",
             "type": "shell"
         },
         {
@@ -47,16 +43,16 @@
             "type": "terminal"
         },
         {
-            "key": "{$2}{#34}  wm       ",
+            "key": "{$2}{#36}  wm       ",
             "type": "wm"
         },
         {
-            "key": "{$2}{#35}󰍛  cpu      ",
+            "key": "{$2}{#31}󰍛  cpu      ",
             "type": "cpu",
             "format": "{1} @ {6}"
         },
         {
-            "key": "{$2}{#34}󰾲  gpu      ",
+            "key": "{$2}{#32}󰾲  gpu      ",
             "type": "gpu",
             "format": "{1} {2} @ {12}"
         },
@@ -66,15 +62,15 @@
             "folders": "/"
         },
         {
-            "key": "{$2}{#32}  memory   ",
+            "key": "{$2}{#34}  memory   ",
             "type": "memory"
         },
         {
-            "key": "{$2}{#32}  sound    ",
+            "key": "{$2}{#35}  sound    ",
             "type": "sound"
         },
         {
-            "key": "{$2}{#32}󰅐  uptime   ",
+            "key": "{$2}{#36}󰅐  uptime   ",
             "type": "uptime"
         },
         //{
@@ -82,7 +78,7 @@
         //    "type": "custom"
         //},
         //{
-        //    "key": "{$2}{#39} colors   ",
+        //    "key": "{$2}{#39}  colors   ",
         //    "type": "colors",
         //    "symbol": "circle"
         //},
