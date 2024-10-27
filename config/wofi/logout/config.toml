@@ -17,8 +17,7 @@ y=4
 
 # Size
 width=150
-lines=6
-# height=173
+height=173
 
 # Use the predefined order ("alphabetical" is misleading)
 sort_order=alphabetical
