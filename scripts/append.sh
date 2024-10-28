@@ -1,6 +1,6 @@
 #!/bin/sh
 
-function append {
+append() {
     # arg1: file
     # arg2: content
 
