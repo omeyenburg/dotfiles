@@ -1,13 +1,23 @@
-image=$HOME/.config/wallpapers/scarlet-tree-dark-5120x2880.png
+image=$CONFIG_WALLPAPER
+font=$CONFIG_FONT
+font-size=40
+
 ignore-empty-password
 indicator-caps-lock
-font=UbuntuMono Nerd Font
-font-size=40
 scaling=fill
-indicator-x-position=965
-indicator-y-position=540
-indicator-radius=150
-indicator-thickness=30
+
+# For scaling = 1.33333:
+# indicator-x-position=965
+# indicator-y-position=540
+# indicator-radius=150
+# indicator-thickness=30
+
+# For scaling = 1.6
+indicator-x-position=800
+indicator-y-position=500
+indicator-radius=90
+indicator-thickness=20
+
 bs-hl-color=ffa066
 caps-lock-bs-hl-color=ffa066
 caps-lock-key-hl-color=957fbb
