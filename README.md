@@ -99,6 +99,13 @@ To set up git run:
 ```
 
 ## Post-Installation
+### Fix Brave-Browser right click popup
+Open brave://flags/
+Search for "Preferred Ozone platform" and explicitly set it to "Wayland"
+
+Some more things to try out:
+- Shared pinned tab
+
 ### Change hostname
 Run this with the desired hostname:
 ```
