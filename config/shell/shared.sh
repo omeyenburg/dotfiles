@@ -2,12 +2,12 @@
 export EDITOR=nvim
 
 # PKG update alias
-alias pkg-update="sudo $HOME/.config/shell/pkg-update.sh"
+# alias pkg-update="sudo $HOME/.config/shell/pkg-update.sh"
 
 # ls command
 alias ll="ls -alF"
 alias la="ls -A"
-alias l="ls -CF"
+# alias l="ls -CF"
 
 # Vim
 alias vim="nvim"
@@ -18,26 +18,18 @@ alias nvic="nvim --cmd 'let g:keyboard_layout = \"Colemak\"'"
 alias git="LANG=en_GB git"
 alias gitlog="python3 ~/.config/shell/gitlog.py"
 
-# Neofetch
-alias neofetch="neofetch | sed 's/^/    /;$d' && echo ''"
-
 # File explorer
-alias exp='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+# alias exp='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 
 # Add mason packages to path
 export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
-OS=$(uname)
-if [ "$OS" = "Linux" ]; then
-    # Linux-specific settings
-    true
-elif [ "$OS" = "Darwin" ]; then
-    # macOS-specific settings
-
+# macOS-specific settings
+if [ "$(uname)" = "Darwin" ]; then
     # Disable homebrew autoupdate
     export HOMEBREW_NO_AUTO_UPDATE=1
 
-    # Enable colors
+    # Enable terminal colors
     [[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
 fi
 
