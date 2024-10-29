@@ -12,7 +12,6 @@
 #entry:selected {
     border: 1px solid rgba(53, 185, 171, 1);
     background-color: rgba(23, 63, 79, 0.95);
-    color: rgba(53, 185, 171, 1);
 }
 
 #entry {
@@ -20,5 +19,12 @@
     padding: 10px;
     border-radius: 6px;
     border: 1px solid transparent;
+}
+
+#text:selected {
+    color: rgba(53, 185, 171, 1);
+}
+
+#text {
     color: rgba(53, 185, 171, 1);
 }
