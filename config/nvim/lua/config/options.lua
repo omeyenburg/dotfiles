@@ -43,6 +43,10 @@ vim.opt.lazyredraw = false -- Don’t update screen during macro and script exec
 vim.opt.updatetime = 250 -- Decrease update time
 vim.opt.scrolloff = 8 -- Minimal number of screen lines to keep above and below the cursor
 vim.opt.sidescrolloff = 8 -- Minimal number of screen columns either side of cursor if wrap is `false`
+vim.opt.list = true -- Highlight trailing whitespace and similar
+
+-- Example listchars: set listchars=eol:~,tab:>.,trail:~,extends:>,precedes:<,space:_
+vim.opt.listchars = "tab:> ,trail:~,extends:>,precedes:<" -- Set the highlight symbols
 
 -- }}}
 -- Indentation Options {{{ ---------------------------------
