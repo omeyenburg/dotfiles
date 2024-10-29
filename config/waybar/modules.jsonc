@@ -13,12 +13,19 @@
         "signal": 8,
         "tooltip": true,
     },
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""],
-        "tooltip": false
+    "custom/brightness": {
+        "exec": "~/.config/waybar/scripts/brightness_module.sh",
+        "return-type": "json",
+        "interval": 10,
+        "signal": 9,
+        "tooltip": true,
     },
+    //"backlight": {
+    //    // "device": "acpi_video1",
+    //    "format": "{percent}% {icon}",
+    //    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    //    "tooltip": false
+    //},
     "pulseaudio": {
         "format": "{volume}% {icon}",
         "format-bluetooth": "{volume}% {icon}",

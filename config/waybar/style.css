@@ -41,12 +41,14 @@
 tooltip {
     border-radius: 8px;
     background-color: rgba(23, 63, 79, 0.9);
-    padding: 10px;
-    margin: 10px;
+    padding: 0px;
+    margin: 0px;
 }
 
 tooltip label {
     color: rgba(53, 185, 171, 1);
+    padding: 0px;
+    margin: -6px -5px -4px -3px;
 }
 
 /* -----------------------------------------------------
@@ -93,7 +95,7 @@ tooltip label {
     padding-right: 12px;
 }
 
-#battery, #pulseaudio, #cpu, #memory, #idle_inhibitor {
+#battery, #pulseaudio, #idle_inhibitor {
     padding-right: 17px;
 }
 
@@ -104,14 +106,14 @@ tooltip label {
 #cpu {
     border-radius: 8px 0 0 8px;
     margin-right: 0px;
-    padding-right: 5px;
+    padding-right: 7px;
 }
 
 #memory {
     border-radius: 0;
     margin-left: 0px;
     margin-right: 0px;
-    padding-right: 5px;
+    padding-right: 7px;
 }
 
 #temperature {

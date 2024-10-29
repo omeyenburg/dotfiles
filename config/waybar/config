@@ -11,7 +11,8 @@
         "custom/battery",
         // "battery",
         // "power-profiles-daemon",
-        "backlight",
+        // "backlight",
+        "custom/brightness",
         "pulseaudio"
     ],
     "modules-center": [
