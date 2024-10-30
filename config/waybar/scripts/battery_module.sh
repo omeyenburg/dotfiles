@@ -46,6 +46,7 @@ esac
 
 # Set battery icon based on percentage and charging status
 if [ "$battery_status" = "Charging" ]; then
+    color_status="charging"
     charging_levels=(󰂅 󰂋 󰂊 󰢞 󰂉 󰢝 󰂈 󰂇 󰂆 󰢜 󰢟)
     if [ $battery_percent -ge 95 ]; then
         battery_icon="${charging_levels[0]}"
@@ -68,6 +69,7 @@ if [ "$battery_status" = "Charging" ]; then
     elif [ $battery_percent -ge 10 ]; then
         battery_icon="${charging_levels[9]}"
     else
+        color_status="warning"
         battery_icon="${charging_levels[10]}"
     fi
 else
@@ -92,9 +94,11 @@ else
         battery_icon="${battery_levels[8]}"
     elif [ $battery_percent -ge 10 ]; then
         battery_icon="${battery_levels[9]}"
+        color_status="warning"
         sendwarning "Battery status: low" 1
     else
         battery_icon="${battery_levels[10]}"
+        color_status="critical"
         sendwarning "Battery status: critical" 2
     fi
 fi
@@ -104,4 +108,4 @@ text="${profile_icon}  ${battery_percent}% ${battery_icon} "
 tooltip="Current: ${battery_percent}%\nDesign:  $battery_percent_design%\nStatus:  ${battery_status}\nProfile: ${profile_name}"
 
 # Output JSON for Waybar
-echo "{\"text\": \"${text}\", \"tooltip\": \"${tooltip}\", \"class\": \"${power_profile}\"}"
+echo "{\"text\": \"${text}\", \"tooltip\": \"${tooltip}\", \"class\": \"${color_status}\"}"

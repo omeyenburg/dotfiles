@@ -1,6 +1,6 @@
 image=$CONFIG_WALLPAPER
 font=$CONFIG_FONT
-font-size=40
+font-size=30
 
 ignore-empty-password
 indicator-caps-lock

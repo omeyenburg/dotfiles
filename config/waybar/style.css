@@ -22,6 +22,7 @@
     border: none;
     border-radius: 0;
     box-shadow: none;
+    text-shadow: none;
     margin: 2px 2px 0px 2px;
     background-color: transparent;
 }
@@ -121,6 +122,14 @@ tooltip label {
     margin-left: 0px;
 }
 
+#cpu.warning, #memory.warning, #temperature.warning {
+   color: rgba(255, 210, 4, 1);
+}
+
+#cpu.critical, #memory.critical, #temperature.warning {
+    color: rgba(238, 46, 36, 1);
+}
+
 /* -----------------------------------------------------
  * Network
  * ----------------------------------------------------- */
@@ -135,17 +144,16 @@ tooltip label {
  * Battery
  * ----------------------------------------------------- */
 
-#battery.warning {
+#custom-battery.warning {
    color: rgba(255, 210, 4, 1);
 }
 
-#battery.critical {
+#custom-battery.critical {
     color: rgba(238, 46, 36, 1);
 }
 
-#battery.charging {
-    color: rgba(53, 185, 171, 1);
-}
+#custom-battery.charging {
+    color: rgba(115, 186, 37, 1);}
 
 /* -----------------------------------------------------
  * Bluetooth
