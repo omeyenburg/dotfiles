@@ -1,6 +1,6 @@
 max-icon-size=64
-width=600
-height=500
+width=500
+height=300
 
 on-touch=none
 default-timeout=3000
@@ -13,11 +13,13 @@ background-color=#3B4252
 
 [urgency=normal]
 border-color=#d08770
+layer=overlay
 
 [urgency=high]
 border-color=#bf616a
 default-timeout=0
 ignore-timeout=1
+layer=overlay
 
 [summary~="log-.*"]
 border-color=#a3be8c
