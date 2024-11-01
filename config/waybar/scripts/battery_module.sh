@@ -45,6 +45,7 @@ case $power_profile in
 esac
 
 # Set battery icon based on percentage and charging status
+# Full, Charging, Discharging
 if [ "$battery_status" = "Charging" ]; then
     color_status="charging"
     charging_levels=(󰂅 󰂋 󰂊 󰢞 󰂉 󰢝 󰂈 󰂇 󰂆 󰢜 󰢟)

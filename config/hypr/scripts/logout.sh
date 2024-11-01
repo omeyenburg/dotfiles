@@ -9,17 +9,16 @@ S0="          Lock"
 S1="        Logout"
 S2="        Reboot"
 S3="      Shutdown"
-# S4="     Processes"
-# S5="      Settings"
+S4="         Gnome"
 
 cd $HOME/.config/wofi/logout
-OUTPUT=$(echo -e "$S0\n$S1\n$S2\n$S3" | wofi --show dmenu --conf config.toml --style style.css)
+OUTPUT=$(echo -e "$S0\n$S1\n$S2\n$S3\n$S4" | wofi --show dmenu --conf config.toml --style style.css)
 
 case "$OUTPUT" in
     "$S0") swaylock ;;
     "$S1") hyprctl dispatch exit ;;
     "$S2") systemctl reboot ;;
     "$S3") systemctl poweroff ;;
-    # "$S4") killall btop || alacritty -e btop ;;
+    # "$S4") XDG_CURRENT_DESKTOP=GNOME gnome-control-center --verbose ;;
     *) ;;
 esac

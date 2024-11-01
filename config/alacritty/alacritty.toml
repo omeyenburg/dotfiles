@@ -19,5 +19,5 @@ startup_mode = "Maximized"
 decorations_theme_variant = "Dark"
 
 [window.padding]
-x = 5
-y = 5
+x = 4
+y = 4

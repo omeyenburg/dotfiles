@@ -1,3 +1,3 @@
 #!/bin/sh
 
-killall btop || alacritty -e btop
+killall btop || kitty -e btop
