@@ -21,6 +21,7 @@ zypper:
 - gcc
 - btop
 - tmux
+- kitty
 - neovim
 - fastfetch
 - pavucontrol
@@ -39,7 +40,6 @@ zypper:
 - NetworkManager-applet
 - blueman
 - texlive-latexmk
-- alacritty
 - brave-browser
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
@@ -49,6 +49,8 @@ sudo zypper removerepo brave-browser
 flatpak:
 - discord
 - spotify
+flatpak install flatpak install flathub io.github.realmazharhussain.GdmSettings
+flatpak run io.github.realmazharhussain.GdmSettings
 
 should be shipped with hyprland:
 - swaylock
@@ -171,14 +173,22 @@ Nerdfonts are adjusted fonts that contain additional unicode symbols that can be
 
 To download the UbuntuMono Nerd Font run:
 ```
+mkdir font-tmp
+cd font-tmp
 curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/UbuntuMono.tar.xz
 tar -xJf UbuntuMono.tar.xz
+
+mkdir -p ~/.local/share/fonts
+cp UbuntuMonoNerdFontMono-Regular.ttf ~/.local/share/fonts/
+fc-cache -f -v
 ```
 
-Or:
+Or with zip format:
 ```
+...
 curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/UbuntuMono.zip
 unzip UbuntuMono.zip -d UbuntuMono
+...
 ```
 
 ## TODO
