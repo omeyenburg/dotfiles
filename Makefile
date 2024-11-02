@@ -22,5 +22,8 @@ link-conf:
 link-home:
 	@sh "$(DOTFILES)scripts/link_home.sh" "$(ARGS)"
 
-install-wallpapers:
-	@sh "$(DOTFILES)scripts/install-wallpapers.sh"
+# Main wallpaper target that handles subcommands
+wallpaper:
+	@sh "$(DOTFILES)scripts/wallpaper.sh" $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+
+%: ; @:
