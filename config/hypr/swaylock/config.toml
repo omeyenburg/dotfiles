@@ -1,5 +1,5 @@
-image=$CONFIG_WALLPAPER
-font=$CONFIG_FONT
+image=$WALLPAPER
+font=$FONT
 font-size=30
 
 ignore-empty-password

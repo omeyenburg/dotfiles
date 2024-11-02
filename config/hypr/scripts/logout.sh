@@ -15,7 +15,7 @@ cd $HOME/.config/hypr/wofi/logout
 OUTPUT=$(echo -e "$S0\n$S1\n$S2\n$S3\n$S4" | wofi --show dmenu --conf config.toml --style style.css)
 
 case "$OUTPUT" in
-    "$S0") swaylock ;;
+    "$S0") swaylock --config $HOME/.config/hypr/swaylock/config.toml ;;
     "$S1") hyprctl dispatch exit ;;
     "$S2") systemctl reboot ;;
     "$S3") systemctl poweroff ;;
