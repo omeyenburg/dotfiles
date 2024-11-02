@@ -1,8 +1,6 @@
 # dotfiles
-Here are my dotfiles (work-in-progress).  
-This is meant to support only OpenSUSE and MacOS atm.  
-I use hyprland as my main deskop environment, but there is some kde plasma configuration flying around.
-There is configuration for zsh and bash.  
+Here are my dotfiles ( (always) work-in-progress).
+This is meant to support only OpenSUSE with Hyprland for now.
 QMK has also some configuration, but is only needed for custom keyboards.
 
 ## Apps
@@ -19,6 +17,7 @@ zypper:
 - make
 - clang
 - gcc
+- yazi
 - btop
 - tmux
 - kitty
@@ -39,6 +38,7 @@ zypper:
 - python311-virtualenv
 - NetworkManager-applet
 - blueman
+- zathura
 - texlive-latexmk
 - brave-browser
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
@@ -49,8 +49,6 @@ sudo zypper removerepo brave-browser
 flatpak:
 - discord
 - spotify
-flatpak install flatpak install flathub io.github.realmazharhussain.GdmSettings
-flatpak run io.github.realmazharhussain.GdmSettings
 
 should be shipped with hyprland:
 - swaylock
@@ -100,75 +98,20 @@ To set up git run:
 . ./scripts/git.sh
 ```
 
+To install tpm run:
+```
+./scripts/tmux.sh
+```
+Plugins can be installed with tpm by pressing <leader>+I within tmux.
+
 ## Post-Installation
-### Fix Brave-Browser right click popup
-Open brave://flags/
-Search for "Preferred Ozone platform" and explicitly set it to "Wayland"
-
-Some more things to try out:
-- Shared pinned tab
-
 ### Change hostname
 Run this with the desired hostname:
 ```
 sudo hostnamectl set-hostname <newhostname>
 ```
 
-### Fix firefox performance
-On some devices hardware acceleration leads to worse performance.
-Try to disable it by disabling recommended performance settings and disabling hardware acceleration.
-
-### Disable startup sound on mac
-Command to disable macos startup sound:
-```
-sudo nvram StartupMute=%01
-```
-And to enable:
-```
-sudo nvram StartupMute=%00
-```
-https://apple.stackexchange.com/questions/431910/how-to-permanently-disable-the-mac-startup-sound
-
-### TMUX
-Run `./scripts/tmux.sh` install tpm.
-Plugins can be installed with tpm by pressing <leader>+I within tmux.
-
-### Sleeping issues
-This might be a problem when booting from an external media on a MacBook.
-
-Some grub args may have to be modified.
-edit with:
-```
-sudo vim /etc/default/grub
-```
-
-Here is a working list of args, most of which are probably not needed or useful:
-```
-GRUB_CMDLINE_LINUX_DEFAULT="splash=silent quiet pcie_aspm=force nohibernate=1 acpi=copy_dsdt security=apparmor amd_iommu=off mitigations=auto acpi_osi=Linux"
-```
-
-Then update grub with:
-```
-sudo grub2-mkconfig -o /boot/grub2/grub.cfg
-```
-
-This might be needed if the error is related to brcmf:
-Run:
-```
-sudo nano /etc/modprobe.d/blacklist-brcmf.conf
-```
-
-And add:
-```
-blacklist brcmf
-```
-
-### Youtube lagging in dark mode
-1. enter youtube video
-2. click on the video settings
-3. disable ambient mode
-
-## Installing a nerdfont
+### Installing a nerdfont
 Nerdfonts are adjusted fonts that contain additional unicode symbols that can be rendered in the terminal. For this config, I chose the UbuntuMono Nerd Font. You can find and download nerdfonts [here](https://www.nerdfonts.com/).
 
 To download the UbuntuMono Nerd Font run:
@@ -190,10 +133,3 @@ curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Ubuntu
 unzip UbuntuMono.zip -d UbuntuMono
 ...
 ```
-
-## TODO
-- move app list to separate file
-- interactive app installer
-- interactive setup scripts
-- global colorscheme
-- easy font switching
