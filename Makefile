@@ -21,3 +21,6 @@ link-conf:
 
 link-home:
 	@sh "$(DOTFILES)scripts/link_home.sh" "$(ARGS)"
+
+install-wallpapers:
+	@sh "$(DOTFILES)scripts/install-wallpapers.sh"
