@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Run hyprpicker and copy hex to clipboard
-color=$(hyprpicker -a)
+color=$(hyprpicker -a --no-zoom)
 
 # Remove # from hex
 hex_clean=${color#\#}
