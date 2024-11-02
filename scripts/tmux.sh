@@ -7,9 +7,11 @@ PLUGINS=$HOME/.tmux/plugins
 (
     echo Installing tpm
     mkdir -p $PLUGINS && cd $PLUGINS || err "Failed to create $PLUGINS"
-    cd tpm && git pull || git clone git@github.com:tmux-plugins/tpm $HOME/.tmux/plugins/tpm || err "Could not clone tpm"
+    cd tpm && git pull \
+        || git clone git@github.com:tmux-plugins/tpm $HOME/.tmux/plugins/tpm \
+        || err "Could not clone tpm"
 
-    echo
+    cd $PLUGINS
     echo Installing plugins
-    . $HOME/.tmux/plugins/tpm/scripts/install_plugins.sh || err "Failed to install plugins"
+    source $PLUGINS/tpm/scripts/install_plugins.sh || err "Failed to install plugins"
 )
