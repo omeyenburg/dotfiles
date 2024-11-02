@@ -84,23 +84,23 @@ ssh -T git@github.com
 ## Installation
 To link the config files run:
 ```
-./scripts/link_conf.sh
-./scripts/link_home.sh
+make link-home
+make link-conf
 ```
 
 To add the shell config to .bashrc run:
 ```
-source scripts/shell.sh
+make shell
 ```
 
 To set up git run:
 ```
-. ./scripts/git.sh
+make git
 ```
 
 To install tpm run:
 ```
-./scripts/tmux.sh
+make tmux
 ```
 Plugins can be installed with tpm by pressing <leader>+I within tmux.
 

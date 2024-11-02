@@ -1,4 +1,5 @@
 #!/bin/sh
+
 (
     source scripts/err.sh
 
@@ -10,7 +11,7 @@
         err "No config name provided."
     fi
 
-    CONFDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"/../config
+    CONFDIR="$DOTFILES/config
 
     mv -i "$HOME/.config/$name" "$CONFDIR" || err "Failed to move config file."
 

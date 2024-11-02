@@ -1,5 +1,5 @@
 #!/bin/sh
-. ./scripts/append.sh
+source ./scripts/append.sh
 
 SHELLRC=".bashrc"
 LINES='source $HOME/.config/shell/shared.sh

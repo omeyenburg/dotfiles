@@ -1,7 +1,6 @@
 #!/bin/sh
 
-CONFDIR="$(cd "$(dirname "$0")" && pwd)"/../config
-# CONFDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"/../config
+CONFDIR="$DOTFILES/config"
 
 for file in $(ls -a $CONFDIR); do
     if [ "$file" = "." ] || [ "$file" = ".." ]; then
