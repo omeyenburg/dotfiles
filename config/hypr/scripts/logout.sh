@@ -11,7 +11,7 @@ S2="        Reboot"
 S3="      Shutdown"
 S4="         Gnome"
 
-cd $HOME/.config/wofi/logout
+cd $HOME/.config/hypr/wofi/logout
 OUTPUT=$(echo -e "$S0\n$S1\n$S2\n$S3\n$S4" | wofi --show dmenu --conf config.toml --style style.css)
 
 case "$OUTPUT" in
@@ -19,6 +19,6 @@ case "$OUTPUT" in
     "$S1") hyprctl dispatch exit ;;
     "$S2") systemctl reboot ;;
     "$S3") systemctl poweroff ;;
-    # "$S4") XDG_CURRENT_DESKTOP=GNOME gnome-control-center --verbose ;;
+    "$S4") XDG_CURRENT_DESKTOP=GNOME gnome-control-center --verbose ;;
     *) ;;
 esac

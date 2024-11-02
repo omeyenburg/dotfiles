@@ -6,15 +6,15 @@
         "tooltip": true
     },
     "custom/battery": {
-        "exec": "~/.config/waybar/scripts/battery_module.sh",
-        "on-click": "~/.config/waybar/scripts/battery_profile.sh",
+        "exec": "~/.config/hypr/waybar/scripts/battery_module.sh",
+        "on-click": "~/.config/hypr/waybar/scripts/battery_profile.sh",
         "return-type": "json",
         "interval": 10,
         "signal": 8,
         "tooltip": true,
     },
     "custom/brightness": {
-        "exec": "~/.config/waybar/scripts/brightness_module.sh",
+        "exec": "~/.config/hypr/waybar/scripts/brightness_module.sh",
         "return-type": "json",
         "interval": 10,
         "signal": 9,
