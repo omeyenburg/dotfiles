@@ -11,7 +11,7 @@
         err "No config name provided."
     fi
 
-    CONFDIR="$DOTFILES/config
+    CONFDIR="$DOTFILES/config"
 
     mv -i "$HOME/.config/$name" "$CONFDIR" || err "Failed to move config file."
 

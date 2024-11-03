@@ -1,29 +1,29 @@
 DOTFILES := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 export DOTFILES
 
-add-conf:
-	@sh "$(DOTFILES)scripts/add_conf.sh" "$(ARGS)"
-
 configure:
-	@sh "$(DOTFILES)scripts/configure.sh" "$(ARGS)"
+	@sh "$(DOTFILES)scripts/configure.sh"
 
 git:
-	@sh "$(DOTFILES)scripts/git.sh" "$(ARGS)"
+	@sh "$(DOTFILES)scripts/git.sh"
 
 shell:
-	@sh "$(DOTFILES)scripts/shell.sh" "$(ARGS)"
+	@sh "$(DOTFILES)scripts/shell.sh"
 
 tmux:
-	@sh "$(DOTFILES)scripts/tmux.sh" "$(ARGS)"
+	@sh "$(DOTFILES)scripts/tmux.sh"
 
 link-conf:
-	@sh "$(DOTFILES)scripts/link_conf.sh" "$(ARGS)"
+	@sh "$(DOTFILES)scripts/link_conf.sh"
 
 link-home:
-	@sh "$(DOTFILES)scripts/link_home.sh" "$(ARGS)"
+	@sh "$(DOTFILES)scripts/link_home.sh"
 
-# Main wallpaper target that handles subcommands
+unlink:
+	@sh "$(DOTFILES)scripts/unlink.sh"
+
 wallpaper:
-	@sh "$(DOTFILES)scripts/wallpaper.sh" $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+	@sh "$(DOTFILES)scripts/wallpaper.sh"
 
-%: ; @:
+pywal-venv:
+	@sh "$(DOTFILES)scripts/color.sh"
