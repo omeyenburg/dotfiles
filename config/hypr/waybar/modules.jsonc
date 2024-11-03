@@ -47,7 +47,13 @@
     "hyprland/window": {
         "format": "{}",
         "rewrite": {
-            //"(.*) - Brave": "$1", // 🌎
+            ".*Bitwarden Password Manager.*": "Bitwarden",
+            "^(?!.*Bitwarden Password Manager).* Brave": "Brave",
+            "^(?!.*Bitwarden Password Manager).* Mozilla Firefox": "Firefox",
+            "vim (.*)": "NeoVim: $1",
+            "Spotify.*": "Spotify",
+            "kitty.*": "",
+            "bash.*": "",
             "(.*)@(.*):(.*)": "$3"
         }
     },
