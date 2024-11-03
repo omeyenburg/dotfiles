@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Credit:
+# https://github.com/hyprwm/Hyprland/issues/3835
+
 handle() {
     case $1 in
       windowtitle*)
