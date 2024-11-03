@@ -1,16 +1,21 @@
 /*
- * __        __          _                  ____  _         _       
- * \ \      / /_ _ _   _| |__   __ _ _ __  / ___|| |_ _   _| | ___  
- *  \ \ /\ / / _` | | | | '_ \ / _` | '__| \___ \| __| | | | |/ _ \ 
- *   \ V  V / (_| | |_| | |_) | (_| | |     ___) | |_| |_| | |  __/ 
- *    \_/\_/ \__,_|\__, |_.__/ \__,_|_|    |____/ \__|\__, |_|\___| 
- *                 |___/                              |___/         
- *  
+ * __        __          _                  ____  _         _
+ * \ \      / /_ _ _   _| |__   __ _ _ __  / ___|| |_ _   _| | ___
+ *  \ \ /\ / / _` | | | | '_ \ / _` | '__| \___ \| __| | | | |/ _ \
+ *   \ V  V / (_| | |_| | |_) | (_| | |     ___) | |_| |_| | |  __/
+ *    \_/\_/ \__,_|\__, |_.__/ \__,_|_|    |____/ \__|\__, |_|\___|
+ *                 |___/                              |___/
+ *
  * ----------------------------------------------------- 
 */
 
 /* Inspiration: */
 /* https://github.com/mylinuxforwork/dotfiles/blob/main/share/dotfiles/.config/waybar/themes/ml4w/style.css */
+
+/* -----------------------------------------------------
+ * Import Pywal colors 
+ * ----------------------------------------------------- */
+/* @import 'style-light.css'; */
 
 /* -----------------------------------------------------
  * General 
@@ -31,7 +36,10 @@
     border-radius: 8px;
     padding: 0px 10px;
     margin: 0px 5px;
+    /*background-color: @backgroundlight;*/
     background-color: rgba(23, 63, 79, 0.6);
+    opacity: 0.8;
+    /*color: @textcolor1;*/
     color: rgba(53, 185, 171, 1);
 }
 
@@ -40,13 +48,15 @@
  * ----------------------------------------------------- */
 
 tooltip {
-    border-radius: 8px;
+    /*background-color: @backgroundlight;*/
     background-color: rgba(23, 63, 79, 0.9);
+    border-radius: 8px;
     padding: 0px;
     margin: 0px;
 }
 
 tooltip label {
+    /*color: @textcolor1;*/
     color: rgba(53, 185, 171, 1);
     padding: 0px;
     margin: -6px -5px -4px -3px;
@@ -161,10 +171,12 @@ tooltip label {
 
 #bluetooth.disabled {
     color: rgba(128, 128, 128, 1);
+    /*color: @textcolor2;*/
 }
 
 #bluetooth.off {
     color: rgba(128, 128, 128, 1);
+    /*color: @textcolor2;*/
 }
 
 #bluetooth.connected {
@@ -177,6 +189,7 @@ tooltip label {
 
 #idle_inhibitor.deactivated {
     color: rgba(128, 128, 128, 1);
+    /*color: @textcolor2;*/
 }
 
 /* -----------------------------------------------------

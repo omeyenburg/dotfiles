@@ -6,6 +6,9 @@ ignore-empty-password
 indicator-caps-lock
 scaling=fill
 
+# To prevent white edges around images
+color=000000
+
 # For scaling = 1.33333:
 # indicator-x-position=965
 # indicator-y-position=540
