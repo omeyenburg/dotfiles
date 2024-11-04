@@ -6,6 +6,8 @@
 handle() {
     case $1 in
       windowtitle*)
+        ## Bitwarden : floating and centered ##
+
         # Extract the window ID from the line
         window_id=${1#*>>}
 
@@ -32,6 +34,24 @@ handle() {
                 hyprctl dispatch setfloating address:0x$window_id
                 hyprctl dispatch resizewindowpixel exact 20% 50%,address:0x$window_id
                 hyprctl dispatch centerwindow address:0x$window_id
+            fi
+        fi
+
+        ## Firefox opacity : opaque except in new tab page ##
+
+        if [[ $1 == "windowtitlev2"* ]]; then
+            # Extract the floating state
+            title=$(echo "${1#*>>}" | sed 's/^[0-9a-z]*,\(.*\)/\1/')
+
+            firefox=$(echo "$title" | sed 's/.*Mozilla Firefox/true/' )
+            if [ "$firefox" == 'true' ]; then
+
+                # Check title
+                if [ "$title" == 'Mozilla Firefox' ]; then
+                    hyprctl setprop active opaque false
+                else
+                    hyprctl setprop active opaque true
+                fi
             fi
         fi
         ;;
