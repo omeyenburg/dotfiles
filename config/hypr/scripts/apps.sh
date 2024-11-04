@@ -5,5 +5,5 @@ if [ "$(ps -e | grep wofi)" ]; then
     exit 0
 fi
 
-cd $HOME/.config/hypr/wofi/apps
-wofi --show drun --conf config.toml --style style.css
+cd $HOME
+wofi --show drun --conf $HOME/.config/hypr/wofi/apps/config.toml --style $HOME/.config/hypr/wofi/apps/style.css

@@ -5,20 +5,21 @@ if [ "$(ps -e | grep wofi)" ]; then
     exit 0
 fi
 
-S0="          Lock"
-S1="        Logout"
-S2="        Reboot"
-S3="      Shutdown"
-S4="         Gnome"
+s0="          Lock"
+s1="        Logout"
+s2="        Reboot"
+s3="      Shutdown"
+s4="         Gnome"
 
-cd $HOME/.config/hypr/wofi/logout
-OUTPUT=$(echo -e "$S0\n$S1\n$S2\n$S3\n$S4" | wofi --show dmenu --conf config.toml --style style.css)
+conf=$HOME/.config/hypr/wofi/logout/config.toml
+style=$HOME/.config/hypr/wofi/logout/style.css
+output=$(echo -e "$s0\n$s1\n$s2\n$s3\n$s4" | wofi --show dmenu --conf $conf --style $style)
 
-case "$OUTPUT" in
-    "$S0") swaylock --config $HOME/.config/hypr/swaylock/config.toml ;;
-    "$S1") hyprctl dispatch exit ;;
-    "$S2") systemctl reboot ;;
-    "$S3") systemctl poweroff ;;
-    "$S4") XDG_CURRENT_DESKTOP=GNOME gnome-control-center --verbose ;;
+case "$output" in
+    "$s0") swaylock --config $HOME/.config/hypr/swaylock/config.toml ;;
+    "$s1") hyprctl dispatch exit ;;
+    "$s2") systemctl reboot ;;
+    "$s3") systemctl poweroff ;;
+    "$s4") XDG_CURRENT_DESKTOP=GNOME gnome-control-center --verbose ;;
     *) ;;
 esac
