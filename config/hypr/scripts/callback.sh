@@ -47,7 +47,7 @@ handle() {
             if [ "$firefox" == 'true' ]; then
 
                 # Check title
-                if [ "$title" == 'Mozilla Firefox' ]; then
+                if [ "$title" == 'Mozilla Firefox' ] || [ "$title" == "New Tab — Mozilla Firefox"]; then
                     hyprctl setprop active opaque false
                 else
                     hyprctl setprop active opaque true
