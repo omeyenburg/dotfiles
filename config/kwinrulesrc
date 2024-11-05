@@ -1,0 +1,28 @@
+[22a8ebac-c996-4a38-a2cd-42fe08230d11]
+Description=Window settings for systemsettings
+clientmachine=localhost
+size=1398,1017
+sizerule=3
+title=Window Rules * — System Settings
+types=1
+windowrole=MainWindow#1
+windowrolematch=1
+wmclass=systemsettings
+wmclassmatch=1
+
+[44cb191c-747a-4374-9699-1f1f4830dcd6]
+Description=Window settings for Brave-browser
+clientmachine=localhost
+size=2560,1534
+sizerule=3
+title=Create Desktop Entry Ranger - Brave
+types=1
+windowrole=browser
+windowrolematch=1
+wmclass=brave-browser Brave-browser
+wmclasscomplete=true
+wmclassmatch=1
+
+[General]
+count=2
+rules=44cb191c-747a-4374-9699-1f1f4830dcd6,22a8ebac-c996-4a38-a2cd-42fe08230d11
