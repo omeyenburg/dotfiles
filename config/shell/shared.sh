@@ -24,6 +24,9 @@ alias gitlog="python3 ~/.config/shell/gitlog.py"
 # Add mason packages to path
 export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
+# Add ~/.local/bin to path
+export PATH="$PATH:$HOME/.local/bin"
+
 # macOS-specific settings
 if [ "$(uname)" = "Darwin" ]; then
     # Disable homebrew autoupdate
