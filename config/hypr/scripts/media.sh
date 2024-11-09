@@ -15,7 +15,6 @@ if [ "$1" = "volume" ]; then
 
     muted=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{ print $3 }')
     percent=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{ print 100 * $2 }')
-    echo $percent
 
     if [ "$muted" ]; then
         title="Volume (muted)"
@@ -58,10 +57,11 @@ fi
 # killall -9 AppRun.wrapped
 # killall -9 zenity
 # $HOME/.local/bin/yad --progress --title="info-overlay" --text="$title" --text-align="center" --timeout=1 --no-buttons --borders=12 $percent
-old=$(ps -e | grep zenity | head -1 | awk '{ print $1 }')
-zenity --progress --title="Volume" --text="" --timeout=1 --percentage=1 --no-cancel --ok-label="$percent%" --height=130 &
-sleep 0.2
-if [ "$old" ]; then
-    echo "killing $old"
-    kill $old
-fi
+# old=$(ps -e | grep zenity | head -1 | awk '{ print $1 }')
+# zenity --progress --title="Volume" --text="" --timeout=1 --percentage=1 --no-cancel --ok-label="$percent%" --height=130 &
+# sleep 0.2
+# if [ "$old" ]; then
+#     echo "killing $old"
+#     kill $old
+# fi
+python3 $HOME/.config/hypr/scripts/overlay.py $percent
