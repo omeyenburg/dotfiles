@@ -23,9 +23,9 @@ if [ "$1" = "volume" ]; then
     fi
 elif [ "$1" = "screen-brightness" ]; then
     if [ "$2" = "up" ]; then
-        brightnessctl s 5%+
+        brightnessctl set 5%+ > /dev/null
     elif [ "$2" = "down" ]; then
-        brightnessctl s 5%-
+        brightnessctl set 5%- > /dev/null
     else
         echo "Invalid value '$2'. Valid values are: up, down"
         exit 1
@@ -33,7 +33,7 @@ elif [ "$1" = "screen-brightness" ]; then
 
     title="Screen Brightness"
     current=$(brightnessctl g)
-    current=$(brightnessctl m)
+    max=$(brightnessctl m)
     percent=$(echo "100*$current/$max" | bc)
 elif [ "$1" = "keyboard-brightness" ]; then
     if [ "$2" = "up" ]; then
@@ -47,7 +47,7 @@ elif [ "$1" = "keyboard-brightness" ]; then
 
     title="Keyboard Brightness"
     current=$(brightnessctl -d smc::kbd_backlight get)
-    current=$(brightnessctl -d smc::kbd_backlight max)
+    max=$(brightnessctl -d smc::kbd_backlight max)
     percent=$(echo "100*$current/$max" | bc)
 else
     echo "Invalid value '$1'. Valid values are: volume, screen-brightness, keyboard-brightness"
@@ -64,4 +64,12 @@ fi
 #     echo "killing $old"
 #     kill $old
 # fi
-python3 $HOME/.config/hypr/scripts/overlay.py $percent
+# pid=$(ps aux | grep "hypr/scripts/overlay.py" | awk '{ print $2 }')
+# sleep 0.2
+# kill -9 $pid
+
+echo $percent > /tmp/hypr-overlay-pipe
+running=$(ps aux | grep "python3.*hypr/scripts/overlay.py" | wc -l)
+if [ $running -le 1 ]; then
+    python3 $HOME/.config/hypr/scripts/overlay.py $percent
+fi

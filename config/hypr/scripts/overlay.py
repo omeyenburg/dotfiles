@@ -1,3 +1,4 @@
+import time
 import sys
 import os
 import gi
@@ -6,7 +7,6 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib
 
 try:
-    print(sys.argv)
     percentage = int(sys.argv[1])
 except ValueError or IndexError:
     raise Exception("Expected one numeric argument: percentage")
@@ -45,7 +45,8 @@ def close_window():
     return False  # Returning False removes the timeout callback after it runs once
 
 # Set a timeout to close the window after 1 second
-GLib.timeout_add(1000, close_window)
+timeout_time = 800
+timeout_id = GLib.timeout_add(timeout_time, close_window)
 
 style_provider = Gtk.CssProvider()
 css = """
@@ -56,12 +57,12 @@ label {
 }
 
 progressbar > trough {
-    background-color: #D3D3D3;
+    background-color: #808080;
     min-height: 10px;
 }
 
 progressbar > trough > progress {
-    background-color: #808080;
+    background-color: #D3D3D3;
     border: none;
     min-height: 10px;
 }
@@ -75,5 +76,29 @@ Gtk.StyleContext.add_provider_for_screen(
 
 
 win.show_all()
+
+FIFO_PATH = "/tmp/hypr-overlay-pipe"  # Named pipe path
+# Function to read from the FIFO and update the progress bar
+
+
+def update_progress():
+    global timeout_id
+
+    with open(FIFO_PATH, "r+") as fifo:
+        line = fifo.read().strip()
+        if line:
+            try:
+                percent = float(line) / 100
+                progress_bar.set_fraction(percent)
+                GLib.source_remove(timeout_id)
+                timeout_id = GLib.timeout_add(timeout_time, close_window)
+                fifo.truncate(0)
+            except ValueError:
+                print("Invalid input:", line)
+    GLib.timeout_add(50, update_progress)
+
+
+# Run the update_progress function in a separate thread
+GLib.idle_add(update_progress)
 
 Gtk.main()
