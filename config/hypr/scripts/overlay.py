@@ -1,5 +1,6 @@
 import os
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib
 
@@ -37,7 +38,7 @@ images = {
     "audio-muted": ".config/hypr/icons/audio-volume-muted-symbolic.png",
     "audio-overamplified": ".config/hypr/icons/audio-volume-overamplified-symbolic.png",
     "display-brightness": ".config/hypr/icons/display-brightness-symbolic.png",
-    "keyboard-brightness": ".config/hypr/icons/keyboard-brightness-symbolic.png"
+    "keyboard-brightness": ".config/hypr/icons/keyboard-brightness-symbolic.png",
 }
 
 
@@ -52,11 +53,11 @@ class Window(Gtk.Window):
 
         # Apply custom css
         style_provider = Gtk.CssProvider()
-        style_provider.load_from_data(css.encode('utf-8'))
+        style_provider.load_from_data(css.encode("utf-8"))
         Gtk.StyleContext.add_provider_for_screen(
             Gtk.Window.get_screen(self),
             style_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
 
         timeout_id = GLib.timeout_add(1000, self.quit)
@@ -96,7 +97,7 @@ class Window(Gtk.Window):
                     print("Could not convert to int:", line[0])
 
                 if "muted" in line:
-                    title = " ".join(line[1:-2])
+                    title = " ".join(line[1:-1])
                     muted = True
                 else:
                     title = " ".join(line[1:])
@@ -104,7 +105,8 @@ class Window(Gtk.Window):
 
                 self.title_widget.set_text(title)
                 self.bar_widget.set_fraction(percent / 100)
-                self.bar_widget.set_text(str(percent) + "%")
+
+                self.bar_widget.set_text(str(round(percent / 5) * 5) + "%")
 
                 if title == "Volume":
                     if muted:
