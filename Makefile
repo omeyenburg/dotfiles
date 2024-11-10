@@ -22,9 +22,6 @@ link-home:
 unlink:
 	@sh "$(DOTFILES)scripts/unlink.sh"
 
-binary:
-	@sh "$(DOTFILES)scripts/bin.sh"
-
 wallpaper:
 	@sh "$(DOTFILES)scripts/wallpaper.sh"
 
