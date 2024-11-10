@@ -13,6 +13,22 @@
         "signal": 8,
         "tooltip": true,
     },
+    "hyprland/workspaces": {
+        "on-scroll-up": "hyprctl dispatch workspace r-1",
+        "on-scroll-down": "hyprctl dispatch workspace r+1",
+        "on-click": "activate",
+        "active-only": false,
+        "all-outputs": true,
+        "format": "{}",
+        "format-icons": {
+            "urgent": "",
+            "active": "",
+            "default": ""
+        },
+        "persistent-workspaces": {
+            "*": 4
+        }
+    },
     "custom/brightness": {
         "exec": "~/.config/hypr/waybar/scripts/brightness_module.sh",
         "return-type": "json",
@@ -20,12 +36,6 @@
         "signal": 9,
         "tooltip": true,
     },
-    //"backlight": {
-    //    // "device": "acpi_video1",
-    //    "format": "{percent}% {icon}",
-    //    "format-icons": ["", "", "", "", "", "", "", "", ""],
-    //    "tooltip": false
-    //},
     "pulseaudio": {
         "format": "{volume}% {icon}",
         "format-bluetooth": "{volume}% {icon}",
