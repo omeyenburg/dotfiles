@@ -4,7 +4,7 @@ Here is a list of useful and required apps. This guide is specific to OpenSUSE.
 ## Zypper
 Run this to install the listed apps below
 ```
-sudo zypper install git gcc yazi tmux make curl btop kitty clang neovim rustup fastfetch wofi mako waybar hyprland hypridle hyprshot hyprpicker pavucontrol NetworkManager-applet blueman gimp zathura texlive-latexmk
+sudo zypper install git gcc yazi tmux make curl btop kitty clang neovim rustup fastfetch wofi mako waybar zenity hyprland hypridle hyprshot hyprpicker pavucontrol NetworkManager-applet blueman gimp zathura texlive-latexmk
 ```
 
 ### Developing
@@ -25,6 +25,7 @@ sudo zypper install git gcc yazi tmux make curl btop kitty clang neovim rustup f
 - wofi
 - mako
 - waybar
+- zenity
 - hyprland
 - hypridle
 - hyprshot

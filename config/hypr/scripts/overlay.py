@@ -13,6 +13,7 @@ label {
 
 progressbar {
     color: #D3D3D3;
+    font-size: 14px;
 }
 
 progressbar > trough {
