@@ -15,14 +15,30 @@ if [ "$1" == "point" ]; then
 elif [ "$1" == "select" ]; then
     # Run zenity
     rgb=$(zenity --color-selection | sed 's/^rgb[a]*(//;s/,/ /g;s/)$//')
+    echo $rgb
 
     # Split up components
     r=$(echo $rgb | awk '{ print $1 }')
     g=$(echo $rgb | awk '{ print $2 }')
     b=$(echo $rgb | awk '{ print $3 }')
 
-    # Convert values to hex
-    hex=$(printf '#%x%x%x\n' $r $g $b)
+    # Convert values to hex and prepend missing zeros
+    hex_r=$(printf '%x' $r)
+    if [ $(echo $hex_r | wc -m) -lt 3 ]; then
+        hex_r="0$hex_r"
+    fi
+
+    hex_g=$(printf '%x' $g)
+    if [ $(echo $hex_g | wc -m) -lt 3 ]; then
+        hex_g="0$hex_g"
+    fi
+
+    hex_b=$(printf '%x' $b)
+    if [ $(echo $hex_b | wc -m) -lt 3 ]; then
+        hex_b="0$hex_b"
+    fi
+
+    hex="#${hex_r}${hex_g}${hex_b}"
 fi
 
 # Convert to RGB percentages (0-1)
