@@ -14,19 +14,32 @@
         "tooltip": true,
     },
     "hyprland/workspaces": {
-        "on-scroll-up": "hyprctl dispatch workspace r-1",
-        "on-scroll-down": "hyprctl dispatch workspace r+1",
         "on-click": "activate",
         "active-only": false,
         "all-outputs": true,
-        "format": "{}",
+        //"format": "{}",
+        "format": "{id}:{windows} ",
+        "format-window-separator": " ",
+        "window-rewrite-default": "",
+        "window-rewrite": {
+            "class<gimp>": "",
+            "class<kitty>": "",
+            "class<firefox>": "󰈹",
+            "class<spotify>": "",
+            "class<discord>": "",
+            "class<.*libreoffice.*>": "󰏆",
+            "class<org.gnome.Nautilus>": "",
+            "class<kitty> title<.*vim.*>": "",
+            "class<firefox> title<.*github.*>": "",
+            "class<firefox> title<.*youtube.*>": "",
+	},
         "format-icons": {
             "urgent": "",
             "active": "",
             "default": ""
         },
         "persistent-workspaces": {
-            "*": 4
+            "*": 3
         }
     },
     "custom/brightness": {
