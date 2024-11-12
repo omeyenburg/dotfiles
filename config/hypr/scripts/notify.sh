@@ -28,3 +28,6 @@ id=$(busctl --user call \
     0 1 \
     "urgency" "i" "$urgency" \
     "$timeout")
+
+# Return id of notification
+echo $(echo "$id" | sed "s/u\s//")
