@@ -63,3 +63,4 @@ sudo zypper removerepo brave-browser
 ## Flatpak
 - discord
 - spotify
+- com.github.reds.LogisimEvolution
