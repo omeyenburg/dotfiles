@@ -1,0 +1,11 @@
+@define-color shadow rgba({color0.rgb},0.3);
+@define-color darkbackground rgba({color0.rgb},0.7);
+@define-color transparentbackground rgba({color1.rgb},0.75);
+@define-color opaquebackground rgb({color1.rgb});
+@define-color highlightbackground rgb({color2.rgb});
+@define-color border rgb({color5.rgb});
+@define-color textnormal rgb({color7.rgb});
+@define-color textinactive rgb({color8.rgb});
+@define-color textok rgb(115,186,37);
+@define-color textwarning rgb(255,210,4);
+@define-color textcritical rgb(238,46,36);
