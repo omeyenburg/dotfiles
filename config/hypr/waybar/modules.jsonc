@@ -17,8 +17,8 @@
         "on-click": "activate",
         "active-only": false,
         "all-outputs": true,
-        //"format": "{}",
-        "format": "{id}:{windows} ",
+        "format": "{}",
+        //"format": "{id}:{windows} ",
         "format-window-separator": " ",
         "window-rewrite-default": "",
         "window-rewrite": {

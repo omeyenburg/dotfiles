@@ -15,11 +15,21 @@
 /* -----------------------------------------------------
  * Import Pywal colors 
  * ----------------------------------------------------- */
-/* @import 'style-light.css'; */
+
+@import '../../../.cache/wal/colors-waybar.css';
+
 
 /* -----------------------------------------------------
- * General 
+ * General
  * ----------------------------------------------------- */
+
+label {
+    all: unset;
+}
+
+button {
+    all: unset;
+}
 
 * {
     font-family: "UbuntuMono Nerd Font";
@@ -38,11 +48,9 @@
     border-radius: 12px;
     padding: 0px 10px;
     margin: 0px 5px;
-    /*background-color: @backgroundlight;*/
-    background-color: rgba(23, 63, 79, 0.6);
+    background-color: @transparentbackground;
+    color: @textnormal;
     opacity: 0.8;
-    /*color: @textcolor1;*/
-    color: rgba(53, 185, 171, 1);
 }
 
 /* -----------------------------------------------------
@@ -50,16 +58,14 @@
  * ----------------------------------------------------- */
 
 tooltip {
-    /*background-color: @backgroundlight;*/
-    background-color: rgba(23, 63, 79, 0.9);
+    background-color: @transparentbackground;
     border-radius: 8px;
     padding: 0px;
     margin: 0px;
 }
 
 tooltip label {
-    /*color: @textcolor1;*/
-    color: rgba(53, 185, 171, 1);
+    color: @textnormal;
     padding: 0px;
     margin: -6px -5px -4px -3px;
 }
@@ -70,39 +76,45 @@ tooltip label {
 
 #workspaces {
     padding: 0px 3px;
-    background-color: rgba(23, 63, 79, 0.6);
+    background-color: @transparentbackground;
 }
 
 #workspaces button {
-    padding: 0px 5px;
+    padding: 1px 6px;
     margin: 4px 2px;
     border-radius: 10px;
-    color: rgba(53, 185, 171, 1);
-    background-color: rgba(23, 63, 79, 0.6);
+    color: @textnormal;
+    background-color: @darkbackground;
     transition: all 0.3s ease-in-out;
     opacity: 0.5;
+    text-shadow: 
+        -0.1px -0.1px 2px @shadow,
+        0.1px -0.1px 2px @shadow,
+        -0.1px 0.1px 2px @shadow,
+        0.1px 0.1px 2px @shadow;
 }
 
 #workspaces button:hover {
-    opacity: 0.7;
+    color: @textok;
 }
 
 #workspaces button.active {
-    min-width: 25px;
+    /*padding: 1px 10px;*/
+    min-width: 15px;
     transition: all 0.3s ease-in-out;
     opacity: 1.0;
 }
 
 #workspaces button.focused {
-    color: rgba(115, 186, 37, 1);
+    color: @textnormal;
 }
 
 #workspaces button.visible {
-    color: rgba(115, 186, 37, 1);
+    color: @textnormal;
 }
 
 #workspaces button.urgent {
-    color: rgba(33, 164, 223, 1);
+    color: @textwarning;
 }
 
 /* -----------------------------------------------------
@@ -144,11 +156,11 @@ tooltip label {
 }
 
 #cpu.warning, #memory.warning, #temperature.warning {
-   color: rgba(255, 210, 4, 1);
+    color: @textwarning;
 }
 
 #cpu.critical, #memory.critical, #temperature.warning {
-    color: rgba(238, 46, 36, 1);
+    color: @textcritical;
 }
 
 /* -----------------------------------------------------
@@ -158,7 +170,7 @@ tooltip label {
 #network.disconnected {
     border-width: 1px;
     border-color: rgba(255, 210, 4, 1);
-    color: rgba(255, 210, 4, 1);
+    color: @textwarning;
 }
 
 /* -----------------------------------------------------
@@ -166,32 +178,41 @@ tooltip label {
  * ----------------------------------------------------- */
 
 #custom-battery.warning {
-   color: rgba(255, 210, 4, 1);
+    color: @textwarning;
 }
 
 #custom-battery.critical {
-    color: rgba(238, 46, 36, 1);
+    color: @textcritical;
 }
 
 #custom-battery.charging {
-    color: rgba(115, 186, 37, 1);}
+    color: @textok;
+}
 
 /* -----------------------------------------------------
  * Bluetooth
  * ----------------------------------------------------- */
 
 #bluetooth.disabled {
-    color: rgba(128, 128, 128, 1);
-    /*color: @textcolor2;*/
+    color: @textinactive;
+    text-shadow: 
+        -0.05px -0.05px 2px @shadow,
+        0.05px -0.05px 2px @shadow,
+        -0.05px 0.05px 2px @shadow,
+        0.05px 0.05px 2px @shadow;
 }
 
 #bluetooth.off {
-    color: rgba(128, 128, 128, 1);
-    /*color: @textcolor2;*/
+    color: @textinactive;
+    text-shadow: 
+        -0.05px -0.05px 2px @shadow,
+        0.05px -0.05px 2px @shadow,
+        -0.05px 0.05px 2px @shadow,
+        0.05px 0.05px 2px @shadow;
 }
 
 #bluetooth.connected {
-    color: rgba(115, 186, 37, 1);
+    color: @textok;
 }
 
 /* -----------------------------------------------------
@@ -199,8 +220,12 @@ tooltip label {
  * ----------------------------------------------------- */
 
 #idle_inhibitor.deactivated {
-    color: rgba(128, 128, 128, 1);
-    /*color: @textcolor2;*/
+    color: @textinactive;
+    text-shadow: 
+        -0.05px -0.05px 2px @shadow,
+        0.05px -0.05px 2px @shadow,
+        -0.05px 0.05px 2px @shadow,
+        0.05px 0.05px 2px @shadow;
 }
 
 /* -----------------------------------------------------
