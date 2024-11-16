@@ -1,33 +1,60 @@
+/* -----------------------------------------------------
+ * Import Pywal colors 
+ * ----------------------------------------------------- */
+
+@import '.cache/wal/colors-waybar.css';
+
+/* -----------------------------------------------------
+ * Window
+ * ----------------------------------------------------- */
+
+* {
+    all: unset;
+}
+
 #window {
     opacity: 0.9;
     border-radius: 8px;
     font-family: "UbuntuMono Nerd Font";
-    background: linear-gradient(45deg, rgba(51, 204, 255, 0.9), rgba(0, 255, 153, 0.9)) 1;
+    background-color: @border;
 }
 
 #outer-box {
     margin: 2px;
     border-radius: 8px;
-    background-color: #3B4252;
+    background-color: @opaquebackground;
 }
 
 #text {
-    padding: 0 0 0 15px;
+    margin-left: 15px;
+    color: @textnormal;
 }
+
+/* -----------------------------------------------------
+ * Input
+ * ----------------------------------------------------- */
 
 #input {
     margin: 4px;
-    padding: 8px;
+    padding: 14px;
     border-radius: 6px;
-    background-color: #1f2335;
-    color: #D8DEE9;
-    border: 0px solid transparent;
+    background-color: @darkbackground;
+    color: @textnormal;
     font-size: 18px;
 }
 
+#input > image.left {
+    margin-right: 10px;
+    color: @textnormal;
+}
+
+/* -----------------------------------------------------
+ * Entry
+ * ----------------------------------------------------- */
+
 #entry:selected {
-    background-color: rgba(51, 204, 255, 0.2);
-    border: 2px solid rgba(51, 204, 255, 0.8);
+    background-color: @highlightbackground;
+    border: 2px solid @border;
 }
 
 #entry {
@@ -36,10 +63,10 @@
     border-radius: 6px;
     font-size: 18px;
     border: 2px solid transparent;
-    color: #D8DEE9;
+    color: @textnormal;
 }
 
 #expander-box {
-    background-color: rgba(51, 204, 255, 0.3);
+    background-color: transparent;
     border-radius: 6px;
 }

@@ -1,17 +1,35 @@
+/* -----------------------------------------------------
+ * Import Pywal colors 
+ * ----------------------------------------------------- */
+
+@import '.cache/wal/colors-waybar.css';
+
+/* -----------------------------------------------------
+ * Window
+ * ----------------------------------------------------- */
+
+* {
+    all: unset;
+}
+
 #input {
     margin: -100px;
 }
 
 #window {
     border-radius: 8px;
-    background-color: rgba(23, 63, 79, 0.8);
+    background-color: @transparentbackground;
     font-family: "UbuntuMono Nerd Font";
     font-size: 16px;
 }
 
+/* -----------------------------------------------------
+ * Entry
+ * ----------------------------------------------------- */
+
 #entry:selected {
-    border: 1px solid rgba(53, 185, 171, 1);
-    background-color: rgba(23, 63, 79, 0.95);
+    border: 1px solid @border;
+    background-color: @highlightbackground;
 }
 
 #entry {
@@ -22,9 +40,9 @@
 }
 
 #text:selected {
-    color: rgba(53, 185, 171, 1);
+    color: @textnormal;
 }
 
 #text {
-    color: rgba(53, 185, 171, 1);
+    color: @textnormal;
 }
