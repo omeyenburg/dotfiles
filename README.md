@@ -34,3 +34,6 @@ Run this with the desired hostname:
 ```
 sudo hostnamectl set-hostname <newhostname>
 ```
+
+## Wallpapers
+A collection of wallpapers can be found on the wallpaper branch.

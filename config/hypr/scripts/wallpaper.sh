@@ -39,7 +39,7 @@ else
 fi
 
 # Generate colorscheme
-$HOME/.config/wal/venv/bin/python -m pywal -i $wallpaper -stqn $light --saturate 0.1
+wal -i $wallpaper -stqn $light --saturate 0.1
 
 # Relaunch waybar (kill again for spam protection)
 killall waybar

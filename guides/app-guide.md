@@ -31,6 +31,7 @@ sudo zypper install git gcc yazi tmux make curl btop kitty clang neovim rustup f
 - hyprshot
 - hyprpicker
 - pavucontrol
+- python311-pipx
 
 ### Networking & Bluetooth
 - NetworkManager-applet
@@ -64,3 +65,6 @@ sudo zypper removerepo brave-browser
 - discord
 - spotify
 - com.github.reds.LogisimEvolution
+
+## PIPX
+- pywal

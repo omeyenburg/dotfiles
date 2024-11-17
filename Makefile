@@ -21,6 +21,3 @@ link-home:
 
 unlink:
 	@sh "$(DOTFILES)scripts/unlink.sh"
-
-pywal-venv:
-	@sh "$(DOTFILES)scripts/color.sh"
