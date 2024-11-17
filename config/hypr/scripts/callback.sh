@@ -68,13 +68,20 @@ handle() {
             window_info=$(hyprctl clients -j | jq --arg id "0x$window_id" '.[] | select(.address == ($id))')
 
             # Get size
-            window_width=$(echo $window_info | jq -r '.size.[0]')
-            monitor_width=$(hyprctl monitors -j | jq -r '.[].width')
             monitor_scale=$(hyprctl monitors -j | jq -r '.[].scale')
 
-            if [[ $window_width -ge $(echo "$monitor_width/$monitor_scale" | bc) ]]; then
+            window_width=$(echo $window_info | jq -r '.size.[0]')
+            monitor_width=$(hyprctl monitors -j | jq -r '.[].width')
+            max_width=$(echo "$monitor_width/$monitor_scale" | bc)
+
+            window_height=$(echo $window_info | jq -r '.size.[1]')
+            monitor_height=$(hyprctl monitors -j | jq -r '.[].height')
+            max_height=$(echo "$monitor_height/$monitor_scale" | bc)
+
+            if [[ $window_width -ge $max_width ]] || [[ $window_height -ge $max_height ]]; then
                 hyprctl dispatch resizeactive -200 -200
-                hyprctl dispatch moveactive 100 100
+                hyprctl dispatch centerwindow
+                # hyprctl dispatch moveactive 100 100
             fi
         fi
         ;;

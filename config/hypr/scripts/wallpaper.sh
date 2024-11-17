@@ -26,7 +26,7 @@ echo "Using wallpaper $wallpaper"
 killall waybar
 
 # These commands require "ipc" in hyprpaper to be enabled
-hyprctl hyprpaper unload "all" 1>/dev/null || (pkill hyprpaper && hyprpaper --config $hypr/conf/wallpaper.conf & disown)
+timeout 1 hyprctl hyprpaper unload "all" 1>/dev/null || { pkill hyprpaper; hyprpaper --config $hypr/conf/wallpaper.conf & disown; }
 hyprctl hyprpaper preload "$wallpaper" 1>/dev/null || (echo "Failed to preload wallpaper" && exit 1)
 hyprctl hyprpaper wallpaper "$monitor,$wallpaper" 1>/dev/null || (echo "Failed to apply wallpaper" && exit 1)
 
@@ -41,7 +41,7 @@ fi
 # Generate colorscheme
 $HOME/.config/wal/venv/bin/python -m pywal -i $wallpaper -stqn $light --saturate 0.1
 
-# Relaunch waybar
+# Relaunch waybar (kill again for spam protection)
 killall waybar
 waybar --config $HOME/.config/hypr/waybar/config.jsonc --style $HOME/.config/hypr/waybar/style.css & disown
 
@@ -49,5 +49,3 @@ waybar --config $HOME/.config/hypr/waybar/config.jsonc --style $HOME/.config/hyp
 echo "Reloading mako"
 $HOME/.config/hypr/mako/colors-wal.sh
 makoctl reload
-# killall mako
-# mako --config $HOME/.config/hypr/mako/config.toml & disown
