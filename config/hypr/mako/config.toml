@@ -7,9 +7,9 @@ default-timeout=3000
 max-visible=5
 font=UbuntuMono Nerd Font 12
 border-radius=8
-text-color=#b4b7b8
-border-color=#566769AA
-background-color=#3a4347EE
+text-color=#edc5f0
+border-color=#9ea3b0AA
+background-color=#7f6c84EE
 
 [urgency=normal]
 border-color=#d08770

@@ -20,7 +20,9 @@ elif [ "$wallpaper" == "list" ]; then
     done
     exit 0
 fi
+
 echo "Using wallpaper $wallpaper"
+export WALLPAPER=$wallpaper
 
 # Kill waybar before changing wallpaper
 killall waybar
@@ -39,7 +41,7 @@ else
 fi
 
 # Generate colorscheme
-wal -i $wallpaper -stqn $light --saturate 0.1
+$(which wal) -i $wallpaper -stqn $light --saturate 0.1
 
 # Relaunch waybar (kill again for spam protection)
 killall waybar
