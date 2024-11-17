@@ -6,7 +6,7 @@ monitor=${2:-"eDP-1"}
 
 # Search wallpapers
 function list_wallpapers {
-    ls $HOME/.local/share/wallpapers/*.{png,PNG,jpg,JPG,jpeg,JPEG} 2> /dev/null
+    ls $HOME/.local/share/wallpapers/* 2> /dev/null
 }
 
 # Select a random wallpaper if no wallpaper is provided.
@@ -22,13 +22,17 @@ elif [ "$wallpaper" == "list" ]; then
 fi
 
 echo "Using wallpaper $wallpaper"
-export WALLPAPER=$wallpaper
+# $HOME/.config/hypr/scripts/notify.sh "" "$wallpaper"
 
 # Kill waybar before changing wallpaper
 killall waybar
 
+if [ ! "$(ps -e | grep hyprpaper )"]; then
+    hyprpaper #--config $hypr/conf/wallpaper.conf & disown
+fi
+
 # These commands require "ipc" in hyprpaper to be enabled
-timeout 1 hyprctl hyprpaper unload "all" 1>/dev/null || { pkill hyprpaper; hyprpaper --config $hypr/conf/wallpaper.conf & disown; }
+timeout 1 hyprctl hyprpaper unload "all" 1>/dev/null || { pkill hyprpaper; hyprpaper & disown; } # --config $hypr/conf/wallpaper.conf
 hyprctl hyprpaper preload "$wallpaper" 1>/dev/null || (echo "Failed to preload wallpaper" && exit 1)
 hyprctl hyprpaper wallpaper "$monitor,$wallpaper" 1>/dev/null || (echo "Failed to apply wallpaper" && exit 1)
 
