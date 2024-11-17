@@ -25,6 +25,11 @@
 
 label {
     all: unset;
+    text-shadow: 
+        -0.05px -0.05px 2px @shadow,
+        0.05px -0.05px 2px @shadow,
+        -0.05px 0.05px 2px @shadow,
+        0.05px 0.05px 2px @shadow;
 }
 
 button {
@@ -36,10 +41,6 @@ button {
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    text-shadow: none;
     margin: 2px 0px 0px 0px;
     background-color: transparent;
 }
@@ -87,11 +88,6 @@ tooltip label {
     background-color: @darkbackground;
     transition: all 0.3s ease-in-out;
     opacity: 0.5;
-    text-shadow: 
-        -0.1px -0.1px 2px @shadow,
-        0.1px -0.1px 2px @shadow,
-        -0.1px 0.1px 2px @shadow,
-        0.1px 0.1px 2px @shadow;
 }
 
 #workspaces button:hover {
@@ -169,7 +165,7 @@ tooltip label {
 
 #network.disconnected {
     border-width: 1px;
-    border-color: rgba(255, 210, 4, 1);
+    border-color: @textwarning;
     color: @textwarning;
 }
 
@@ -195,20 +191,10 @@ tooltip label {
 
 #bluetooth.disabled {
     color: @textinactive;
-    text-shadow: 
-        -0.05px -0.05px 2px @shadow,
-        0.05px -0.05px 2px @shadow,
-        -0.05px 0.05px 2px @shadow,
-        0.05px 0.05px 2px @shadow;
 }
 
 #bluetooth.off {
     color: @textinactive;
-    text-shadow: 
-        -0.05px -0.05px 2px @shadow,
-        0.05px -0.05px 2px @shadow,
-        -0.05px 0.05px 2px @shadow,
-        0.05px 0.05px 2px @shadow;
 }
 
 #bluetooth.connected {
@@ -221,11 +207,6 @@ tooltip label {
 
 #idle_inhibitor.deactivated {
     color: @textinactive;
-    text-shadow: 
-        -0.05px -0.05px 2px @shadow,
-        0.05px -0.05px 2px @shadow,
-        -0.05px 0.05px 2px @shadow,
-        0.05px 0.05px 2px @shadow;
 }
 
 /* -----------------------------------------------------
