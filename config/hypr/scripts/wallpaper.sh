@@ -4,40 +4,28 @@
 wallpaper=${1:-""}
 monitor=${2:-"eDP-1"}
 
+# Return current wallpaper
+function get_wallpaper {
+    cat $HOME/.cache/wal/wal
+    echo ""
+}
+
 # Search wallpapers
 function list_wallpapers {
     ls $HOME/.local/share/wallpapers/* 2> /dev/null
 }
 
-function get_wallpaper {
-    cat $HOME/.cache/wal/wal
-    echo
-}
-
-function restart_hyprpaper {
-    killall hyprpaper
-    hyprpaper & disown
-}
-
-function switch_hyprpaper {
-    if [ ! "$(ps -e | grep hyprpaper )"]; then
-        hyprpaper #--config $hypr/conf/wallpaper.conf & disown
-    fi
-
-    # These commands require "ipc" in hyprpaper to be enabled
-    hyprctl hyprpaper unload "all" #1>/dev/null # || { pkill hyprpaper; hyprpaper & disown; } # --config $hypr/conf/wallpaper.conf
-    hyprctl hyprpaper preload "$wallpaper" #1>/dev/null || (echo "Failed to preload wallpaper" && exit 1)
-    hyprctl hyprpaper wallpaper "$monitor,$wallpaper" #1>/dev/null || (echo "Failed to apply wallpaper" && exit 1)
-}
-
 # Select a random wallpaper if no wallpaper is provided.
 if [ ! "$wallpaper" ]; then
     wallpaper=$(list_wallpapers | sort -R | tail -1)
+elif [ "$wallpaper" == "get" ]; then
+    get_wallpaper
+    exit 0
 elif [ "$wallpaper" == "list" ]; then
     echo "Found wallpapers:"
     for file in $(list_wallpapers)
     do
-        echo "    $file"
+        echo "  $file"
     done
     exit 0
 fi
@@ -48,18 +36,31 @@ echo "Using wallpaper $wallpaper"
 # Kill waybar before changing wallpaper
 killall waybar
 
-# if [ ! "$(ps -e | grep hyprpaper )"]; then
-#     hyprpaper #--config $hypr/conf/wallpaper.conf & disown
-# fi
-#
-# # These commands require "ipc" in hyprpaper to be enabled
-# timeout 1 hyprctl hyprpaper unload "all" 1>/dev/null # || { pkill hyprpaper; hyprpaper & disown; } # --config $hypr/conf/wallpaper.conf
-#
-#
-# hyprctl hyprpaper preload "$wallpaper" #1>/dev/null || (echo "Failed to preload wallpaper" && exit 1)
-# hyprctl hyprpaper wallpaper "$monitor,$wallpaper" #1>/dev/null || (echo "Failed to apply wallpaper" && exit 1)
+# Start hyprpaper if not running yet
+if [ ! "$(ps -e | grep hyprpaper )" ]; then
+    echo "Starting hyprpaper"
+    hyprpaper & disown
+    sleep 0.1
+fi
 
-timeout 1 switch_hyprpaper | { restart_hyprpaper; timeout 1 switch_hyprpaper; }
+# Try loading wallpaper
+for ((i = 1; i <= 2; i++)); do
+    # These commands require "ipc" in hyprpaper to be enabled
+    success=$(timeout 1 bash -c "{ hyprctl hyprpaper unload 'all'; hyprctl hyprpaper preload $wallpaper; hyprctl hyprpaper wallpaper $monitor,$wallpaper; }" )
+
+    if [ $? -eq 0 ]; then
+        echo "Successfully loaded wallpaper"
+        break
+    elif [ $i == 1 ]; then
+        echo "Retrying to load wallpaper"
+        echo "Reason: $success"
+        killall hyprpaper
+        hyprpaper & disown
+    else
+        echo "Failed to load wallpaper"
+        exit 1
+    fi
+done
 
 # Detect wallpaper brightness
 brightness=$(magick "$wallpaper" -colorspace Gray -format "%[fx:mean*255]" info:)
