@@ -9,6 +9,27 @@ function list_wallpapers {
     ls $HOME/.local/share/wallpapers/* 2> /dev/null
 }
 
+function get_wallpaper {
+    cat $HOME/.cache/wal/wal
+    echo
+}
+
+function restart_hyprpaper {
+    killall hyprpaper
+    hyprpaper & disown
+}
+
+function switch_hyprpaper {
+    if [ ! "$(ps -e | grep hyprpaper )"]; then
+        hyprpaper #--config $hypr/conf/wallpaper.conf & disown
+    fi
+
+    # These commands require "ipc" in hyprpaper to be enabled
+    hyprctl hyprpaper unload "all" #1>/dev/null # || { pkill hyprpaper; hyprpaper & disown; } # --config $hypr/conf/wallpaper.conf
+    hyprctl hyprpaper preload "$wallpaper" #1>/dev/null || (echo "Failed to preload wallpaper" && exit 1)
+    hyprctl hyprpaper wallpaper "$monitor,$wallpaper" #1>/dev/null || (echo "Failed to apply wallpaper" && exit 1)
+}
+
 # Select a random wallpaper if no wallpaper is provided.
 if [ ! "$wallpaper" ]; then
     wallpaper=$(list_wallpapers | sort -R | tail -1)
@@ -27,14 +48,18 @@ echo "Using wallpaper $wallpaper"
 # Kill waybar before changing wallpaper
 killall waybar
 
-if [ ! "$(ps -e | grep hyprpaper )"]; then
-    hyprpaper #--config $hypr/conf/wallpaper.conf & disown
-fi
+# if [ ! "$(ps -e | grep hyprpaper )"]; then
+#     hyprpaper #--config $hypr/conf/wallpaper.conf & disown
+# fi
+#
+# # These commands require "ipc" in hyprpaper to be enabled
+# timeout 1 hyprctl hyprpaper unload "all" 1>/dev/null # || { pkill hyprpaper; hyprpaper & disown; } # --config $hypr/conf/wallpaper.conf
+#
+#
+# hyprctl hyprpaper preload "$wallpaper" #1>/dev/null || (echo "Failed to preload wallpaper" && exit 1)
+# hyprctl hyprpaper wallpaper "$monitor,$wallpaper" #1>/dev/null || (echo "Failed to apply wallpaper" && exit 1)
 
-# These commands require "ipc" in hyprpaper to be enabled
-timeout 1 hyprctl hyprpaper unload "all" 1>/dev/null || { pkill hyprpaper; hyprpaper & disown; } # --config $hypr/conf/wallpaper.conf
-hyprctl hyprpaper preload "$wallpaper" 1>/dev/null || (echo "Failed to preload wallpaper" && exit 1)
-hyprctl hyprpaper wallpaper "$monitor,$wallpaper" 1>/dev/null || (echo "Failed to apply wallpaper" && exit 1)
+timeout 1 switch_hyprpaper | { restart_hyprpaper; timeout 1 switch_hyprpaper; }
 
 # Detect wallpaper brightness
 brightness=$(magick "$wallpaper" -colorspace Gray -format "%[fx:mean*255]" info:)
