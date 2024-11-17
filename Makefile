@@ -22,8 +22,5 @@ link-home:
 unlink:
 	@sh "$(DOTFILES)scripts/unlink.sh"
 
-wallpaper:
-	@sh "$(DOTFILES)scripts/wallpaper.sh"
-
 pywal-venv:
 	@sh "$(DOTFILES)scripts/color.sh"
