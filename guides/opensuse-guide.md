@@ -1,8 +1,8 @@
-# Apps
-Here is a list of useful and required apps. This guide is specific to OpenSUSE.
+# OpenSUSE apps
+Here is a list of useful and required apps. This is mostly specific to OpenSUSE.
 
 ## Zypper
-Run this to install the listed apps below:
+Run this to install the listed apps below through zypper:
 ```
 sudo zypper install git gcc yazi tmux make curl btop kitty clang neovim rustup fastfetch wofi mako waybar zenity hyprland hypridle hyprshot hyprpicker pavucontrol NetworkManager-applet blueman gimp zathura texlive-latexmk
 ```
