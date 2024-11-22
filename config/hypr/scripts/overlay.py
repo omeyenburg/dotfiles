@@ -1,33 +1,44 @@
+import sys
 import os
 import gi
 
+# Import Gtk
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib
 
+# Import wal colors
+HOME = os.getenv("HOME")
+sys.path.append(os.path.join(HOME, ".cache/wal/"))
+from colors import *
 
-css = """
-label {
-    color: #D3D3D3;
+
+css = f"""
+window {{
+    background-color: {color0};
+}}
+
+label {{
+    color: {color7};
     font-size: 18px;
     font-weight: bold;
-}
+}}
 
-progressbar {
-    color: #D3D3D3;
+progressbar {{
+    color: {color7};
     font-size: 14px;
-}
+}}
 
-progressbar > trough {
+progressbar > trough {{
     border: none;
-    background-color: #808080;
+    background-color: {color2};
     min-height: 10px;
-}
+}}
 
-progressbar > trough > progress {
-    background-color: #D3D3D3;
+progressbar > trough > progress {{
+    background-color: {color7};
     border: none;
     min-height: 10px;
-}
+}}
 """
 
 images = {
@@ -76,15 +87,22 @@ class Window(Gtk.Window):
         vbox.pack_start(self.title_widget, False, False, 0)
 
         # Media icon
-        icon_path = os.path.join(os.getenv("HOME"), images["empty"])
+        icon_path = os.path.join(HOME, images["empty"])
         self.icon_widget = Gtk.Image.new_from_file(icon_path)
-        vbox.pack_start(self.icon_widget, False, False, 0)
+
+        frame = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        frame.set_halign(Gtk.Align.CENTER)
+        frame.add(self.icon_widget)
+
+        vbox.pack_start(frame, False, False, 0)
 
         # Bar
         self.bar_widget = Gtk.ProgressBar()
+
         self.bar_widget.set_margin_start(23)
         self.bar_widget.set_margin_end(23)
         self.bar_widget.set_show_text(True)
+
         vbox.pack_start(self.bar_widget, False, False, 0)
 
     def update(self, timeout_id):
@@ -126,6 +144,11 @@ class Window(Gtk.Window):
 
                 icon_path = os.path.join(os.getenv("HOME"), icon)
                 self.icon_widget.set_from_file(icon_path)
+                # pixbuf = GdkPixbuf.Pixbuf.new_from_file(icon_path)
+                # self.tinted_pixbuf = self.tint_pixbuf(pixbuf, (52, 152, 219, 128))
+
+                # Display the image
+                # image = Gtk.Image.new_from_pixbuf(self.tinted_pixbuf)
 
                 GLib.source_remove(timeout_id)
                 timeout_id = GLib.timeout_add(800, self.quit)
