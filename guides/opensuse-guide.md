@@ -66,5 +66,8 @@ sudo zypper removerepo brave-browser
 - spotify
 - com.github.reds.LogisimEvolution
 
+### Scaling:
+flatpak override --user com.spotify.Client --env=GDK_SCALE=1.3 --env=GDK_DPI_SCALE=0.5
+
 ## PIPX
 - pywal

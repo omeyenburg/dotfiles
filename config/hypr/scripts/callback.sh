@@ -36,24 +36,6 @@ handle() {
                 hyprctl dispatch centerwindow address:0x$window_id
             fi
         fi
-
-        ## Firefox opacity : opaque except in new tab page ##
-        #
-        # if [[ $1 == "windowtitlev2"* ]]; then
-        #     # Extract the floating state
-        #     title=$(echo "${1#*>>}" | sed 's/^[0-9a-z]*,\(.*\)/\1/')
-        #
-        #     firefox=$(echo "$title" | sed 's/.*Mozilla Firefox/true/' )
-        #     if [ "$firefox" == 'true' ]; then
-        #
-        #         # Check title
-        #         if [ "$title" == 'Mozilla Firefox' ] || [ "$title" == "New Tab — Mozilla Firefox"]; then
-        #             hyprctl setprop active opaque false
-        #         else
-        #             hyprctl setprop active opaque true
-        #         fi
-        #     fi
-        # fi
         ;;
       changefloatingmode*)
         # Extract the window ID from the line
@@ -70,18 +52,19 @@ handle() {
             # Get size
             monitor_scale=$(hyprctl monitors -j | jq -r '.[].scale')
 
+            # Get current window and monitor size
             window_width=$(echo $window_info | jq -r '.size.[0]')
             monitor_width=$(hyprctl monitors -j | jq -r '.[].width')
-            max_width=$(echo "$monitor_width/$monitor_scale" | bc)
+            max_width=$(echo "$monitor_width/$monitor_scale - 20" | bc)
 
             window_height=$(echo $window_info | jq -r '.size.[1]')
             monitor_height=$(hyprctl monitors -j | jq -r '.[].height')
-            max_height=$(echo "$monitor_height/$monitor_scale" | bc)
+            max_height=$(echo "$monitor_height/$monitor_scale - 20" | bc)
 
+            # Decrease window size above threshold
             if [[ $window_width -ge $max_width ]] || [[ $window_height -ge $max_height ]]; then
-                hyprctl dispatch resizeactive -200 -200
+                hyprctl dispatch resizeactive -30 -60
                 hyprctl dispatch centerwindow
-                # hyprctl dispatch moveactive 100 100
             fi
         fi
         ;;
