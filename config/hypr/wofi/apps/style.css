@@ -15,7 +15,7 @@
 #window {
     opacity: 0.9;
     border-radius: 8px;
-    font-family: "UbuntuMono Nerd Font";
+    font-family: "FiraCode Nerd Font";
     background-color: @border;
 }
 

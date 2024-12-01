@@ -5,11 +5,11 @@ height=300
 on-touch=none
 default-timeout=3000
 max-visible=5
-font=UbuntuMono Nerd Font 12
+font=FiraCode Nerd Font 12
 border-radius=8
-text-color=#edc5f0
-border-color=#9ea3b0AA
-background-color=#7f6c84EE
+text-color=#c5c1dc
+border-color=#829199AA
+background-color=#8e8876EE
 
 [urgency=normal]
 border-color=#d08770
