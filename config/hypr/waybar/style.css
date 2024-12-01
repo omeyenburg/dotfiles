@@ -38,9 +38,9 @@ button {
 
 * {
     font-family: "FiraCode Nerd Font";
+    font-size: 12px;
     font-style: normal;
     font-weight: bold;
-    font-size: 14px;
     margin: 2px 0px 0px 0px;
     background-color: transparent;
 }

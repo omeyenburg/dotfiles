@@ -119,7 +119,7 @@
         "format-ethernet": "{ipaddr}/{cidr}  ",
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "N/A 󱚵 ",
-        "tooltip-format": "{ifname} via {gwaddr} ({essid})  ",
+        "tooltip-format": "{ifname} via {gwaddr} ({essid})",
         // "format-alt": "{ifname}: {ipaddr}/{cidr}",
         "on-click": "pkill nm-connection-editor || nm-connection-editor"
     },

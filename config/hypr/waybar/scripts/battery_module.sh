@@ -111,7 +111,7 @@ fi
 # Construct tooltip with detailed information
 text="${profile_icon}  ${battery_percent}% ${battery_icon} "
 # tooltip="Current: ${battery_percent}%\nDesign:  $battery_percent_design%\nStatus:  ${battery_status}\nProfile: ${profile_name}"
-tooltip="Current: ${battery_percent}%\nRemaining:  $battery_remaining%\nStatus:  ${battery_status}\nProfile: ${profile_name}"
+tooltip="Current:   ${battery_percent}%\nRemaining: $battery_remaining\nStatus:    ${battery_status}\nProfile:   ${profile_name}"
 
 # Output JSON for Waybar
 echo "{\"text\": \"${text}\", \"tooltip\": \"${tooltip}\", \"class\": \"${color_status}\"}"

@@ -5,10 +5,10 @@ if [ "$(ps -e | grep wofi)" ]; then
     exit 0
 fi
 
-s0="          Lock"
-s1="        Logout"
-s2="        Reboot"
-s3="      Shutdown"
+s0="        Lock"
+s1="      Logout"
+s2="      Reboot"
+s3="    Shutdown"
 
 conf=$HOME/.config/hypr/wofi/logout/config.toml
 style=$HOME/.config/hypr/wofi/logout/style.css
