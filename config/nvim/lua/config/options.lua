@@ -1,4 +1,4 @@
--- General {{{ ---------------------------------------------
+-- General {{{
 
 -- Disable providers
 vim.g.loaded_perl_provider = 0
@@ -20,11 +20,48 @@ vim.opt.mouse = ''
 -- Mapped sequence wait time
 vim.opt.timeoutlen = 1000
 
+
+-- }}}
+-- Folding Options {{{
+
 -- Enable folding
 vim.opt.foldmethod = 'marker'
 
+-- Remove Folded section highlighting
+vim.api.nvim_set_hl(0, "Folded", { fg = "NONE", bg = "NONE", bold = true })
+
+-- Remove FoldColumn highlighting
+vim.api.nvim_set_hl(0, "FoldColumn", { fg = "NONE", bg = "NONE", bold = true})
+
+-- Remove fill chars on right side
+vim.o.fillchars = "fold: "
+
+function _G.custom_fold_text()
+    local line_count = vim.v.foldend - vim.v.foldstart + 1
+    local first_line = vim.fn.getline(vim.v.foldstart)
+
+    -- Remove leading '#', '-' and '/' characters and spaces
+    first_line = first_line:gsub("^#*-*/*%s*", "")
+
+    -- Remove trailing '{' and spaces
+    first_line = first_line:gsub("%s*{*%s*$", "")
+
+    -- Truncate first line if it's too long
+    if #first_line > 50 then
+        first_line = first_line:sub(1, 50) .. "..."
+    end
+
+    -- Pad line count to align vertically (assuming max 4 digits)
+    local padded_line_count = string.format("%4d", line_count)
+
+    return string.format("> %s lines: %s", padded_line_count, first_line)
+end
+
+-- Set the custom fold text
+vim.opt.foldtext = "v:lua.custom_fold_text()"
+
 -- }}}
--- Appearance Options {{{ ----------------------------------
+-- Appearance Options {{{
 
 -- If some icons are displayed incorrectly, you need to install a nerd font
 -- e.g.: https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode
@@ -49,7 +86,7 @@ vim.opt.list = true -- Highlight trailing whitespace and similar
 vim.opt.listchars = "tab:> ,trail:~,extends:>,precedes:<" -- Set the highlight symbols
 
 -- }}}
--- Indentation Options {{{ ---------------------------------
+-- Indentation Options {{{
 
 local tab_size = 4
 vim.opt.tabstop = 8 -- Number of spaces that a <Tab> in the file counts for. Setting 'tabstop' to any other value than 8 can make your file appear wrong in many places.
@@ -62,14 +99,14 @@ vim.opt.breakindent = false -- Wrapped lines will continue visually indented
 vim.opt.smartindent = true -- Adjust indentation based on control flow statements
 
 -- }}}
--- Search Options {{{ --------------------------------------
+-- Search Options {{{
 
 vim.opt.ignorecase = true -- Case-insensitive searching
 vim.opt.smartcase = true -- Case-sensitive searching if one or more capital letters are used in the search term
 vim.opt.hlsearch = true -- Set highlight all search results
 
 -- }}}
--- Split Options {{{ ---------------------------------------
+-- Split Options {{{
 
 -- C-w + v  -> Vertical split
 -- C-w + s  -> Vertical split
@@ -85,7 +122,7 @@ vim.api.nvim_command 'highlight WinSeparator guifg=#A9B2D5' -- Set color of spli
 vim.opt.laststatus = 3 -- Enables horizontal split lines by disabling status lines for each buffer (must run after plugins)
 
 -- }}}
--- Undo Options {{{ ----------------------------------------
+-- Undo Options {{{
 
 -- Save undo history
 vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
@@ -97,7 +134,7 @@ vim.opt.backup = false
 vim.opt.writebackup = false
 
 -- }}}
--- File Explorer Options (Netrw) {{{ -----------------------
+-- File Explorer Options (Netrw) {{{
 
 -- i    -> Cycle list style
 -- s    -> Cycle sorting
