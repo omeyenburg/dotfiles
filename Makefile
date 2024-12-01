@@ -21,3 +21,6 @@ link-home:
 
 unlink:
 	@sh "$(DOTFILES)scripts/unlink.sh"
+
+fonts:
+	@sh "$(DOTFILES)scripts/fonts.sh"
