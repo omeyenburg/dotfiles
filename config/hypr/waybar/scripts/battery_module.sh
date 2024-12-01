@@ -14,12 +14,16 @@ function sendwarning() {
     powerprofilesctl set power-saver
 }
 
-# Get battery information
-battery_status=$(cat /sys/class/power_supply/BAT0/status)
-battery_charge=$(cat /sys/class/power_supply/BAT0/charge_now)
-battery_charge_full=$(cat /sys/class/power_supply/BAT0/charge_full)
-battery_percent_design=$(cat /sys/class/power_supply/BAT0/capacity)
-battery_percent=$(echo "100*$battery_charge/$battery_charge_full" | bc)
+# # Get battery information
+# battery_status=$(cat /sys/class/power_supply/BAT0/status)
+# battery_charge=$(cat /sys/class/power_supply/BAT0/charge_now)
+# battery_charge_full=$(cat /sys/class/power_supply/BAT0/charge_full)
+# battery_percent_design=$(cat /sys/class/power_supply/BAT0/capacity)
+# battery_percent=$(echo "100*$battery_charge/$battery_charge_full" | bc)
+battery_data=$(acpi | sed "s/.*: //;s/[,%]//g;")
+battery_status=$(echo $battery_data | awk '{ print $1 }')
+battery_percent=$(echo $battery_data | awk '{ print $2 }')
+battery_remaining=$(echo $battery_data | awk '{ print $3 }')
 
 # Get current power profile
 power_profile=$(powerprofilesctl get)
@@ -106,7 +110,8 @@ fi
 
 # Construct tooltip with detailed information
 text="${profile_icon}  ${battery_percent}% ${battery_icon} "
-tooltip="Current: ${battery_percent}%\nDesign:  $battery_percent_design%\nStatus:  ${battery_status}\nProfile: ${profile_name}"
+# tooltip="Current: ${battery_percent}%\nDesign:  $battery_percent_design%\nStatus:  ${battery_status}\nProfile: ${profile_name}"
+tooltip="Current: ${battery_percent}%\nRemaining:  $battery_remaining%\nStatus:  ${battery_status}\nProfile: ${profile_name}"
 
 # Output JSON for Waybar
 echo "{\"text\": \"${text}\", \"tooltip\": \"${tooltip}\", \"class\": \"${color_status}\"}"

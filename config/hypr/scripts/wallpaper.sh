@@ -34,12 +34,12 @@ echo "Using wallpaper $wallpaper"
 # $HOME/.config/hypr/scripts/notify.sh "" "$wallpaper"
 
 # Kill waybar before changing wallpaper
-killall waybar
+pkill waybar
 
 # Start hyprpaper if not running yet
 if [ ! "$(ps -e | grep hyprpaper )" ]; then
     echo "Starting hyprpaper"
-    hyprpaper & disown
+    hyprpaper --config .config/hypr/conf/wallpaper.conf & disown
     sleep 0.1
 fi
 
@@ -54,8 +54,8 @@ for ((i = 1; i <= 2; i++)); do
     elif [ $i == 1 ]; then
         echo "Retrying to load wallpaper"
         echo "Reason: $success"
-        killall hyprpaper
-        hyprpaper & disown
+        pkill hyprpaper
+        hyprpaper --config .config/hypr/conf/wallpaper.conf & disown
     else
         echo "Failed to load wallpaper"
         exit 1
@@ -74,7 +74,7 @@ fi
 $(which wal) -i $wallpaper -stqn $light --saturate 0.1
 
 # Relaunch waybar (kill again for spam protection)
-killall waybar
+pkill waybar
 waybar --config $HOME/.config/hypr/waybar/config.jsonc --style $HOME/.config/hypr/waybar/style.css & disown
 
 # Reload mako

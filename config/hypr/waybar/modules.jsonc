@@ -71,7 +71,7 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "killall pavucontrol || pavucontrol"
+        "on-click": "pkill pavucontrol || pavucontrol"
     },
 
     // Center
@@ -111,7 +111,7 @@
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "show-disabled": true,
         "interval": 10,
-        "on-click": "killall blueman-manager || blueman-manager"
+        "on-click": "pkill blueman-manager || blueman-manager"
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
@@ -121,7 +121,7 @@
         "format-disconnected": "N/A 󱚵 ",
         "tooltip-format": "{ifname} via {gwaddr} ({essid})  ",
         // "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "killall nm-connection-editor || nm-connection-editor"
+        "on-click": "pkill nm-connection-editor || nm-connection-editor"
     },
     "cpu": {
         "format": "{usage}% ",

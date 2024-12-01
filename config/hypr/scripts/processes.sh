@@ -1,3 +1,3 @@
 #!/bin/sh
 
-killall btop || kitty -e btop
+pkill btop || kitty -e btop
