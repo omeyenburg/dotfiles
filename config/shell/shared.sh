@@ -27,6 +27,9 @@ export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 # Add ~/.local/bin to path
 export PATH="$PATH:$HOME/.local/bin"
 
+# Custom command line prompt
+export PS1="\u:\w\$ "
+
 # macOS-specific settings
 if [ "$(uname)" = "Darwin" ]; then
     # Disable homebrew autoupdate
