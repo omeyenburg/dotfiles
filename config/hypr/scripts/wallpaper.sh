@@ -39,7 +39,7 @@ pkill waybar
 # Start hyprpaper if not running yet
 if [ ! "$(ps -e | grep hyprpaper )" ]; then
     echo "Starting hyprpaper"
-    hyprpaper --config .config/hypr/conf/wallpaper.conf & disown
+    hyprpaper # --config .config/hypr/conf/wallpaper.conf & disown
     sleep 0.1
 fi
 
@@ -55,7 +55,7 @@ for ((i = 1; i <= 2; i++)); do
         echo "Retrying to load wallpaper"
         echo "Reason: $success"
         pkill hyprpaper
-        hyprpaper --config .config/hypr/conf/wallpaper.conf & disown
+        hyprpaper # --config .config/hypr/conf/wallpaper.conf & disown
     else
         echo "Failed to load wallpaper"
         exit 1
