@@ -41,7 +41,7 @@ function _G.custom_fold_text()
     local first_line = vim.fn.getline(vim.v.foldstart)
 
     -- Remove leading '#', '-' and '/' characters and spaces
-    first_line = first_line:gsub("^#*-*/*%s*", "")
+    first_line = first_line:gsub("^%s*\"*#*-*/*%s*", "")
 
     -- Remove trailing '{' and spaces
     first_line = first_line:gsub("%s*{*%s*$", "")
