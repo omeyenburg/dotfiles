@@ -16,8 +16,7 @@ if exists("*vundle#begin")
     Plugin 'FuzzyFinder'
     Plugin 'tpope/vim-fugitive'
     Plugin 'Lokaltog/vim-easymotion'
-    call vundle#end()            " required
-    filetype plugin indent on    " required
+    call vundle#end()
 endif
 
 " }}}
@@ -44,9 +43,11 @@ highlight Folded ctermbg=NONE cterm=bold
 " }}}
 " Options {{{
 
+" enable filetype detection
+filetype plugin indent on
+
 " be iMproved, required
 set nocompatible
-filetype off " required
 
 " show line numbers
 set number
@@ -54,8 +55,8 @@ set number
 " relative line numbers
 set relativenumber
 
-" disable printing mode which is already visible in status line
-set noshowmode
+" allow buffer switching, e.g. with :bn, without saving
+set hidden
 
 " highlight line of cursor
 set cursorline
@@ -96,14 +97,17 @@ set shiftwidth=2
 " use the appropriate number of spaces to insert a <Tab>
 set expandtab
 
-" line wrapping
-set nowrap
+" enable automatic indentation
+set autoindent
+
+" keep indentation when pressing '#'
+set indentkeys-=0#
 
 " wrapped lines will continue visually indented
 set nobreakindent
 
-" adjust indentation based on control flow statements
-set smartindent
+" line wrapping
+set nowrap
 
 " case-insensitive searching
 set ignorecase
