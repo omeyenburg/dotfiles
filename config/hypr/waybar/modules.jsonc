@@ -121,7 +121,7 @@
         "format-disconnected": "N/A 󱚵 ",
         "tooltip-format": "{ifname} via {gwaddr} ({essid})",
         // "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "pkill nmtui || $TERMINAL nmtui"
+        "on-click": "pkill nmtui || kitty nmtui"
     },
     "cpu": {
         "format": "{usage}% ",
