@@ -4,21 +4,23 @@
 # | |\  | |>  <| |_| |___) |
 # |_| \_|_/_/\_\\___/|____/
 #
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  # Include the results of the hardware scan.
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
-  # Use the systemd-boot EFI boot loader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
+  # Enable the nix command.
+#  nix = {
+#    package = pkgs.nixVersions.stable;
+#    extraOptions = ''
+#      experimental-features = nix-command
+#    '';
+#  };
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   boot = {
     # Clean temporary files in /tmp on every boot.
@@ -53,12 +55,12 @@
   };
 
   networking = {
-    # Define hostname.
+    # Define the hostname.
     hostName = "oskar-nixos";
 
     # Pick only one of the below networking options.
-    # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+    wireless.enable = false;      # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary.
     # proxy.default = "http://user:password@proxy:port/";
@@ -75,11 +77,9 @@
   time.timeZone = "Europe/Berlin";
 
   # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8"; # default?
+  i18n.defaultLocale = "en_US.UTF-8";
 
   console = {
-    # font = "Lat2-Terminus16";
-    # keyMap = "us";
     earlySetup = true;
     useXkbConfig = true;
   };
@@ -108,31 +108,24 @@
     xserver.xkb = {
       layout = "de";
       variant = "mac";
-      options = "eurosign:e,caps:escape";
+      options = "caps:escape";
     };
 
-    # Enable the X11 windowing system.
-    # xserver.enable = true;
-  
-    # Configure keymap in X11.
-    # xserver.xkb.layout = "us";
-    # xserver.xkb.options = "eurosign:e,caps:escape";
-  
     # Enable CUPS to print documents.
     printing.enable = true;
-  
+
     # Enable sound (pulseaudio or pipewire).
     # hardware.pulseaudio.enable = true;
     pipewire = {
       enable = true;
       pulse.enable = true;
     };
-  
-    # Enable touchpad support (enabled default in most desktopManager).
-    # libinput.enable = true;
-  
+
     # Enable power profiles daemon.
     power-profiles-daemon.enable = true;
+
+    # Enable touchpad support (enabled default in most desktopManager).
+    # libinput.enable = true;
 
     # Enable the OpenSSH daemon.
     # openssh.enable = true;
@@ -144,74 +137,82 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
-      yazi
-      tmux
-      kitty
-      emacs
-      neovim
-      ripgrep
-      fastfetch
-      unzip
-      gcc
-      gnumake
-      python313
+      # Apps
+      anki
       gimp
+      kitty
       spotify
       discord
       obsidian
       inkscape
       mars-mips
-      logisim
-      logisim-evolution
-      hunspell
-      hunspellDicts.de_DE
-      hunspellDicts.en_US-large
-      libreoffice-qt
-      zathura
-      texliveBasic
-      yad
-      wofi
-      mako
-      pywal
-      waybar
-      figlet
-      hyprland
-      hypridle
-      hyprlock
-      hyprshot
-      hyprpaper
-      hyprpicker
+      libreoffice-qt 
+      logisim logisim-evolution
+
+      # Tools
+      fzf yazi tmux emacs figlet unzip gnumake fastfetch
+
+      # Languages & Compilers
+      gcc clang
+      python312Full
+
+#
+#      # Language Servers
+#      pkgs.rust-analyzer
+#      pkgs.lua-language-server
+#      pkgs.python312Packages.jedi-language-server
+#
+#      # Linters and Formatters
+#      pkgs.python312Packages.flake8
+#      pkgs.python312Packages.black
+#      pkgs.rustfmt
+#
+#      # Utility Tools
+#      pkgs.fd
+#      pkgs.fzf
+#      pkgs.ripgrep
+#      pkgs.tree-sitter
+#      pkgs.wl-clipboard
+      
+      # Latex
+      zathura texlab texliveFull
+
+      # Hyprland
+      yad wofi mako pywal waybar hyprland hypridle hyprlock hyprshot hyprpaper hyprpicker
+
+      # Deps
+      hunspell hunspellDicts.de_DE hunspellDicts.en_US-large
     ];
   };
 
   # Allow non-free software (e.g. spotify).
   nixpkgs.config.allowUnfree = true;
 
-  environment = {
-    # Packages installed in system profile.
-    systemPackages = with pkgs; [
-      git
-      vim
-      btop
-      tree
-      wget
-      curl
-      acpi
-      xorg.xrdb
-      wl-clipboard
-      brightnessctl
-      power-profiles-daemon
-      adwaita-qt
-      adwaita-qt6
-      intel-gpu-tools
-      bluez
-      bluez-tools
-      linux-firmware
-      b43FirmwareCutter
-      b43Firmware_6_30_163_46
-      broadcom-bt-firmware
-    ];
+  # Packages installed in system profile.
+  
+    environment.systemPackages = with pkgs; [
+      inputs.neovim.packages."${pkgs.system}".neovim
+      #inputs.neovim.packages.x86_64-linux.default
+      #(myFlake.packages.${system}.default or (throw "Package 'default' not found in the flake"))
+      #(import /home/oskar/.config/nixos/flakes/neovim) # { system = "x86_64-linux"; }).packages.x86_64-linux.neovimEnv
+      # Tools
+      # inputs.nvim.defaultPackage.x86_64-linux
+      #inputs.neovimEnv
 
+      git vim btop tree wget curl
+
+      # Theme
+      adwaita-qt adwaita-qt6
+
+      # System
+      acpi xorg.xrdb brightnessctl power-profiles-daemon intel-gpu-tools linux-firmware
+
+      # Bluetooth
+      bluez bluez-tools b43FirmwareCutter b43Firmware_6_30_163_46 broadcom-bt-firmware
+    ];
+  
+
+  environment = {
     # Define environment variables for session processes.
     sessionVariables = rec {
       XDG_CACHE_HOME  = "$HOME/.cache";
@@ -221,6 +222,8 @@
       XDG_BIN_HOME    = "$HOME/.local/bin";
       XDG_CURRENT_DESKTOP = "Hyprland";
       PATH = [ "${XDG_BIN_HOME}" ];
+
+      NIXOS_OZONE_WL = "1";
   
       # Cursor                                                                           
       # XCURSOR_SIZE = "24";
@@ -288,12 +291,14 @@
   };
 
   # Some programs need SUID wrappers, can be configured further or are started in user sessions.
-  programs.firefox.enable = true;
-  programs.hyprland.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs = {
+    firefox.enable = true;
+    hyprland.enable = true;
+    # gnupg.agent = {
+    #   enable = true;
+    #   enableSSHSupport = true;
+    # };
+  };
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
