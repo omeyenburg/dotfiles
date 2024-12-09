@@ -11,12 +11,25 @@
       name = "nvim";
       targetPkgs = pkgs: [
         pkgs.neovim
+
+        # Language Servers
+        pkgs.clang-tools
         pkgs.rust-analyzer
+        pkgs.glsl_analyzer
         pkgs.lua-language-server
+        pkgs.bash-language-server
         pkgs.python312Packages.jedi-language-server
+
+        # Linters
         pkgs.python312Packages.flake8
-        pkgs.python312Packages.black
+
+        # Formatters
+        pkgs.shfmt
+        pkgs.stylua
         pkgs.rustfmt
+        pkgs.black # python312Packages.black
+
+        # Utility Tools
         pkgs.fd
         pkgs.fzf
         pkgs.ripgrep
@@ -27,3 +40,5 @@
     };
   };
 }
+
+# vim: set shiftwidth=2 tabstop=2 expandtab:

@@ -13,13 +13,8 @@
     ./hardware-configuration.nix
   ];
 
-  # Enable the nix command.
-#  nix = {
-#    package = pkgs.nixVersions.stable;
-#    extraOptions = ''
-#      experimental-features = nix-command
-#    '';
-#  };
+  # Enable the nix command and flakes.
+  # nixos-rebuild switch will first attempt to load /etc/nixos/flake.nix
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   boot = {
@@ -156,24 +151,6 @@
       gcc clang
       python312Full
 
-#
-#      # Language Servers
-#      pkgs.rust-analyzer
-#      pkgs.lua-language-server
-#      pkgs.python312Packages.jedi-language-server
-#
-#      # Linters and Formatters
-#      pkgs.python312Packages.flake8
-#      pkgs.python312Packages.black
-#      pkgs.rustfmt
-#
-#      # Utility Tools
-#      pkgs.fd
-#      pkgs.fzf
-#      pkgs.ripgrep
-#      pkgs.tree-sitter
-#      pkgs.wl-clipboard
-      
       # Latex
       zathura texlab texliveFull
 
@@ -188,18 +165,12 @@
   # Allow non-free software (e.g. spotify).
   nixpkgs.config.allowUnfree = true;
 
-  # Packages installed in system profile.
-  
-    environment.systemPackages = with pkgs; [
-      inputs.neovim.packages."${pkgs.system}".neovim
-      #inputs.neovim.packages.x86_64-linux.default
-      #(myFlake.packages.${system}.default or (throw "Package 'default' not found in the flake"))
-      #(import /home/oskar/.config/nixos/flakes/neovim) # { system = "x86_64-linux"; }).packages.x86_64-linux.neovimEnv
+  environment = {
+    # Packages installed in system profile.
+    systemPackages = with pkgs; [
       # Tools
-      # inputs.nvim.defaultPackage.x86_64-linux
-      #inputs.neovimEnv
-
       git vim btop tree wget curl
+      inputs.neovim.packages."${pkgs.system}".neovim
 
       # Theme
       adwaita-qt adwaita-qt6
@@ -210,9 +181,7 @@
       # Bluetooth
       bluez bluez-tools b43FirmwareCutter b43Firmware_6_30_163_46 broadcom-bt-firmware
     ];
-  
 
-  environment = {
     # Define environment variables for session processes.
     sessionVariables = rec {
       XDG_CACHE_HOME  = "$HOME/.cache";
