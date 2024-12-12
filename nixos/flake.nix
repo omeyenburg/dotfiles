@@ -1,16 +1,17 @@
 {
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs";
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # Select the channel, e.g. github:NixOS/nixpkgs/nixos-unstable
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    neovim.url = "path:./flakes/neovim";
+
+    # Add the Home Manager input from the community repository.
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  #outputs = { self, nixpkgs, neovimEnv-flake, ... }: {
-  outputs = inputs@{ self, nixpkgs, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
     # Use your hostname here.
     # Alternatively, you can select a configuration with:
-    # nixos-rebuild switch --flake '/etc/nixos#my-hostname'
+    # nixos-rebuild switch --flake '/etc/nixos#hostname'
     nixosConfigurations.oskar-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       # Set all inputs parameters as special arguments for all submodules,
@@ -18,6 +19,20 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./configuration.nix
+
+        # Import Home Manager as a NixOS module.
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            # backupFileExtension = "backup";
+            users.oskar = import ./home.nix;
+          };
+
+          # Optionally, use home-manager.extraSpecialArgs to pass
+          # arguments to home.nix
+        }
       ];
     };
   };

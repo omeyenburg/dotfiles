@@ -14,7 +14,7 @@
   ];
 
   # Enable the nix command and flakes.
-  # nixos-rebuild switch will first attempt to load /etc/nixos/flake.nix
+  # nixos-rebuild switch will now first attempt to load /etc/nixos/flake.nix.
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   boot = {
@@ -28,8 +28,8 @@
     # Only used if the chip is supported by this module.
     kernelModules = [ "btusb" ];
 
-    # kernelParams = [ 
-      # Recommendation: Yes, if you experience Bluetooth issues like stuttering. Otherwise, it’s not essential. 
+    # kernelParams = [
+      # Recommendation: Yes, if you experience Bluetooth issues like stuttering. Otherwise, it’s not essential.
       # "bluetooth.disable_ertm=1"  # Disable Enhanced Retransmission Mode
 
       # Recommendation: Yes, especially if you notice flickering or stuttering in video playback or UI rendering.
@@ -55,12 +55,12 @@
 
     # Pick only one of the below networking options.
     networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-    wireless.enable = false;      # Enables wireless support via wpa_supplicant.
+    wireless.enable = false;       # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary.
     # proxy.default = "http://user:password@proxy:port/";
     # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  
+
     # Open ports in the firewall.
     # firewall.allowedTCPPorts = [ ... ];
     # firewall.allowedUDPPorts = [ ... ];
@@ -79,13 +79,13 @@
     useXkbConfig = true;
   };
 
-  # Enable bluetooth
+  # Enable bluetooth.
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
     settings = {
       General = {
-        # Increase connection quality and range
+        # Increase connection quality and range.
         MaxConnections = "1";
         Experimental = "true";
         FastConnectable = "true";
@@ -96,10 +96,10 @@
   };
 
   services = {
-    # Enable blueman interface
+    # Enable the blueman interface.
     blueman.enable = true;
 
-    # Configure keymap in X11
+    # Configure keymaps in X11 and console.
     xserver.xkb = {
       layout = "de";
       variant = "mac";
@@ -141,15 +141,14 @@
       obsidian
       inkscape
       mars-mips
-      libreoffice-qt 
+      libreoffice-qt
       logisim logisim-evolution
 
       # Tools
       fzf yazi tmux emacs figlet unzip gnumake fastfetch
 
       # Languages & Compilers
-      gcc clang
-      python312Full
+      gcc python312Full
 
       # Latex
       zathura texlab texliveFull
@@ -170,10 +169,6 @@
     systemPackages = with pkgs; [
       # Tools
       git vim btop tree wget curl
-      inputs.neovim.packages."${pkgs.system}".neovim
-
-      # Theme
-      adwaita-qt adwaita-qt6
 
       # System
       acpi xorg.xrdb brightnessctl power-profiles-daemon intel-gpu-tools linux-firmware
@@ -193,44 +188,44 @@
       PATH = [ "${XDG_BIN_HOME}" ];
 
       NIXOS_OZONE_WL = "1";
-  
-      # Cursor                                                                           
+
+      # Cursor
       # XCURSOR_SIZE = "24";
       # XCURSOR_THEME = "Adwaita";
-   
+
       # Toolkit backend
       # GTK_THEME = "Adwaita-dark";
       # GDK_BACKEND = "wayland,x11,*";
       # CLUTTER_BACKEND = "wayland";
-  
+
       # QT config
       # QT_QPA_PLATFORM = "wayland;xcb";
       # QT_QPA_PLATFORMTHEME = "qt5ct";
       # QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       # QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-  
+
       # Electron config
       # ELECTRON_ENABLE_SYSTEM_THEME = "true";
       # ELECTRON_FORCE_SYSTEM_THEME = "1";
-  
+
       # Firefox
       # MOZ_ENABLE_WAYLAND = "1";
       # MOZ_WEBRENDER = "1";
       # MOZ_ACCELERATED = "1";
       # MOZ_DISABLE_RDD_SANDBOX = "1";
-  
+
       # General config
       # EDITOR = "nvim";
       # TERMINAL = "kitty";
       # FONT = "FiraCode Nerd Font";
-    
+
       # Video acceleration
       # LIBVA_DRIVER_NAME = "i965";  # or "iHD" for newer Intel GPUs
       # VDPAU_DRIVER = "va_gl";
-  
+
       # Remove if running into compatibility issues
       # SDL_VIDEODRIVER = "wayland";
-  
+
       # Configure nmtui colors
       # Elements: root, border, window, shadow, title, button, actbutton, checkbox, actcheckbox, entry, label, listbox, actlistbox, textbox, acttextbox, helpline, roottext, emptyscale, fullscale, disentry, compactbutton, actsellistbox, sellistbox
       # Syntax: <element>=<fg>,<bg>
@@ -267,6 +262,13 @@
     #   enable = true;
     #   enableSSHSupport = true;
     # };
+  };
+
+  # Configure qt theme.
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "adwaita-dark";
   };
 
   # Copy the NixOS configuration file and link it from the resulting system
