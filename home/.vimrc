@@ -135,6 +135,9 @@ set noswapfile
 set nobackup
 set nowritebackup
 
+" disable netrw banner
+let g:netrw_banner=0
+
 " }}}
 " Keymaps {{{
 
@@ -143,5 +146,18 @@ nnoremap q: <nop>
 
 " open netrw
 nnoremap <space>e :Ex<cr>
+
+" }}}
+" Autocommands {{{
+
+" Automatically place the cursor on the file in netrw
+autocmd FileType netrw call s:netrw_start_on_file()
+
+function! s:netrw_start_on_file()
+  " Skip the first two entries "../" and "./"
+  if getline(1) =~# '^../$' && getline(2) =~# '^./$'
+    exe "normal! 2j"
+  endif
+endfunction
 
 " }}}
