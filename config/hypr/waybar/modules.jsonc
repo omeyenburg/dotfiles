@@ -54,7 +54,7 @@
         "exec": "~/.config/hypr/waybar/scripts/brightness_module.sh",
         "return-type": "json",
         "interval": 10,
-        "signal": 9,
+        "signal": 8,
         "tooltip": true,
     },
     "pulseaudio": {
@@ -72,6 +72,17 @@
             "default": ["", "", ""]
         },
         "on-click": "pkill pavucontrol || pavucontrol"
+    },
+    "custom/pipewire": {
+        "format": "{icon}",
+        "return-type": "json",
+        "signal": 8,
+        "interval": "once",
+        "format-icons": {
+            "mute": "",
+            "default": ["", "", ""]
+        },
+        "exec": "pw-volume status"
     },
 
     // Center
