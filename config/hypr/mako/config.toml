@@ -7,9 +7,9 @@ default-timeout=3000
 max-visible=5
 font=FiraCode Nerd Font 12
 border-radius=8
-text-color=#b4b7b8
-border-color=#56666aAA
-background-color=#3a4347EE
+text-color=#addbee
+border-color=#798a92AA
+background-color=#505b61EE
 
 [urgency=normal]
 border-color=#d08770
