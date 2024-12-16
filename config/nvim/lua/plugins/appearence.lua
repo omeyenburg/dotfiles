@@ -13,10 +13,6 @@ Draws the colors hex color strings in their matching color.
 Abonded version: https://github.com/norcalli/nvim-colorizer.lua
 https://github.com/NvChad/nvim-colorizer.lua
 
-# Twilight
-Dims inactive parts of the code. - :Twilight -> Toggle twilight mode
-https://github.com/folke/twilight.nvim
-
 # Tokyonight
 Pretty colorscheme - Variants: tokyonight-night, tokyonight-day, tokyonight-moon, tokyonight-storm
 https://github.com/folke/tokyonight.nvim
@@ -25,10 +21,6 @@ https://github.com/folke/tokyonight.nvim
 Adds a statusline with automatic adjusting style, matching the colorscheme
 https://github.com/nvim-lualine/lualine.nvim
 
-# Alpha
-Greeting interface
-https://github.com/goolord/alpha-nvim
-
 # Which-Key
 Shows pending keybinds in a window at the bottom
 https://github.com/folke/which-key.nvim
@@ -36,6 +28,10 @@ https://github.com/folke/which-key.nvim
 # Todo Comments
 Highlight todo, notes, etc in comments
 https://github.com/folke/todo-comments.nvim
+
+# Snacks
+Greeting interface, intent line, etc.
+https://github.com/folke/snacks.nvim
 
 ]]
 
@@ -79,12 +75,6 @@ return {
                 names = false,
             },
         },
-    },
-
-    { -- Dim inactive code parts
-        'folke/twilight.nvim',
-        lazy = true,
-        cmd = 'Twilight',
     },
 
     { -- Tokyonight colorscheme
@@ -157,56 +147,6 @@ return {
         end,
     },
 
-    { -- Startup screen
-        'goolord/alpha-nvim',
-        lazy = true,
-        enabled = false,
-        event = 'VimEnter',
-        opts = function()
-            local dashboard = require 'alpha.themes.dashboard'
-
-            dashboard.section.header.val = {
-                '                                                    ',
-                ' ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ',
-                ' ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ',
-                ' ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ',
-                ' ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ',
-                ' ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ',
-                ' ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ',
-                '                                                    ',
-            }
-
-            dashboard.section.buttons.val = {
-                -- https://www.nerdfonts.com/cheat-sheet
-                dashboard.button('n', '󰷈  New file', '<cmd>ene<CR>'),
-                dashboard.button('e', '  File Explorer', '<cmd>Ex<CR>'),
-                dashboard.button('l', '  Restore last session', [[<cmd>lua require("persistence").load({ last = true })<CR>]]),
-                dashboard.button('r', '  Recent files', '<cmd>Telescope oldfiles<CR>'),
-                dashboard.button('f', '  Find file', '<cmd>Telescope find_files<CR>'),
-                dashboard.button('p', '󰒲  Plugins', '<cmd>Lazy<CR>'),
-                dashboard.button('m', '󱌣  Mason', '<cmd>Mason<CR>'),
-                dashboard.button('s', '  Settings', '<cmd>cd ~/.config/nvim<CR><cmd>Ex<CR>'),
-                dashboard.button('q', '  Quit', '<cmd>qa<CR>'),
-            }
-
-            return dashboard
-        end,
-        config = function(_, dashboard)
-            local alpha = require 'alpha'
-
-            vim.api.nvim_create_autocmd('User', {
-                callback = function()
-                    local stats = require('lazy').stats()
-                    local ms = math.floor(stats.startuptime * 100) / 100
-                    dashboard.section.footer.val = '󱐌 Lazy-loaded ' .. stats.loaded .. '/' .. stats.count .. ' plugins in ' .. ms .. 'ms'
-                    pcall(vim.cmd.AlphaRedraw)
-                end,
-            })
-
-            alpha.setup(dashboard.opts)
-        end,
-    },
-
     { -- Shortcut helper
         'folke/which-key.nvim',
         lazy = true,
@@ -231,5 +171,37 @@ return {
         event = 'VeryLazy',
         dependencies = { 'nvim-lua/plenary.nvim' },
         opts = { signs = true },
+    },
+
+    { -- Collection of plugins
+        'folke/snacks.nvim',
+        priority = 1000,
+        lazy = false,
+        ---@type snacks.Config
+        opts = {
+            bigfile = { enabled = true },
+            dashboard = {
+                enabled = true,
+                preset = {
+                    keys = {
+                        { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
+                        { icon = ' ', key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
+                        { icon = ' ', key = 'g', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
+                        { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
+                        { icon = ' ', key = 'e', desc = 'File Explorer', action = ":Ex" },
+                        { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
+                        { icon = '󰒲 ', key = 'p', desc = 'Plugins', action = ':Lazy', enabled = package.loaded.lazy ~= nil },
+                        { icon = ' ', key = 'c', desc = 'Config', action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+                        { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
+                    },
+                },
+            },
+            indent = { enabled = true },
+            input = { enabled = true },
+            notifier = { enabled = true },
+            quickfile = { enabled = true },
+            statuscolumn = { enabled = true },
+            words = { enabled = true },
+        },
     },
 }
