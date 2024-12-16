@@ -2,7 +2,6 @@
 
 # Nvim Lint
 Linting
-
 https://github.com/mfussenegger/nvim-lint
 
 --]]

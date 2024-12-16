@@ -2,14 +2,15 @@
 
 # Vim Sleuth
 Automatic indentation adjustment based on edited file layout
-
 https://github.com/tpope/vim-sleuth
-
 
 # Conform
 Autoformat
-
 https://github.com/stevearc/conform.nvim
+
+# Comment
+Toggle comments
+https://github.com/numToStr/Comment.nvim
 
 --]]
 
@@ -74,5 +75,11 @@ return {
                 },
             },
         },
+    },
+
+    { -- Comment toggling
+        'numToStr/Comment.nvim',
+        lazy = true,
+        event = 'VeryLazy',
     },
 }

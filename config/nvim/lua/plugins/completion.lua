@@ -1,24 +1,19 @@
--- TODO: !!!
--- No tab if completion window is open (bug fix)
--- No tab if completion window is not open, but non-whitespace char on left side of cursor (feature to be added)
-
 --[[
+
+ TODO: !!!
+ No tab if completion window is open (bug fix)
+ No tab if completion window is not open, but non-whitespace char on left side of cursor (feature to be added)
 
 # LSP Signature
 Provides function signatures
-
 https://github.com/ray-x/lsp_signature.nvim
-
 
 # Autopairs
 Add closing brackets and quotes & open bracket after function completion
-
 https://github.com/windwp/nvim-autopairs
-
 
 # Cmp
 Autocompletion
-
 https://github.com/hrsh7th/nvim-cmp
 
 ]]

@@ -2,13 +2,10 @@
 
 # Harpoon
 Quickly mark files and switch between marked files
-
 https://github.com/theprimeagen/harpoon
-
 
 # Telescope
 Fuzzy Finder for files and more
-
 https://github.com/nvim-telescope/telescope.nvim
 
 --]]

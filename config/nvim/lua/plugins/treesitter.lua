@@ -2,13 +2,10 @@
 
 # Treesitter
 Highlight, edit, and navigate code
-
 https://github.com/nvim-treesitter/nvim-treesitter
-
 
 # Treesiter Context
 Shows the context of the currently visible buffer contents
-
 https://github.com/nvim-treesitter/nvim-treesitter-context
 
 --]]

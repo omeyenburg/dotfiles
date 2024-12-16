@@ -1,12 +1,9 @@
 --[[
 
 # Rust Tools
-
 https://github.com/simrat39/rust-tools.nvim
 
-
 # Crates
-
 https://github.com/Saecki/crates.nvim
 
 --]]

@@ -2,54 +2,40 @@
 
 # Nvim Web DevIcons
 Integrates support of nerd fonts
-
 https://github.com/nvim-tree/nvim-web-devicons
-
 
 # Gitsigns
 Adds git related signs to the line numbers, as well as utilities for managing changes
-See `:help gitsigns`
-
 https://github.com/lewis6991/gitsigns.nvim
-
 
 # Nvim Colorizer
 Draws the colors hex color strings in their matching color.
 Abonded version: https://github.com/norcalli/nvim-colorizer.lua
-
 https://github.com/NvChad/nvim-colorizer.lua
 
-
 # Twilight
-Dims inactive parts of the code.
-- :Twilight  -> Toggle twilight mode
-
+Dims inactive parts of the code. - :Twilight -> Toggle twilight mode
 https://github.com/folke/twilight.nvim
 
-
 # Tokyonight
-Pretty colorscheme
-- Variants: tokyonight-night, tokyonight-day, tokyonight-moon, tokyonight-storm
-
+Pretty colorscheme - Variants: tokyonight-night, tokyonight-day, tokyonight-moon, tokyonight-storm
 https://github.com/folke/tokyonight.nvim
-
 
 # Lualine
 Adds a statusline with automatic adjusting style, matching the colorscheme
-
 https://github.com/nvim-lualine/lualine.nvim
-
 
 # Alpha
 Greeting interface
-
 https://github.com/goolord/alpha-nvim
-
 
 # Which-Key
 Shows pending keybinds in a window at the bottom
-
 https://github.com/folke/which-key.nvim
+
+# Todo Comments
+Highlight todo, notes, etc in comments
+https://github.com/folke/todo-comments.nvim
 
 ]]
 
@@ -84,7 +70,7 @@ return {
             filetypes = {
                 '*',
                 '!c',
-                'cpp',
+                '!cpp',
                 html = { RGB = true },
                 css = { RGB = true, names = true },
             },
@@ -174,6 +160,7 @@ return {
     { -- Startup screen
         'goolord/alpha-nvim',
         lazy = true,
+        enabled = false,
         event = 'VimEnter',
         opts = function()
             local dashboard = require 'alpha.themes.dashboard'
@@ -236,5 +223,13 @@ return {
         opts = {
             present = 'modern',
         },
+    },
+
+    { -- Highlight todo, note, bug, fix etc. labels
+        'folke/todo-comments.nvim',
+        lazy = true,
+        event = 'VeryLazy',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        opts = { signs = true },
     },
 }

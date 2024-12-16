@@ -83,6 +83,17 @@ local simple_mappings = {
         '<<',
         'Dedent line',
     },
+    {
+        'n',
+        '<leader>tt',
+        function()
+            vim.cmd.new()
+            vim.cmd.term()
+            vim.cmd.wincmd 'J'
+            vim.api.nvim_win_set_height(0, 15)
+        end,
+        'Open built-in terminal',
+    },
     -- }}}
 }
 

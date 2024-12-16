@@ -1,61 +1,20 @@
 --[[
 
-# Mason
-Package manager for neovim utilities
-
-https://github.com/williamboman/mason.nvim
-
-
-# Mason-LSPConfig
-closes some gaps that exist between mason.nvim and lspconfig
-
-https://github.com/williamboman/mason-lspconfig.nvim
-
-
 # Nvim Lspconfig
 LSP Configuration &
-
 https://github.com/neovim/nvim-lspconfig
 
 ]]
 
 return {
-    { -- Package manager
-        'williamboman/mason.nvim',
-        lazy = true,
-        priority = 1000, -- Must run before nvim-lspconfig
-        cmd = 'Mason',
-        event = { 'BufReadPost', 'BufNewFile' },
-        opts = {
-            ui = {
-                icons = {
-                    package_installed = '✓',
-                    package_pending = '➜',
-                    package_uninstalled = '✗',
-                },
-            },
-        },
-    },
-
-    { -- Setup Mason for lspconfig
-        'williamboman/mason-lspconfig.nvim',
-        lazy = true,
-        priority = 900,
-        event = { 'BufReadPost', 'BufNewFile' },
-    },
-
     { -- LSP Configuration & Plugins
         'neovim/nvim-lspconfig',
         lazy = true,
         priority = 800,
         event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-            'WhoIsSethDaniel/mason-tool-installer.nvim',
-
             -- Useful status updates for LSP
-            -- { 'j-hui/fidget.nvim', opts = {} },
+            { 'j-hui/fidget.nvim', opts = {} },
         },
         opts = {
             inlay_hints = { enabled = true },
@@ -150,35 +109,75 @@ return {
                 end,
             })
 
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-            capabilities.textDocument.signatureHelp = nil
 
-            local mason_tools = require 'config.mason_tools'
-            local mason_servers = require 'config.mason_servers'
+            local lspconfig = require('lspconfig')
 
-            if vim.fn.getenv("HOME") == "/data/data/com.termux/files/home" then
-                mason_tools = {}
-                mason_servers = {}
-            end
+            -- nixd (e.g., for Nix files)
+            lspconfig.nixd.setup {}
 
-            require('mason').setup()
-            require('mason-tool-installer').setup {
-                ensure_installed = mason_tools,
-                auto_update = true, -- Automatically update on startup
-                run_on_start = true, -- Run update on Neovim startup
+            -- clang-tools (Clangd for C/C++/Objective-C/Objective-C++)
+            lspconfig.clangd.setup {}
+
+            -- rust-analyzer (Rust)
+            lspconfig.rust_analyzer.setup {
+                on_attach = function(client, bufnr)
+                    require('completion').on_attach(client)
+                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                end,
+                settings = {
+                    ['rust-analyzer'] = {
+                        imports = {
+                            granularity = {
+                                group = 'module',
+                            },
+                            prefix = 'self',
+                        },
+                        cargo = {
+                            buildScripts = {
+                                enable = true,
+                            },
+                        },
+                        procMacro = {
+                            enable = true,
+                        },
+                    },
+                },
             }
 
-            require('mason-lspconfig').setup {
-                ensure_installed = vim.tbl_keys(mason_servers),
-                automatic_installation = true,
-                handlers = {
-                    function(server_name)
-                        local server = mason_servers[server_name] or {}
-                        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-                        require('lspconfig')[server_name].setup(server)
-                    end,
+            -- glsl_analyzer (GLSL)
+            lspconfig.glslls.setup {}
+
+            -- lua-language-server (Lua)
+            lspconfig.lua_ls.setup {
+                settings = {
+                    Lua = {
+                        runtime = {
+                            version = 'LuaJIT', -- Lua runtime version
+                            path = vim.split(package.path, ';'),
+                        },
+                        diagnostics = {
+                            globals = { 'vim' }, -- Recognize 'vim' as a global
+                        },
+                        workspace = {
+                            library = vim.api.nvim_get_runtime_file("", true), -- Make LSP aware of Neovim runtime files
+                            checkThirdParty = false,
+                        },
+                        telemetry = {
+                            enable = false,
+                        },
+                    },
                 },
+            }
+
+            -- bash-language-server (Bash)
+            lspconfig.bashls.setup {}
+
+            -- jedi-language-server (Python)
+            lspconfig.jedi_language_server.setup {}
+
+            -- latex language server
+            lspconfig.texlab.setup {
+                filetypes = { "tex", "plaintex", "bib", "markdown" }
             }
         end,
     },

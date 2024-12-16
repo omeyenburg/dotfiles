@@ -34,7 +34,6 @@ create_autocmd {
 
             vim.keymap.set('i', code, symbol, { buffer = 0 })
         end
-
     end,
 }
 
@@ -124,6 +123,17 @@ vim.api.nvim_create_autocmd('FileType', {
         end
 
         -- Fix netrw deleting clipboard when clipboard is synced between OS and Vim
-        vim.fn.setreg('+', vim.fn.getreg('+'))
+        vim.fn.setreg('+', vim.fn.getreg '+')
+    end,
+})
+
+-- Configure built in terminal
+vim.api.nvim_create_autocmd('TermOpen', {
+    group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
+    callback = function()
+        vim.opt.number = false
+        vim.opt.relativenumber = false
+        vim.api.nvim_buf_set_keymap(0, 'n', '<leader>tt', ':bd!<cr>', { noremap = true, silent = true })
+        vim.api.nvim_buf_set_keymap(0, 't', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
     end,
 })
