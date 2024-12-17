@@ -26,6 +26,7 @@ return {
         build = ':TSUpdate',
         opts = {
             ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'rust', 'python' },
+            ignore_install = { 'latex' }, -- Disable latex, because it requires nodejs
             auto_install = true,
             highlight = {
                 enable = true,

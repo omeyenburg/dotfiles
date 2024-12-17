@@ -1,8 +1,16 @@
+--[[
+
+# VimTex
+Latex compilation & live preview
+https://github.com/lervag/vimtex
+
+--]]
+
 return {
-  "lervag/vimtex",
-  lazy = false,
-  init = function()
-    -- VimTeX configuration goes here, e.g.
-    vim.g.vimtex_view_method = "zathura"
-  end
+    'lervag/vimtex',
+    lazy = true,
+    ft = { 'tex' },
+    init = function()
+        vim.g.vimtex_view_method = 'zathura'
+    end,
 }
