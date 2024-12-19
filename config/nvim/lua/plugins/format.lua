@@ -3,6 +3,8 @@
 # Vim Sleuth
 Automatic indentation adjustment based on edited file layout
 https://github.com/tpope/vim-sleuth
+Alternative: https://github.com/Darazaki/indent-o-matic
+(faster, because it only checks the first indentation)
 
 # Conform
 Autoformat

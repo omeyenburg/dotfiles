@@ -179,7 +179,7 @@ return {
         lazy = false,
         ---@type snacks.Config
         opts = {
-            bigfile = { enabled = true },
+            bigfile = { enabled = true }, -- Disable lsp etc. in large files
             dashboard = {
                 enabled = true,
                 preset = {
@@ -188,7 +188,7 @@ return {
                         { icon = ' ', key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
                         { icon = ' ', key = 'g', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
                         { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
-                        { icon = ' ', key = 'e', desc = 'File Explorer', action = ":Ex" },
+                        { icon = ' ', key = 'e', desc = 'File Explorer', action = ':Ex' },
                         { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
                         { icon = '󰒲 ', key = 'p', desc = 'Plugins', action = ':Lazy', enabled = package.loaded.lazy ~= nil },
                         { icon = ' ', key = 'c', desc = 'Config', action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
@@ -196,12 +196,14 @@ return {
                     },
                 },
             },
-            indent = { enabled = true },
-            input = { enabled = true },
-            notifier = { enabled = true },
-            quickfile = { enabled = true },
-            statuscolumn = { enabled = true },
-            words = { enabled = true },
+            indent = { -- Draws indent lines
+                enabled = true,
+                scope = { enabled = false }, -- highlights current scope
+            },
+            input = { enabled = true }, -- Input box
+            notifier = { enabled = true }, -- Floating notifications
+            quickfile = { enabled = true }, -- Quicky load files
+            -- statuscolumn = { enabled = true },
         },
     },
 }

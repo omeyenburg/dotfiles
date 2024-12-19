@@ -68,7 +68,43 @@ return {
         },
         config = function()
             local cmp = require 'cmp'
-            local luasnip = require('luasnip').config.setup {}
+
+            --- Luasnip {{{
+            require('luasnip').config.setup {}
+            local luasnip = require 'luasnip'
+
+            -- Load LuaSnip snippets
+            require("luasnip.loaders.from_lua").lazy_load()
+
+            -- Define custom snippets
+            local s = luasnip.snippet
+            local t = luasnip.text_node
+            local helpers = require("luasnip.extras.conditions").expand
+            local in_mathzone = function()
+                return vim.fn['vimtex#syntax#in_mathzone']() == 1
+            end
+
+            -- Snippets for C
+            luasnip.add_snippets("c", {
+                s("main", {
+                    t({
+                        "#include <stdio.h>",
+                        "",
+                        "int main() {",
+                        "    return 0;",
+                        "}"
+                    })
+                }),
+            })
+
+            -- Snippets for LaTeX (Matrix in Math Mode)
+            luasnip.add_snippets("tex", {
+                s({ trig = "matrix", condition = in_mathzone }, {
+                    t({ "\\begin{bmatrix}", "    ", "\\end{bmatrix}" })
+                }),
+            })
+
+            --- }}}
 
             local has_words_before = function()
                 unpack = unpack or table.unpack

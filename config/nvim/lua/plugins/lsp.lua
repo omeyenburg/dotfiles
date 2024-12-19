@@ -109,8 +109,7 @@ return {
                 end,
             })
 
-
-            local lspconfig = require('lspconfig')
+            local lspconfig = require 'lspconfig'
 
             -- nixd (e.g., for Nix files)
             lspconfig.nixd.setup {}
@@ -159,7 +158,7 @@ return {
                             globals = { 'vim' }, -- Recognize 'vim' as a global
                         },
                         workspace = {
-                            library = vim.api.nvim_get_runtime_file("", true), -- Make LSP aware of Neovim runtime files
+                            library = vim.api.nvim_get_runtime_file('', true), -- Make LSP aware of Neovim runtime files
                             checkThirdParty = false,
                         },
                         telemetry = {
@@ -176,9 +175,7 @@ return {
             lspconfig.jedi_language_server.setup {}
 
             -- latex language server
-            lspconfig.texlab.setup {
-                filetypes = { "tex", "plaintex", "bib", "markdown" }
-            }
+            lspconfig.texlab.setup {}
         end,
     },
 }
