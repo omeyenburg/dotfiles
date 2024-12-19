@@ -201,7 +201,7 @@ return {
                 scope = { enabled = false }, -- highlights current scope
             },
             input = { enabled = true }, -- Input box
-            notifier = { enabled = true }, -- Floating notifications
+            -- notifier = { enabled = true }, -- Floating notifications
             quickfile = { enabled = true }, -- Quicky load files
             -- statuscolumn = { enabled = true },
         },

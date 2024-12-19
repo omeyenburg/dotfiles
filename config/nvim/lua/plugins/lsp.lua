@@ -13,13 +13,80 @@ return {
         priority = 800,
         event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
-            -- Useful status updates for LSP
-            { 'j-hui/fidget.nvim', opts = {} },
+            { 'j-hui/fidget.nvim', opts = {} }, -- Useful status updates for LSP
+            { 'saghen/blink.cmp' }, -- Completion
         },
         opts = {
             inlay_hints = { enabled = true },
+            servers = {
+                -- nixd (e.g., for Nix files)
+                nixd = {},
+
+                -- clang-tools (Clangd for C/C++/Objective-C/Objective-C++)
+                clangd = {},
+
+                -- rust-analyzer (Rust)
+                rust_analyzer = {
+                    on_attach = function(client, bufnr)
+                        require('completion').on_attach(client)
+                        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    end,
+                    settings = {
+                        ['rust-analyzer'] = {
+                            imports = {
+                                granularity = {
+                                    group = 'module',
+                                },
+                                prefix = 'self',
+                            },
+                            cargo = {
+                                buildScripts = {
+                                    enable = true,
+                                },
+                            },
+                            procMacro = {
+                                enable = true,
+                            },
+                        },
+                    },
+                },
+
+                -- glsl_analyzer (GLSL)
+                glslls = {},
+
+                -- lua-language-server (Lua)
+                lua_ls = {
+                    settings = {
+                        Lua = {
+                            runtime = {
+                                version = 'LuaJIT', -- Lua runtime version
+                                path = vim.split(package.path, ';'),
+                            },
+                            diagnostics = {
+                                globals = { 'vim' }, -- Recognize 'vim' as a global
+                            },
+                            workspace = {
+                                library = vim.api.nvim_get_runtime_file('', true), -- Make LSP aware of Neovim runtime files
+                                checkThirdParty = false,
+                            },
+                            telemetry = {
+                                enable = false,
+                            },
+                        },
+                    },
+                },
+
+                -- bash-language-server (Bash)
+                bashls = {},
+
+                -- jedi-language-server (Python)
+                jedi_language_server = {},
+
+                -- latex language server
+                texlab = {},
+            },
         },
-        config = function()
+        config = function(_, opts)
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
                 callback = function(event)
@@ -111,71 +178,14 @@ return {
 
             local lspconfig = require 'lspconfig'
 
-            -- nixd (e.g., for Nix files)
-            lspconfig.nixd.setup {}
+            vim.print(opts.servers)
 
-            -- clang-tools (Clangd for C/C++/Objective-C/Objective-C++)
-            lspconfig.clangd.setup {}
-
-            -- rust-analyzer (Rust)
-            lspconfig.rust_analyzer.setup {
-                on_attach = function(client, bufnr)
-                    require('completion').on_attach(client)
-                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-                end,
-                settings = {
-                    ['rust-analyzer'] = {
-                        imports = {
-                            granularity = {
-                                group = 'module',
-                            },
-                            prefix = 'self',
-                        },
-                        cargo = {
-                            buildScripts = {
-                                enable = true,
-                            },
-                        },
-                        procMacro = {
-                            enable = true,
-                        },
-                    },
-                },
-            }
-
-            -- glsl_analyzer (GLSL)
-            lspconfig.glslls.setup {}
-
-            -- lua-language-server (Lua)
-            lspconfig.lua_ls.setup {
-                settings = {
-                    Lua = {
-                        runtime = {
-                            version = 'LuaJIT', -- Lua runtime version
-                            path = vim.split(package.path, ';'),
-                        },
-                        diagnostics = {
-                            globals = { 'vim' }, -- Recognize 'vim' as a global
-                        },
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file('', true), -- Make LSP aware of Neovim runtime files
-                            checkThirdParty = false,
-                        },
-                        telemetry = {
-                            enable = false,
-                        },
-                    },
-                },
-            }
-
-            -- bash-language-server (Bash)
-            lspconfig.bashls.setup {}
-
-            -- jedi-language-server (Python)
-            lspconfig.jedi_language_server.setup {}
-
-            -- latex language server
-            lspconfig.texlab.setup {}
+            for server, config in pairs(opts.servers) do
+                -- passing config.capabilities to blink.cmp merges with the capabilities in your
+                -- `opts[server].capabilities, if you've defined it
+                config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+                lspconfig[server].setup(config)
+            end
         end,
     },
 }
