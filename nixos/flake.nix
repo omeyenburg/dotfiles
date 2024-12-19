@@ -1,3 +1,10 @@
+#  _   _ _       ___  ____
+# | \ | (_)_  __/ _ \/ ___|
+# |  \| | \ \/ / | | \___ \
+# | |\  | |>  <| |_| |___) |
+# |_| \_|_/_/\_\\___/|____/
+#
+
 {
   inputs = {
     # Select the channel, e.g. github:NixOS/nixpkgs/nixos-unstable
@@ -26,7 +33,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            # backupFileExtension = "backup";
+            backupFileExtension = "backup";
             users.oskar = import ./home.nix;
           };
 

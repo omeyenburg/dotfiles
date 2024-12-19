@@ -1,3 +1,10 @@
+#  _   _ _       ___  ____
+# | \ | (_)_  __/ _ \/ ___|
+# |  \| | \ \/ / | | \___ \
+# | |\  | |>  <| |_| |___) |
+# |_| \_|_/_/\_\\___/|____/
+#
+
 { config, pkgs, ... }:
 
 {
@@ -16,9 +23,40 @@
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
 
+#    Mars = {
+#      sessionVariables = {
+#        GTK_SCALE = 2;
+#      };
+#    };
+
+    emacs = {
+      enable = true;
+
+      # Install additional Emacs packages with Home Manager
+      extraPackages = epkgs: with epkgs; [
+        # Org mode packages
+        epkgs.org
+        epkgs.org-contrib
+        epkgs.org-bullets
+        
+        # Evil mode packages
+        epkgs.evil
+        epkgs.evil-collection
+        epkgs.evil-org
+        evil-surround
+
+        use-package
+      ];
+    };
+
     # Configure Neovim dependencies.
     neovim = {
       enable = true;
+      vimAlias = true;
+      vimdiffAlias = true;
+      withRuby = false;
+      withNodeJs = false;
+      withPython3 = false;
       defaultEditor = true;
       extraPackages = with pkgs; [
         # Language Servers
@@ -49,9 +87,6 @@
   };
 
   dconf.settings = {
-    # "org/gnome/desktop/background" = {
-    #   picture-uri-dark = "file://${pkgs.nixos-artwork.wallpapers.nineish-dark-gray.src}";
-    # };
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
     };
@@ -66,8 +101,14 @@
     };
   };
 
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/pdf" = ["com.github.johnfactotum.Foliate.desktop"];
+    };
+  };
+
   # Wayland, X, etc. support for session vars
-  # systemd.user.sessionVariables = config.home-manager.users.oskar.home.sessionVariables;
   # systemd.user.sessionVariables = config.home-manager.users.oskar.home.sessionVariables;
 
   # This value determines the Home Manager release that your

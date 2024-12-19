@@ -138,6 +138,7 @@
       kitty
       spotify
       discord
+      foliate
       obsidian
       inkscape
       mars-mips
@@ -145,7 +146,8 @@
       logisim logisim-evolution
 
       # Tools
-      fzf yazi tmux emacs figlet unzip gnumake fastfetch
+      fzf yazi tmux figlet unzip gnumake fastfetch
+      bash-completion
 
       # Languages & Compilers
       gcc python312Full
@@ -154,7 +156,8 @@
       zathura texlab texliveFull
 
       # Hyprland
-      yad wofi mako pywal waybar hyprland hypridle hyprlock hyprshot hyprpaper hyprpicker
+      yad wofi mako pywal waybar pw-volume
+      hyprland hypridle hyprlock hyprshot hyprpaper hyprpicker
 
       # Deps
       hunspell hunspellDicts.de_DE hunspellDicts.en_US-large
@@ -258,6 +261,11 @@
   programs = {
     firefox.enable = true;
     hyprland.enable = true;
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    };
     # gnupg.agent = {
     #   enable = true;
     #   enableSSHSupport = true;
