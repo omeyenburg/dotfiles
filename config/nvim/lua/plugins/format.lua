@@ -52,7 +52,8 @@ return {
             --     }
             -- end,
             formatters_by_ft = {
-                bash = { 'shfmt' }, -- Bash formatter
+                sh = { 'shfmt' }, -- Shell formatter
+                bash = { 'shfmt' }, -- Shell formatter
                 c = { 'clang-format' }, -- C formatter
                 cpp = { 'clang-format' }, -- C++ formatter
                 css = { 'prettier' }, -- CSS formatter

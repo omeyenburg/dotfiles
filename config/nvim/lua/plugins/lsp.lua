@@ -178,8 +178,6 @@ return {
 
             local lspconfig = require 'lspconfig'
 
-            vim.print(opts.servers)
-
             for server, config in pairs(opts.servers) do
                 -- passing config.capabilities to blink.cmp merges with the capabilities in your
                 -- `opts[server].capabilities, if you've defined it

@@ -42,10 +42,11 @@ return {
         lazy = true,
         event = 'InsertEnter',
         config = function()
-            require('nvim-autopairs').setup { map_cr = true }
-            local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-            local cmp = require 'cmp'
-            cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+            -- require('nvim-autopairs').setup { map_cr = true }
+            require('nvim-autopairs').setup()
+        --     local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+        --     local cmp = require 'cmp'
+        --     cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
         end,
     },
 
@@ -293,25 +294,66 @@ return {
 
     {
         'saghen/blink.cmp',
-        -- optional: provides snippets for the snippet source
-        dependencies = 'rafamadriz/friendly-snippets',
-
-        -- use a release tag to download pre-built binaries
-        version = 'v0.*',
-        -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-        -- build = 'cargo build --release',
-        -- If you use nix, you can build from source using latest nightly rust with:
-        -- build = 'nix run .#build-plugin',
-
-        ---@module 'blink.cmp'
-        ---@type blink.cmp.Config
+        lazy = true,
+        event = "VeryLazy",
+        dependencies = {
+            -- optional: provides snippets for the snippet source
+            'rafamadriz/friendly-snippets',
+            { -- Snippet Engine & its associated nvim-cmp source
+                'L3MON4D3/LuaSnip',
+                build = 'make install_jsregexp',
+            },
+        },
         opts = {
             -- 'default' for mappings similar to built-in completion
-            -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
-            -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-            -- see the "default configuration" section below for full documentation on how to define
-            -- your own keymap.
+            -- Available commands:
+            --   show, hide, cancel, accept, select_and_accept, select_prev, select_next, show_documentation, hide_documentation,
+            --   scroll_documentation_up, scroll_documentation_down, snippet_forward, snippet_backward, fallback
+            -- 'default' keymap
+            --   ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+            --   ['<C-e>'] = { 'hide' },
+            --   ['<C-y>'] = { 'select_and_accept' },
+            --
+            --   ['<C-p>'] = { 'select_prev', 'fallback' },
+            --   ['<C-n>'] = { 'select_next', 'fallback' },
+            --
+            --   ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+            --   ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+            --
+            --   ['<Tab>'] = { 'snippet_forward', 'fallback' },
+            --   ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
             keymap = { preset = 'default' },
+
+            completion = {
+                accept = {
+                    -- Experimental auto-brackets support
+                    auto_brackets = {
+                        enabled = true,
+                    },
+                },
+                keyword = {
+                    -- 'prefix' will fuzzy match on the text before the cursor
+                    -- 'full' will fuzzy match on the text before *and* after the cursor
+                    range = 'prefix',
+                },
+                -- Displays a preview of the selected item on the current line
+                ghost_text = {
+                    enabled = false,
+                },
+            },
+
+            -- experimental signature help support
+            signature = {
+                enabled = true,
+            },
+
+            -- default list of enabled providers defined so that you can extend it
+            -- elsewhere in your config, without redefining it, due to `opts_extend`
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'luasnip', 'buffer' },
+                -- optionally disable cmdline completions
+                -- cmdline = {},
+            },
 
             appearance = {
                 -- Sets the fallback highlight groups to nvim-cmp's highlight groups
@@ -322,17 +364,6 @@ return {
                 -- Adjusts spacing to ensure icons are aligned
                 nerd_font_variant = 'mono',
             },
-
-            -- default list of enabled providers defined so that you can extend it
-            -- elsewhere in your config, without redefining it, due to `opts_extend`
-            sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer' },
-                -- optionally disable cmdline completions
-                -- cmdline = {},
-            },
-
-            -- experimental signature help support
-            -- signature = { enabled = true }
         },
         -- allows extending the providers array elsewhere in your config
         -- without having to redefine it
