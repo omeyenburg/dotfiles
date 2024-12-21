@@ -16,11 +16,6 @@ https://github.com/numToStr/Comment.nvim
 
 --]]
 
-local function script_path()
-    local str = debug.getinfo(2, 'S').source:sub(2)
-    return str:match '(.*/)'
-end
-
 return {
     { -- Indentation size detection
         'tpope/vim-sleuth',
@@ -52,30 +47,17 @@ return {
             --     }
             -- end,
             formatters_by_ft = {
-                sh = { 'shfmt' }, -- Shell formatter
-                bash = { 'shfmt' }, -- Shell formatter
-                c = { 'clang-format' }, -- C formatter
-                cpp = { 'clang-format' }, -- C++ formatter
-                css = { 'prettier' }, -- CSS formatter
-                go = { 'goimports', 'gofmt' }, -- Go formatters
-                html = { 'prettier' }, -- HTML formatter
-                java = { 'google_java_format' }, -- Java formatter
-                javascript = { 'prettier' }, -- JavaScript formatter
-                json = { 'jq' }, -- JSON formatter
-                lua = { 'stylua' }, -- Lua formatter
-                markdown = { 'prettier' }, -- Markdown formatter
+                bash = { 'shfmt' },
+                c = { 'clang-format' },
+                cpp = { 'clang-format' },
+                json = { 'jq' },
+                go = { 'gofmt', 'goimports' },
+                lua = { 'stylua' },
+                nix = { 'alejandra' },
                 python = { 'black' }, -- Python formatter with global config in ~/pyproject.toml
-                rust = { 'rustfmt' }, -- Rust formatter
-                typescript = { 'prettier' }, -- TypeScript formatter
-                yaml = { 'prettier' }, -- YAML formatter
-                dosini = { 'config_format' },
-            },
-            formatters = {
-                config_format = {
-                    command = 'python3',
-                    args = { script_path() .. '/../formatter/config_format.py', '$FILENAME' },
-                    stdin = false,
-                },
+                rust = { 'rustfmt' },
+                sh = { 'shfmt' },
+                ['_'] = { 'indent' },
             },
         },
     },

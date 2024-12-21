@@ -15,11 +15,11 @@ return {
 
             lint.linters_by_ft = {
                 -- c = { 'clangd' }, -- Mason install, automatic
-                python = { 'flake8' }, -- Mason install
-                javascript = { 'eslint' }, -- Mason install
-                -- text = { 'vale' },
+                -- javascript = { 'eslint' }, -- Mason install
                 -- markdown = { 'vale' },
+                python = { 'flake8' }, -- Mason install
                 -- rust = { 'rust_analyzer' }, -- has its own implementation
+                -- text = { 'vale' },
             }
 
             local function set_config(linter, path)
