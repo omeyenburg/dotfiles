@@ -10,10 +10,6 @@ Alternative: https://github.com/Darazaki/indent-o-matic
 Autoformat
 https://github.com/stevearc/conform.nvim
 
-# Comment
-Toggle comments
-https://github.com/numToStr/Comment.nvim
-
 --]]
 
 return {
@@ -39,32 +35,19 @@ return {
         },
         opts = {
             notify_on_error = true,
-            -- format_on_save = function(bufnr)
-            --     local disable_filetypes = { c = true, cpp = true }
-            --     return {
-            --         timeout_ms = 500,
-            --         lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-            --     }
-            -- end,
             formatters_by_ft = {
                 bash = { 'shfmt' },
                 c = { 'clang-format' },
                 cpp = { 'clang-format' },
-                json = { 'jq' },
                 go = { 'gofmt', 'goimports' },
+                json = { 'jq' },
                 lua = { 'stylua' },
                 nix = { 'alejandra' },
-                python = { 'black' }, -- Python formatter with global config in ~/pyproject.toml
+                python = { 'black' },
                 rust = { 'rustfmt' },
                 sh = { 'shfmt' },
-                ['_'] = { 'indent' },
+                toml = { 'taplo' },
             },
         },
-    },
-
-    { -- Comment toggling
-        'numToStr/Comment.nvim',
-        lazy = true,
-        event = 'VeryLazy',
     },
 }
