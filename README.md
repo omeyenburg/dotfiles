@@ -29,7 +29,7 @@ To install tpm run:
 ```
 make tmux
 ```
-Plugins can be installed with tpm by pressing <leader>+I within tmux.
+Install plugins by pressing `<leader>+I` within tmux.
 
 ## Wallpapers
 A collection of wallpapers can be found on the wallpaper branch.
