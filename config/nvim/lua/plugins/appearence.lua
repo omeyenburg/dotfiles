@@ -8,7 +8,7 @@ https://github.com/nvim-tree/nvim-web-devicons
 Adds git related signs to the line numbers, as well as utilities for managing changes
 https://github.com/lewis6991/gitsigns.nvim
 
-# Nvim Colorizer
+# Nvim Colorizer (removed)
 Draws the colors hex color strings in their matching color.
 Abonded version: https://github.com/norcalli/nvim-colorizer.lua
 https://github.com/NvChad/nvim-colorizer.lua
@@ -57,26 +57,6 @@ return {
         },
     },
 
-    { -- Draw the hex strings in their matching color.
-        'NvChad/nvim-colorizer.lua',
-        lazy = true,
-        event = 'VeryLazy',
-        priority = 800, -- load after airline theme, before TreeSitter/LSP
-        opts = {
-            filetypes = {
-                '*',
-                '!c',
-                '!cpp',
-                html = { RGB = true },
-                css = { RGB = true, names = true },
-            },
-            user_default_options = {
-                RGB = false,
-                names = false,
-            },
-        },
-    },
-
     { -- Tokyonight colorscheme
         'folke/tokyonight.nvim',
         lazy = true,
@@ -98,19 +78,12 @@ return {
             require('lualine').setup {
                 options = {
                     icons_enabled = true, -- Requires a nerd font
-
-                    -- Theme
-                    -- https://github.com/nvim-luaVline/lualine.nvim/blob/master/THEMES.md
-                    theme = 'auto',
-
-                    --component_separators = { left = '', right = '' },
-                    --section_separators = { left = '', right = '' },
+                    theme = 'auto', -- https://github.com/nvim-luaVline/lualine.nvim/blob/master/THEMES.md
                     disabled_filetypes = {
                         statusline = {},
                         winbar = {},
                     },
                     ignore_focus = {},
-                    always_divide_middle = true,
                     globalstatus = true,
                     refresh = {
                         statusline = 1000,
@@ -173,11 +146,10 @@ return {
         opts = { signs = true },
     },
 
-    { -- Collection of plugins
+    { -- Collection of QoL plugins
         'folke/snacks.nvim',
         priority = 1000,
         lazy = false,
-        ---@type snacks.Config
         opts = {
             bigfile = { enabled = true }, -- Disable lsp etc. in large files
             dashboard = {
@@ -201,9 +173,7 @@ return {
                 scope = { enabled = false }, -- highlights current scope
             },
             input = { enabled = true }, -- Input box
-            -- notifier = { enabled = true }, -- Floating notifications
             quickfile = { enabled = true }, -- Quicky load files
-            -- statuscolumn = { enabled = true },
         },
     },
 }
