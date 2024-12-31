@@ -1,0 +1,15 @@
+# __   __        _
+# \ \ / /_ _ ___(_)
+#  \ V / _` |_  / |
+#   | | (_| |/ /| |
+#   |_|\__,_/___|_|
+
+# Default config:
+# https://github.com/sxyazi/yazi/blob/shipped/yazi-config/preset/keymap-default.toml
+
+# [manager]
+# prepend_keymap = [
+#     # Instead of opening directories in vim, navigate to them
+#     # You can still open them in vim by pressing O, Shift+O or Shift+Enter
+#     { on = "<Enter>", run = "enter", desc = "Enter the child directory" },
+# ]
