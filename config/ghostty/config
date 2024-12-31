@@ -1,0 +1,31 @@
+#   ____ _               _   _
+#  / ___| |__   ___  ___| |_| |_ _   _
+# | |  _| '_ \ / _ \/ __| __| __| | | |
+# | |_| | | | | (_) \__ \ |_| |_| |_| |
+#  \____|_| |_|\___/|___/\__|\__|\__, |
+#                                |___/
+
+# Theme
+theme = tokyonight
+
+# Font
+#font-family = "Symbols Nerd Font Mono"
+#font-family = "Fira Code"
+#font-family-bold = "Fira Code"
+#font-family-italic = "Maple Mono"
+#font-family-bold-italic = "Maple Mono"
+
+# Cursor
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+# Mouse
+mouse-hide-while-typing = true
+# mouse-scroll-multiplier = 1
+
+# Window
+window-decoration = false
+background-opacity = 0.9
+window-theme = ghostty
+confirm-close-surface = false
