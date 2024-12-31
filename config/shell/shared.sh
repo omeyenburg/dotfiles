@@ -1,21 +1,36 @@
+#!/bin/sh
+
 # Default editor
 export EDITOR=nvim
 
-# ls command
+# ls
 alias ll="ls -alF"
 alias la="ls -A"
 
 # Vim
-alias vim="nvim"
-alias vic="nvim --cmd 'let g:keyboard_layout = \"Colemak\"'"
-alias nvic="nvim --cmd 'let g:keyboard_layout = \"Colemak\"'"
+# alias vim="nvim"
+# alias vic="nvim --cmd 'let g:keyboard_layout = \"Colemak\"'"
+# alias nvic="nvim --cmd 'let g:keyboard_layout = \"Colemak\"'"
+
+# Fastfetch
+source "$HOME/.config/fastfetch/run.sh"
 
 # Git
 alias git="LANG=en_GB git"
 alias gitlog="python3 ~/.config/shell/gitlog.py"
 
+# Yazi
+y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        builtin cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
+
 # Add mason packages to path
-export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
+# export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
 # Add ~/.local/bin to path
 export PATH="$PATH:$HOME/.local/bin"
@@ -43,4 +58,5 @@ elif [ "$SHELL" = "/bin/zsh" ]; then
 fi
 
 # Custom command line prompt
-export PS1="\u:\w\$ "
+# export PS1="\u:\w\$ "
+eval "$(starship init bash)"

@@ -1,8 +1,7 @@
 #!/bin/sh
-source ./scripts/append.sh
+. ./scripts/append.sh
 
 SHELLRC=".bashrc"
-LINES='source $HOME/.config/shell/shared.sh
-source $HOME/.config/fastfetch/run.sh'
+LINES='source "$HOME/.config/shell/shared.sh"'
 
-append $HOME/$SHELLRC "$LINES"
+append "$HOME/$SHELLRC" "$LINES"

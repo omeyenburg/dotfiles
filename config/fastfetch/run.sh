@@ -15,10 +15,10 @@ else
     echo "StartFastfetch: $os not yet supported"
 fi
 
-if [ ${FASTFETCHSTART:-} ] && [ "${logo:-''}" ]; then
-    if [ $cols -ge 71 ]; then
+if [ "${FASTFETCHSTART:-}" ] && [ "${logo:-''}" ]; then
+    if [ "$cols" -ge 71 ]; then
         fastfetch -l "${logo}_small" $args
-    elif [ $cols -ge 56 ]; then
+    elif [ "$cols" -ge 56 ]; then
         fastfetch -l none $args
     fi
 fi
