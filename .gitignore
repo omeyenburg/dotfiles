@@ -1,2 +1,13 @@
-lazy-lock.json
+# Lock files
+*-lock.json
+
+# Log files
 *.log
+
+# Emacs generated config
+config/emacs/auto-save-list/
+config/emacs/config.el
+config/emacs/config.org~
+config/emacs/eln-cache/
+config/emacs/elpa/
+config/emacs/elpaca/
