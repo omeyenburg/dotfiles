@@ -26,7 +26,7 @@ return {
         build = ':TSUpdate',
         opts = {
             ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'rust', 'python' },
-            ignore_install = { 'latex' }, -- Disable latex, because it requires nodejs
+            ignore_install = { 'latex', 'asm' }, -- Disable latex, because it requires nodejs
             auto_install = true,
             highlight = {
                 enable = true,
@@ -49,6 +49,19 @@ return {
         config = function(_, opts)
             require('nvim-treesitter.install').prefer_git = true
             require('nvim-treesitter.configs').setup(opts)
+
+            local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+            parser_config.mips = {
+                install_info = {
+                    -- url = 'https://github.com/omeyenburg/tree-sitter-mips', -- You can use a local path for url if you prefer
+                    url = vim.fn.expand '$HOME/git/tree-sitter-mips',
+                    branch = 'main',
+                    files = { 'src/parser.c' },
+                    generate_requires_npm = false,
+                    requires_generate_from_grammar = false,
+                },
+                filetype = 'asm',
+            }
         end,
     },
 }

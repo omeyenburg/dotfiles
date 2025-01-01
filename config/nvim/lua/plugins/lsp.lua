@@ -84,6 +84,12 @@ return {
 
                 -- latex language server
                 texlab = {},
+
+                mips_lsp = {
+                    cmd = { vim.fn.expand '~' .. '/git/mips-language-server/target/debug/mips-language-server' },
+                    filetypes = { 'asm' },
+                    root_dir = vim.loop.cwd(),
+                },
             },
         },
         config = function(_, opts)
@@ -177,6 +183,17 @@ return {
             })
 
             local lspconfig = require 'lspconfig'
+
+            local configs = require 'lspconfig.configs'
+            if not configs.mips_lsp then
+                configs.mips_lsp = {
+                    default_config = {
+                        cmd = { vim.fn.expand '~' .. '/git/mips-language-server/target/debug/mips-language-server' },
+                        root_dir = lspconfig.util.root_pattern '.git',
+                        filetypes = { 'asm' },
+                    },
+                }
+            end
 
             for server, config in pairs(opts.servers) do
                 -- passing config.capabilities to blink.cmp merges with the capabilities in your
