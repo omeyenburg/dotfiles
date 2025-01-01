@@ -8,11 +8,6 @@ https://github.com/nvim-tree/nvim-web-devicons
 Adds git related signs to the line numbers, as well as utilities for managing changes
 https://github.com/lewis6991/gitsigns.nvim
 
-# Nvim Colorizer (removed)
-Draws the colors hex color strings in their matching color.
-Abonded version: https://github.com/norcalli/nvim-colorizer.lua
-https://github.com/NvChad/nvim-colorizer.lua
-
 # Tokyonight
 Pretty colorscheme - Variants: tokyonight-night, tokyonight-day, tokyonight-moon, tokyonight-storm
 https://github.com/folke/tokyonight.nvim
@@ -59,7 +54,7 @@ return {
 
     { -- Tokyonight colorscheme
         'folke/tokyonight.nvim',
-        lazy = true,
+        lazy = false,
         priority = 1000,
         event = 'VimEnter',
         init = function()
@@ -71,53 +66,23 @@ return {
     { -- Statusbar
         'nvim-lualine/lualine.nvim',
         lazy = true,
-        priority = 900,
-        event = 'VimEnter',
+        event = 'VeryLazy',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
-        config = function()
-            require('lualine').setup {
-                options = {
-                    icons_enabled = true, -- Requires a nerd font
-                    theme = 'auto', -- https://github.com/nvim-luaVline/lualine.nvim/blob/master/THEMES.md
-                    disabled_filetypes = {
-                        statusline = {},
-                        winbar = {},
-                    },
-                    ignore_focus = {},
-                    globalstatus = true,
-                    refresh = {
-                        statusline = 1000,
-                        tabline = 1000,
-                        winbar = 1000,
-                    },
-                },
-                sections = {
-                    lualine_a = { 'mode' },
-                    lualine_b = { 'branch', 'diff', 'diagnostics' },
-                    lualine_c = {
-                        {
-                            'filename',
-                            path = 1,
-                        },
-                    },
-                    lualine_x = { 'encoding', 'fileformat', 'filetype' },
-                    lualine_y = { 'progress' },
-                    lualine_z = { 'location' },
-                },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = { 'filename' },
-                    lualine_x = { 'location' },
-                    lualine_y = {},
-                    lualine_z = {},
-                },
-                tabline = {},
-                winbar = {},
-                inactive_winbar = {},
-                extensions = {},
-            }
-        end,
+        opts = {
+            options = {
+                icons_enabled = true, -- Requires a nerd font
+                theme = 'tokyonight', -- https://github.com/nvim-luaVline/lualine.nvim/blob/master/THEMES.md
+                globalstatus = true,
+            },
+            sections = {
+                lualine_a = { 'mode' },
+                lualine_b = { 'branch', 'diff', 'diagnostics' },
+                lualine_c = { { 'filename', path = 1 } },
+                lualine_x = { 'windows' },
+                lualine_y = { 'encoding', 'fileformat', 'filetype' },
+                lualine_z = { 'location' },
+            },
+        },
     },
 
     { -- Shortcut helper
@@ -143,7 +108,9 @@ return {
         lazy = true,
         event = 'VeryLazy',
         dependencies = { 'nvim-lua/plenary.nvim' },
-        opts = { signs = true },
+        opts = {
+            signs = false,
+        },
     },
 
     { -- Collection of QoL plugins
@@ -172,7 +139,6 @@ return {
                 enabled = true,
                 scope = { enabled = false }, -- highlights current scope
             },
-            input = { enabled = true }, -- Input box
             quickfile = { enabled = true }, -- Quicky load files
         },
     },

@@ -17,6 +17,7 @@ return {
         'lervag/vimtex',
         lazy = true,
         ft = { 'tex' },
+        event = 'VeryLazy',
         init = function()
             vim.g.vimtex_view_method = 'zathura'
         end,
@@ -26,6 +27,7 @@ return {
         'simrat39/rust-tools.nvim',
         lazy = true,
         ft = { 'rust' },
+        event = 'VeryLazy',
         opts = {
             server = {
                 standalone = true,
@@ -68,5 +70,6 @@ return {
         'Saecki/crates.nvim',
         lazy = true,
         ft = { 'rust', 'toml' },
+        event = 'VeryLazy',
     },
 }
