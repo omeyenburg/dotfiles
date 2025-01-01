@@ -1,369 +1,100 @@
---[[
- NOTE: Colemak layout
-
-Upper row:   /, w, e, b, g, /, p, u, y, /
-Home row:    a, r, i, v, d, o, h, j, k, l
-Lower row:   s, x, n, v, /, /, q, ., /, /
-]]
-
--- Mappings to be disabled
--- { mode, key }
-local disabled_mappings = {
-    { 'x', 'Q' },
-    { 'n', 'q:' }, -- Command history
+-- Floating terminal
+local state = {
+  floating = {
+    buf = -1,
+    win = -1,
+  }
 }
 
--- Layout names
-local layouts = {
-    'Normal',
-    'Colemak',
-}
+local function create_floating_window(opts)
+  opts = opts or {}
+  local width = opts.width or math.floor(vim.o.columns * 0.8)
+  local height = opts.height or math.floor(vim.o.lines * 0.8)
 
--- Simple mappings
--- { mode, key, action, description }
-local simple_mappings = {
-    -- {{{
-    {
-        'n',
-        '<Esc>',
-        '<CMD>nohlsearch<CR>',
-        'Clear search highlight',
-    },
-    {
-        'n',
-        '<leader>e',
-        vim.cmd.Ex,
-        'Goto explorer',
-    },
-    {
-        'n',
-        'J',
-        'mzJ`z',
-        'Join lines',
-    },
-    {
-        'n',
-        '<leader>~',
-        '~h',
-        'Static toggle case',
-    },
-    {
-        'n',
-        '<C-d>',
-        '<C-d>zz',
-        'Scroll down',
-    },
-    {
-        'n',
-        '<C-u>',
-        '<C-u>zz',
-        'Scroll up',
-    },
-    {
-        'v',
-        '<Tab>',
-        '>gv',
-        'Indent selection',
-    },
-    {
-        'v',
-        '<S-Tab>',
-        '<gv',
-        'Dedent selection',
-    },
-    {
-        'n',
-        '<Tab>',
-        '>>',
-        'Indent line',
-    },
-    {
-        'n',
-        '<S-Tab>',
-        '<<',
-        'Dedent line',
-    },
-    {
-        'n',
-        '<leader>tt',
-        function()
-            vim.cmd.new()
-            vim.cmd.term()
-            vim.cmd.wincmd 'J'
-            vim.api.nvim_win_set_height(0, 15)
-        end,
-        'Open built-in terminal',
-    },
-    -- }}}
-}
+  -- Calculate the position to center the window
+  local col = math.floor((vim.o.columns - width) / 2)
+  local row = math.floor((vim.o.lines - height) / 2)
 
--- Mappings for each layout
--- { mode, keys, action, description }
-local layout_mappings = {
-    -- Movement keys {{{
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'h', 'n' },
-        'h',
-        'Left',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'j', 'e' },
-        'j',
-        'Down',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'k', 'i' },
-        'k',
-        'Up',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'l', 'o' },
-        'l',
-        'Right',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'e', 'f' },
-        'e',
-        'Next end of word',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'E', 'F' },
-        'E',
-        'Next end of WORD',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'b', 'p' },
-        'b',
-        'Last word',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'B', 'P' },
-        'B',
-        'Last WORD ',
-    },
-    {
-        'n',
-        { 'n', 'c' },
-        'nzzzv',
-        'Search next occurence',
-    },
-    {
-        'n',
-        { 'N', 'C' },
-        'Nzzzv',
-        'Search previous occurence',
-    },
-    {
-        'n',
-        { '<C-h>', '<C-n>' },
-        '<C-w><C-h>',
-        'Move focus to the left window',
-    },
-    {
-        'n',
-        { '<C-l>', '<C-o>' },
-        '<C-w><C-l>',
-        'Move focus to the right window',
-    },
-    {
-        'n',
-        { '<C-j>', '<C-e>' },
-        '<C-w><C-j>',
-        'Move focus to the lower window',
-    },
-    {
-        'n',
-        { '<C-k>', '<C-i>' },
-        '<C-w><C-k>',
-        'Move focus to the upper window',
-    },
-    -- }}}
-    -- Mode switching keys {{{
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'i', 's' },
-        'i',
-        'Insert before cursor',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'I', 'S' },
-        'I',
-        'Insert at line start',
-    },
-    {
-        'n',
-        { 'o', 'h' },
-        'o',
-        'Insert line below',
-    },
-    {
-        'n',
-        { 'O', 'H' },
-        'O',
-        'Insert line above',
-    },
-    -- }}}
-    -- Cutting keys {{{
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 's', 'z' },
-        's',
-        'cut and insert',
-    },
-    {
-        { 'n', 'x', 'o', 'v' },
-        { 'S', 'Z' },
-        'S',
-        'cut line and insert',
-    },
-    -- }}}
-    -- Pasting keys {{{
-    {
-        { 'n', 'x', 'v' },
-        { 'p', 'l' },
-        'p',
-        'Paste after cursor',
-    },
-    {
-        { 'n', 'x', 'v' },
-        { 'P', 'L' },
-        'P',
-        'Paste before cursor',
-    },
-    {
-        'x',
-        { '<leader>p', '<leader>x' },
-        '"_dP',
-        'Paste and keep register',
-    },
-    -- }}}
-    -- Editing keys {{{
-    {
-        'v',
-        { 'J', 'E' },
-        ":m '>+1<CR>gv=gv",
-        'Shift selection done',
-    },
-    {
-        'v',
-        { 'K', 'I' },
-        ":m '<-2<CR>gv=gv",
-        'Shift selection up',
-    },
-    {
-        'n',
-        { '<leader>o', '<leader>h' },
-        'o<Esc>k',
-        'Create line below',
-    },
-    {
-        'n',
-        { '<leader>O', '<leader>H' },
-        'O<Esc>j',
-        'Create line above',
-    },
-    -- }}}
-    -- Others {{{
-    {
-        'n',
-        { 'q', 'm' },
-        'q',
-        'Toggle macro',
-    },
-    -- }}}
-}
--- Disable unwanted mappings
-for _, mapping in pairs(disabled_mappings) do
-    local modes = {}
-    local lhs = mapping[2]
+  -- Create a buffer
+  local buf = nil
+  if vim.api.nvim_buf_is_valid(opts.buf) then
+    buf = opts.buf
+  else
+    buf = vim.api.nvim_create_buf(false, true) -- No file, scratch buffer
+  end
 
-    if type(mapping[1]) == 'string' then
-        modes = { mapping[1] }
-    else
-        modes = mapping[1]
-    end
+  -- Define window configuration
+  local win_config = {
+    relative = "editor",
+    width = width,
+    height = height,
+    col = col,
+    row = row,
+    style = "minimal", -- No borders or extra UI elements
+    border = "rounded",
+  }
 
-    for _, mode in pairs(modes) do
-        local status, _ = pcall(vim.keymap.del, mode, lhs)
+  -- Create the floating window
+  local win = vim.api.nvim_open_win(buf, true, win_config)
 
-        if not status then
-            vim.keymap.set(mode, lhs, '<nop>')
-        end
-    end
+  return { buf = buf, win = win }
 end
 
--- Apply simple mappings
-for _, mapping in pairs(simple_mappings) do
-    local modes = mapping[1]
-    local key = mapping[2]
-    local action = mapping[3]
-    local desc = mapping[4]
-
-    vim.keymap.set(modes, key, action, { noremap = true, silent = true, desc = desc })
-end
-
--- Switch layout function; call with :Layout [layout]
-local function switch_layout(layout)
-    local index = nil
-    for i, name in ipairs(layouts) do
-        if name == layout then
-            index = i
-        elseif vim.g.keyboard_disable_other == true then
-            -- Disable mappings of other layout
-            for _, mapping in pairs(layout_mappings) do
-                local modes = {}
-                local lhs = mapping[2][i]
-
-                if type(mapping[1]) == 'string' then
-                    modes = { mapping[1] }
-                else
-                    modes = mapping[1]
-                end
-
-                for _, mode in pairs(modes) do
-                    pcall(vim.keymap.del, mode, lhs)
-                    vim.keymap.set(mode, lhs, '<nop>', { noremap = true, silent = true, desc = '' })
-                end
-            end
-        end
+local toggle_terminal = function()
+  if not vim.api.nvim_win_is_valid(state.floating.win) then
+    state.floating = create_floating_window { buf = state.floating.buf }
+    if vim.bo[state.floating.buf].buftype ~= "terminal" then
+      vim.cmd.terminal()
     end
-
-    assert(index ~= nil, 'Invalid layout "' .. layout .. '"')
-    vim.g.keyboard_layout = layout
-
-    -- Apply new mappings
-    for _, mapping in pairs(layout_mappings) do
-        local modes = mapping[1]
-        local key = mapping[2][index]
-        local action = mapping[3]
-        local desc = mapping[4]
-
-        -- Remap the new key; not recursively (noremap)
-        vim.keymap.set(modes, key, action, { noremap = true, silent = true, desc = desc })
-    end
+  else
+    vim.api.nvim_win_hide(state.floating.win)
+  end
 end
 
-vim.api.nvim_create_user_command('Layout', function(opts)
-    local layout = opts.args
-    switch_layout(layout)
-end, {
-    nargs = 1,
-    complete = function(_)
-        return layouts
-    end,
-})
+-- Centered half page scrolling
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true, desc = 'Scroll down' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true, desc = 'Scroll up' })
 
-vim.g.keyboard_disable_other = false
-if vim.g.keyboard_layout == nil then
-    vim.g.keyboard_layout = 'Normal'
-end
-switch_layout(vim.g.keyboard_layout)
+-- Shortcuts for switching between windows
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { noremap = true, silent = true, desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { noremap = true, silent = true, desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { noremap = true, silent = true, desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { noremap = true, silent = true, desc = 'Move focus to the right window' })
+
+-- Remove search highlight with escape
+vim.keymap.set('n', '<Esc>', '<CMD>nohlsearch<CR>', { noremap = true, silent = true, desc = 'Clear search highlight' })
+
+-- Quick indentation
+vim.keymap.set('n', '<S-Tab>', '<<', { noremap = true, silent = true, desc = 'Dedent line' })
+vim.keymap.set('n', '<Tab>', '>>', { noremap = true, silent = true, desc = 'Indent line' })
+vim.keymap.set('v', '<S-Tab>', '<gv', { noremap = true, silent = true, desc = 'Dedent selection' })
+vim.keymap.set('v', '<Tab>', '>gv', { noremap = true, silent = true, desc = 'Indent selection' })
+
+-- Open Netrw
+vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { noremap = true, silent = true, desc = 'Open explorer' })
+
+-- Create lines but stay in normal mode
+vim.keymap.set('n', '<leader>O', 'O<Esc>j', { noremap = true, silent = true, desc = 'Create line above' })
+vim.keymap.set('n', '<leader>o', 'o<Esc>k', { noremap = true, silent = true, desc = 'Create line below' })
+vim.keymap.set('n', '<leader>tt', toggle_terminal, { noremap = true, silent = true, desc = 'Open built-in terminal' })
+
+-- Join lines and keep cursor position
+vim.keymap.set('n', 'J', 'mzJ`z', { noremap = true, silent = true, desc = 'Join lines' })
+
+-- Centered searching
+vim.keymap.set('n', 'N', 'Nzzzv', { noremap = true, silent = true, desc = 'Search previous occurence' })
+vim.keymap.set('n', 'n', 'nzzzv', { noremap = true, silent = true, desc = 'Search next occurence' })
+
+-- Escape in terminal
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true, desc = 'Terminal normal mode' })
+
+-- Move selected lines
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Shift selection down" })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = "Shift selection up" })
+
+-- Paste but keep register
+vim.keymap.set('x', '<leader>p', '"_dP', { noremap = true, silent = true, desc = 'Paste and keep register' })
+
+-- Disable unused keymaps
+vim.keymap.set('x', 'Q', '<nop>')
+vim.keymap.set('n', 'q:', '<nop>')

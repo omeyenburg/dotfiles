@@ -156,3 +156,10 @@ vim.g.netrw_banner = 0 -- Disable banner
 vim.g.netrw_winsize = 25 -- Sets explorer width/height when using :Vex or :Hex
 
 -- }}}
+-- Custom Commands {{{
+
+-- Alias for wq
+vim.api.nvim_create_user_command("Wq", ":wq", {})
+vim.api.nvim_create_user_command("WQ", ":wq", {})
+
+-- }}}

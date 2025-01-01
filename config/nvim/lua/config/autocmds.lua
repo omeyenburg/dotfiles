@@ -126,14 +126,3 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.fn.setreg('+', vim.fn.getreg '+')
     end,
 })
-
--- Configure built in terminal
-vim.api.nvim_create_autocmd('TermOpen', {
-    group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
-    callback = function()
-        vim.opt.number = false
-        vim.opt.relativenumber = false
-        vim.api.nvim_buf_set_keymap(0, 'n', '<leader>tt', ':bd!<cr>', { noremap = true, silent = true })
-        vim.api.nvim_buf_set_keymap(0, 't', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
-    end,
-})
