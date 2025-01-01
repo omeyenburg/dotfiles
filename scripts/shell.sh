@@ -1,7 +1,9 @@
 #!/bin/sh
+
+# Insert
 . ./scripts/append.sh
+append "$HOME/.bashrc" 'source "$HOME/.config/shell/session.sh"'
+append "$HOME/.bash_profile" 'source "$HOME/.config/shell/profile.sh"'
 
-SHELLRC=".bashrc"
-LINES='source "$HOME/.config/shell/shared.sh"'
-
-append "$HOME/$SHELLRC" "$LINES"
+# Enable starship prompt for bash
+eval "$(starship init bash)"
