@@ -15,7 +15,7 @@ return {
         'windwp/nvim-autopairs',
         lazy = true,
         event = 'InsertEnter',
-        opts = {}
+        opts = {},
     },
 
     {
@@ -31,6 +31,7 @@ return {
             'rafamadriz/friendly-snippets',
             { -- Snippet Engine & its associated nvim-cmp source
                 'L3MON4D3/LuaSnip',
+                version = 'v2.*',
                 build = 'make install_jsregexp',
             },
         },
@@ -75,12 +76,28 @@ return {
                 },
             },
 
-            -- experimental signature help support
+            -- Experimental signature help support
             signature = {
                 enabled = true,
             },
 
-            -- default list of enabled providers defined so that you can extend it
+            -- Snippets
+            snippets = {
+                expand = function(snippet)
+                    require('luasnip').lsp_expand(snippet)
+                end,
+                active = function(filter)
+                    if filter and filter.direction then
+                        return require('luasnip').jumpable(filter.direction)
+                    end
+                    return require('luasnip').in_snippet()
+                end,
+                jump = function(direction)
+                    require('luasnip').jump(direction)
+                end,
+            },
+
+            -- Default list of enabled providers defined so that you can extend it
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'luasnip', 'buffer' },
@@ -102,5 +119,10 @@ return {
         -- allows extending the providers array elsewhere in your config
         -- without having to redefine it
         opts_extend = { 'sources.default' },
+        config = function(_, opts)
+            vim.print(opts)
+            require("blink.cmp").setup(opts)
+            require("config.luasnip")
+        end
     },
 }
