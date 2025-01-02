@@ -24,3 +24,6 @@ unlink:
 
 fonts:
 	@sh "$(DOTFILES)scripts/fonts.sh"
+
+qmk:
+	@sh "$(DOTFILES)scripts/qmk.sh"
