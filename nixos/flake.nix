@@ -7,15 +7,21 @@
 
 {
   inputs = {
-    # Select the channel, e.g. github:NixOS/nixpkgs/nixos-unstable
+    # Select the channel, e.g. github:NixOS/nixpkgs/nixos-unstable.
     nixpkgs.url = "nixpkgs/nixos-unstable";
+
+    # Add hardware input module.
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # Add the Home Manager input from the community repository.
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Add ghostty input
+    ghostty.url = "github:ghostty-org/ghostty";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, nixos-hardware, home-manager, ghostty, ... }: {
     # Use your hostname here.
     # Alternatively, you can select a configuration with:
     # nixos-rebuild switch --flake '/etc/nixos#hostname'
@@ -27,6 +33,10 @@
       modules = [
         ./configuration.nix
 
+        # Import hardware specific options. Find your module in this list:
+        # https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
+        # nixos-hardware.nixosModules.apple-macbook-pro-12-1
+
         # Import Home Manager as a NixOS module.
         home-manager.nixosModules.home-manager
         {
@@ -34,11 +44,16 @@
             useGlobalPkgs = true;
             useUserPackages = true;
             backupFileExtension = "backup";
+
+            # Optionally, use home-manager.extraSpecialArgs to pass
+            # arguments to home.nix
+            extraSpecialArgs = { inherit inputs; };
+
             users.oskar = import ./home.nix;
           };
 
-          # Optionally, use home-manager.extraSpecialArgs to pass
-          # arguments to home.nix
+          # Wayland, X, etc. support for session vars
+          # systemd.user.sessionVariables = config.home-manager.users.oskar.home.sessionVariables;
         }
       ];
     };

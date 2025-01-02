@@ -13,6 +13,12 @@
     ./hardware-configuration.nix
   ];
 
+  # Bug fix specific to MacBook Pro 12,1.
+  # See https://github.com/NixOS/nixos-hardware/tree/master/apple/macbook-pro/12-1
+  powerManagement.powerUpCommands = ''
+    ${pkgs.systemd}/bin/systemctl restart wpa_supplicant.service
+  '';
+
   # Enable the nix command and flakes.
   # nixos-rebuild switch will now first attempt to load /etc/nixos/flake.nix.
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -79,19 +85,27 @@
     useXkbConfig = true;
   };
 
-  # Enable bluetooth.
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        # Increase connection quality and range.
-        MaxConnections = "1";
-        Experimental = "true";
-        FastConnectable = "true";
-        ReconnectAttempts = "7";
-        ReconnectIntervals = "1, 2, 4, 8, 16, 32, 64";
+  hardware = {
+    # Enable bluetooth.
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          # Increase connection quality and range.
+          MaxConnections = "1";
+          Experimental = "true";
+          FastConnectable = "true";
+          ReconnectAttempts = "7";
+          ReconnectIntervals = "1, 2, 4, 8, 16, 32, 64";
+        };
       };
+    };
+
+    # Enable OpenGL
+    graphics = {
+      enable = true;
+      enable32Bit = true;
     };
   };
 
@@ -99,11 +113,13 @@
     # Enable the blueman interface.
     blueman.enable = true;
 
+    # Contrary to the name, also affects wayland
     # Configure keymaps in X11 and console.
     xserver.xkb = {
-      layout = "de";
-      variant = "mac";
-      options = "caps:escape";
+        layout = "de";
+        variant = "mac";
+        options = "caps:escape";
+      # videoDrivers = [ "intel" ];
     };
 
     # Enable CUPS to print documents.
@@ -124,6 +140,9 @@
 
     # Enable the OpenSSH daemon.
     # openssh.enable = true;
+    
+    udisks2.enable = true;
+    upower.enable = true;
   };
 
   # Define a user account.
@@ -133,20 +152,24 @@
     extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       # Apps
+      qmk
       anki
       gimp
-      kitty
       spotify
       discord
       foliate
       obsidian
       inkscape
       mars-mips
+      prismlauncher
       libreoffice-qt
       logisim logisim-evolution
 
+      # Terminal
+      kitty starship
+
       # Tools
-      fzf yazi tmux figlet unzip gnumake fastfetch
+      fzf tmux figlet unzip gnumake fastfetch
       bash-completion
 
       # Languages & Compilers
@@ -192,42 +215,9 @@
 
       NIXOS_OZONE_WL = "1";
 
-      # Cursor
-      # XCURSOR_SIZE = "24";
-      # XCURSOR_THEME = "Adwaita";
-
-      # Toolkit backend
-      # GTK_THEME = "Adwaita-dark";
-      # GDK_BACKEND = "wayland,x11,*";
-      # CLUTTER_BACKEND = "wayland";
-
-      # QT config
-      # QT_QPA_PLATFORM = "wayland;xcb";
-      # QT_QPA_PLATFORMTHEME = "qt5ct";
-      # QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-      # QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-
-      # Electron config
-      # ELECTRON_ENABLE_SYSTEM_THEME = "true";
-      # ELECTRON_FORCE_SYSTEM_THEME = "1";
-
-      # Firefox
-      # MOZ_ENABLE_WAYLAND = "1";
-      # MOZ_WEBRENDER = "1";
-      # MOZ_ACCELERATED = "1";
-      # MOZ_DISABLE_RDD_SANDBOX = "1";
-
-      # General config
-      # EDITOR = "nvim";
-      # TERMINAL = "kitty";
-      # FONT = "FiraCode Nerd Font";
-
       # Video acceleration
-      # LIBVA_DRIVER_NAME = "i965";  # or "iHD" for newer Intel GPUs
-      # VDPAU_DRIVER = "va_gl";
-
-      # Remove if running into compatibility issues
-      # SDL_VIDEODRIVER = "wayland";
+      LIBVA_DRIVER_NAME = "i965";  # or "iHD" for newer Intel GPUs
+      VDPAU_DRIVER = "va_gl";
 
       # Configure nmtui colors
       # Elements: root, border, window, shadow, title, button, actbutton, checkbox, actcheckbox, entry, label, listbox, actlistbox, textbox, acttextbox, helpline, roottext, emptyscale, fullscale, disentry, compactbutton, actsellistbox, sellistbox
@@ -259,8 +249,11 @@
 
   # Some programs need SUID wrappers, can be configured further or are started in user sessions.
   programs = {
+    thunar.enable = true;
     firefox.enable = true;
     hyprland.enable = true;
+    gamemode.enable = true;
+    starship.enable = true;
     steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play

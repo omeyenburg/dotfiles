@@ -5,7 +5,7 @@
 # |_| \_|_/_/\_\\___/|____/
 #
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   home = {
@@ -13,9 +13,10 @@
     username = "oskar";
     homeDirectory = "/home/oskar";
 
-    packages = with pkgs; [
-      gtk3
-      gtk4
+    packages = [
+      pkgs.gtk3
+      pkgs.gtk4
+      inputs.ghostty.packages."${pkgs.system}".default
     ];
   };
 
@@ -23,11 +24,13 @@
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
 
-#    Mars = {
-#      sessionVariables = {
-#        GTK_SCALE = 2;
-#      };
-#    };
+    btop = {
+      enable = true;
+    };
+
+    yazi = {
+      enable = true;
+    };
 
     emacs = {
       enable = true;
@@ -71,10 +74,14 @@
         pkgs.python312Packages.flake8
 
         # Formatters
+        pkgs.jq
         pkgs.black
         pkgs.shfmt
+        pkgs.taplo
         pkgs.stylua
+        pkgs.indent
         pkgs.rustfmt
+        pkgs.alejandra
 
         # Utility Tools
         pkgs.fd
@@ -107,9 +114,6 @@
       "application/pdf" = ["com.github.johnfactotum.Foliate.desktop"];
     };
   };
-
-  # Wayland, X, etc. support for session vars
-  # systemd.user.sessionVariables = config.home-manager.users.oskar.home.sessionVariables;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
