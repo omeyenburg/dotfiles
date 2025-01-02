@@ -1,5 +1,5 @@
 # dotfiles
-Here are my dotfiles ( (always) work-in-progress).
+Here are my dotfiles ( (always) work-in-progress :).
 This is meant to support only OpenSUSE with Hyprland for now.
 QMK has also some configuration, but is only needed for custom keyboards.
 
