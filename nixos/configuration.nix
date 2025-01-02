@@ -141,7 +141,14 @@
     # Enable the OpenSSH daemon.
     # openssh.enable = true;
     
+    # Enable automatic disk mounting
+    devmon.enable = true;
+
+    # Handles disk mounting operations
     udisks2.enable = true;
+
+    gvfs.enable = true;
+
     upower.enable = true;
   };
 
@@ -149,7 +156,12 @@
   # Don't forget to set a password with ‘passwd’.
   users.users.oskar = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ # Enable ‘sudo’ for the user.
+      "wheel"
+      "networkmanager" # Allow editing network connections
+      "storage" # Allow writing to external devices like usb drives
+      "plugdev"
+    ];
     packages = with pkgs; [
       # Apps
       qmk
