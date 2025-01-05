@@ -120,7 +120,6 @@ return {
         -- without having to redefine it
         opts_extend = { 'sources.default' },
         config = function(_, opts)
-            vim.print(opts)
             require("blink.cmp").setup(opts)
             require("config.luasnip")
         end

@@ -16,7 +16,7 @@ return {
     { -- Indentation size detection
         'tpope/vim-sleuth',
         lazy = true,
-        event = 'VeryLazy',
+        event = {'VeryLazy', 'BufRead'},
     },
 
     { -- Formatting
