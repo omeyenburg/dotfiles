@@ -29,3 +29,6 @@ window-decoration = false
 background-opacity = 0.9
 window-theme = ghostty
 confirm-close-surface = false
+
+# Keybinds
+keybind = ctrl+shift+n=unbind
