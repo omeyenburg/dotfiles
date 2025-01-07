@@ -95,6 +95,11 @@ vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true, de
 -- Paste but keep register
 vim.keymap.set('x', '<leader>p', '"_dP', { noremap = true, silent = true, desc = 'Paste and keep register' })
 
+-- Cycle through buffers
+-- Cycle through harpoon files with <C-n> / <C-p>
+vim.keymap.set("n", "<C-S-n>", ":bnext<CR>", { noremap = true, silent = true, desc = 'Paste and keep register' })
+vim.keymap.set("n", "<C-S-p>", ":bprev<CR>", { noremap = true, silent = true, desc = 'Paste and keep register' })
+
 -- Disable unused keymaps
 vim.keymap.set('x', 'Q', '<nop>')
 vim.keymap.set('n', 'q:', '<nop>')
