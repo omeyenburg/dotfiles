@@ -85,10 +85,20 @@ return {
                 -- latex language server
                 texlab = {},
 
-                mips_lsp = {
-                    cmd = { vim.fn.expand '~' .. '/git/mips-language-server/target/debug/mips-language-server' },
-                    filetypes = { 'asm' },
-                    root_dir = vim.loop.cwd(),
+                -- mips language server
+                mips_ls = {
+                    settings = {
+                        Mips = {
+                            arch = "mips32",
+                            disable_pseudo_instructions = false,
+                            linting = {
+                                enable = true,
+                                missing_label = true,
+                                unknown_instruction = true,
+                                unknown_directive = true
+                            }
+                        },
+                    },
                 },
             },
         },
@@ -185,8 +195,8 @@ return {
             local lspconfig = require 'lspconfig'
 
             local configs = require 'lspconfig.configs'
-            if not configs.mips_lsp then
-                configs.mips_lsp = {
+            if not configs.mips_ls then
+                configs.mips_ls = {
                     default_config = {
                         cmd = { vim.fn.expand '~' .. '/git/mips-language-server/target/debug/mips-language-server' },
                         root_dir = lspconfig.util.root_pattern '.git',
