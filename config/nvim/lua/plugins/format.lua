@@ -16,7 +16,7 @@ return {
     { -- Indentation size detection
         'tpope/vim-sleuth',
         lazy = true,
-        event = {'VeryLazy', 'BufRead'},
+        event = { 'VeryLazy', 'BufRead' },
     },
 
     { -- Formatting
@@ -28,6 +28,7 @@ return {
                 '<leader>f',
                 function()
                     require('conform').format { async = true, lsp_fallback = true }
+                    vim.cmd 'silent! Sleuth'
                 end,
                 desc = '[F]ormat buffer',
                 mode = '',
