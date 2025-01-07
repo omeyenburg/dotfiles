@@ -33,6 +33,22 @@ return {
                 mode = 'n',
             },
             {
+                '<C-n>',
+                function()
+                    require('harpoon.ui').nav_next()
+                end,
+                desc = 'Open next file',
+                mode = 'n',
+            },
+            {
+                '<C-p>',
+                function()
+                    require('harpoon.ui').nav_prev()
+                end,
+                desc = 'Open previous file',
+                mode = 'n',
+            },
+            {
                 '<C-1>',
                 function()
                     require('harpoon.ui').nav_file(1)
