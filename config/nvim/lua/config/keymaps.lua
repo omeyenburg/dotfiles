@@ -1,54 +1,54 @@
 -- Floating terminal
 local state = {
-  floating = {
-    buf = -1,
-    win = -1,
-  }
+    floating = {
+        buf = -1,
+        win = -1,
+    },
 }
 
 local function create_floating_window(opts)
-  opts = opts or {}
-  local width = opts.width or math.floor(vim.o.columns * 0.8)
-  local height = opts.height or math.floor(vim.o.lines * 0.8)
+    opts = opts or {}
+    local width = opts.width or math.floor(vim.o.columns * 0.8)
+    local height = opts.height or math.floor(vim.o.lines * 0.8)
 
-  -- Calculate the position to center the window
-  local col = math.floor((vim.o.columns - width) / 2)
-  local row = math.floor((vim.o.lines - height) / 2)
+    -- Calculate the position to center the window
+    local col = math.floor((vim.o.columns - width) / 2)
+    local row = math.floor((vim.o.lines - height) / 2)
 
-  -- Create a buffer
-  local buf = nil
-  if vim.api.nvim_buf_is_valid(opts.buf) then
-    buf = opts.buf
-  else
-    buf = vim.api.nvim_create_buf(false, true) -- No file, scratch buffer
-  end
+    -- Create a buffer
+    local buf = nil
+    if vim.api.nvim_buf_is_valid(opts.buf) then
+        buf = opts.buf
+    else
+        buf = vim.api.nvim_create_buf(false, true) -- No file, scratch buffer
+    end
 
-  -- Define window configuration
-  local win_config = {
-    relative = "editor",
-    width = width,
-    height = height,
-    col = col,
-    row = row,
-    style = "minimal", -- No borders or extra UI elements
-    border = "rounded",
-  }
+    -- Define window configuration
+    local win_config = {
+        relative = 'editor',
+        width = width,
+        height = height,
+        col = col,
+        row = row,
+        style = 'minimal', -- No borders or extra UI elements
+        border = 'rounded',
+    }
 
-  -- Create the floating window
-  local win = vim.api.nvim_open_win(buf, true, win_config)
+    -- Create the floating window
+    local win = vim.api.nvim_open_win(buf, true, win_config)
 
-  return { buf = buf, win = win }
+    return { buf = buf, win = win }
 end
 
 local toggle_terminal = function()
-  if not vim.api.nvim_win_is_valid(state.floating.win) then
-    state.floating = create_floating_window { buf = state.floating.buf }
-    if vim.bo[state.floating.buf].buftype ~= "terminal" then
-      vim.cmd.terminal()
+    if not vim.api.nvim_win_is_valid(state.floating.win) then
+        state.floating = create_floating_window { buf = state.floating.buf }
+        if vim.bo[state.floating.buf].buftype ~= 'terminal' then
+            vim.cmd.terminal()
+        end
+    else
+        vim.api.nvim_win_hide(state.floating.win)
     end
-  else
-    vim.api.nvim_win_hide(state.floating.win)
-  end
 end
 
 -- Centered half page scrolling
@@ -89,17 +89,17 @@ vim.keymap.set('n', 'n', 'nzzzv', { noremap = true, silent = true, desc = 'Searc
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true, desc = 'Terminal normal mode' })
 
 -- Move selected lines
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Shift selection down" })
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = "Shift selection up" })
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = 'Shift selection down' })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = 'Shift selection up' })
 
 -- Paste but keep register
 vim.keymap.set('x', '<leader>p', '"_dP', { noremap = true, silent = true, desc = 'Paste and keep register' })
 
 -- Cycle through buffers
 -- Cycle through harpoon files with <C-n> / <C-p>
-vim.keymap.set("n", "<C-S-n>", ":bnext<CR>", { noremap = true, silent = true, desc = 'Paste and keep register' })
-vim.keymap.set("n", "<C-S-p>", ":bprev<CR>", { noremap = true, silent = true, desc = 'Paste and keep register' })
+vim.keymap.set('n', '<C-S-n>', ':bnext<CR>', { noremap = true, silent = true, desc = 'Paste and keep register' })
+vim.keymap.set('n', '<C-S-p>', ':bprev<CR>', { noremap = true, silent = true, desc = 'Paste and keep register' })
 
 -- Disable unused keymaps
 vim.keymap.set('x', 'Q', '<nop>')
-vim.keymap.set('n', 'q:', '<nop>')
+vim.keymap.set({ 'n', 'x' }, 'q:', '<nop>')
