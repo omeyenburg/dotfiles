@@ -14,11 +14,11 @@ return {
             local lint = require 'lint'
 
             lint.linters_by_ft = {
-                -- c = { 'clangd' }, -- Mason install, automatic
-                -- javascript = { 'eslint' }, -- Mason install
+                -- c = { 'clangd' },
+                -- javascript = { 'eslint' },
+                python = { 'flake8' },
+                haskell = { 'hlint' },
                 -- markdown = { 'vale' },
-                python = { 'flake8' }, -- Mason install
-                -- rust = { 'rust_analyzer' }, -- has its own implementation
                 -- text = { 'vale' },
             }
 

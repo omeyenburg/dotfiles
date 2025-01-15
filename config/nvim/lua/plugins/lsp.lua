@@ -19,6 +19,9 @@ return {
         opts = {
             inlay_hints = { enabled = true },
             servers = {
+                -- haskell-language-server
+                hls = {},
+
                 -- nixd (e.g., for Nix files)
                 nixd = {},
 
