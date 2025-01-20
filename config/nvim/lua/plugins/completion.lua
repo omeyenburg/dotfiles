@@ -83,6 +83,7 @@ return {
 
             -- Snippets
             snippets = {
+                -- alternative: preset = 'luasnip'
                 expand = function(snippet)
                     require('luasnip').lsp_expand(snippet)
                 end,
@@ -100,7 +101,7 @@ return {
             -- Default list of enabled providers defined so that you can extend it
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
-                default = { 'lsp', 'path', 'snippets', 'luasnip', 'buffer' },
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
                 providers = { snippets = { min_keyword_length = 4 } },
                 -- optionally disable cmdline completions
                 -- cmdline = {},
@@ -118,7 +119,7 @@ return {
         },
         -- allows extending the providers array elsewhere in your config
         -- without having to redefine it
-        opts_extend = { 'sources.default' },
+        -- opts_extend = { 'sources.default' },
         config = function(_, opts)
             require("blink.cmp").setup(opts)
             require("config.luasnip")
