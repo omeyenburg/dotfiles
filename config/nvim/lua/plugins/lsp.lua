@@ -28,32 +28,6 @@ return {
                 -- clang-tools (Clangd for C/C++/Objective-C/Objective-C++)
                 clangd = {},
 
-                -- rust-analyzer (Rust)
-                rust_analyzer = {
-                    on_attach = function(client, bufnr)
-                        require('completion').on_attach(client)
-                        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-                    end,
-                    settings = {
-                        ['rust-analyzer'] = {
-                            imports = {
-                                granularity = {
-                                    group = 'module',
-                                },
-                                prefix = 'self',
-                            },
-                            cargo = {
-                                buildScripts = {
-                                    enable = true,
-                                },
-                            },
-                            procMacro = {
-                                enable = true,
-                            },
-                        },
-                    },
-                },
-
                 -- glsl_analyzer (GLSL)
                 glslls = {},
 
@@ -92,14 +66,14 @@ return {
                 mips_ls = {
                     settings = {
                         Mips = {
-                            arch = "mips32",
+                            arch = 'mips32',
                             disable_pseudo_instructions = false,
                             linting = {
                                 enable = true,
                                 missing_label = true,
                                 unknown_instruction = true,
-                                unknown_directive = true
-                            }
+                                unknown_directive = true,
+                            },
                         },
                     },
                 },
