@@ -64,29 +64,29 @@ return {
                 desc = 'Diagnostics (Trouble)',
             },
             {
-                '<leader>xx',
-                '<cmd>trouble diagnostics toggle filter.buf=0<cr>',
-                desc = 'buffer diagnostics (trouble)',
+                '<leader>xX',
+                '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+                desc = 'Buffer diagnostics (Trouble)',
             },
             {
-                '<leader>cs',
-                '<cmd>trouble symbols toggle focus=false<cr>',
-                desc = 'symbols (trouble)',
-            },
-            {
-                '<leader>cl',
-                '<cmd>trouble lsp toggle focus=false win.position=right<cr>',
-                desc = 'lsp definitions / references / ... (trouble)',
+                '<leader>xs',
+                '<cmd>Trouble symbols toggle focus=false<cr>',
+                desc = 'Symbols (Trouble)',
             },
             {
                 '<leader>xl',
-                '<cmd>trouble loclist toggle<cr>',
-                desc = 'location list (trouble)',
+                '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+                desc = 'Lsp definitions/References (Trouble)',
+            },
+            {
+                '<leader>xL',
+                '<cmd>Trouble loclist toggle<cr>',
+                desc = 'Location list (Trouble)',
             },
             {
                 '<leader>xq',
-                '<cmd>trouble qflist toggle<cr>',
-                desc = 'quickfix list (trouble)',
+                '<cmd>Trouble qflist toggle<cr>',
+                desc = 'Quickfix list (Trouble)',
             },
         },
     },
@@ -103,10 +103,23 @@ return {
             require('mini.ai').setup { n_lines = 100 }
 
             -- Add/delete/replace surroundings (brackets, quotes, etc.)
-            -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-            -- - sd'   - [S]urround [D]elete [']quotes
-            -- - sr)'  - [S]urround [R]eplace [)] [']
-            require('mini.surround').setup()
+            -- saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+            -- sd'   - [S]urround [D]elete [']quotes
+            -- sr)'  - [S]urround [R]eplace [)] [']
+            require('mini.surround').setup {
+                mappings = {
+                    add = '<leader>sa', -- Add surrounding in Normal and Visual modes
+                    delete = '<leader>sd', -- Delete surrounding
+                    find = '<leader>sf', -- Find surrounding (to the right)
+                    find_left = '<leader>sF', -- Find surrounding (to the left)
+                    highlight = '<leader>sh', -- Highlight surrounding
+                    replace = '<leader>sr', -- Replace surrounding
+                    update_n_lines = '<leader>sn', -- Update `n_lines`
+
+                    suffix_last = 'l', -- Suffix to search with "prev" method
+                    suffix_next = 'n', -- Suffix to search with "next" method
+                },
+            }
         end,
     },
 }

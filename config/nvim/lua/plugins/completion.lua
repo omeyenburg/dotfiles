@@ -23,11 +23,8 @@ return {
         lazy = true,
         event = 'VeryLazy',
         version = '*',
-        -- build = "cargo build --release",
-        -- version = not vim.g.lazyvim_blink_main and "*",
-        -- build = vim.g.lazyvim_blink_main and "cargo build --release",
         dependencies = {
-            -- optional: provides snippets for the snippet source
+            -- Provides snippets for the snippet source
             'rafamadriz/friendly-snippets',
             { -- Snippet Engine & its associated nvim-cmp source
                 'L3MON4D3/LuaSnip',
@@ -55,7 +52,6 @@ return {
             --   ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
             keymap = { preset = 'default' },
 
-            -- fuzzy = { prebuilt_binaries = { force_version ="*"}, },
             completion = {
                 accept = {
                     -- Experimental auto-brackets support
