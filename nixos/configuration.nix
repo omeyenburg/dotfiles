@@ -19,9 +19,23 @@
     ${pkgs.systemd}/bin/systemctl restart wpa_supplicant.service
   '';
 
-  # Enable the nix command and flakes.
-  # nixos-rebuild switch will now first attempt to load /etc/nixos/flake.nix.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    settings = {
+      # Enable the nix command and flakes.
+      # nixos-rebuild switch will now first attempt to load /etc/nixos/flake.nix.
+      experimental-features = [ "nix-command" "flakes" ];
+    
+      # Optimise store during each build
+      # Can also be done manually: nix-store --optimise
+      # auto-optimise-store = true;
+    };
+
+    # Automatic garbage collect
+    gc = {
+      automatic = true;
+      dates = "weekly";
+    };
+  };
 
   boot = {
     # Clean temporary files in /tmp on every boot.
@@ -149,7 +163,7 @@
 
     gvfs.enable = true;
 
-    upower.enable = true;
+    # upower.enable = true;
   };
 
   # Define a user account.
@@ -181,8 +195,9 @@
       kitty starship
 
       # Tools
-      fzf tmux figlet unzip gnumake fastfetch
+      tmux figlet unzip gnumake fastfetch
       bash-completion
+      tree-sitter
 
       # Languages & Compilers
       gcc python312Full
@@ -206,7 +221,7 @@
     # Packages installed in system profile.
     systemPackages = with pkgs; [
       # Tools
-      git vim btop tree wget curl
+      fzf git vim btop tree wget curl
 
       # System
       acpi xorg.xrdb brightnessctl power-profiles-daemon intel-gpu-tools linux-firmware
@@ -261,7 +276,6 @@
 
   # Some programs need SUID wrappers, can be configured further or are started in user sessions.
   programs = {
-    thunar.enable = true;
     firefox.enable = true;
     hyprland.enable = true;
     gamemode.enable = true;

@@ -24,6 +24,11 @@
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
 
+    direnv = {
+      enable = true;
+      enableBashIntegration = true;
+    };
+
     btop = {
       enable = true;
     };
@@ -36,20 +41,20 @@
       enable = true;
 
       # Install additional Emacs packages with Home Manager
-      extraPackages = epkgs: with epkgs; [
-        # Org mode packages
-        epkgs.org
-        epkgs.org-contrib
-        epkgs.org-bullets
-        
-        # Evil mode packages
-        epkgs.evil
-        epkgs.evil-collection
-        epkgs.evil-org
-        evil-surround
-
-        use-package
-      ];
+      #extraPackages = epkgs: with epkgs; [
+        ## Org mode packages
+        #epkgs.org
+        #epkgs.org-contrib
+        #epkgs.org-bullets
+        #
+        ## Evil mode packages
+        #epkgs.evil
+        #epkgs.evil-collection
+        #epkgs.evil-org
+        #evil-surround
+#
+        #use-package
+      #];
     };
 
     # Configure Neovim dependencies.
@@ -68,6 +73,7 @@
         pkgs.glsl_analyzer
         pkgs.lua-language-server
         pkgs.bash-language-server
+        pkgs.haskell-language-server
         pkgs.python312Packages.jedi-language-server
 
         # Linters
