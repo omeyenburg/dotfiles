@@ -100,6 +100,15 @@ vim.keymap.set('x', '<leader>p', '"_dP', { noremap = true, silent = true, desc =
 vim.keymap.set('n', '<C-S-n>', ':bnext<CR>', { noremap = true, silent = true, desc = 'Paste and keep register' })
 vim.keymap.set('n', '<C-S-p>', ':bprev<CR>', { noremap = true, silent = true, desc = 'Paste and keep register' })
 
+-- Open Tree-Sitter inspector
+vim.keymap.set('n', '<leader>tr', function()
+    if vim.fn.expand("%"):find("Syntax tree for") ~= nil then
+        vim.cmd("bdelete")
+    else
+        vim.cmd("InspectTree")
+    end
+end, { noremap = true, silent = true, desc = 'Inspect tree'})
+
 -- Disable unused keymaps
 vim.keymap.set('x', 'Q', '<nop>')
 vim.keymap.set({ 'n', 'x' }, 'q:', '<nop>')
