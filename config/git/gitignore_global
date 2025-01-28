@@ -43,6 +43,11 @@ node_modules/
 *.o
 *.out
 
+# Temporary files
+*.tmp
+*.temp
+*.swp
+
 # Others
 .local
 .ssh
@@ -52,6 +57,4 @@ node_modules/
 env*
 *auth*
 *.log
-*.tmp
-*.temp
-*.swp
+*.lock
