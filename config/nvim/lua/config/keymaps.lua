@@ -51,6 +51,16 @@ local toggle_terminal = function()
     end
 end
 
+-- Toggle inspect tree
+local toggle_inspect_tree = function()
+    if vim.fn.bufexists("Syntax tree") ~= 0 then
+        vim.api.nvim_buf_delete(vim.fn.bufnr("Syntax tree"), {})
+    else
+        vim.cmd 'InspectTree'
+        vim.api.nvim_buf_set_name(0, "Syntax tree")
+    end
+end
+
 -- Centered half page scrolling
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true, desc = 'Scroll down' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true, desc = 'Scroll up' })
@@ -76,7 +86,6 @@ vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { noremap = true, silent = true, de
 -- Create lines but stay in normal mode
 vim.keymap.set('n', '<leader>O', 'O<Esc>j', { noremap = true, silent = true, desc = 'Create line above' })
 vim.keymap.set('n', '<leader>o', 'o<Esc>k', { noremap = true, silent = true, desc = 'Create line below' })
-vim.keymap.set('n', '<leader>tt', toggle_terminal, { noremap = true, silent = true, desc = 'Open built-in terminal' })
 
 -- Join lines and keep cursor position
 vim.keymap.set('n', 'J', 'mzJ`z', { noremap = true, silent = true, desc = 'Join lines' })
@@ -100,14 +109,11 @@ vim.keymap.set('x', '<leader>p', '"_dP', { noremap = true, silent = true, desc =
 vim.keymap.set('n', '<C-S-n>', ':bnext<CR>', { noremap = true, silent = true, desc = 'Paste and keep register' })
 vim.keymap.set('n', '<C-S-p>', ':bprev<CR>', { noremap = true, silent = true, desc = 'Paste and keep register' })
 
--- Open Tree-Sitter inspector
-vim.keymap.set('n', '<leader>tr', function()
-    if vim.fn.expand("%"):find("Syntax tree for") ~= nil then
-        vim.cmd("bdelete")
-    else
-        vim.cmd("InspectTree")
-    end
-end, { noremap = true, silent = true, desc = 'Inspect tree'})
+-- Toggle terminal
+vim.keymap.set('n', '<leader>tt', toggle_terminal, { noremap = true, silent = true, desc = 'Toggle terminal' })
+
+-- Toggle tree-sitter inspect tree
+vim.keymap.set('n', '<leader>tr', toggle_inspect_tree, { noremap = true, silent = true, desc = 'Toggle inspect tree' })
 
 -- Disable unused keymaps
 vim.keymap.set('x', 'Q', '<nop>')
