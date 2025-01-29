@@ -28,9 +28,5 @@ elif [ "$SHELL" = "/bin/zsh" ]; then
     setopt HIST_IGNORE_ALL_DUPS
 fi
 
-# Custom command line prompt
-# Not necessary, if starship prompt is used
-# export PS1="\u:\w\> "
-
 # Source shared config
 . $HOME/.config/shell/shared.sh
