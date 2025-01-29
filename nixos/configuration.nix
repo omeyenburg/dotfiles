@@ -164,6 +164,8 @@
     gvfs.enable = true;
 
     # upower.enable = true;
+
+    ollama.enable = true;
   };
 
   # Define a user account.
@@ -197,7 +199,6 @@
       # Tools
       tmux figlet unzip gnumake fastfetch
       bash-completion
-      tree-sitter
 
       # Languages & Compilers
       gcc python312Full
