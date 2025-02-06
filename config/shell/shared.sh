@@ -15,6 +15,15 @@ alias gitlog="python3 ~/.config/shell/gitlog.py"
 # Ollama
 alias deepseek="ollama run deepseek-r1:1.5b"
 
+# Tmux sessions
+alias t=~/.config/tmux/t.sh
+complete -W "exit kill $(t list)" t
+
+# Obsidian vaults
+obsidianopen() {
+    obsidian "obsidian://open?vault=$1" & disown
+}
+
 # Yazi
 y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
