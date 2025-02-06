@@ -10,8 +10,11 @@ if [ "$1" = "volume" ]; then
         wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
     elif [ "$2" = "toggle" ]; then
         wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    elif [ "$2" = "get" ]; then
+        wpctl get-volume @DEFAULT_AUDIO_SINK@
+        exit 1
     else
-        echo "Invalid value '$2'. Valid values are: up, down, toggle"
+        echo "Invalid value '$2'. Valid values are: up, down, toggle, get"
         exit 1
     fi
 
