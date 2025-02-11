@@ -57,4 +57,3 @@ node_modules/
 env*
 *auth*
 *.log
-*.lock
