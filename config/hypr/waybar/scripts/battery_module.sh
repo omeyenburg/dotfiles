@@ -18,20 +18,6 @@ send_battery_warning() {
     powerprofilesctl set power-saver
 }
 
-# Positional arguments:
-# network name
-# type (normal=0, warning=1, critical=2)
-send_mute_warning() {
-    id_cache="$HOME/.cache/waybar_mute_notification"
-
-    # Get last used id
-    id=$(cat "$id_cache" || echo "0")
-
-    # Send notification and save new id
-    id=$(~/.config/hypr/scripts/notify.sh "mute-warning" "You are not muted" "Consider to mute volume in $1" 2000 "$2" "$id")
-    echo "$id" > "$id_cache"
-}
-
 # # Get battery information
 # battery_status=$(cat /sys/class/power_supply/BAT0/status)
 # battery_charge=$(cat /sys/class/power_supply/BAT0/charge_now)
@@ -140,6 +126,7 @@ network=$(nmcli -t -f NAME con show --active | head -1)
 
 if [ "$network" = "eduroam" ] || [ "$network" = "WIFI@DB" ]; then
     if ! .config/hypr/scripts/media.sh volume get | grep -q "MUTED"; then
-        send_mute_warning "$network" 0
+        ~/.config/hypr/scripts/media.sh volume toggle silent
+        ~/.config/hypr/scripts/notify.sh "mute-warning" "Connected to network $network" "Volume is now muted" 4000 0 "$id"
     fi
 fi

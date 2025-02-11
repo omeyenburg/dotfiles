@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Arguments
+# type: volume | display-brightness | keyboard-brightness
+# action: up | down | toggle | get
+# optionally: silent
+
 timeout=1
 pipe="/tmp/hyprland-media-pipe"
 
@@ -56,6 +61,11 @@ elif [ "$1" = "keyboard-brightness" ]; then
     percent=$((100*current/max))
 else
     echo "Invalid value '$1'. Valid values are: volume, display-brightness, keyboard-brightness"
+    exit 1
+fi
+
+# Don't show notification, if silent is set.
+if [ "$3" = "silent" ]; then
     exit 1
 fi
 
