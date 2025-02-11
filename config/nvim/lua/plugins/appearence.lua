@@ -52,15 +52,27 @@ return {
         },
     },
 
-    { -- Tokyonight colorscheme
-        'folke/tokyonight.nvim',
+    -- { -- Tokyonight colorscheme
+    --     'folke/tokyonight.nvim',
+    --     enable = false,
+    --     lazy = false,
+    --     priority = 1000,
+    --     event = 'VimEnter',
+    --     init = function()
+    --         vim.cmd.colorscheme 'tokyonight-night'
+    --         vim.cmd.hi 'Comment gui=none guifg=#8C7DA6'
+    --     end,
+    -- },
+
+    {
+        'catppuccin/nvim',
+        name = 'catppuccin',
         lazy = false,
         priority = 1000,
         event = 'VimEnter',
-        init = function()
-            vim.cmd.colorscheme 'tokyonight-night'
-            vim.cmd.hi 'Comment gui=none guifg=#8C7DA6'
-        end,
+        init = function ()
+            vim.cmd.colorscheme 'catppuccin'
+        end
     },
 
     { -- Statusbar
@@ -71,7 +83,7 @@ return {
         opts = {
             options = {
                 icons_enabled = true, -- Requires a nerd font
-                theme = 'tokyonight', -- https://github.com/nvim-luaVline/lualine.nvim/blob/master/THEMES.md
+                theme = 'catppuccin', -- https://github.com/nvim-luaVline/lualine.nvim/blob/master/THEMES.md
                 globalstatus = true,
             },
             sections = {
