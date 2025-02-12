@@ -1,8 +1,8 @@
-# Lock files
-*-lock.json
-
 # Log files
 *.log
+
+# Nvim lock file
+lazy-lock.json
 
 # Emacs generated config
 config/emacs/auto-save-list/
