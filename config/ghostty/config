@@ -6,7 +6,7 @@
 #                                |___/
 
 # Theme
-theme = tokyonight
+theme = catppuccin
 
 # Font
 #font-family = "Symbols Nerd Font Mono"
