@@ -17,11 +17,14 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Add ghostty input
+    # Catppuccin theme.
+    catppuccin.url = "github:catppuccin/nix";
+
+    # Add ghostty input.
     ghostty.url = "github:ghostty-org/ghostty";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixos-hardware, home-manager, ghostty, ... }: {
+  outputs = inputs@{ self, nixpkgs, nixos-hardware, home-manager, catppuccin, ghostty, ... }: {
     # Use your hostname here.
     # Alternatively, you can select a configuration with:
     # nixos-rebuild switch --flake '/etc/nixos#hostname'
@@ -37,6 +40,10 @@
         # https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
         # nixos-hardware.nixosModules.apple-macbook-pro-12-1
 
+        # Add catppuccin theme.
+        catppuccin.nixosModules.catppuccin
+        { catppuccin.enable = true; }
+
         # Import Home Manager as a NixOS module.
         home-manager.nixosModules.home-manager
         {
@@ -49,7 +56,9 @@
             # arguments to home.nix
             extraSpecialArgs = { inherit inputs; };
 
-            users.oskar = import ./home.nix;
+            users.oskar.imports = [
+              ./home.nix
+            ];
           };
 
           # Wayland, X, etc. support for session vars

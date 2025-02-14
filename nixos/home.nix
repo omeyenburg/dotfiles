@@ -112,6 +112,24 @@
       package = pkgs.gnome-themes-extra;
       # adwaita-qt adwaita-qt6
     };
+    #cursorTheme = ...
+    #iconTheme = ...
+
+    # use this together with: imports = [inputs.catppuccin.homeManagerModules.catppuccin];
+    # catppuccin = {
+    #   enable = true;
+    #   flavor = "mocha";
+    #   accent = "pink";
+    #   size = "standard";
+    #   tweaks = [ "normal" ];
+    # };
+  };
+  
+  qt = {
+    enable = true;
+    platformTheme.name = "gtk";
+    style.name = "adwaita-dark";
+    style.package = pkgs.adwaita-qt;
   };
 
   xdg.mimeApps = {

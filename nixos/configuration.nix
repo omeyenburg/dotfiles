@@ -194,11 +194,11 @@
       logisim logisim-evolution
 
       # Terminal
-      kitty starship
+      kitty
 
       # Tools
       tmux figlet unzip gnumake fastfetch
-      bash-completion
+      bash-completion gitmux
 
       # Languages & Compilers
       gcc python312Full
@@ -222,7 +222,7 @@
     # Packages installed in system profile.
     systemPackages = with pkgs; [
       # Tools
-      fzf git vim btop tree wget curl
+      fzf git vim btop tree wget curl cryptsetup
 
       # System
       acpi xorg.xrdb brightnessctl power-profiles-daemon intel-gpu-tools linux-firmware
@@ -280,7 +280,6 @@
     firefox.enable = true;
     hyprland.enable = true;
     gamemode.enable = true;
-    starship.enable = true;
     steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
