@@ -24,21 +24,32 @@
     ghostty.url = "github:ghostty-org/ghostty";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixos-hardware, home-manager, catppuccin, ghostty, ... }: {
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    nixos-hardware,
+    home-manager,
+    catppuccin,
+    ghostty,
+    ...
+  }: {
     # Use your hostname here.
     # Alternatively, you can select a configuration with:
-    # nixos-rebuild switch --flake '/etc/nixos#hostname'
+    # nixos-rebuild switch --flake '/etc/nixos#hostname'.
     nixosConfigurations.oskar-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       # Set all inputs parameters as special arguments for all submodules,
-      # so you can directly use all dependencies in inputs in submodules
+      # so you can directly use all dependencies in inputs in submodules.
       specialArgs = { inherit inputs; };
       modules = [
-        ./configuration.nix
+        # Include the results of the hardware scan.
+        ./hardware-configuration.nix
 
-        # Import hardware specific options. Find your module in this list:
-        # https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
-        # nixos-hardware.nixosModules.apple-macbook-pro-12-1
+        # Include macbook/intel specific configuration.
+        ./macos-configuration.nix
+
+        # Include main configuration.
+        ./configuration.nix
 
         # Add catppuccin theme.
         catppuccin.nixosModules.catppuccin
@@ -52,8 +63,8 @@
             useUserPackages = true;
             backupFileExtension = "backup";
 
-            # Optionally, use home-manager.extraSpecialArgs to pass
-            # arguments to home.nix
+            # Optionally, use home-manager.extraSpecialArgs
+            # to pass arguments to home.nix.
             extraSpecialArgs = { inherit inputs; };
 
             users.oskar.imports = [
@@ -61,7 +72,7 @@
             ];
           };
 
-          # Wayland, X, etc. support for session vars
+          # Wayland, X, etc. support for session vars.
           # systemd.user.sessionVariables = config.home-manager.users.oskar.home.sessionVariables;
         }
       ];

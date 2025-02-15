@@ -46,13 +46,13 @@
         #epkgs.org
         #epkgs.org-contrib
         #epkgs.org-bullets
-        #
+
         ## Evil mode packages
         #epkgs.evil
         #epkgs.evil-collection
         #epkgs.evil-org
         #evil-surround
-#
+
         #use-package
       #];
     };

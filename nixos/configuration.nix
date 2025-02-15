@@ -5,29 +5,18 @@
 # |_| \_|_/_/\_\\___/|____/
 #
 
-{ config, lib, pkgs, inputs, ... }:
+{ lib, pkgs, inputs, ... }:
 
 {
-  # Include the results of the hardware scan.
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
-  # Bug fix specific to MacBook Pro 12,1.
-  # See https://github.com/NixOS/nixos-hardware/tree/master/apple/macbook-pro/12-1
-  powerManagement.powerUpCommands = ''
-    ${pkgs.systemd}/bin/systemctl restart wpa_supplicant.service
-  '';
-
   nix = {
     settings = {
       # Enable the nix command and flakes.
       # nixos-rebuild switch will now first attempt to load /etc/nixos/flake.nix.
       experimental-features = [ "nix-command" "flakes" ];
-    
+
       # Optimise store during each build
       # Can also be done manually: nix-store --optimise
-      # auto-optimise-store = true;
+      auto-optimise-store = true;
     };
 
     # Automatic garbage collect
@@ -43,24 +32,6 @@
 
     # Use latest stable Linux kernel available in NixOS.
     kernelPackages = pkgs.linuxPackages_latest;
-
-    # Load btusb module, commonly used for Bluetooth adapters.
-    # Only used if the chip is supported by this module.
-    kernelModules = [ "btusb" ];
-
-    # kernelParams = [
-      # Recommendation: Yes, if you experience Bluetooth issues like stuttering. Otherwise, it’s not essential.
-      # "bluetooth.disable_ertm=1"  # Disable Enhanced Retransmission Mode
-
-      # Recommendation: Yes, especially if you notice flickering or stuttering in video playback or UI rendering.
-      # "i915.enable_psr=0"         # Disables Panel Self Refresh to prevent flickering/stuttering.
-
-      # Recommendation: Yes, as it benefits performance without significant downsides.
-      # "i915.enable_fbc=1"         # Enables Framebuffer Compression for better performance.
-
-      # Recommendation: Yes, as it can improve performance, especially with newer kernels.
-      # "i915.enable_guc=3"         # Enables GuC for better GPU scheduling (Broadwell supports this).
-     # ];
 
     # Use the systemd-boot EFI boot loader.
     loader = {
@@ -100,27 +71,18 @@
   };
 
   hardware = {
-    # Enable bluetooth.
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-      settings = {
-        General = {
-          # Increase connection quality and range.
-          MaxConnections = "1";
-          Experimental = "true";
-          FastConnectable = "true";
-          ReconnectAttempts = "7";
-          ReconnectIntervals = "1, 2, 4, 8, 16, 32, 64";
-        };
-      };
-    };
-
     # Enable OpenGL
     graphics = {
-      enable = true;
-      enable32Bit = true;
+      enable = true; # Formally known as driSupport
+      enable32Bit = true; # For Wine/Steam
+      extraPackages = [
+        pkgs.intel-compute-runtime # or use intel-ocl
+        pkgs.intel-media-driver # or intel-vaapi-driver if older than 2014
+      ];
     };
+
+    # Whether to enable non-root access to the firmware of QMK keyboards.
+    keyboard.qmk.enable = true;
   };
 
   services = {
@@ -129,11 +91,13 @@
 
     # Contrary to the name, also affects wayland
     # Configure keymaps in X11 and console.
-    xserver.xkb = {
+    xserver = {
+      # autorun = false;
+      videoDrivers = [ "intel" ];
+      xkb = {
         layout = "de";
         variant = "mac";
-        options = "caps:escape";
-      # videoDrivers = [ "intel" ];
+        options = "caps:escape"; };
     };
 
     # Enable CUPS to print documents.
@@ -146,25 +110,33 @@
       pulse.enable = true;
     };
 
-    # Enable power profiles daemon.
-    power-profiles-daemon.enable = true;
+    # Enable power profiles daemon (conflicts with tlp).
+    # Also include powerprofilesctl package.
+    # power-profiles-daemon.enable = true;
+
+    # Enable tlp power management (conflicts with power profiles daemon).
+    tlp.enable = true;
+
+    # Enable some battery monitoring.
+    # Doesn't seem to be useful.
+    # upower.enable = true;
 
     # Enable touchpad support (enabled default in most desktopManager).
     # libinput.enable = true;
 
     # Enable the OpenSSH daemon.
     # openssh.enable = true;
-    
-    # Enable automatic disk mounting
+
+    # Enable automatic disk mounting.
     devmon.enable = true;
 
-    # Handles disk mounting operations
+    # Handles disk mounting operations.
     udisks2.enable = true;
 
-    gvfs.enable = true;
+    # Should not be necessary, test without it.
+    # gvfs.enable = true;
 
-    # upower.enable = true;
-
+    # Enable ollama for local ai models.
     ollama.enable = true;
   };
 
@@ -225,10 +197,11 @@
       fzf git vim btop tree wget curl cryptsetup
 
       # System
-      acpi xorg.xrdb brightnessctl power-profiles-daemon intel-gpu-tools linux-firmware
+      acpi xorg.xrdb brightnessctl linux-firmware
+      # powerprofilesctl # use powerprofile unless tlp is used
 
       # Bluetooth
-      bluez bluez-tools b43FirmwareCutter b43Firmware_6_30_163_46 broadcom-bt-firmware
+      bluez bluez-tools
     ];
 
     # Define environment variables for session processes.
@@ -242,10 +215,6 @@
       PATH = [ "${XDG_BIN_HOME}" ];
 
       NIXOS_OZONE_WL = "1";
-
-      # Video acceleration
-      LIBVA_DRIVER_NAME = "i965";  # or "iHD" for newer Intel GPUs
-      VDPAU_DRIVER = "va_gl";
 
       # Configure nmtui colors
       # Elements: root, border, window, shadow, title, button, actbutton, checkbox, actcheckbox, entry, label, listbox, actlistbox, textbox, acttextbox, helpline, roottext, emptyscale, fullscale, disentry, compactbutton, actsellistbox, sellistbox
