@@ -64,8 +64,9 @@
 
   # Bug fix specific to MacBook Pro 12,1.
   # See https://github.com/NixOS/nixos-hardware/tree/master/apple/macbook-pro/12-1
+  # Replace NetworkManager with wpa_supplicant, if using wpa
   powerManagement.powerUpCommands = ''
-    ${pkgs.systemd}/bin/systemctl restart wpa_supplicant.service
+    ${pkgs.systemd}/bin/systemctl restart NetworkManager.service
     '';
 
   # Broadcom bluetooth firmware
