@@ -9,8 +9,12 @@ Adds git related signs to the line numbers, as well as utilities for managing ch
 https://github.com/lewis6991/gitsigns.nvim
 
 # Tokyonight
-Pretty colorscheme - Variants: tokyonight-night, tokyonight-day, tokyonight-moon, tokyonight-storm
+Variants: tokyonight-night, tokyonight-day, tokyonight-moon, tokyonight-storm
 https://github.com/folke/tokyonight.nvim
+
+# Catppuccin
+Variants: catppuccin-frappe, catppuccin-latte, catppuccin-macchiato, catppuccin-mocha
+https://github.com/catppuccin/nvim
 
 # Lualine
 Adds a statusline with automatic adjusting style, matching the colorscheme
@@ -64,15 +68,17 @@ return {
     --     end,
     -- },
 
-    {
+    { -- Catppuccin colorscheme
         'catppuccin/nvim',
         name = 'catppuccin',
         lazy = false,
         priority = 1000,
         event = 'VimEnter',
-        init = function ()
+        init = function()
             vim.cmd.colorscheme 'catppuccin'
-        end
+            vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+            vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+        end,
     },
 
     { -- Statusbar
