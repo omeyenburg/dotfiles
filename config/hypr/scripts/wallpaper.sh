@@ -5,23 +5,23 @@ wallpaper=${1:-""}
 monitor=${2:-"eDP-1"}
 
 # Return current wallpaper
-function get_wallpaper {
-    cat $HOME/.cache/wal/wal
+get_wallpaper () {
+    cat "$HOME/.cache/wal/wal"
     echo ""
 }
 
 # Search wallpapers
-function list_wallpapers {
-    ls $HOME/.local/share/wallpapers/* 2> /dev/null
+list_wallpapers () {
+    ls "$HOME/.local/share/wallpapers/*" 2> /dev/null
 }
 
 # Select a random wallpaper if no wallpaper is provided.
 if [ ! "$wallpaper" ]; then
     wallpaper=$(list_wallpapers | sort -R | tail -1)
-elif [ "$wallpaper" == "get" ]; then
+elif [ "$wallpaper" = "get" ]; then
     get_wallpaper
     exit 0
-elif [ "$wallpaper" == "list" ]; then
+elif [ "$wallpaper" = "list" ]; then
     echo "Found wallpapers:"
     for file in $(list_wallpapers)
     do
@@ -64,20 +64,21 @@ done
 
 # Detect wallpaper brightness
 brightness=$(magick "$wallpaper" -colorspace Gray -format "%[fx:mean*255]" info:)
-if (( $(echo "$BRIGHTNESS > 50" | bc -l) )); then
+if (( $(echo "$brightness > 50" | bc -l) )); then
     light="-l"
 else
     light=""
 fi
 
 # Generate colorscheme
-$(which wal) -i $wallpaper -stqn $light --saturate 0.1
+$(which wal) -i "$wallpaper" -stqn $light --saturate 0.1
 
 # Relaunch waybar (kill again for spam protection)
-pkill waybar
-waybar --config $HOME/.config/hypr/waybar/config.jsonc --style $HOME/.config/hypr/waybar/style.css & disown
+# pkill waybar
+# waybar --config $HOME/.config/hypr/waybar/config.jsonc --style $HOME/.config/hypr/waybar/style.css & disown
+"$HOME/.config/hypr/scripts/waybar.sh" start
 
 # Reload mako
 echo "Reloading mako"
-$HOME/.config/hypr/mako/colors-wal.sh
+"$HOME/.config/hypr/mako/colors-wal.sh"
 makoctl reload
