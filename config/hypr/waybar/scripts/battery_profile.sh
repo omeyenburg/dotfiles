@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Get current power profile
-power_profile=$(powerprofilesctl get)
+power_profile=$(powerprofilesctl get || exit)
 
 # Cycle through power profiles
 case $power_profile in
