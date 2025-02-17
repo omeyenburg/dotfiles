@@ -28,5 +28,8 @@ fonts:
 qmk:
 	@sh "$(DOTFILES)scripts/qmk.sh"
 
+hypr:
+	@sh "$(DOTFILES)scripts/make.sh"
+
 nixos-backup:
 	@sh "$(DOTFILES)scripts/nixos-backup.sh"

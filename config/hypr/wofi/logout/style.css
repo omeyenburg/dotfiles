@@ -1,8 +1,9 @@
 /* -----------------------------------------------------
- * Import Pywal colors 
+ * Import colors
  * ----------------------------------------------------- */
 
-@import '.cache/wal/colors-waybar.css';
+@import '.config/hypr/themes/current.css';
+
 
 /* -----------------------------------------------------
  * Window
@@ -24,6 +25,7 @@
     font-style: normal;
     font-weight: bold;
 }
+
 
 /* -----------------------------------------------------
  * Entry

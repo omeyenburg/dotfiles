@@ -6,17 +6,17 @@
  *    \_/\_/ \__,_|\__, |_.__/ \__,_|_|    |____/ \__|\__, |_|\___|
  *                 |___/                              |___/
  *
- * ----------------------------------------------------- 
-*/
-
-/* Inspiration: */
-/* https://github.com/mylinuxforwork/dotfiles/blob/main/share/dotfiles/.config/waybar/themes/ml4w/style.css */
-
-/* -----------------------------------------------------
- * Import Pywal colors 
+ * Inspiration:
+ * https://github.com/mylinuxforwork/dotfiles/blob/main/share/dotfiles/.config/waybar/themes/ml4w/style.css
+ *
  * ----------------------------------------------------- */
 
-@import '../../../.cache/wal/colors-waybar.css';
+
+/* -----------------------------------------------------
+ * Import colors
+ * ----------------------------------------------------- */
+
+@import '../themes/current.css';
 
 
 /* -----------------------------------------------------
@@ -25,7 +25,7 @@
 
 label {
     all: unset;
-    text-shadow: 
+    text-shadow:
         -0.05px -0.05px 2px @shadow,
         0.05px -0.05px 2px @shadow,
         -0.05px 0.05px 2px @shadow,
@@ -54,6 +54,7 @@ button {
     opacity: 0.8;
 }
 
+
 /* -----------------------------------------------------
  * Tooltips
  * ----------------------------------------------------- */
@@ -71,8 +72,9 @@ tooltip label {
     margin: -6px -5px -4px -3px;
 }
 
+
 /* -----------------------------------------------------
- * Workspaces 
+ * Workspaces
  * ----------------------------------------------------- */
 
 #workspaces {
@@ -113,6 +115,7 @@ tooltip label {
     color: @textwarning;
 }
 
+
 /* -----------------------------------------------------
  * Modules
  * ----------------------------------------------------- */
@@ -128,6 +131,7 @@ tooltip label {
 #battery, #pulseaudio, #idle_inhibitor {
     padding-right: 17px;
 }
+
 
 /* -----------------------------------------------------
  * CPU, Memory & Temperature
@@ -159,6 +163,7 @@ tooltip label {
     color: @textcritical;
 }
 
+
 /* -----------------------------------------------------
  * Network
  * ----------------------------------------------------- */
@@ -168,6 +173,7 @@ tooltip label {
     border-color: @textwarning;
     color: @textwarning;
 }
+
 
 /* -----------------------------------------------------
  * Battery
@@ -185,6 +191,7 @@ tooltip label {
     color: @textok;
 }
 
+
 /* -----------------------------------------------------
  * Bluetooth
  * ----------------------------------------------------- */
@@ -201,6 +208,7 @@ tooltip label {
     color: @textok;
 }
 
+
 /* -----------------------------------------------------
  * Idle Inhibator
  * ----------------------------------------------------- */
@@ -208,6 +216,7 @@ tooltip label {
 #idle_inhibitor.deactivated {
     color: @textinactive;
 }
+
 
 /* -----------------------------------------------------
  * Window (Hide window name if no windows are open)
