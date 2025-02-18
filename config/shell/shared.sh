@@ -4,16 +4,15 @@ export EDITOR=nvim
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-# ls
-alias ll="ls -alF"
-alias la="ls -A"
-
-# Git
+alias deepseek="ollama run deepseek-r1:1.5b"
 alias git="LANG=en_GB git"
 alias gitlog="python3 ~/.config/shell/gitlog.py"
-
-# Ollama
-alias deepseek="ollama run deepseek-r1:1.5b"
+alias la="ls -A"
+alias ll="ls -alF"
+alias pls="\sudo"
+sudo() {
+    echo How is it called?
+}
 
 # Tmux sessions
 alias t=~/.config/tmux/t.sh
