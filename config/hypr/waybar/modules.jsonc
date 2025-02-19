@@ -132,23 +132,23 @@
         "format-disconnected": "N/A 󱚵 ",
         "tooltip-format": "{ifname} via {gwaddr} ({essid})",
         // "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "pkill nmtui || kitty nmtui"
+        "on-click": "pkill nmtui || ghostty -e nmtui"
     },
     "cpu": {
         "format": "{usage}% ",
-        "on-click": "~/.config/hypr/scripts/processes.sh",
+        "on-click": "pkill btop || ghostty -e btop",
         "tooltip": true
     },
     "memory": {
         "format": "{}% ",
-        "on-click": "~/.config/hypr/scripts/processes.sh",
+        "on-click": "pkill btop || ghostty -e btop",
         "tooltip": true
     },
     "temperature": {
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", "", "", ""],
-        "on-click": "~/.config/hypr/scripts/processes.sh",
+        "on-click": "pkill btop || ghostty -e btop",
         "tooltip": false
     },
     "custom/power": {
