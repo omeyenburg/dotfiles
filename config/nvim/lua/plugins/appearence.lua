@@ -8,6 +8,10 @@ https://github.com/nvim-tree/nvim-web-devicons
 Adds git related signs to the line numbers, as well as utilities for managing changes
 https://github.com/lewis6991/gitsigns.nvim
 
+# Fidget
+LSP status updates
+https://github.com/'j-hui/fidget.nvim'
+
 # Tokyonight
 Variants: tokyonight-night, tokyonight-day, tokyonight-moon, tokyonight-storm
 https://github.com/folke/tokyonight.nvim
@@ -52,6 +56,21 @@ return {
                 delete = { text = '_' },
                 topdelete = { text = '‾' },
                 changedelete = { text = '~' },
+            },
+        },
+    },
+
+    { -- LSP status updates
+        'j-hui/fidget.nvim',
+        opts = {
+            progress = {
+                ignore_done_already = true,
+            },
+            notification = {
+                window = {
+                    border = 'rounded', -- enable border
+                    winblend = 10, -- opacity
+                },
             },
         },
     },
