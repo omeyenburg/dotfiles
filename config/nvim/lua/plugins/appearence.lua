@@ -95,8 +95,8 @@ return {
         event = 'VimEnter',
         init = function()
             vim.cmd.colorscheme 'catppuccin'
-            vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-            vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+            vim.api.nvim_set_hl(0, 'Normal', { bg = '#1c1c2b' })
+            vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#1c1c2b' })
         end,
     },
 
