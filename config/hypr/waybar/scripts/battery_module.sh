@@ -9,9 +9,14 @@ send_battery_warning() {
     # Get last used id
     id=$(cat "$id_cache" || echo "0")
 
-    # Send notification and save new id
+    if [ "$battery_percent" -ge 90 ]; then
+        message="$battery_percent% remaining."
+    else
+        message="$battery_percent% remaining. Connect device to a power source."
+    fi
 
-    id=$(~/.config/hypr/scripts/notify.sh "battery-status" "$1" "$battery_percent% remaining. Connect device to a power source." 20000 "$2" "$id")
+    # Send notification and save new id
+    id=$(~/.config/hypr/scripts/notify.sh "battery-status" "$1" "$message" 20000 "$2" "$id")
     echo "$id" > "$id_cache"
 
     # Set power profile to power-saver
@@ -59,6 +64,7 @@ if [ "$battery_status" = "Charging" ]; then
     charging_levels=(󰂅 󰂋 󰂊 󰢞 󰂉 󰢝 󰂈 󰂇 󰂆 󰢜 󰢟)
     if [ "$battery_percent" -ge 95 ]; then
         battery_icon="${charging_levels[0]}"
+        send_battery_warning "Battery fully charged" 1
     elif [ "$battery_percent" -ge 90 ]; then
         battery_icon="${charging_levels[1]}"
     elif [ "$battery_percent" -ge 80 ]; then
