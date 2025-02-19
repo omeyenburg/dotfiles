@@ -6,7 +6,7 @@
 #                                |___/
 
 # Theme
-theme = catppuccin
+theme = catppuccin-mocha
 
 # Font
 #font-family = "Symbols Nerd Font Mono"
@@ -18,17 +18,21 @@ theme = catppuccin
 # Cursor
 cursor-style = block
 cursor-style-blink = false
+cursor-invert-fg-bg = true
+cursor-click-to-move = false
 shell-integration-features = no-cursor
 
 # Mouse
+link-url = false
 mouse-hide-while-typing = true
-# mouse-scroll-multiplier = 1
 
 # Window
-window-decoration = false
 background-opacity = 0.9
-window-theme = ghostty
 confirm-close-surface = false
+gtk-adwaita = false
+resize-overlay = never
+window-decoration = false
+window-theme = ghostty
 
-# Keybinds
+# Keymaps
 keybind = ctrl+shift+n=unbind
