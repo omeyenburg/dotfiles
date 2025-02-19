@@ -46,6 +46,7 @@ local toggle_terminal = function()
         if vim.bo[state.floating.buf].buftype ~= 'terminal' then
             vim.cmd.terminal()
         end
+        vim.api.nvim_buf_set_name(0, "[Terminal]")
     else
         vim.api.nvim_win_hide(state.floating.win)
     end
@@ -56,8 +57,14 @@ local toggle_inspect_tree = function()
     if vim.fn.bufexists("Syntax tree") ~= 0 then
         vim.api.nvim_buf_delete(vim.fn.bufnr("Syntax tree"), {})
     else
-        vim.cmd 'InspectTree'
-        vim.api.nvim_buf_set_name(0, "Syntax tree")
+        local s, _ = pcall(function() vim.cmd 'InspectTree' end)
+        if s then
+            vim.api.nvim_buf_set_name(0, "Syntax tree")
+            vim.wo.relativenumber=false
+            vim.wo.number=false
+        else
+            print("File does not support syntax tree.")
+        end
     end
 end
 
