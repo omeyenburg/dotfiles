@@ -37,7 +37,7 @@ echo "Using wallpaper $wallpaper"
 pkill waybar
 
 # Start hyprpaper if not running yet
-if [ ! "$(ps -e | grep hyprpaper )" ]; then
+if ! pgrep hyprpaper; then
     echo "Starting hyprpaper"
     hyprpaper # --config .config/hypr/conf/wallpaper.conf & disown
     sleep 0.1
