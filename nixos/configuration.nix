@@ -45,8 +45,15 @@
     hostName = "oskar-nixos";
 
     # Pick only one of the below networking options.
-    networkmanager.enable = true;  # Easiest to use and most distros use this by default.
     wireless.enable = false;       # Enables wireless support via wpa_supplicant.
+
+    # Easiest to use and most distros use this by default.
+    # Conflicts with wireless
+    networkmanager = {
+      enable = true;
+      #wifi.powersave = false;
+      #wifi.scanRandMacAddress = false;
+    };
 
     # Configure network proxy if necessary.
     # proxy.default = "http://user:password@proxy:port/";
@@ -92,7 +99,7 @@
     # Contrary to the name, also affects wayland
     # Configure keymaps in X11 and console.
     xserver = {
-      # autorun = false;
+      autorun = false;
       videoDrivers = [ "intel" ];
       xkb = {
         layout = "de";
@@ -137,7 +144,7 @@
     # gvfs.enable = true;
 
     # Enable ollama for local ai models.
-    ollama.enable = true;
+    # ollama.enable = true;
   };
 
   # Define a user account.
@@ -220,7 +227,7 @@
       # Elements: root, border, window, shadow, title, button, actbutton, checkbox, actcheckbox, entry, label, listbox, actlistbox, textbox, acttextbox, helpline, roottext, emptyscale, fullscale, disentry, compactbutton, actsellistbox, sellistbox
       # Syntax: <element>=<fg>,<bg>
       NEWT_COLORS = ''
-        root=black,black
+        root=default,default
         border=black,lightgray
         window=white,lightgray
         shadow=white,black
