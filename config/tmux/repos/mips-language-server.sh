@@ -13,11 +13,11 @@ if [ $? != 0 ]; then
     tmux new-session -d -s $session
 
     tmux new-window -t $session:1
-    tmux send-keys -t $session:1 'nix develop' C-m
+    tmux send-keys -t $session:1 'nix develop --offline' C-m
     tmux send-keys -t $session:1 'clear' C-m
 
     tmux new-window -t $session:2
-    tmux send-keys -t $session:2 'nix develop' C-m
+    tmux send-keys -t $session:2 'nix develop --offline' C-m
     tmux send-keys -t $session:2 'clear' C-m
 
     tmux new-window -t $session:3
