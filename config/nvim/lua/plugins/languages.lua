@@ -4,10 +4,6 @@
 Latex compilation & live preview
 https://github.com/lervag/vimtex
 
-# RustaceanVim
-Rust-Analyzer wrapper
-https://github.com/mrcjkb/rustaceanvim/
-
 # Crates.nvim
 Rust crate management
 https://github.com/Saecki/crates.nvim
@@ -23,13 +19,6 @@ return {
         init = function()
             vim.g.vimtex_view_method = 'zathura'
         end,
-    },
-
-    {
-        'mrcjkb/rustaceanvim',
-        lazy = false,
-        version = '^5',
-        ft = { 'rust' },
     },
 
     {
