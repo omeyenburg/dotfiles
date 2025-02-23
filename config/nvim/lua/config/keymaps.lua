@@ -46,7 +46,7 @@ local toggle_terminal = function()
         if vim.bo[state.floating.buf].buftype ~= 'terminal' then
             vim.cmd.terminal()
         end
-        vim.api.nvim_buf_set_name(0, "[Terminal]")
+        vim.api.nvim_buf_set_name(0, '[Terminal]')
     else
         vim.api.nvim_win_hide(state.floating.win)
     end
@@ -54,19 +54,50 @@ end
 
 -- Toggle inspect tree
 local toggle_inspect_tree = function()
-    if vim.fn.bufexists("Syntax tree") ~= 0 then
-        vim.api.nvim_buf_delete(vim.fn.bufnr("Syntax tree"), {})
+    if vim.fn.bufexists 'Syntax tree' ~= 0 then
+        vim.api.nvim_buf_delete(vim.fn.bufnr 'Syntax tree', {})
     else
-        local s, _ = pcall(function() vim.cmd 'InspectTree' end)
+        local s, _ = pcall(function()
+            vim.cmd 'InspectTree'
+        end)
         if s then
-            vim.api.nvim_buf_set_name(0, "Syntax tree")
-            vim.wo.relativenumber=false
-            vim.wo.number=false
+            vim.api.nvim_buf_set_name(0, 'Syntax tree')
+            vim.wo.relativenumber = false
+            vim.wo.number = false
         else
-            print("File does not support syntax tree.")
+            print 'File does not support syntax tree.'
         end
     end
 end
+
+-- Open link under cursor
+vim.keymap.set('n', '<leader>k', function()
+    local link = vim.fn.expand '<cWORD>'
+
+    -- Open link with browser if possible
+    if link:match 'https?://' then
+        vim.fn.system('xdg-open ' .. link)
+    else
+        -- Strip quotes i.e.
+        link = link:gsub("^['\"](.-)['\"]$", "%1")
+
+        local cwd = vim.fn.getcwd()
+        local file_dir = vim.fn.expand("%:p:h")
+
+        local link_expanded = vim.fn.expand(link)
+        local link_cwd = vim.fs.joinpath(cwd, link)
+        local link_file_dir = vim.fs.joinpath(file_dir, link)
+
+        -- Check if any of the file paths is readable
+        if vim.fn.filereadable(link_expanded) == 1 then
+            vim.cmd('edit ' .. link_expanded)
+        elseif vim.fn.filereadable(link_cwd) == 1 then
+            vim.cmd('edit ' .. link_cwd)
+        elseif vim.fn.filereadable(link_file_dir) == 1 then
+            vim.cmd('edit ' .. link_file_dir)
+        end
+    end
+end, { noremap = true, silent = true, desc = 'Open link' })
 
 -- Centered half page scrolling
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true, desc = 'Scroll down' })
