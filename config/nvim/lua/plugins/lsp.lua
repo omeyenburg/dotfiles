@@ -17,21 +17,29 @@ return {
             'saghen/blink.cmp',
         },
         opts = {
-            inlay_hints = { enabled = true },
             servers = {
                 -- haskell-language-server
+                -- https://haskell-language-server.readthedocs.io/en/latest/configuration.html
                 hls = {},
 
-                -- nixd (for Nix files)
-                nixd = {},
+                -- nix-language-server
+                -- https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md
+                nixd = {
+                    settings = {
+                        nixd = {},
+                    },
+                },
 
-                -- clang-tools (Clangd for C/C++/Objective-C/Objective-C++)
+                -- clang-tools for C/C++/Objective-C/Objective-C++
+                -- https://clangd.llvm.org/config
                 clangd = {},
 
-                -- glsl_analyzer (GLSL)
+                -- glsl-analyzer
+                -- https://github.com/nolanderc/glsl_analyzer?tab=readme-ov-file#neovim
                 glslls = {},
 
-                -- lua-language-server (Lua)
+                -- lua-language-server
+                -- https://luals.github.io/wiki/configuration/#neovim
                 lua_ls = {
                     settings = {
                         Lua = {
@@ -46,16 +54,22 @@ return {
                     },
                 },
 
-                -- bash-language-server (Bash)
+                -- bash-language-server
+                -- https://github.com/bash-lsp/bash-language-server?tab=readme-ov-file
                 bashls = {},
 
-                -- jedi-language-server (Python)
-                jedi_language_server = {},
+                -- jedi-language-server for Python
+                -- https://github.com/pappasam/jedi-language-server?tab=readme-ov-file#configuration
+                jedi_language_server = {
+                    init_options = {},
+                },
 
                 -- latex-language-server
+                -- https://github.com/latex-lsp/texlab/wiki/Configuration
                 texlab = {},
 
                 -- rust-analyzer
+                -- https://rust-analyzer.github.io/book/configuration.html
                 rust_analyzer = {
                     cachePriming = {
                         enable = false,
