@@ -10,7 +10,8 @@ alias gitlog="python3 ~/.config/shell/gitlog.py"
 alias la="ls -A"
 alias ll="ls -alF"
 alias pls="\sudo"
-sudo() {
+alias sudo=how_is_it_called
+how_is_it_called() {
     echo How is it called?
 }
 
@@ -64,4 +65,4 @@ parse_root() {
 }
 
 export PROMPT_DIRTRIM=3
-export PS1="${bold_cyan}\w\$(parse_git_branch)\$(parse_nix_shell)\$(parse_root)\n${bold_green}❯ ${default_color}"
+export PS1="${bold_cyan}\w\$(parse_git_branch)\$(parse_nix_shell)\$(parse_root)\n${bold_green}❯${default_color} "

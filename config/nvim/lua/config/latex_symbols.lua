@@ -1,13 +1,14 @@
 --[[
--- 
+--
 -- General symbols
 -- https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf
--- 
+--
 -- Unicode translations
 -- https://en.wikipedia.org/wiki/List_of_Unicode_characters
 -- https://en.wikipedia.org/wiki/Mathematical_Alphanumeric_Symbols
 -- https://en.wikipedia.org/wiki/Supplemental_Mathematical_Operators
 -- https://www.quackit.com/html/html_editors/scratchpad
+--
 ]]
 
 return {
