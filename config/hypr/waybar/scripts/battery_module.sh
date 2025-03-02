@@ -24,12 +24,7 @@ send_battery_warning() {
 }
 
 # # Get battery information
-# battery_status=$(cat /sys/class/power_supply/BAT0/status)
-# battery_charge=$(cat /sys/class/power_supply/BAT0/charge_now)
-# battery_charge_full=$(cat /sys/class/power_supply/BAT0/charge_full)
-# battery_percent_design=$(cat /sys/class/power_supply/BAT0/capacity)
-# battery_percent=$(echo "100*$battery_charge/$battery_charge_full" | bc)
-battery_data=$(acpi | sed "s/.*: //;s/[,%]//g;")
+battery_data=$(acpi | head -1 | sed "s/.*: //;s/[,%]//g;")
 battery_status=$(echo "$battery_data" | awk '{ print $1 }')
 battery_percent=$(echo "$battery_data" | awk '{ print $2 }')
 battery_remaining=$(echo "$battery_data" | awk '{ print $3 }')
