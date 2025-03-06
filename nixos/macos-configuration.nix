@@ -23,9 +23,14 @@
       # Set to 1, if you experience Bluetooth issues like stuttering.
       "bluetooth.disable_ertm=1"  # Disable Enhanced Retransmission Mode
 
+      # This hopefully prevents wifi/bluetooth from waking up from suspend.
+      "brcmfmac.disable_ap=1"
+
       # Set to 0, if you notice flickering or stuttering in video playback or UI rendering.
       # Disables Panel Self Refresh to prevent flickering/stuttering.
-      "i915.enable_psr=0"
+      #
+      # but i just want to test if it has an impact...
+      "i915.enable_psr=1"
 
       # Benefits performance without significant downsides.
       # Enables Framebuffer Compression for better performance.
