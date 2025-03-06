@@ -29,6 +29,12 @@
       enableBashIntegration = true;
     };
 
+    librewolf = {
+      enable = true;
+      settings = {};
+      languagePacks = [ "en-GB" "de" ];
+    };
+
     btop = {
       enable = true;
     };
