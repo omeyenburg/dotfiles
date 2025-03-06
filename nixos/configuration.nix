@@ -5,7 +5,7 @@
 # |_| \_|_/_/\_\\___/|____/
 #
 
-{ lib, pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
   nix = {
@@ -31,7 +31,8 @@
     tmp.cleanOnBoot = true;
 
     # Use latest stable Linux kernel available in NixOS.
-    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_zen;
 
     # Use the systemd-boot EFI boot loader.
     loader = {
@@ -122,7 +123,13 @@
     # power-profiles-daemon.enable = true;
 
     # Enable tlp power management (conflicts with power profiles daemon).
-    tlp.enable = true;
+    tlp = {
+      enable = true;
+      settings = {
+	INTEL_GPU_MIN_FREQ_ON_AC = 500;
+	CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      };
+    };
 
     # Enable some battery monitoring.
     # Doesn't seem to be useful.
@@ -151,11 +158,12 @@
   # Don't forget to set a password with ‘passwd’.
   users.users.oskar = {
     isNormalUser = true;
-    extraGroups = [ # Enable ‘sudo’ for the user.
-      "wheel"
+    extraGroups = [
+      "wheel" # Enable ‘sudo’ for the user.
       "networkmanager" # Allow editing network connections
       "storage" # Allow writing to external devices like usb drives
       "plugdev"
+      "gamemode" # Allow gamemode to set CPU governor
     ];
     packages = with pkgs; [
       # Apps
@@ -181,6 +189,7 @@
 
       # Languages & Compilers
       gcc python312Full
+      graalvm-ce
 
       # Latex
       zathura texlab texliveFull
@@ -195,7 +204,21 @@
   };
 
   # Allow non-free software (e.g. spotify).
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config.allowUnfree = true;
+    config.packageOverrides = pkgs: {
+      glfw = pkgs.glfw.overrideAttrs (oldAttrs: {
+        cmakeFlags = oldAttrs.cmakeFlags or [] ++ [
+          "-DGLFW_BUILD_WAYLAND=ON"
+          "-DGLFW_BUILD_X11=OFF"
+          "-DCMAKE_BUILD_TYPE=Release"
+          "-DBUILD_SHARED_LIBS=ON"
+          "-DCMAKE_C_FLAGS=-O3 -march=native -pipe"
+          "-DCMAKE_CXX_FLAGS=-O3 -march=native -pipe"
+        ];
+      });
+    };
+  };
 
   environment = {
     # Packages installed in system profile.
@@ -205,6 +228,7 @@
 
       # System
       acpi xorg.xrdb brightnessctl linux-firmware
+      glfw
       # powerprofilesctl # use powerprofile unless tlp is used
 
       # Bluetooth
@@ -222,6 +246,10 @@
       PATH = [ "${XDG_BIN_HOME}" ];
 
       NIXOS_OZONE_WL = "1";
+
+      MESA_GL_VERSION_OVERRIDE = "4.6";
+      MESA_GLSL_VERSION_OVERRIDE = "460";
+      MESA_LOADER_DRIVER_OVERRIDE = "iris";
 
       # Configure nmtui colors
       # Elements: root, border, window, shadow, title, button, actbutton, checkbox, actcheckbox, entry, label, listbox, actlistbox, textbox, acttextbox, helpline, roottext, emptyscale, fullscale, disentry, compactbutton, actsellistbox, sellistbox
@@ -254,8 +282,18 @@
   # Some programs need SUID wrappers, can be configured further or are started in user sessions.
   programs = {
     firefox.enable = true;
+    gamemode = {
+      enable = true;
+      enableRenice = true;
+      settings = {
+        general = {
+          desiredgov = "performance";
+          softrealtime = "auto";
+          renice = 10;
+        };
+      };
+    };
     hyprland.enable = true;
-    gamemode.enable = true;
     steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
