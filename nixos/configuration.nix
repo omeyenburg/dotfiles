@@ -30,7 +30,7 @@
     # Clean temporary files in /tmp on every boot.
     tmp.cleanOnBoot = true;
 
-    # Use latest stable Linux kernel available in NixOS.
+    # Select Linux kernel.
     # kernelPackages = pkgs.linuxPackages_latest;
     kernelPackages = pkgs.linuxPackages_zen;
 
@@ -109,7 +109,21 @@
     };
 
     # Enable CUPS to print documents.
-    printing.enable = true;
+    printing = {
+      enable = true;
+      browsing = true;
+      drivers = [
+        pkgs.gutenprint
+        pkgs.brlaser
+      ];
+    };
+
+    # Enable printer discovery.
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
 
     # Enable sound (pulseaudio or pipewire).
     # hardware.pulseaudio.enable = true;
@@ -163,6 +177,7 @@
       "networkmanager" # Allow editing network connections
       "storage" # Allow writing to external devices like usb drives
       "plugdev"
+      "lp" # For printing, might not be necessary, just seen somewhere
       "gamemode" # Allow gamemode to set CPU governor
     ];
     packages = with pkgs; [
