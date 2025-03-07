@@ -218,9 +218,11 @@
     ];
   };
 
-  # Allow non-free software (e.g. spotify).
   nixpkgs = {
+    # Allow non-free software (e.g. spotify).
     config.allowUnfree = true;
+
+    # Compile glfw with wayland patches
     config.packageOverrides = pkgs: {
       glfw = pkgs.glfw.overrideAttrs (oldAttrs: {
         cmakeFlags = oldAttrs.cmakeFlags or [] ++ [
@@ -252,16 +254,33 @@
 
     # Define environment variables for session processes.
     sessionVariables = rec {
+      EDITOR = "nvim";
+
+      # XDG paths
       XDG_CACHE_HOME  = "$HOME/.cache";
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_DATA_HOME   = "$HOME/.local/share";
       XDG_STATE_HOME  = "$HOME/.local/state";
       XDG_BIN_HOME    = "$HOME/.local/bin";
-      XDG_CURRENT_DESKTOP = "Hyprland";
       PATH = [ "${XDG_BIN_HOME}" ];
 
+      # Wayland
+      CLUTTER_BACKEND = "wayland";
+      GDK_BACKEND = "wayland,x11,*";
+      GTK_THEME = "Adwaita-dark";
+      MOJANG_USE_WAYLAND = "1";
+      MOZ_ACCELERATED = "1";
+      MOZ_DISABLE_RDD_SANDBOX = "1";
+      MOZ_ENABLE_WAYLAND = "1";
+      MOZ_WEBRENDER = "1";
       NIXOS_OZONE_WL = "1";
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+      QT_QPA_PLATFORM = "wayland;xcb";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      SDL_VIDEODRIVER = "wayland";
+      XDG_CURRENT_DESKTOP = "Hyprland";
 
+      # OpenGL
       MESA_GL_VERSION_OVERRIDE = "4.6";
       MESA_GLSL_VERSION_OVERRIDE = "460";
       MESA_LOADER_DRIVER_OVERRIDE = "iris";
