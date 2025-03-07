@@ -141,7 +141,18 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "application/pdf" = ["com.github.johnfactotum.Foliate.desktop"];
+      "application/javascript" = "nvim.desktop";
+      "application/json" = "nvim.desktop";
+      "application/x-sh" = "nvim.desktop";
+      "application/x-shellscript" = "nvim.desktop";
+      "application/x-yaml" = "nvim.desktop";
+      "application/xhtml+xml" = "nvim.desktop";
+      "application/xml" = "nvim.desktop";
+      "application/pdf" = "librefox.desktop";
+      "image/*" = "gimp.desktop";
+      "inode/*" = "yazi.desktop";
+      "text/*" = "nvim.desktop";
+      "x-scheme-handler/ssh" = "com.mitchellh.ghostty.desktop";
     };
   };
 
