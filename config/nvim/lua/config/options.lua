@@ -97,6 +97,7 @@ vim.opt.expandtab = true -- Use the appropriate number of spaces to insert a <Ta
 vim.opt.wrap = false -- Line wrapping
 vim.opt.breakindent = false -- Wrapped lines will continue visually indented
 vim.opt.smartindent = true -- Adjust indentation based on control flow statements
+vim.opt.indentexpr = "#" -- Prevent hash symbols from detenting when smartindent is enabled
 
 -- }}}
 -- Search Options {{{
