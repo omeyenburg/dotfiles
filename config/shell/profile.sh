@@ -1,3 +1,3 @@
 #!/bin/sh
 
-. "$HOME/.config/shell/shared.sh"
+. "$HOME"/.config/shell/shared.sh

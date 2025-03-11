@@ -29,4 +29,4 @@ elif [ "$SHELL" = "/bin/zsh" ]; then
 fi
 
 # Source shared config
-. $HOME/.config/shell/shared.sh
+. "$HOME"/.config/shell/shared.sh

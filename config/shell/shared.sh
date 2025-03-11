@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 export EDITOR=nvim
 export LANG=en_US.UTF-8
@@ -9,10 +9,11 @@ alias git="LANG=en_GB git"
 alias gitlog="python3 ~/.config/shell/gitlog.py"
 alias la="ls -A"
 alias ll="ls -alF"
-alias pls="\sudo"
-alias sudo=how_is_it_called
-how_is_it_called() {
-    echo How is it called?
+
+# After suspend wifi sometimes does not work.
+# Quick-and-dirty fix is to remove the wifi device and rescan.
+reloadwifi() {
+    sudo sh -c 'echo 1 > /sys/bus/pci/devices/0000:03:00.0/remove && sleep 0.1 && echo 1 > /sys/bus/pci/rescan'
 }
 
 # Tmux sessions
@@ -26,7 +27,8 @@ obsidianopen() {
 
 # Yazi
 y() {
-    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    local tmp
+    tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
     yazi "$@" --cwd-file="$tmp"
     if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
         builtin cd -- "$cwd"
