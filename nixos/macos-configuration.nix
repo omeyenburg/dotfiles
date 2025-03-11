@@ -4,10 +4,11 @@
 # | |  | | (_| | (__| |_) | (_) | (_) |   <
 # |_|  |_|\__,_|\___|____/ \___/ \___/|_|\_\
 #
-
-{ pkgs, inputs, ... }:
-
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   # Import hardware specific options. Find your module in this list:
   # https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
   imports = [
@@ -17,14 +18,15 @@
   boot = {
     # Load btusb module, commonly used for Bluetooth adapters.
     # Only used if the chip is supported by this module.
-    kernelModules = [ "btusb" ];
+    kernelModules = ["btusb"];
 
     kernelParams = [
       # Set to 1, if you experience Bluetooth issues like stuttering.
-      "bluetooth.disable_ertm=1"  # Disable Enhanced Retransmission Mode
+      "bluetooth.disable_ertm=1" # Disable Enhanced Retransmission Mode
 
       # This hopefully prevents wifi/bluetooth from waking up from suspend.
       "brcmfmac.disable_ap=1"
+      "pcie_aspm=off"
 
       # Set to 0, if you notice flickering or stuttering in video playback or UI rendering.
       # Disables Panel Self Refresh to prevent flickering/stuttering.
@@ -46,8 +48,6 @@
       # In nixos-hardware this is set to 0.
       # But it needs to be set to 1.
       "hid_apple.iso_layout=1"
-
-      "pcie_aspm=off"
     ];
   };
 
@@ -97,7 +97,7 @@
     ];
 
     # Video acceleration
-    sessionVariables = rec {
+    sessionVariables = {
       LIBVA_DRIVER_NAME = "iHD"; # Or i965 for older Intel GPUs
       VDPAU_DRIVER = "va_gl";
     };

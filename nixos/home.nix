@@ -4,10 +4,11 @@
 # | |\  | |>  <| |_| |___) |
 # |_| \_|_/_/\_\\___/|____/
 #
-
-{ config, pkgs, inputs, ... }:
-
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   home = {
     # Home Manager needs a bit of information about you and the paths it should manage.
     username = "oskar";
@@ -32,7 +33,7 @@
     librewolf = {
       enable = true;
       settings = {};
-      languagePacks = [ "en-GB" "de" ];
+      languagePacks = ["en-GB" "de"];
     };
 
     btop = {
@@ -48,18 +49,18 @@
 
       # Install additional Emacs packages with Home Manager
       #extraPackages = epkgs: with epkgs; [
-        ## Org mode packages
-        #epkgs.org
-        #epkgs.org-contrib
-        #epkgs.org-bullets
+      ## Org mode packages
+      #epkgs.org
+      #epkgs.org-contrib
+      #epkgs.org-bullets
 
-        ## Evil mode packages
-        #epkgs.evil
-        #epkgs.evil-collection
-        #epkgs.evil-org
-        #evil-surround
+      ## Evil mode packages
+      #epkgs.evil
+      #epkgs.evil-collection
+      #epkgs.evil-org
+      #evil-surround
 
-        #use-package
+      #use-package
       #];
     };
 
@@ -130,7 +131,7 @@
     #   tweaks = [ "normal" ];
     # };
   };
-  
+
   qt = {
     enable = true;
     platformTheme.name = "gtk";

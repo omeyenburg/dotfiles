@@ -4,15 +4,12 @@
 # | |\  | |>  <| |_| |___) |
 # |_| \_|_/_/\_\\___/|____/
 #
-
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   nix = {
     settings = {
       # Enable the nix command and flakes.
       # nixos-rebuild switch will now first attempt to load /etc/nixos/flake.nix.
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
 
       # Optimise store during each build
       # Can also be done manually: nix-store --optimise
@@ -32,7 +29,10 @@
 
     # Select Linux kernel.
     # kernelPackages = pkgs.linuxPackages_latest;
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.linuxPackages_hardended;
+    # kernelPackages = pkgs.linuxPackages_zen;
+    # kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
     # Use the systemd-boot EFI boot loader.
     loader = {
@@ -45,8 +45,9 @@
     # Define the hostname.
     hostName = "oskar-nixos";
 
-    # Pick only one of the below networking options.
-    wireless.enable = false;       # Enables wireless support via wpa_supplicant.
+    # Choose either wpa_supplicant or networkmanager for networking.
+    # Enables wireless support via wpa_supplicant.
+    wireless.enable = false;
 
     # Easiest to use and most distros use this by default.
     # Conflicts with wireless
@@ -101,11 +102,12 @@
     # Configure keymaps in X11 and console.
     xserver = {
       autorun = false;
-      videoDrivers = [ "intel" ];
+      videoDrivers = ["intel"];
       xkb = {
         layout = "de";
         variant = "mac";
-        options = "caps:escape"; };
+        options = "caps:escape";
+      };
     };
 
     # Enable CUPS to print documents.
@@ -140,9 +142,18 @@
     tlp = {
       enable = true;
       settings = {
-	INTEL_GPU_MIN_FREQ_ON_AC = 500;
-	CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        INTEL_GPU_MIN_FREQ_ON_AC = 500;
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
       };
+      # # I believe WIFI_PWR_ON_BAT = "off"; should fix this wifi issue after suspend!
+      # # WIFI_PWR_ON_AC = "off"; should be default
+      # settings = {
+      #   INTEL_GPU_MIN_FREQ_ON_AC = 500;
+      #   CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      #
+      #   WIFI_PWR_ON_BAT = "off";
+      #   WIFI_PWR_ON_AC = "off";
+      # };
     };
 
     # Enable some battery monitoring.
@@ -174,11 +185,11 @@
     isNormalUser = true;
     extraGroups = [
       "wheel" # Enable ‘sudo’ for the user.
-      "networkmanager" # Allow editing network connections
-      "storage" # Allow writing to external devices like usb drives
+      "networkmanager" # Allow editing network connections.
+      "storage" # Allow writing to external devices like usb drives.
       "plugdev"
-      "lp" # For printing, might not be necessary, just seen somewhere
-      "gamemode" # Allow gamemode to set CPU governor
+      "lp" # For printing, might not be necessary, just seen somewhere.
+      "gamemode" # Allow gamemode to set CPU governor.
     ];
     packages = with pkgs; [
       # Apps
@@ -193,28 +204,49 @@
       mars-mips
       prismlauncher
       libreoffice-qt
-      logisim logisim-evolution
+      logisim
+      logisim-evolution
 
       # Terminal
       kitty
 
       # Tools
-      tmux figlet unzip gnumake fastfetch
-      bash-completion gitmux
+      tmux
+      figlet
+      unzip
+      gnumake
+      fastfetch
+      bash-completion
+      gitmux
 
       # Languages & Compilers
-      gcc python312Full
+      gcc
+      python312Full
       graalvm-ce
 
       # Latex
-      zathura texlab texliveFull
+      zathura
+      texlab
+      texliveFull
 
       # Hyprland
-      yad wofi mako pywal waybar pw-volume
-      hyprland hypridle hyprlock hyprshot hyprpaper hyprpicker
+      yad
+      wofi
+      mako
+      pywal
+      waybar
+      pw-volume
+      hyprland
+      hypridle
+      hyprlock
+      hyprshot
+      hyprpaper
+      hyprpicker
 
       # Deps
-      hunspell hunspellDicts.de_DE hunspellDicts.en_US-large
+      hunspell
+      hunspellDicts.de_DE
+      hunspellDicts.en_US-large
     ];
   };
 
@@ -225,14 +257,17 @@
     # Compile glfw with wayland patches
     config.packageOverrides = pkgs: {
       glfw = pkgs.glfw.overrideAttrs (oldAttrs: {
-        cmakeFlags = oldAttrs.cmakeFlags or [] ++ [
-          "-DGLFW_BUILD_WAYLAND=ON"
-          "-DGLFW_BUILD_X11=OFF"
-          "-DCMAKE_BUILD_TYPE=Release"
-          "-DBUILD_SHARED_LIBS=ON"
-          "-DCMAKE_C_FLAGS=-O3 -march=native -pipe"
-          "-DCMAKE_CXX_FLAGS=-O3 -march=native -pipe"
-        ];
+        cmakeFlags =
+          oldAttrs.cmakeFlags
+          or []
+          ++ [
+            "-DGLFW_BUILD_WAYLAND=ON"
+            "-DGLFW_BUILD_X11=OFF"
+            "-DCMAKE_BUILD_TYPE=Release"
+            "-DBUILD_SHARED_LIBS=ON"
+            "-DCMAKE_C_FLAGS=-O3 -march=native -pipe"
+            "-DCMAKE_CXX_FLAGS=-O3 -march=native -pipe"
+          ];
       });
     };
   };
@@ -241,46 +276,64 @@
     # Packages installed in system profile.
     systemPackages = with pkgs; [
       # Tools
-      fzf git vim btop tree wget curl cryptsetup
+      fzf
+      git
+      vim
+      btop
+      tree
+      wget
+      curl
+      cryptsetup
 
       # System
-      acpi xorg.xrdb brightnessctl linux-firmware
+      acpi
+      xorg.xrdb
+      brightnessctl
+      linux-firmware
       glfw
-      # powerprofilesctl # use powerprofile unless tlp is used
+
+      # Conflicts with tlp
+      # powerprofilesctl
 
       # Bluetooth
-      bluez bluez-tools
+      bluez
+      bluez-tools
     ];
 
     # Define environment variables for session processes.
     sessionVariables = rec {
-      EDITOR = "nvim";
-
-      # XDG paths
-      XDG_CACHE_HOME  = "$HOME/.cache";
+      # XDG directories
+      XDG_BIN_HOME = "$HOME/.local/bin";
+      XDG_CACHE_HOME = "$HOME/.cache";
       XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_DATA_HOME   = "$HOME/.local/share";
-      XDG_STATE_HOME  = "$HOME/.local/state";
-      XDG_BIN_HOME    = "$HOME/.local/bin";
-      PATH = [ "${XDG_BIN_HOME}" ];
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_STATE_HOME = "$HOME/.local/state";
+
+      #
+      EDITOR = "nvim";
+      PATH = ["${XDG_BIN_HOME}"];
+      XDG_CURRENT_DESKTOP = "Hyprland";
+
+      # Theme
+      GTK_THEME = "Adwaita-dark";
 
       # Wayland
       CLUTTER_BACKEND = "wayland";
       GDK_BACKEND = "wayland,x11,*";
-      GTK_THEME = "Adwaita-dark";
       MOJANG_USE_WAYLAND = "1";
-      MOZ_ACCELERATED = "1";
-      MOZ_DISABLE_RDD_SANDBOX = "1";
-      MOZ_ENABLE_WAYLAND = "1";
-      MOZ_WEBRENDER = "1";
       NIXOS_OZONE_WL = "1";
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       QT_QPA_PLATFORM = "wayland;xcb";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       SDL_VIDEODRIVER = "wayland";
-      XDG_CURRENT_DESKTOP = "Hyprland";
 
-      # OpenGL
+      # Firefox/Librewolf
+      MOZ_ACCELERATED = "1";
+      MOZ_DISABLE_RDD_SANDBOX = "1";
+      MOZ_ENABLE_WAYLAND = "1";
+      MOZ_WEBRENDER = "1";
+
+      # Mesa/OpenGL
       MESA_GL_VERSION_OVERRIDE = "4.6";
       MESA_GLSL_VERSION_OVERRIDE = "460";
       MESA_LOADER_DRIVER_OVERRIDE = "iris";
@@ -315,7 +368,10 @@
 
   # Some programs need SUID wrappers, can be configured further or are started in user sessions.
   programs = {
+    # Install firefox.
     firefox.enable = true;
+
+    # Install gamemode wrapper for games.
     gamemode = {
       enable = true;
       enableRenice = true;
@@ -323,16 +379,22 @@
         general = {
           desiredgov = "performance";
           softrealtime = "auto";
-          renice = 10;
+          renice = 10; # Negated niceness value.
         };
       };
     };
+
+    # Install hyprland.
+    # xdg-desktop-portal-hyprland is automatically started with hyprland.
     hyprland.enable = true;
+
+    # Install steam.
     steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     };
+
     # gnupg.agent = {
     #   enable = true;
     #   enableSSHSupport = true;

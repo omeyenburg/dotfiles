@@ -4,7 +4,6 @@
 # | |\  | |>  <| |_| |___) |
 # |_| \_|_/_/\_\\___/|____/
 #
-
 {
   inputs = {
     # Select the channel, e.g. github:NixOS/nixpkgs/nixos-unstable.
@@ -40,7 +39,7 @@
       system = "x86_64-linux";
       # Set all inputs parameters as special arguments for all submodules,
       # so you can directly use all dependencies in inputs in submodules.
-      specialArgs = { inherit inputs; };
+      specialArgs = {inherit inputs;};
       modules = [
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
@@ -53,7 +52,7 @@
 
         # Add catppuccin theme.
         catppuccin.nixosModules.catppuccin
-        { catppuccin.enable = true; }
+        {catppuccin.enable = true;}
 
         # Import Home Manager as a NixOS module.
         home-manager.nixosModules.home-manager
@@ -65,7 +64,7 @@
 
             # Optionally, use home-manager.extraSpecialArgs
             # to pass arguments to home.nix.
-            extraSpecialArgs = { inherit inputs; };
+            extraSpecialArgs = {inherit inputs;};
 
             users.oskar.imports = [
               ./home.nix
