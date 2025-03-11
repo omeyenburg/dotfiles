@@ -29,10 +29,12 @@ mouse-hide-while-typing = true
 # Window
 background-opacity = 0.9
 confirm-close-surface = false
-gtk-adwaita = false
 resize-overlay = never
-window-decoration = false
+window-decoration = none
 window-theme = ghostty
+
+# Notifications
+app-notifications = no-clipboard-copy
 
 # Keymaps
 keybind = ctrl+shift+n=unbind
