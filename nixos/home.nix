@@ -6,18 +6,14 @@
 #
 {
   pkgs,
-  inputs,
   ...
 }: {
   home = {
-    # Home Manager needs a bit of information about you and the paths it should manage.
     username = "oskar";
     homeDirectory = "/home/oskar";
-
     packages = [
       pkgs.gtk3
       pkgs.gtk4
-      inputs.ghostty.packages."${pkgs.system}".default
     ];
   };
 
@@ -44,26 +40,6 @@
       enable = true;
     };
 
-    emacs = {
-      enable = true;
-
-      # Install additional Emacs packages with Home Manager
-      #extraPackages = epkgs: with epkgs; [
-      ## Org mode packages
-      #epkgs.org
-      #epkgs.org-contrib
-      #epkgs.org-bullets
-
-      ## Evil mode packages
-      #epkgs.evil
-      #epkgs.evil-collection
-      #epkgs.evil-org
-      #evil-surround
-
-      #use-package
-      #];
-    };
-
     # Configure Neovim dependencies.
     neovim = {
       enable = true;
@@ -75,33 +51,33 @@
       defaultEditor = true;
       extraPackages = with pkgs; [
         # Language Servers
-        pkgs.nixd
-        pkgs.rust-analyzer
-        pkgs.glsl_analyzer
-        pkgs.lua-language-server
-        pkgs.bash-language-server
-        pkgs.haskell-language-server
-        pkgs.python312Packages.jedi-language-server
+        nixd
+        rust-analyzer
+        glsl_analyzer
+        lua-language-server
+        bash-language-server
+        haskell-language-server
+        python312Packages.jedi-language-server
 
         # Linters
-        pkgs.python312Packages.flake8
+        python312Packages.flake8
 
         # Formatters
-        pkgs.jq
-        pkgs.black
-        pkgs.shfmt
-        pkgs.taplo
-        pkgs.stylua
-        pkgs.indent
-        pkgs.rustfmt
-        pkgs.alejandra
+        jq
+        black
+        shfmt
+        taplo
+        stylua
+        indent
+        rustfmt
+        alejandra
 
         # Utility Tools
-        pkgs.fd
-        pkgs.fzf
-        pkgs.ripgrep
-        pkgs.tree-sitter
-        pkgs.wl-clipboard
+        fd
+        fzf
+        ripgrep
+        tree-sitter
+        wl-clipboard
       ];
     };
   };

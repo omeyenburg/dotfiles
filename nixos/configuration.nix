@@ -29,10 +29,9 @@
 
     # Select Linux kernel.
     # kernelPackages = pkgs.linuxPackages_latest;
-    kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_hardended;
     # kernelPackages = pkgs.linuxPackages_zen;
-    # kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
     # Use the systemd-boot EFI boot loader.
     loader = {
@@ -209,6 +208,7 @@
 
       # Terminal
       kitty
+      ghostty
 
       # Tools
       tmux

@@ -18,18 +18,14 @@
 
     # Catppuccin theme.
     catppuccin.url = "github:catppuccin/nix";
-
-    # Add ghostty input.
-    ghostty.url = "github:ghostty-org/ghostty";
   };
 
   outputs = inputs @ {
     self,
-    nixpkgs,
-    nixos-hardware,
-    home-manager,
     catppuccin,
-    ghostty,
+    home-manager,
+    nixos-hardware,
+    nixpkgs,
     ...
   }: {
     # Use your hostname here.
@@ -52,7 +48,9 @@
 
         # Add catppuccin theme.
         catppuccin.nixosModules.catppuccin
-        {catppuccin.enable = true;}
+        {
+          catppuccin.enable = true;
+        }
 
         # Import Home Manager as a NixOS module.
         home-manager.nixosModules.home-manager
@@ -62,17 +60,13 @@
             useUserPackages = true;
             backupFileExtension = "backup";
 
-            # Optionally, use home-manager.extraSpecialArgs
-            # to pass arguments to home.nix.
-            extraSpecialArgs = {inherit inputs;};
+            # Optionally, pass arguments to home-manager.
+            # extraSpecialArgs = {inherit inputs;};
 
             users.oskar.imports = [
               ./home.nix
             ];
           };
-
-          # Wayland, X, etc. support for session vars.
-          # systemd.user.sessionVariables = config.home-manager.users.oskar.home.sessionVariables;
         }
       ];
     };
