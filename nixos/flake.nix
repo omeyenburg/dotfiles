@@ -16,7 +16,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Catppuccin theme.
+    # Add the Catppuccin theme.
     catppuccin.url = "github:catppuccin/nix";
   };
 
@@ -65,6 +65,7 @@
 
             users.oskar.imports = [
               ./home.nix
+              catppuccin.homeManagerModules.catppuccin
             ];
           };
         }

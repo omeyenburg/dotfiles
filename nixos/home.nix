@@ -97,15 +97,6 @@
     };
     #cursorTheme = ...
     #iconTheme = ...
-
-    # use this together with: imports = [inputs.catppuccin.homeManagerModules.catppuccin];
-    # catppuccin = {
-    #   enable = true;
-    #   flavor = "mocha";
-    #   accent = "pink";
-    #   size = "standard";
-    #   tweaks = [ "normal" ];
-    # };
   };
 
   qt = {
