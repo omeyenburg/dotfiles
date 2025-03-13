@@ -1,7 +1,20 @@
 {
   pkgs,
+  inputs,
   ...
 }: {
+  imports = [
+    inputs.catppuccin.homeManagerModules.catppuccin
+  ];
+
+  catppuccin = {
+    enable = false;
+    nvim.enable = false;
+    btop.enable = false;
+    gtk.enable = false;
+    spotify-player.enable = true;
+  };
+
   gtk = {
     enable = true;
     theme = {
