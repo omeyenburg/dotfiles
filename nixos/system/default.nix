@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   imports = [
-    ./environment.nix
     ./packages.nix
     ./programs.nix
     ./services.nix
@@ -102,7 +101,7 @@
   };
 
   # Define a user account.
-  # Set a password with ‘passwd’.
+  # Set a password with ‘passwd <user>’.
   users.users.oskar = {
     isNormalUser = true;
     extraGroups = [
@@ -113,6 +112,29 @@
       "storage" # Allow writing to external devices like usb drives.
       "wheel" # Enable ‘sudo’ for the user.
     ];
+  };
+
+  environment.sessionVariables = {
+    XDG_BIN_HOME = "$HOME/.local/bin";
+    XDG_CACHE_HOME = "$HOME/.cache";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_STATE_HOME = "$HOME/.local/state";
+
+    EDITOR = "nvim";
+
+    MOZ_WEBRENDER = "1";
+    MOZ_ACCELERATED = "1";
+
+    # Wayland
+    MOZ_ENABLE_WAYLAND = "1";
+    NIXOS_OZONE_WL = "1";
+    GDK_BACKEND = "wayland,x11,*";
+    QT_QPA_PLATFORM = "wayland;xcb";
+    SDL_VIDEODRIVER = "wayland";
+    CLUTTER_BACKEND = "wayland";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+    QT_AUTO_SCREEN_SCALE_FACTOR = "1";
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
