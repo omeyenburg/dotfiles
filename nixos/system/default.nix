@@ -25,6 +25,12 @@
     };
   };
 
+  # Whether to enable the RealtimeKit system service, which hands
+  # out realtime scheduling priority to user processes on demand.
+  # Used by PulseAudio and PipeWire to acquire realtime priority.
+  # Might reduce audio latency.
+  security.rtkit.enable = true;
+
   boot = {
     # Clean temporary files in /tmp on every boot.
     tmp.cleanOnBoot = true;
@@ -33,7 +39,7 @@
     # kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_hardended;
     # kernelPackages = pkgs.linuxPackages_zen;
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod;
 
     # Use the systemd-boot EFI boot loader.
     loader = {
@@ -100,26 +106,14 @@
   users.users.oskar = {
     isNormalUser = true;
     extraGroups = [
-      "wheel" # Enable ‘sudo’ for the user.
-      "networkmanager" # Allow editing network connections.
-      "storage" # Allow writing to external devices like usb drives.
-      "plugdev"
-      "lp" # For printing, might not be necessary, just seen somewhere.
       "gamemode" # Allow gamemode to set CPU governor.
+      "lp" # For printing, might not be necessary, just seen somewhere.
+      "networkmanager" # Allow editing network connections.
+      "plugdev"
+      "storage" # Allow writing to external devices like usb drives.
+      "wheel" # Enable ‘sudo’ for the user.
     ];
   };
-
-  # Configure qt theme.
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
-  };
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
