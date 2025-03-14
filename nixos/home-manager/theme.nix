@@ -1,19 +1,19 @@
 {
   pkgs,
-  inputs,
+  # inputs,
   ...
 }: {
-  imports = [
-    inputs.catppuccin.homeManagerModules.catppuccin
-  ];
+  # imports = [
+  #   inputs.catppuccin.homeManagerModules.catppuccin
+  # ];
 
-  catppuccin = {
-    enable = false;
-    nvim.enable = false;
-    btop.enable = false;
-    gtk.enable = false;
-    spotify-player.enable = true;
-  };
+  # catppuccin = {
+  #   enable = false;
+  #   nvim.enable = false;
+  #   btop.enable = false;
+  #   gtk.enable = false;
+  #   spotify-player.enable = true;
+  # };
 
   gtk = {
     enable = true;
@@ -28,10 +28,10 @@
 
   qt = {
     enable = true;
-    platformTheme.name = "kvantum";
-    style.name = "kvantum";
-    # platformTheme.name = "gtk";
-    # style.name = "adwaita-dark";
+    # platformTheme.name = "kvantum";
+    # style.name = "kvantum";
+    platformTheme.name = "gtk";
+    style.name = "adwaita-dark";
     # style.package = pkgs.adwaita-qt;
   };
 
