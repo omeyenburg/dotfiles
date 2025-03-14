@@ -96,6 +96,11 @@
       ];
     };
 
+    bluetooth = {
+      enable = true;
+      powerOnBoot = false;
+    };
+
     # Whether to enable non-root access to the firmware of QMK keyboards.
     keyboard.qmk.enable = true;
   };

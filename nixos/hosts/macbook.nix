@@ -11,11 +11,8 @@
 
   boot = {
     # Load btusb module, commonly used for Bluetooth adapters.
-    # Only used if the chip is supported by this module.
     kernelModules = [
       "btusb"
-      # "snd_hda_intel"
-      # "brcmfmac"
     ];
 
     kernelParams = [
@@ -51,24 +48,6 @@
 
   services = {
     mbpfan.settings.general.polling_interval = 3;
-  };
-
-  # Fix bluetooth.
-  # Increase connection quality and range.
-  hardware = {
-    bluetooth = {
-      enable = true;
-      # powerOnBoot = true;
-      # settings = {
-      #   General = {
-      #     MaxConnections = "1";
-      #     Experimental = "true";
-      #     FastConnectable = "true";
-      #     ReconnectAttempts = "7";
-      #     ReconnectIntervals = "1, 2, 4, 8, 16, 32, 64";
-      #   };
-      # };
-    };
   };
 
   # Fix wifi connection after suspend
