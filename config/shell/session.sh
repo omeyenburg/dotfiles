@@ -28,5 +28,8 @@ elif [ "$SHELL" = "/bin/zsh" ]; then
     setopt HIST_IGNORE_ALL_DUPS
 fi
 
+eval "$(direnv hook bash)"
+export DIRENV_LOG_FORMAT=""
+
 # Source shared config
 . "$HOME"/.config/shell/shared.sh
