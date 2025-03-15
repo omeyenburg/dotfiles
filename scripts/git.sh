@@ -9,4 +9,4 @@ git config --global fetch.autoFetch true
 git config --global color.ui true
 git config --global init.defaultBranch main
 
-echo "Git configuration applied!"
+echo "Git configuration applied."

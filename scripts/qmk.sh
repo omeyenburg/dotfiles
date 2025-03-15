@@ -3,8 +3,8 @@
 QMKHOME="$HOME/.qmk_firmware"
 
 if [ ! -d "$QMKHOME" ]; then
-  echo "$QMKHOME does not exist. Run \"qmk setup\" first."
-  exit 1
+    echo "$QMKHOME does not exist. Run \"qmk setup\" first."
+    exit 1
 fi
 
 for dir in "$DOTFILES"keyboards/*; do

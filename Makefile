@@ -1,9 +1,6 @@
 DOTFILES := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 export DOTFILES
 
-configure:
-	@sh "$(DOTFILES)scripts/configure.sh"
-
 git:
 	@sh "$(DOTFILES)scripts/git.sh"
 
