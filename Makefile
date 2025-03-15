@@ -13,11 +13,8 @@ shell:
 tmux:
 	@sh "$(DOTFILES)scripts/tmux.sh"
 
-link-conf:
-	@sh "$(DOTFILES)scripts/link_conf.sh"
-
-link-home:
-	@sh "$(DOTFILES)scripts/link_home.sh"
+link:
+	@sh "$(DOTFILES)scripts/link.sh"
 
 unlink:
 	@sh "$(DOTFILES)scripts/unlink.sh"
