@@ -87,7 +87,7 @@ return {
     --     end,
     -- },
 
-    { -- Catppuccin colorscheme
+    os.getenv 'COLORTERM' == 'truecolor' and { -- Catppuccin colorscheme
         'catppuccin/nvim',
         name = 'catppuccin',
         lazy = false,
@@ -98,7 +98,7 @@ return {
             vim.api.nvim_set_hl(0, 'Normal', { bg = '#1c1c2b' })
             vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#1c1c2b' })
         end,
-    },
+    } or vim.cmd.colorscheme 'industry',
 
     { -- Statusbar
         'nvim-lualine/lualine.nvim',
