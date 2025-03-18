@@ -15,29 +15,12 @@
         ./programs
         ./packages.nix
         ./theme.nix
+        ./mime.nix
       ];
 
       home = {
         username = "oskar";
         homeDirectory = "/home/oskar";
-      };
-
-      xdg.mimeApps = {
-        enable = true;
-        defaultApplications = {
-          "application/javascript" = "nvim.desktop";
-          "application/json" = "nvim.desktop";
-          "application/x-sh" = "nvim.desktop";
-          "application/x-shellscript" = "nvim.desktop";
-          "application/x-yaml" = "nvim.desktop";
-          "application/xhtml+xml" = "nvim.desktop";
-          "application/xml" = "nvim.desktop";
-          "application/pdf" = "librefox.desktop";
-          "image/*" = "gimp.desktop";
-          "inode/*" = "yazi.desktop";
-          "text/*" = "nvim.desktop";
-          "x-scheme-handler/ssh" = "com.mitchellh.ghostty.desktop";
-        };
       };
 
       # This value determines the Home Manager release that your
