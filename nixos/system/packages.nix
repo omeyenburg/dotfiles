@@ -1,7 +1,17 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  overlay-unstable,
+  ...
+}: {
   nixpkgs = {
     # Allow non-free software
     config.allowUnfree = true;
+
+    # Enable unstable packages
+    # Accessable through pkgs.unstable.<package>
+    overlays = [
+      overlay-unstable
+    ];
 
     # Compile glfw with wayland patches
     config.packageOverrides = pkgs: {
@@ -30,6 +40,7 @@
     wget
     curl
     cryptsetup
+    efibootmgr
 
     # System
     acpi
