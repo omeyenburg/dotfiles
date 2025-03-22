@@ -30,12 +30,14 @@
       rustfmt
       alejandra
 
-      # Utility Tools
+      # Tools
       fd
       fzf
       ripgrep
       tree-sitter
       wl-clipboard
+      rustup # Provides cargo & rust-analyzer
+      clang-tools # Provides clangd, clang-format & clang-tidy
     ];
   };
 }
