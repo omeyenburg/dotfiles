@@ -16,7 +16,7 @@
 #window {
     opacity: 0.9;
     border-radius: 8px;
-    font-family: "FiraCode Nerd Font";
+    font-family: "FiraMono Nerd Font";
     font-size: 12px;
     font-style: normal;
     background-color: @border;
