@@ -1,12 +1,15 @@
-max-icon-size=64
 width=500
 height=300
+max-icon-size=64
+border-radius=8
 
+layer=overlay
 on-touch=none
 default-timeout=3000
+
 max-visible=5
-font=FiraCode Nerd Font 12
-border-radius=8
+font=FiraMono Nerd Font 12
+
 text-color=#cdd6f4
 border-color=#f5e0dc
 background-color=#1e1e2e
@@ -14,13 +17,11 @@ progress-color=over #313244
 
 [urgency=normal]
 border-color=#fab387
-layer=overlay
 
 [urgency=high]
 border-color=#f38ba8
 default-timeout=0
 ignore-timeout=1
-layer=overlay
 
 [summary~="log-.*"]
 border-color=#a3be8c
