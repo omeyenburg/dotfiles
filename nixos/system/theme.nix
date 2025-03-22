@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{pkgs, inputs, ...}: {
   imports = [
     inputs.catppuccin.nixosModules.catppuccin
   ];
@@ -41,5 +41,26 @@
       actsellistbox=black,blue
       sellistbox=black,blue
     '';
+  };
+
+  # List all available fonts using:
+  # fc-list | sed 's/.*: \(.*\):.*/\1/' | sort | uniq
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      dejavu_fonts
+      unstable.nerd-fonts.fira-mono
+      unstable.nerd-fonts.jetbrains-mono
+      unstable.nerd-fonts.ubuntu-mono
+    ];
+
+    fontconfig = {
+      defaultFonts = {
+        monospace = ["JetBrainsMono Nerd Font"];
+        # monospace = ["UbuntuMono Nerd Font"];
+        sansSerif = ["DejaVu Sans"];
+        serif = ["DejaVu Serif"];
+      };
+    };
   };
 }
