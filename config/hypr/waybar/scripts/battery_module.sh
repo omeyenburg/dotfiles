@@ -125,14 +125,3 @@ fi
 
 # Output JSON for Waybar
 echo "{\"text\": \"${text}\", \"tooltip\": \"${tooltip}\", \"class\": \"${color_status}\"}"
-
-# Also check wifi and volume, as this repeats in a loop.
-# In eduroam and WIFI@DB volume should be muted.
-network=$(nmcli -t -f NAME con show --active | head -1)
-
-if [ "$network" = "eduroam" ] || [ "$network" = "WIFI@DB" ]; then
-    if ! .config/hypr/scripts/media.sh volume get | grep -q "MUTED"; then
-        ~/.config/hypr/scripts/media.sh volume toggle silent
-        ~/.config/hypr/scripts/notify.sh "mute-warning" "Connected to network $network" "Volume is now muted" 4000 0 "$id"
-    fi
-fi
