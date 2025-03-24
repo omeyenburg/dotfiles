@@ -61,26 +61,32 @@
       };
     };
 
-    # Enable some battery monitoring.
-    # Doesn't seem to be useful.
-    # upower.enable = true;
-
-    # Enable touchpad support (enabled default in most desktopManager).
-    # libinput.enable = true;
-
-    # Enable the OpenSSH daemon.
-    # openssh.enable = true;
-
     # Enable automatic disk mounting.
     devmon.enable = true;
 
     # Handles disk mounting operations.
     udisks2.enable = true;
+  };
 
-    # Should not be necessary, test without it.
-    # gvfs.enable = true;
+  systemd.user = {
+    services.notifier = {
+      description = "System Notifications";
+      wantedBy = ["default.target"];
+      serviceConfig = {
+        ExecStart = "%h/.config/hypr/scripts/notifier-service.sh";
+      };
+      path = with pkgs; [
+        networkmanager
+        curl
+      ];
+    };
 
-    # Enable ollama for local ai models.
-    # ollama.enable = true;
+    timers.notifier = {
+      wantedBy = ["timers.target"];
+      timerConfig = {
+        OnUnitActiveSec = "1min";
+        Persistent = true;
+      };
+    };
   };
 }
