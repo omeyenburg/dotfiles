@@ -17,21 +17,18 @@ if [ ! -f ~/.netrc ]; then
     exit 1
 fi
 
-# Use imaps by default
 scheme=imaps
 port=993
 
 sed 's/ /\n/g' ~/.netrc | sed '/machine/{n;p}' -n | while read -r server; do
-    fetchcmd="curl -s --netrc --connect-timeout 1 --url $scheme://$server:$port/INBOX"
-    mails=$($fetchcmd --request "SEARCH UNSEEN" | sed 's/^* SEARCH\s*//;s/\s*$//')
+    url="$scheme://$server:$port/INBOX"
+    mails=$(curl --url "$url" --connect-timeout 1 --netrc --request "SEARCH UNSEEN" -s | sed 's/^* SEARCH\s*//;s/\s*$//')
 
     for mail in $mails; do
         subject_request="FETCH $mail (BODY[HEADER.FIELDS (SUBJECT)])"
-        subject=$($fetchcmd -D - --request "$subject_request" | sed -n '/^Subject:/{s/Subject:\s*//;s/\s*$//;p}')
+        subject=$(curl --url "$url" --connect-timeout 1 --netrc --request "$subject_request" -D - -s | sed -n '/^Subject:/{s/Subject:\s*//;s/\s*$//;p}')
 
-        if [ "$subject" ]; then
-            echo "New email: $subject"
-            ~/.config/hypr/scripts/notify.sh "mail" "New mail" "$subject" 5000 1 >/dev/null
-        fi
+        echo "New email: $subject"
+        ~/.config/hypr/scripts/notify.sh "mail" "New mail" "$subject" 5000 1 >/dev/null
     done
 done
