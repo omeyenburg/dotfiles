@@ -6,8 +6,7 @@ QMK has also some configuration, but is only needed for custom keyboards.
 ## Installation
 To link the config files, run:
 ```
-make link-home
-make link-conf
+make link
 ```
 
 To add the shell config to .bashrc, run:

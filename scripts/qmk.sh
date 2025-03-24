@@ -9,7 +9,7 @@ fi
 
 for dir in "$DOTFILES"keyboards/*; do
     if [ ! -d "$dir" ]; then
-        echo "$dir is not a directory."
+        echo "$dir is not a directory. (skipping)"
         continue
     fi
 

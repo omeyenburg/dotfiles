@@ -19,7 +19,7 @@ tar -xJf FiraCode.tar.xz
 tar -xJf FiraMono.tar.xz
 
 ls
-rm *.tar.xz
+rm ./*.tar.xz
 
 # Load fonts
 fc-cache -f -v
