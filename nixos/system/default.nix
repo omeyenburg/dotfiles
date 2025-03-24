@@ -41,9 +41,24 @@
     kernelPackages = pkgs.linuxPackages_xanmod;
 
     # Use the systemd-boot EFI boot loader.
+    # Fixing spinning boot icon and sound on macos:
+    # Reset nvram with alt+cmd+r+p while reboot.
+    # Run `sudo nvram StartupMute=%01` on macos.
+    # Run `sudo nixos-rebuild switch --install-bootloader` to reinstall bootloader.
+    # Or better:
+    # sudo efibootmgr --create --disk /dev/sda --part 1 --label "NixOS" --loader /EFI/systemd/systemd-bootx64.efi
+    # or:
+    # sudo mount /dev/sda1 /mnt/efi
+    # sudo bootctl --path=/mnt/efi install
+    # sudo bootctl --path=/mnt/efi status
+    # Remove unnecessary boot entries with `sudo efibootmgr -b XXXX -B` (replace XXXX).
     loader = {
-      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
+      grub.enable = false;
+      systemd-boot.consoleMode = "max";
+      systemd-boot.editor = false;
+      systemd-boot.enable = true;
+      timeout = 5;
     };
   };
 
