@@ -13,32 +13,20 @@
     # Load btusb module, commonly used for Bluetooth adapters.
     kernelModules = [
       "btusb"
+      "brcmfmac"
     ];
 
     kernelParams = [
-      # Set to 1, if you experience Bluetooth issues like stuttering.
-      # "bluetooth.disable_ertm=1" # Disable Enhanced Retransmission Mode
-
-      # This hopefully prevents wifi/bluetooth from waking up from suspend.
-      # "brcmfmac.disable_ap=1"
-      # "pcie_aspm=off"
-
-      # Set to 0, if you notice flickering or stuttering in video playback or UI rendering.
-      # Disables Panel Self Refresh to prevent flickering/stuttering.
-      #
-      # but i just want to test if it has an impact...
-      # "i915.enable_psr=1"
-
       # Benefits performance without significant downsides.
       # Enables Framebuffer Compression for better performance.
-      # "i915.enable_fbc=1"
+      "i915.enable_fbc=1"
 
       # Can improve performance, especially with newer kernels.
       # Enables GuC for better GPU scheduling (Broadwell supports this).
-      # "i915.enable_guc=3"
+      "i915.enable_guc=3"
 
-      # Set to 0 to prevent bluetooth from disconnecting.
-      # "btusb.enable_autosuspend=0"
+      # Enable fastboot
+      "i915.fastboot=1"
 
       # In nixos-hardware this is set to 0.
       # But it needs to be set to 1.
@@ -69,14 +57,20 @@
   #  ${pkgs.systemd}/bin/systemctl restart NetworkManager.service
   #  '';
 
-  # Broadcom bluetooth firmware
-  # hardware.firmware = with pkgs; [
-    # b43FirmwareCutter
-    # b43Firmware_6_30_163_46
-    # broadcom-bt-firmware
-    # firmwareLinuxNonfree
-    # linux-firmware
-  # ];
+  # Something like this, but doesnt seem to be related...
+  # From : https://superuser.com/questions/795879/how-to-configure-dual-boot-nixos-with-mac-os-x-on-an-uefi-macbook
+  # Enable the backlight control on rMBP
+  # Disable USB-based wakeup
+  # see: https://wiki.archlinux.org/index.php/MacBookPro11,x
+  # powerManagement.powerUpCommands = ''
+  #   if [[ "$(cat /sys/class/dmi/id/product_name)" == "MacBookPro11,3" ]]; then
+  #     ${pkgs.pciutils}/bin/setpci -v -H1 -s 00:01.00 BRIDGE_CONTROL=0
+  #
+  #     if cat /proc/acpi/wakeup | grep XHC1 | grep -q enabled; then
+  #       echo XHC1 > /proc/acpi/wakeup
+  #     fi
+  #   fi
+  # '';
 
   # Video acceleration
   environment.sessionVariables = {
