@@ -1,0 +1,8 @@
+default partial alphanumeric_keys
+
+xkb_symbols "basic" {
+    include "de(mac_nodeadkeys)"
+    name[Group1] = "Test xkb layout for debugging hyprland";
+
+    key <AD07> { [ u, U, dead_diaeresis, Aacute ] };
+};
