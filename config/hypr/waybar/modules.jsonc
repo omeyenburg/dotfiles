@@ -135,28 +135,31 @@
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{signalStrength}% 󰖩 ",
-        "format-ethernet": "{ipaddr}/{cidr}  ",
-        "format-linked": "{ifname} (No IP)  ",
+        "format-ethernet": "{ipaddr}/{cidr} 󰈁 ",
+        "format-linked": "{ifname} (No IP) 󰌹 ",
         "format-disconnected": "N/A 󱚵 ",
         "tooltip-format": "{ifname} via {gwaddr} ({essid})",
-        // "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "pkill nmtui || ghostty -e nmtui"
+        //"on-click": "pkill nmtui || ghostty -e nmtui"
+        "on-click": "pkill nmtui || kitty -o confirm_os_window_close=0 nmtui"
     },
     "cpu": {
         "format": "{usage}% ",
-        "on-click": "pkill btop || ghostty -e btop",
+        //"on-click": "pkill btop || ghostty -e btop",
+        "on-click": "pkill btop || kitty -o confirm_os_window_close=0 -o font_size=10 btop",
         "tooltip": true
     },
     "memory": {
         "format": "{}% ",
-        "on-click": "pkill btop || ghostty -e btop",
+        //"on-click": "pkill btop || ghostty -e btop",
+        "on-click": "pkill btop || kitty -o confirm_os_window_close=0 -o font_size=10 btop",
         "tooltip": true
     },
     "temperature": {
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", "", "", ""],
-        "on-click": "pkill btop || ghostty -e btop",
+        //"on-click": "pkill btop || ghostty -e btop",
+        "on-click": "pkill btop || kitty -o confirm_os_window_close=0 -o font_size=10 btop",
         "tooltip": false
     },
     "custom/power": {
