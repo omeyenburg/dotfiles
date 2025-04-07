@@ -21,16 +21,21 @@
     # gtk4
 
     # Tools
-    wl-clipboard
-    bash-completion
     btop
     fastfetch
     figlet
     gitmux
     gnumake
+    cmake
     qmk
     tmux
     unzip
+
+    bash-completion
+    wl-clipboard
+
+    # Pdf tools
+    poppler_utils
 
     # Languages & Compilers
     gcc
