@@ -35,7 +35,7 @@
       "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
 
       # Disable Autoplay
-      "media.autoplay.default" = 5;
+      # "media.autoplay.default" = 5;
 
       # Disable spellcheck
       "layout.spellcheckDefault" = 0;
@@ -133,6 +133,10 @@
 
       # Security error reporting for xfocsp
       "security.xfocsp.errorReporting.automatic" = true;
+
+      # Don't require OSCP to allow network login pages
+      "security.OCSP.enabled" = 2;
+      "security.OCSP.require" = false;
 
       # Disable weak ciphersuites
       "security.ssl3.ecdhe_ecdsa_aes_128_sha" = false;
