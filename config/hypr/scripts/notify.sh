@@ -3,8 +3,8 @@
 # Notification app name
 appname=${1:-"default_app"}
 
-# Notification title
-title=${2:-"No Title"}
+# Notification title (mako will not show if set to notitle)
+title=${2:-"notitle"}
 
 # Notification message
 message=${3:-"No message provided"}
