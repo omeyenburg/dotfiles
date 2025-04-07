@@ -58,5 +58,10 @@
     # Bluetooth
     bluez
     bluez-tools
+
+    # Scanning
+    sane-airscan
+    sane-backends
+    simple-scan
   ];
 }

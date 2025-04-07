@@ -30,6 +30,8 @@
   # Might reduce audio latency.
   security.rtkit.enable = true;
 
+  hardware.sane.extraBackends = [ pkgs.sane-airscan ];
+
   boot = {
     # Clean temporary files in /tmp on every boot.
     tmp.cleanOnBoot = true;
@@ -39,6 +41,19 @@
     # kernelPackages = pkgs.linuxPackages_hardended;
     # kernelPackages = pkgs.linuxPackages_zen;
     kernelPackages = pkgs.linuxPackages_xanmod;
+
+    # Location to save core crash files. Placeholders:
+    # %e: Executable filename (without path).
+    # %p: Process ID.
+    # %u: User ID.
+    # %g: Group ID.
+    # %s: Signal number that caused the dump.
+    # %t: Time of the dump.
+    # %h: Hostname.
+    # %m: Memory address where the dump happened.
+    kernel.sysctl = {
+      "kernel.core_pattern" = "/var/crash/core.%e";
+    };
 
     # Use the systemd-boot EFI boot loader.
     # Fixing spinning boot icon and sound on macos:
@@ -124,9 +139,11 @@
   # Set a password with ‘passwd <user>’.
   users.users.oskar = {
     isNormalUser = true;
+    linger = true;
     extraGroups = [
       "gamemode" # Allow gamemode to set CPU governor.
       "lp" # For printing, might not be necessary, just seen somewhere.
+      "scanner" # For Scanning
       "networkmanager" # Allow editing network connections.
       "plugdev"
       "storage" # Allow writing to external devices like usb drives.

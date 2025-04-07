@@ -24,6 +24,11 @@
       ];
     };
 
+    # Enable SANE to scan documents
+    saned = {
+      enable = true;
+    };
+
     # Enable printer discovery.
     avahi = {
       enable = true;
@@ -77,6 +82,7 @@
       path = with pkgs; [
         curl
         python3
+        wireplumber
         networkmanager
       ];
     };
