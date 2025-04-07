@@ -11,6 +11,7 @@
     obsidian
     prismlauncher
     spotify
+    yubikey-manager
 
     # foliate
     # logisim
@@ -20,6 +21,7 @@
     # gtk4
 
     # Tools
+    wl-clipboard
     bash-completion
     btop
     fastfetch
@@ -32,6 +34,7 @@
 
     # Languages & Compilers
     gcc
+    gdb
     graalvm-ce
     python312Full
 

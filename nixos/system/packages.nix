@@ -33,6 +33,7 @@
 
   environment.systemPackages = with pkgs; [
     # Tools
+    dig
     fzf
     git
     vim
