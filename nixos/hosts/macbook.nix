@@ -34,8 +34,20 @@
     ];
   };
 
+  # Increase fan polling interval
   services = {
     mbpfan.settings.general.polling_interval = 3;
+  };
+
+  # Improve bluetooth stability
+  hardware.bluetooth.settings = {
+    General = {
+      MaxConnections = "1";
+      Experimental = "true";
+      FastConnectable = "true";
+      ReconnectAttempts = "7";
+      ReconnectIntervals = "1, 2, 4, 8, 16, 32, 64";
+    };
   };
 
   # Fix wifi connection after suspend
