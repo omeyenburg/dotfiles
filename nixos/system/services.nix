@@ -3,7 +3,6 @@
     # Enable the blueman interface.
     blueman.enable = true;
 
-    # Contrary to the name, also affects wayland
     # Configure keymaps in X11 and console.
     xserver = {
       autorun = false;
@@ -76,8 +75,9 @@
         ExecStart = "%h/.config/hypr/scripts/notifier-service.sh";
       };
       path = with pkgs; [
-        networkmanager
         curl
+        python3
+        networkmanager
       ];
     };
 
