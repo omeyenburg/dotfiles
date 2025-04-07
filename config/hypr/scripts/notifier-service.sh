@@ -19,9 +19,10 @@ fi
 
 scheme=imaps
 port=993
+python_subject_decode="import sys; from email.header import decode_header; print(''.join(str(t[0], t[1] or 'utf-8') if isinstance(t[0], bytes) else t[0] for t in decode_header(sys.stdin.read().strip())))"
 
-mailcache=~/.cache/seen_mails
-mkdir -p ~/.cache
+mailcache=~/.cache/mails
+mkdir -p "$mailcache"
 
 sed 's/ /\n/g' ~/.netrc | sed '/machine/{n;p}' -n | while read -r server; do
     url="$scheme://$server:$port/INBOX"
@@ -29,13 +30,18 @@ sed 's/ /\n/g' ~/.netrc | sed '/machine/{n;p}' -n | while read -r server; do
 
     for mail in $mails; do
         # Skip if already seen
-        grep -q "^$mail$" "$mailcache" && continue
-        echo "$mail" >>$mailcache
+        grep -q "^$mail$" "$mailcache/$server" && continue
+        echo "$mail" >>"$mailcache/$server"
 
-        subject_request="FETCH $mail (BODY.PEEK[HEADER.FIELDS (SUBJECT)])"
-        subject=$(curl --url "$url" --connect-timeout 1 --netrc --request "$subject_request" -D - -s | sed -n '/^Subject:/{s/Subject:\s*//;s/\s*$//;p}')
+        request="FETCH $mail (BODY.PEEK[HEADER.FIELDS (FROM TO SUBJECT)])"
+        response=$(curl --url "$url" --connect-timeout 1 --netrc --request "$request" -D - -s)
 
-        echo "New email: $subject"
-        ~/.config/hypr/scripts/notify.sh "mail" "New mail" "$subject" 5000 1 >/dev/null
+        from=$(echo "$response" | sed -n '/^From:\s*/{s///;s/\s*$//;s/[^<>]* <\([^ ]*\)>/\1/;p}')
+        to=$(echo "$response" | sed -n '/^To:\s*/{s///;s/\s*$//;p}')
+        subject=$(echo "$response" | sed -n '/^Subject:\s*/{s///;s/\s*$//;p}')
+        decoded_subject=$(echo "$subject" | python3 -c "$python_subject_decode")
+
+        notification=$(printf "By: %s\nTo: %s\n" "$from" "$to")
+        ~/.config/hypr/scripts/notify.sh "mail" "$decoded_subject" "$notification" 5000 1 >/dev/null
     done
 done
