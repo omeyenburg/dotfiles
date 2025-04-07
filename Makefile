@@ -37,4 +37,4 @@ hypr:
 
 # Copy nixos configuration to ./nixos
 nixos-backup:
-	@cp -r /etc/nixos/* "$DOTFILES"/nixos
+	@cp -r /etc/nixos/* "$(DOTFILES)/nixos"
