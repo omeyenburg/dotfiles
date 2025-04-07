@@ -4,7 +4,6 @@ export EDITOR=nvim
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-alias deepseek="ollama run deepseek-r1:1.5b"
 alias git="LANG=en_GB git"
 alias gitlog="python3 ~/.config/shell/gitlog.py"
 alias la="ls -A"
