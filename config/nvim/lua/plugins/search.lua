@@ -49,7 +49,7 @@ return {
                 mode = 'n',
             },
             {
-                '<C-1>',
+                '<leader>1',
                 function()
                     require('harpoon.ui').nav_file(1)
                 end,
@@ -57,7 +57,7 @@ return {
                 mode = 'n',
             },
             {
-                '<C-2>',
+                '<leader>2',
                 function()
                     require('harpoon.ui').nav_file(2)
                 end,
@@ -65,7 +65,7 @@ return {
                 mode = 'n',
             },
             {
-                '<C-3>',
+                '<leader>3',
                 function()
                     require('harpoon.ui').nav_file(3)
                 end,
@@ -73,11 +73,19 @@ return {
                 mode = 'n',
             },
             {
-                '<C-4>',
+                '<leader>4',
                 function()
                     require('harpoon.ui').nav_file(4)
                 end,
                 desc = 'Select fourth file of harpoon',
+                mode = 'n',
+            },
+            {
+                '<leader>5',
+                function()
+                    require('harpoon.ui').nav_file(5)
+                end,
+                desc = 'Select fifth file of harpoon',
                 mode = 'n',
             },
         },
