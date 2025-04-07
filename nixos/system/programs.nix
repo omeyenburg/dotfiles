@@ -1,5 +1,8 @@
 {pkgs, ...}: {
   programs = {
+    # Enable firefox
+    firefox.enable = true;
+
     # Install gamemode wrapper for games.
     gamemode = {
       enable = true;
