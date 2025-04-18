@@ -1,5 +1,5 @@
 {
-  # You can find a list of common mime types here (incomplete)
+  # You can find a list of common mime types here (incomplete).
   # /run/current-system/sw/share/mime/
   xdg.mimeApps = {
     enable = true;

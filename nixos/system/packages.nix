@@ -8,7 +8,7 @@
     config.allowUnfree = true;
 
     # Enable unstable packages
-    # Accessable through pkgs.unstable.<package>
+    # Accessible through pkgs.unstable.<package>
     overlays = [
       overlay-unstable
     ];
@@ -32,34 +32,38 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # Tools
-    dig
+    # General Tools
     fzf
     git
     vim
     tree
-    wget
-    curl
+
+    # Disk
     cryptsetup
     efibootmgr
+
+    # Networking
+    curl
+    dig
+    wget
 
     # System
     acpi
     brightnessctl
     glfw
 
-    # Don't know if i even use this anymore...
-    # This is something related to .Xresources
-    # xorg.xrdb
-
     # Conflicts with tlp
     # powerprofilesctl
+
+    # Man pages
+    man-pages
+    man-pages-posix
 
     # Bluetooth
     bluez
     bluez-tools
 
-    # Scanning
+    # Scanner
     sane-airscan
     sane-backends
     simple-scan
