@@ -12,15 +12,16 @@
       # nixos-rebuild switch will now first attempt to load /etc/nixos/flake.nix.
       experimental-features = ["nix-command" "flakes"];
 
-      # Optimise store during each build
+      # Optimise store during each build.
       # Can also be done manually: nix-store --optimise
       auto-optimise-store = true;
     };
 
-    # Automatic garbage collect
+    # Automatic garbage collection.
     gc = {
       automatic = true;
       dates = "weekly";
+      options = "--delete-older-than 7d";
     };
   };
 
@@ -29,8 +30,6 @@
   # Used by PulseAudio and PipeWire to acquire realtime priority.
   # Might reduce audio latency.
   security.rtkit.enable = true;
-
-  hardware.sane.extraBackends = [ pkgs.sane-airscan ];
 
   boot = {
     # Clean temporary files in /tmp on every boot.
@@ -43,14 +42,6 @@
     kernelPackages = pkgs.linuxPackages_xanmod;
 
     # Location to save core crash files. Placeholders:
-    # %e: Executable filename (without path).
-    # %p: Process ID.
-    # %u: User ID.
-    # %g: Group ID.
-    # %s: Signal number that caused the dump.
-    # %t: Time of the dump.
-    # %h: Hostname.
-    # %m: Memory address where the dump happened.
     kernel.sysctl = {
       "kernel.core_pattern" = "/var/crash/core.%e";
     };
@@ -70,9 +61,12 @@
     loader = {
       efi.canTouchEfiVariables = true;
       grub.enable = false;
-      systemd-boot.consoleMode = "max";
-      systemd-boot.editor = false;
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        editor = false;
+        consoleMode = "max";
+        configurationLimit = 10;
+      };
       timeout = 5;
     };
   };
@@ -89,8 +83,7 @@
     # Conflicts with wireless
     networkmanager = {
       enable = true;
-      #wifi.powersave = false;
-      #wifi.scanRandMacAddress = false;
+      wifi.powersave = false;
     };
 
     # Configure network proxy if necessary.
@@ -104,28 +97,28 @@
     # firewall.enable = false;
   };
 
-  # Set your time zone.
-  time.timeZone = "Europe/Berlin";
-
   # Select internationalisation properties.
+  time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # Inherit console keymap from XServer. See services.
   console = {
     earlySetup = true;
     useXkbConfig = true;
   };
 
   hardware = {
-    # Enable OpenGL
+    # Enable redistributable firmware (helps with most missing firmware issues).
+    enableRedistributableFirmware = true;
+    enableAllFirmware = true;
+
+    # Enable OpenGL.
     graphics = {
-      enable = true; # Formally known as driSupport
-      enable32Bit = true; # For Wine/Steam
-      extraPackages = [
-        pkgs.intel-compute-runtime # or use intel-ocl
-        pkgs.intel-media-driver # or intel-vaapi-driver if older than 2014
-      ];
+      enable = true; # Formally known as driSupport.
+      enable32Bit = true; # For 32-bit applications e.g. from Wine/Steam.
     };
 
+    # Enable bluetooth.
     bluetooth = {
       enable = true;
       powerOnBoot = false;
@@ -133,6 +126,9 @@
 
     # Whether to enable non-root access to the firmware of QMK keyboards.
     keyboard.qmk.enable = true;
+
+    # Enable printer airscanning.
+    sane.extraBackends = [pkgs.sane-airscan];
   };
 
   # Define a user account.

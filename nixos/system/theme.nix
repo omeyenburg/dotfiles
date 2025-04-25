@@ -16,7 +16,7 @@
   environment.sessionVariables = {
     # GTK_THEME = "Adwaita-dark";
 
-    # Configure nmtui colors
+    # Configure nmtui colors.
     # Elements: root, border, window, shadow, title, button, actbutton, checkbox, actcheckbox, entry, label, listbox, actlistbox, textbox, acttextbox, helpline, roottext, emptyscale, fullscale, disentry, compactbutton, actsellistbox, sellistbox
     # Syntax: <element>=<fg>,<bg>
     NEWT_COLORS = ''
@@ -43,6 +43,7 @@
     '';
   };
 
+  # Manage installed and default fonts.
   # List all available fonts using:
   # fc-list | sed 's/.*: \(.*\):.*/\1/' | sort | uniq
   fonts = {
