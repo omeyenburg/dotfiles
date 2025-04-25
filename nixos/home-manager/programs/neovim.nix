@@ -37,7 +37,7 @@
       tree-sitter
       wl-clipboard
       rustup # Provides cargo & rust-analyzer
-      clang-tools # Provides clangd, clang-format & clang-tidy
+      unstable.clang-tools # Provides clangd, clang-format & clang-tidy
     ];
   };
 }
