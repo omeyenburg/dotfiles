@@ -19,6 +19,13 @@
       # Disable accessibility options
       "accessibility.force_disabled" = 1;
 
+      # Pdf options
+      "pdfjs.sidebarViewOnLoad" = 0;
+      "pdfjs.defaultZoomValue" = "page-fit";
+
+      # Force downloads to correct download directory
+      "browser.download.start_downloads_in_tmp_dir" = true;
+
       # Searching
       "browser.search.defaultenginename" = "DuckDuckGo";
       "browser.search.suggest.enabled" = true;
