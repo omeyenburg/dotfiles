@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source scripts/err.sh
+source scripts/utils/err.sh
 
 if [ ! -f ~/.config/tmux/tmux.conf ]; then
     err "Please run \`make link\` first."

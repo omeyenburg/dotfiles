@@ -8,27 +8,27 @@ export DOTFILES
 
 # Apply git configuration
 git:
-	@sh "$(DOTFILES)scripts/git.sh"
+	@sh "$(DOTFILES)scripts/setup/git.sh"
 
 # Write bashrc and bash_profile
 shell:
-	@sh "$(DOTFILES)scripts/shell.sh"
+	@sh "$(DOTFILES)scripts/setup/shell.sh"
 
 # Install tmux plugins
 tmux:
-	@sh "$(DOTFILES)scripts/tmux.sh"
+	@sh "$(DOTFILES)scripts/setup/tmux.sh"
 
 # Link configuration files
 link:
-	@sh "$(DOTFILES)scripts/link.sh"
+	@sh "$(DOTFILES)scripts/setup/link.sh"
 
 # Install FiraCode and FiraMono font
 fonts:
-	@sh "$(DOTFILES)scripts/fonts.sh"
+	@sh "$(DOTFILES)scripts/setup/fonts.sh"
 
 # Link qmk keyboards
 qmk:
-	@sh "$(DOTFILES)scripts/qmk.sh"
+	@sh "$(DOTFILES)scripts/setup/qmk.sh"
 
 # Link css theme files for hyprland
 hypr:

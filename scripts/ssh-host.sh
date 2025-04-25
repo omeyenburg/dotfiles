@@ -1,0 +1,22 @@
+#!/bin/sh
+
+config=~/.ssh/config
+echo "Creating new host in $config"
+
+printf "Host alias: "
+read -r host
+
+printf "User: "
+read -r user
+
+printf "Host name: "
+read -r hostName
+
+mkdir -p ~/.ssh
+{
+    echo "Host $host"
+    echo "    User $user"
+    echo "    HostName $hostName"
+} >>"$config"
+
+echo "Host '$host' added to $config"
