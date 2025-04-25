@@ -26,6 +26,9 @@ key_expand=Tab
 # Move window to bottom
 location=6
 
+# Use overlay layer
+layer=overlay
+
 # Shift window upwards
 y=-200
 

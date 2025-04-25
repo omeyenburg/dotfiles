@@ -11,6 +11,9 @@ single_click=true
 # Show in top right corner
 location=3
 
+# Show above notifications
+layer=overlay
+
 # Offset
 x=-3
 y=4
