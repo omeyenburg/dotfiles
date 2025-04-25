@@ -25,64 +25,102 @@
       # Enables GuC for better GPU scheduling (Broadwell supports this).
       "i915.enable_guc=3"
 
-      # Enable fastboot
-      "i915.fastboot=1"
-
       # In nixos-hardware this is set to 0.
       # But it needs to be set to 1.
       "hid_apple.iso_layout=1"
+
+      # Helps with PCI errors on resume
+      "pci=noaer"
+
+      # Explicitly tell ACPI we support Darwin
+      "acpi_osi=Darwin"
     ];
   };
 
   # Increase fan polling interval
   services = {
-    mbpfan.settings.general.polling_interval = 3;
-  };
-
-  # Improve bluetooth stability
-  hardware.bluetooth.settings = {
-    General = {
-      MaxConnections = "1";
-      Experimental = "true";
-      FastConnectable = "true";
-      ReconnectAttempts = "7";
-      ReconnectIntervals = "1, 2, 4, 8, 16, 32, 64";
+    mbpfan = {
+      enable = true;
+      settings.general.polling_interval = 3;
     };
   };
 
-  # Fix wifi connection after suspend
-  # services = {
-  #   # Some udev stuff
-  #   udev = {
-  #     enable = true;
-  #     #ACTION=="add", SUBSYSTEM=="net", KERNEL=="wlan*", RUN+="${pkgs.iw}/bin/iw dev %k set power_save off"
-  #     extraRules = ''
-  #       ACTION=="add", SUBSYSTEM=="net", KERNEL=="wlan*", RUN+="/bin/sh -c 'echo 1 > /sys/bus/pci/devices/0000:03:00.0/remove; sleep 1; echo 1 > /sys/bus/pci/rescan'"
-  #     '';
-  #   };
-  # };
+  hardware = {
+    graphics.extraPackages = with pkgs; [
+      intel-media-driver # or intel-vaapi-driver if older than 2014
+      intel-compute-runtime # or use intel-ocl
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
 
-  # Bug fix specific to MacBook Pro 12,1.
-  # See https://github.com/NixOS/nixos-hardware/tree/master/apple/macbook-pro/12-1
-  # Replace NetworkManager with wpa_supplicant, if using wpa
-  #powerManagement.powerUpCommands = ''
-  #  ${pkgs.systemd}/bin/systemctl restart NetworkManager.service
-  #  '';
+    # Improve bluetooth stability
+    bluetooth.settings = {
+      General = {
+        MaxConnections = "1";
+        Experimental = "true";
+        FastConnectable = "true";
+        ReconnectAttempts = "7";
+        ReconnectIntervals = "1, 2, 4, 8, 16, 32, 64";
+      };
+    };
 
-  # Something like this, but doesnt seem to be related...
-  # From : https://superuser.com/questions/795879/how-to-configure-dual-boot-nixos-with-mac-os-x-on-an-uefi-macbook
-  # Enable the backlight control on rMBP
-  # Disable USB-based wakeup
-  # see: https://wiki.archlinux.org/index.php/MacBookPro11,x
-  # powerManagement.powerUpCommands = ''
-  #   if [[ "$(cat /sys/class/dmi/id/product_name)" == "MacBookPro11,3" ]]; then
-  #     ${pkgs.pciutils}/bin/setpci -v -H1 -s 00:01.00 BRIDGE_CONTROL=0
-  #
-  #     if cat /proc/acpi/wakeup | grep XHC1 | grep -q enabled; then
-  #       echo XHC1 > /proc/acpi/wakeup
-  #     fi
-  #   fi
-  # '';
+    firmware = with pkgs; [
+      firmwareLinuxNonfree
+      linux-firmware
+    ];
+  };
+
+  systemd.services = {
+    reload-wifi-after-suspend = {
+      description = "Reload Broadcom WiFi after suspend";
+      # after = ["sleep.target"];
+      # wantedBy = ["sleep.target"];
+      # after = [ "systemd-resume.service" ];
+      # requires = [ "systemd-resume.service" ];
+
+      # # This makes it run after waking from suspend/hibernate
+      # wantedBy = [
+      #   "suspend.target"
+      #   "hibernate.target"
+      #   "hybrid-sleep.target"
+      #   "sleep.target"
+      # ];
+
+      # # This ensures it runs after resuming
+      # after = [
+      #   "suspend.target"
+      #   "hibernate.target"
+      #   "hybrid-sleep.target"
+      #   "sleep.target"
+      # ];
+      # wantedBy = ["systemd-resume.service"];
+      # after = ["systemd-resume.service"];
+      script = ''
+        broken=$(lsmod | awk '$1=="brcmfmac" { found=1; if ($3=="0") { print "true"; exit } } END { if (!found) print "true" }')
+        if [ "$broken" ]; then
+          echo "Wifi appears to be broken..."
+          echo 1 > /sys/bus/pci/devices/0000:03:00.0/remove || echo "Failed to delete"
+          sleep 1
+          echo 1 > /sys/bus/pci/rescan || echo "Failed to rescan"
+        else
+          echo "Its fine..."
+        fi
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = false;
+      };
+      path = with pkgs; [
+        kmod
+        gawk
+      ];
+    };
+
+    "systemd-suspend".serviceConfig.ExecStartPost = [
+      "+${pkgs.systemd}/bin/systemctl start reload-wifi-after-suspend.service"
+    ];
+  };
 
   # Video acceleration
   environment.sessionVariables = {
