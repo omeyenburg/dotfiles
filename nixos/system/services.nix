@@ -24,7 +24,7 @@
       ];
     };
 
-    # Enable SANE to scan documents
+    # Enable SANE to scan documents.
     saned = {
       enable = true;
     };
@@ -70,29 +70,46 @@
 
     # Handles disk mounting operations.
     udisks2.enable = true;
+
+    # Smart card daemon
+    pcscd.enable = true;
+
+    # Login options
+    logind = {
+      killUserProcesses = true;
+      lidSwitch = "suspend";
+      lidSwitchDocked = "ignore";
+      lidSwitchExternalPower = "suspend";
+      powerKey = "ignore";
+      powerKeyLongPress = "poweroff";
+    };
   };
 
-  systemd.user = {
-    services.notifier = {
-      description = "System Notifications";
-      wantedBy = ["default.target"];
-      serviceConfig = {
-        ExecStart = "%h/.config/hypr/scripts/notifier-service.sh";
-      };
-      path = with pkgs; [
-        curl
-        python3
-        wireplumber
-        networkmanager
-      ];
+  # Define notification service.
+  systemd.user.services.notifier = {
+    description = "Notifier Service";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "%h/.config/hypr/scripts/notifier-service.sh";
     };
+    wantedBy = ["default.target"];
+    path = with pkgs; [
+      curl
+      gawk
+      networkmanager
+      python3
+      wireplumber
+    ];
+  };
 
-    timers.notifier = {
-      wantedBy = ["timers.target"];
-      timerConfig = {
-        OnUnitActiveSec = "1min";
-        Persistent = true;
-      };
+  systemd.user.timers.notifier = {
+    description = "Notifier Service Timer";
+    timerConfig = {
+      OnBootSec = "1min";
+      OnUnitActiveSec = "1min";
+      Persistent = true;
+      Unit = "notifier.service";
     };
+    wantedBy = ["timers.target"];
   };
 }
