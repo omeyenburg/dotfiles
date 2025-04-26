@@ -6,6 +6,17 @@
     ./theme.nix
   ];
 
+  system.activationScripts.postRebuild = {
+    deps = ["users"];
+    text = ''
+      if [ "$NIXOS_ACTION" = "switch" ]; then
+        generation=$(readlink /nix/var/nix/profiles/system | ${pkgs.gnused}/bin/sed 's/^system-\([0-9]\+\)-link$/\1/')
+        mkdir -p /var/nixos-backup
+        cp -rf /etc/nixos /var/nixos-backup/system-$generation-config
+      fi
+    '';
+  };
+
   nix = {
     settings = {
       # Enable the nix command and flakes.
@@ -21,7 +32,6 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 7d";
     };
   };
 
