@@ -1,0 +1,5 @@
+#!/bin/sh
+
+bluetoothctl devices | grep Device | while read -r _ MAC _; do
+    bluetoothctl disconnect "$MAC"
+done
