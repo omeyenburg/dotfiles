@@ -10,7 +10,6 @@ start() {
 }
 
 stop() {
-
     pkill -o waybar-wrapped
 }
 
