@@ -53,6 +53,10 @@ return {
             keymap = { preset = 'default' },
 
             completion = {
+                menu = {
+                    auto_show = true,
+                    border = 'rounded',
+                },
                 accept = {
                     -- Experimental auto-brackets support
                     -- Seems to only create brackets after completing functions
@@ -65,7 +69,13 @@ return {
                     -- 'full' will fuzzy match on the text before *and* after the cursor
                     range = 'prefix',
                 },
-                documentation = { auto_show = true, auto_show_delay_ms = 500 },
+                documentation = {
+                    auto_show = true,
+                    auto_show_delay_ms = 500,
+                    window = {
+                        border = 'rounded',
+                    },
+                },
                 -- Displays a preview of the selected item on the current line
                 ghost_text = {
                     enabled = false,
@@ -75,6 +85,9 @@ return {
             -- Experimental signature help support
             signature = {
                 enabled = true,
+                window = {
+                    border = 'rounded',
+                },
             },
 
             -- Snippets
@@ -117,8 +130,13 @@ return {
         -- without having to redefine it
         -- opts_extend = { 'sources.default' },
         config = function(_, opts)
-            require("blink.cmp").setup(opts)
-            require("config.luasnip")
-        end
+            require('blink.cmp').setup(opts)
+            require 'config.luasnip'
+
+            -- Change border color from NormalFloat to FloatBorder
+            vim.api.nvim_set_hl(0, 'BlinkCmpDocBorder', { link = 'FloatBorder' })
+            vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { link = 'FloatBorder' })
+            vim.api.nvim_set_hl(0, 'BlinkCmpSignatureHelpBorder', { link = 'FloatBorder' })
+        end,
     },
 }
