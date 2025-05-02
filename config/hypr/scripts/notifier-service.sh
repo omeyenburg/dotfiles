@@ -19,7 +19,13 @@ fi
 
 scheme=imaps
 port=993
-python_subject_decode="import sys; from email.header import decode_header; print(''.join(str(t[0], t[1] or 'utf-8') if isinstance(t[0], bytes) else t[0] for t in decode_header(sys.stdin.read().strip())))"
+
+decode() {
+    string=$1
+    python_decode="import sys; from email.header import decode_header; print(''.join(str(t[0], t[1] or 'utf-8') if isinstance(t[0], bytes) else t[0] for t in decode_header(sys.stdin.read().strip())))"
+    echo "$string" | python3 -c "$python_decode"
+    return 0
+}
 
 mailcache=~/.cache/mails
 mkdir -p "$mailcache"
@@ -39,9 +45,12 @@ sed 's/ /\n/g' ~/.netrc | sed '/machine/{n;p}' -n | while read -r server; do
         from=$(echo "$response" | sed -n '/^From:\s*/{s///;s/\s*$//;s/[^<>]* <\([^ ]*\)>/\1/;p}')
         to=$(echo "$response" | sed -n '/^To:\s*/{s///;s/\s*$//;p}')
         subject=$(echo "$response" | sed -n '/^Subject:\s*/{s///;s/\s*$//;p}')
-        decoded_subject=$(echo "$subject" | python3 -c "$python_subject_decode")
 
-        notification=$(printf "By: %s\nTo: %s\n" "$from" "$to")
+        decoded_from=$(decode "$from")
+        decoded_to=$(decode "$to")
+        decoded_subject=$(decode "$subject")
+
+        notification=$(printf "By: %s\nTo: %s\n" "$decoded_from" "$decoded_to")
         ~/.config/hypr/scripts/notify.sh "mail" "$decoded_subject" "$notification" 5000 1 >/dev/null
     done
 done
