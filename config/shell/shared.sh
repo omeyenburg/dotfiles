@@ -12,7 +12,7 @@ alias ll="ls -alF"
 # After suspend wifi sometimes does not work.
 # Quick-and-dirty fix is to remove the wifi device and rescan.
 reloadwifi() {
-    sudo sh -c 'echo 1 > /sys/bus/pci/devices/0000:03:00.0/remove && sleep 0.1 && echo 1 > /sys/bus/pci/rescan'
+    sudo sh -c '( echo 1 > /sys/bus/pci/devices/0000:03:00.0/remove || : ) && sleep 0.1 && echo 1 > /sys/bus/pci/rescan'
 }
 
 # Tmux sessions

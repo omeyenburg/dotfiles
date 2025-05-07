@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Fastfetch
-. $HOME/.config/fastfetch/run.sh
-
 # Add ~/.local/bin to path
 export PATH="$PATH:$HOME/.local/bin"
 
