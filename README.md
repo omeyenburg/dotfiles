@@ -1,34 +1,13 @@
 # dotfiles
-Here are my dotfiles ( (always) work-in-progress :).
-This is meant to support only OpenSUSE with Hyprland for now.
-QMK has also some configuration, but is only needed for custom keyboards.
+Here are my dotfiles (always work-in-progress).
+Using nixos + hyprland.
+
+QMK has also some configuration for a custom keyboard.
 
 ## Installation
-To link the config files, run:
-```
-make link
-```
+`make link`   - Link the config files.
+`make shell`  - Add the shell config to .bashrc.
+`make git`    - Set up git.
+`make fonts`  - Install the FiraCode font.
+`make tmux`   - Install tpm. (Install plugins by pressing `<leader>+I` within tmux)
 
-To add the shell config to .bashrc, run:
-```
-make shell
-```
-
-To set up git, run:
-```
-make git
-```
-
-To install the FiraCode font, run:
-```
-make fonts
-```
-
-To install tpm run:
-```
-make tmux
-```
-Install plugins by pressing `<leader>+I` within tmux.
-
-## Wallpapers
-A collection of wallpapers can be found on the wallpaper branch.
