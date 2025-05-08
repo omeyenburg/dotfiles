@@ -115,12 +115,9 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd('FileType', {
     pattern = 'netrw',
     callback = function()
-        if vim.g.keyboard_layout == 'Colemak' then
-            vim.api.nvim_buf_set_keymap(0, 'n', 'n', 'h', { noremap = true, silent = true })
-            vim.api.nvim_buf_set_keymap(0, 'n', 'e', 'j', { noremap = true, silent = true })
-            vim.api.nvim_buf_set_keymap(0, 'n', 'i', 'k', { noremap = true, silent = true })
-            vim.api.nvim_buf_set_keymap(0, 'n', 'o', 'l', { noremap = true, silent = true })
-        end
+        vim.api.nvim_buf_set_keymap(0, 'n', 'l', '<CR>', { silent = true, desc = 'Enter file or directory' })
+        vim.api.nvim_buf_set_keymap(0, 'n', 'h', '-', { silent = true, desc = 'Go directory up' })
+        vim.api.nvim_buf_set_keymap(0, 'n', 'qq', ':quit<CR>', { silent = true, desc = 'Quit' })
 
         -- Fix netrw deleting clipboard when clipboard is synced between OS and Vim
         vim.fn.setreg('+', vim.fn.getreg '+')
