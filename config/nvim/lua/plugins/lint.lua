@@ -14,12 +14,8 @@ return {
             local lint = require 'lint'
 
             lint.linters_by_ft = {
-                -- c = { 'clangd' },
-                -- javascript = { 'eslint' },
                 python = { 'flake8' },
                 haskell = { 'hlint' },
-                -- markdown = { 'vale' },
-                -- text = { 'vale' },
             }
 
             local function set_config(linter, path)
