@@ -37,6 +37,7 @@
     git
     vim
     tree
+    subversion
 
     # Disk
     cryptsetup

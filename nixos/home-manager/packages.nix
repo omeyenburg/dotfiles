@@ -3,13 +3,12 @@
     # Apps
     anki
     discord
-    gimp
     inkscape
     kitty
     libreoffice-qt
     obsidian
-    prismlauncher
     spotify
+    unstable.gimp3
     # logisim
     # logisim-evolution
     # mars-mips
@@ -25,7 +24,6 @@
     bash-completion
     btop
     cmake
-    fastfetch
     figlet
     gitmux
     gnumake

@@ -14,6 +14,7 @@
       glsl_analyzer
       lua-language-server
       bash-language-server
+      cmake-language-server
       haskell-language-server
       python312Packages.jedi-language-server
 
