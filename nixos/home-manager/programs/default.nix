@@ -7,9 +7,8 @@
   programs = {
     home-manager.enable = true;
 
-    direnv = {
+    zoxide = {
       enable = true;
-      enableBashIntegration = true;
     };
 
     btop = {
