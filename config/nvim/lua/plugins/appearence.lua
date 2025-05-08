@@ -87,18 +87,20 @@ return {
     --     end,
     -- },
 
-    os.getenv 'COLORTERM' == 'truecolor' and { -- Catppuccin colorscheme
-        'catppuccin/nvim',
-        name = 'catppuccin',
-        lazy = false,
-        priority = 1000,
-        event = 'VimEnter',
-        init = function()
-            vim.cmd.colorscheme 'catppuccin'
-            vim.api.nvim_set_hl(0, 'Normal', { bg = '#1c1c2b' })
-            vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#1c1c2b' })
-        end,
-    } or vim.cmd.colorscheme 'industry',
+    os.getenv 'COLORTERM' == 'truecolor'
+            and { -- Catppuccin colorscheme
+                'catppuccin/nvim',
+                name = 'catppuccin',
+                lazy = false,
+                priority = 1000,
+                event = 'VimEnter',
+                init = function()
+                    vim.cmd.colorscheme 'catppuccin'
+                    vim.api.nvim_set_hl(0, 'Normal', { bg = '#1c1c2b' })
+                    vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#1c1c2b' })
+                end,
+            }
+        or vim.cmd.colorscheme 'industry',
 
     { -- Statusbar
         'nvim-lualine/lualine.nvim',
@@ -137,6 +139,10 @@ return {
         },
         opts = {
             present = 'modern',
+            keys = {
+                scroll_down = '<c-y>', -- binding to scroll down inside the popup
+                scroll_up = '<c-b>', -- binding to scroll up inside the popup
+            },
         },
     },
 
