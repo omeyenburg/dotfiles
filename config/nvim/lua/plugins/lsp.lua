@@ -30,6 +30,10 @@ return {
                     },
                 },
 
+                -- cmake-language-server
+                -- https://github.com/regen100/cmake-language-server
+                cmake = {},
+
                 -- clang-tools for C/C++/Objective-C/Objective-C++
                 -- https://clangd.llvm.org/config
                 clangd = {},
