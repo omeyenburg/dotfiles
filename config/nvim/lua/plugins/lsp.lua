@@ -18,6 +18,10 @@ return {
         },
         opts = {
             servers = {
+                -- awk-language-server
+                -- https://github.com/Beaglefoot/awk-language-server
+                awk_ls = {},
+
                 -- haskell-language-server
                 -- https://haskell-language-server.readthedocs.io/en/latest/configuration.html
                 hls = {},
