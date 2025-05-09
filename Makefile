@@ -1,4 +1,4 @@
-.PHONY: help git shell tmux link unlink fonts qmk hypr nixos-backup
+.PHONY: help git tmux link unlink fonts qmk hypr nixos-backup
 
 COLOR_RED := \033[0;31m
 COLOR_DEFAULT := \033[0m
@@ -9,10 +9,6 @@ export DOTFILES
 # Apply git configuration
 git:
 	@sh "$(DOTFILES)scripts/setup/git.sh"
-
-# Write bashrc and bash_profile
-shell:
-	@sh "$(DOTFILES)scripts/setup/shell.sh"
 
 # Install tmux plugins
 tmux:
