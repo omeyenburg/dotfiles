@@ -1,40 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/sh
+# shellcheck shell=bash
 
-export EDITOR=nvim
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-alias git="LANG=en_GB git"
-alias gitlog="python3 ~/.config/shell/gitlog.py"
-alias la="ls -A"
-alias ll="ls -alF"
-
-# After suspend wifi sometimes does not work.
-# Quick-and-dirty fix is to remove the wifi device and rescan.
-reloadwifi() {
-    sudo sh -c '( echo 1 > /sys/bus/pci/devices/0000:03:00.0/remove || : ) && sleep 0.1 && echo 1 > /sys/bus/pci/rescan'
-}
-
-# Tmux sessions
-alias t=~/.config/tmux/t.sh
-complete -W "exit kill $(t list)" t
-
-# Obsidian vaults
-obsidianopen() {
-    obsidian "obsidian://open?vault=$1" & disown
-}
-
-# Yazi
-y() {
-    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-    yazi "$@" --cwd-file="$tmp"
-    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        builtin cd -- "$cwd"
-    fi
-    rm -f -- "$tmp"
-}
-
-# Custom shell prompt
 # Colors are surrounded with octal codes instead
 # of \[ and \], because these are bash specific.
 default_color='\001\033[0m\002'

@@ -1,3 +1,9 @@
 #!/bin/sh
+# shellcheck shell=bash
 
-. "$HOME"/.config/shell/shared.sh
+# include .profile if it exists
+[[ -f ~/.profile ]] && . ~/.profile
+
+# include session if it exists
+session="$HOME/.config/shell/session.sh"
+[[ -r "$session" ]] && . "$session"
