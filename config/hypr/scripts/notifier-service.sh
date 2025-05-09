@@ -17,6 +17,11 @@ if [ ! -f ~/.netrc ]; then
     exit 1
 fi
 
+# Do not send notifications if librewolf is running,
+# librewolf will send notifications itself.
+silent=$(pgrep librewolf)
+
+# Assume imaps scheme and port 993, might not work for all mail clients.
 scheme=imaps
 port=993
 
@@ -39,18 +44,22 @@ sed 's/ /\n/g' ~/.netrc | sed '/machine/{n;p}' -n | while read -r server; do
         grep -q "^$mail$" "$mailcache/$server" && continue
         echo "$mail" >>"$mailcache/$server"
 
+        if ("$silent"); then
+            continue
+        fi
+
         request="FETCH $mail (BODY.PEEK[HEADER.FIELDS (FROM TO SUBJECT)])"
         response=$(curl --url "$url" --connect-timeout 1 --netrc --request "$request" -D - -s)
 
-        from=$(echo "$response" | sed -n '/^From:\s*/{s///;s/\s*$//;s/[^<>]* <\([^ ]*\)>/\1/;p}')
+        from=$(echo "$response" | sed -n '/^From:\s*/{s///;s/\s*$//;p}')
         to=$(echo "$response" | sed -n '/^To:\s*/{s///;s/\s*$//;p}')
         subject=$(echo "$response" | sed -n '/^Subject:\s*/{s///;s/\s*$//;p}')
 
-        decoded_from=$(decode "$from")
-        decoded_to=$(decode "$to")
+        decoded_from=$(decode "$from" | sed "s/[^<>]* <\([^ ]*\)>/\1/")
+        decoded_to=$(decode "$to" | sed "s/[^<>]* <\([^ ]*\)>/\1/")
         decoded_subject=$(decode "$subject")
 
         notification=$(printf "By: %s\nTo: %s\n" "$decoded_from" "$decoded_to")
-        ~/.config/hypr/scripts/notify.sh "mail" "$decoded_subject" "$notification" 5000 1 >/dev/null
+        ~/.config/hypr/scripts/notify.sh "mail" "$decoded_subject" "$notification" 5000 0 >/dev/null
     done
 done

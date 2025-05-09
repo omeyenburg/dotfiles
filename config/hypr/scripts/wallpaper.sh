@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck shell=bash
 
 # Wallpaper should be a path like: ~/Github/dotfiles/wallpapers/hyprland.jpg
 wallpaper=${1:-""}

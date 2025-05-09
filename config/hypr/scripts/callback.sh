@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck shell=bash
 
 # Credit:
 # https://github.com/hyprwm/Hyprland/issues/3835

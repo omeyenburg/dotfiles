@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck shell=bash
 
 if pgrep wofi; then
     pkill wofi
