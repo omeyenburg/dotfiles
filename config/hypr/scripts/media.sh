@@ -1,8 +1,9 @@
 #!/bin/sh
+# shellcheck shell=bash
 
 # Arguments
 # type: volume | display-brightness | keyboard-brightness
-# action: up | down | toggle | get
+# action: up | down | toggle | mute | get
 # optionally: silent
 
 timeout=1
@@ -15,11 +16,13 @@ if [ "$1" = "volume" ]; then
         wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
     elif [ "$2" = "toggle" ]; then
         wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    elif [ "$2" = "mute" ]; then
+        wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
     elif [ "$2" = "get" ]; then
         wpctl get-volume @DEFAULT_AUDIO_SINK@
         exit 1
     else
-        echo "Invalid value '$2'. Valid values are: up, down, toggle, get"
+        echo "Invalid value '$2'. Valid values are: up, down, toggle, mute, get"
         exit 1
     fi
 
