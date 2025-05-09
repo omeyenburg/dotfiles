@@ -115,7 +115,7 @@ BEGIN { max1 = int(max1); max2 = int(max2); max3 = int(max3) }
         gsub(/ weeks?/,   "w", time)
         gsub(/ months?/,  "mo", time)
         gsub(/ years?/,   "y", time)
-        time = sprintf("%-" max3 + 2 "s", "(" time ")" )
+        time = sprintf("%-" max3 + 3 "s", "(" time ")," )
 
         changes = "0 files changed"
         insertions = 0
@@ -149,7 +149,7 @@ BEGIN { max1 = int(max1); max2 = int(max2); max3 = int(max3) }
             changes = changes " (-" deletions ")"
         }
 
-        print message " " author ", " date " " time ", " changes
+        print message " " author ", " date " " time " " changes
     }
 }
 '
