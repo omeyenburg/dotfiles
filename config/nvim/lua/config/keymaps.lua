@@ -103,6 +103,16 @@ end, { noremap = true, silent = true, desc = 'Open link' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true, desc = 'Scroll down' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true, desc = 'Scroll up' })
 
+-- Mappings to make life easier when wrap is set
+-- vim.keymap.set('n', 'j', 'gj', { noremap = true, silent = true, desc = 'Down' })
+-- vim.keymap.set('n', 'k', 'gk', { noremap = true, silent = true, desc = 'Up' })
+
+-- Mappings to make life harder
+vim.keymap.set('n', 'h', function() return vim.v.count > 0 and 'h' or print("no") end, { expr = true, noremap = true, silent = true, desc = "Right"})
+vim.keymap.set('n', 'j', function() return vim.v.count > 0 and 'j' or print("no") end, { expr = true, noremap = true, silent = true, desc = "Down"})
+vim.keymap.set('n', 'k', function() return vim.v.count > 0 and 'k' or print("no") end, { expr = true, noremap = true, silent = true, desc = "Up"})
+vim.keymap.set('n', 'l', function() return vim.v.count > 0 and 'l' or print("no") end, { expr = true, noremap = true, silent = true, desc = "Left"})
+
 -- Shortcuts for switching between windows
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { noremap = true, silent = true, desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { noremap = true, silent = true, desc = 'Move focus to the lower window' })
