@@ -70,35 +70,6 @@ local toggle_inspect_tree = function()
     end
 end
 
--- Open link under cursor
-vim.keymap.set('n', '<leader>k', function()
-    local link = vim.fn.expand '<cWORD>'
-
-    -- Open link with browser if possible
-    if link:match 'https?://' then
-        vim.fn.system('xdg-open ' .. link)
-    else
-        -- Strip quotes i.e.
-        link = link:gsub("^['\"](.-)['\"]$", "%1")
-
-        local cwd = vim.fn.getcwd()
-        local file_dir = vim.fn.expand("%:p:h")
-
-        local link_expanded = vim.fn.expand(link)
-        local link_cwd = vim.fs.joinpath(cwd, link)
-        local link_file_dir = vim.fs.joinpath(file_dir, link)
-
-        -- Check if any of the file paths is readable
-        if vim.fn.filereadable(link_expanded) == 1 then
-            vim.cmd('edit ' .. link_expanded)
-        elseif vim.fn.filereadable(link_cwd) == 1 then
-            vim.cmd('edit ' .. link_cwd)
-        elseif vim.fn.filereadable(link_file_dir) == 1 then
-            vim.cmd('edit ' .. link_file_dir)
-        end
-    end
-end, { noremap = true, silent = true, desc = 'Open link' })
-
 -- Centered half page scrolling
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true, desc = 'Scroll down' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true, desc = 'Scroll up' })
