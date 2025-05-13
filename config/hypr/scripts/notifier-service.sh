@@ -17,9 +17,9 @@ if [ ! -f ~/.netrc ]; then
     exit 1
 fi
 
-# Do not send notifications if librewolf is running,
-# librewolf will send notifications itself.
-silent=$(pgrep librewolf)
+# Do not send notifications if thunderbird is running,
+# thunderbird will send notifications itself.
+silent=$(pgrep thunderbird)
 
 # Assume imaps scheme and port 993, might not work for all mail clients.
 scheme=imaps
