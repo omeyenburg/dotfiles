@@ -1,7 +1,7 @@
 #!/bin/sh
 
-CONFDIR="$DOTFILES/config"
-HOMEDIR="$DOTFILES/home"
+CONFDIR="${DOTFILES}config"
+HOMEDIR="${DOTFILES}home"
 NIXOS=$([ -d /nix ] && echo true || echo false)
 
 for file in $(ls -a "$CONFDIR"); do
