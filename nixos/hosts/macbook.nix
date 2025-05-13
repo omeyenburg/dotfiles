@@ -47,11 +47,16 @@
 
   hardware = {
     graphics.extraPackages = with pkgs; [
-      intel-media-driver # or intel-vaapi-driver if older than 2014
-      intel-compute-runtime # or use intel-ocl
-      vaapiIntel
+      # For gpus older than 2014
+      # intel-vaapi-driver and intel-ocl
+      # For newer gpus
+      # intel-media-driver and intel-compute-runtime
       vaapiVdpau
       libvdpau-va-gl
+      intel-media-driver
+      intel-vaapi-driver
+      intel-compute-runtime
+      intel-ocl
     ];
 
     # Improve bluetooth stability
@@ -74,28 +79,10 @@
   systemd.services = {
     reload-wifi-after-suspend = {
       description = "Reload Broadcom WiFi after suspend";
-      # after = ["sleep.target"];
-      # wantedBy = ["sleep.target"];
-      # after = [ "systemd-resume.service" ];
-      # requires = [ "systemd-resume.service" ];
-
-      # # This makes it run after waking from suspend/hibernate
-      # wantedBy = [
-      #   "suspend.target"
-      #   "hibernate.target"
-      #   "hybrid-sleep.target"
-      #   "sleep.target"
-      # ];
-
-      # # This ensures it runs after resuming
-      # after = [
-      #   "suspend.target"
-      #   "hibernate.target"
-      #   "hybrid-sleep.target"
-      #   "sleep.target"
-      # ];
-      # wantedBy = ["systemd-resume.service"];
-      # after = ["systemd-resume.service"];
+      path = with pkgs; [
+        kmod
+        gawk
+      ];
       script = ''
         broken=$(lsmod | awk '$1=="brcmfmac" { found=1; if ($3=="0") { print "true"; exit } } END { if (!found) print "true" }')
         if [ "$broken" ]; then
@@ -111,10 +98,6 @@
         Type = "oneshot";
         RemainAfterExit = false;
       };
-      path = with pkgs; [
-        kmod
-        gawk
-      ];
     };
 
     "systemd-suspend".serviceConfig.ExecStartPost = [
@@ -124,7 +107,8 @@
 
   # Video acceleration
   environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD"; # Or i965 for older Intel GPUs
-    VDPAU_DRIVER = "va_gl";
+    # iHD for newer and i965 for older Intel GPUs
+    # LIBVA_DRIVER_NAME = "i965";
+    # VDPAU_DRIVER = "va_gl";
   };
 }

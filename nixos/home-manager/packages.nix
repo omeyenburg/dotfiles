@@ -46,7 +46,6 @@
 
     # Hyprland
     hypridle
-    hyprland
     hyprlock
     hyprpaper
     hyprpicker

@@ -21,7 +21,10 @@
 
     # Install hyprland.
     # xdg-desktop-portal-hyprland is automatically started with hyprland.
-    hyprland.enable = true;
+    hyprland = {
+      enable = true;
+      package = pkgs.hyprland;
+    };
 
     # Install steam.
     steam = {
