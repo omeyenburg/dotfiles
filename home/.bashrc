@@ -56,7 +56,7 @@ fi
 alias git="LANG=en_GB git"
 alias la="ls -A"
 alias ll="ls -alF"
-alias books="librewolf file:///home/oskar/books && exit"
+alias books="xdg-open file:///home/oskar/books && exit"
 
 # Tmux sessions
 alias t=~/.config/tmux/t.sh
@@ -104,7 +104,7 @@ BEGIN { max1 = int(max1); max2 = int(max2); max3 = int(max3) }
 {
     if (length($0) && substr($0, 1, 1) != " ") {
         message = sprintf("%-" max1 "s", $1)
-        author = sprintf("%-" max2 "s", $2)
+        author = sprintf("%-" max2 + 1 "s", $2 ",")
         time = $3
         date = $4
 
@@ -149,7 +149,7 @@ BEGIN { max1 = int(max1); max2 = int(max2); max3 = int(max3) }
             changes = changes " (-" deletions ")"
         }
 
-        print message " " author ", " date " " time " " changes
+        print message " " author " " date " " time " " changes
     }
 }
 '
