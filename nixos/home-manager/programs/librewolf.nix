@@ -10,6 +10,9 @@
 
       ### General
 
+      # Disable animations, e.g. fullscreen animation
+      "ui.prefersReducedMotion" = 1;
+
       # Keep tabs open
       "browser.startup.page" = 3;
 
@@ -22,6 +25,15 @@
       # Pdf options
       "pdfjs.sidebarViewOnLoad" = 0;
       "pdfjs.defaultZoomValue" = "page-fit";
+
+      # Video playback performance : Hardware Acceleration
+      "media.rdd-vpx.enabled" = false;
+      "media.ffvpx-hw.enabled" = false;
+      "media.av1.use-dav1d" = false;
+      "media.av1.enabled" = false;
+
+      # Minor optimisation
+      "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
 
       # Force downloads to correct download directory
       "browser.download.start_downloads_in_tmp_dir" = true;
@@ -65,6 +77,10 @@
       "sidebar.visibility" = "hide-sidebar";
 
       ### Privacy and Security
+
+      # Enable webgl, which is a fingerprint vektor, but needed for 3d graphics, e.g. desmos
+      # Consider using the Canvas Blocker extension.
+      "webgl.disabled" = false;
 
       # Prevent website tracking clicks
       "browser.send_pings" = false;
