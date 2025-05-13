@@ -1,5 +1,14 @@
 {pkgs, ...}: {
+  # Disable waiting for Network Manager at boot.
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   services = {
+    # Enalbe fstrim.
+    fstrim.enable = true;
+
+    # Preload to improve browser startup time.
+    preload.enable = true;
+
     # Enable the blueman interface.
     blueman.enable = true;
 
@@ -59,9 +68,6 @@
 
         START_CHARGE_THRESH_BAT0 = 60;
         STOP_CHARGE_THRESH_BAT0 = 90;
-
-        # WIFI_PWR_ON_BAT = "off";
-        # WIFI_PWR_ON_AC = "off";
       };
     };
 
@@ -85,31 +91,58 @@
     };
   };
 
-  # Define notification service.
-  systemd.user.services.notifier = {
-    description = "Notifier Service";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "%h/.config/hypr/scripts/notifier-service.sh";
-    };
-    wantedBy = ["default.target"];
-    path = with pkgs; [
-      curl
-      gawk
-      networkmanager
-      python3
-      wireplumber
-    ];
-  };
+  systemd = {
+    # services = {
+    #   mute-before-suspend = {
+    #     description = "Mute volume before suspending";
+    #     wantedBy = ["sleep.target" "suspend.target" "hibernate.target" "hybrid-sleep.target"];
+    #     before = ["sleep.target" "suspend.target" "hibernate.target" "hybrid-sleep.target"];
+    #     path = with pkgs; [
+    #       gnugrep
+    #       wireplumber
+    #     ];
+    #     serviceConfig = {
+    #       Type = "oneshot";
+    #       ExecStart = ''
+    #         /home/oskar/.config/hypr/scripts/media.sh volume mute silent
+    #       '';
+    #       User = "oskar";
+    #     };
+    #   };
+    # };
 
-  systemd.user.timers.notifier = {
-    description = "Notifier Service Timer";
-    timerConfig = {
-      OnBootSec = "1min";
-      OnUnitActiveSec = "1min";
-      Persistent = true;
-      Unit = "notifier.service";
+    user = {
+      services = {
+        # Define notification service.
+        notifier = {
+          description = "Notifier Service";
+          path = with pkgs; [
+            curl
+            gawk
+            networkmanager
+            python3
+            wireplumber
+          ];
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = "%h/.config/hypr/scripts/notifier-service.sh";
+          };
+          wantedBy = ["default.target"];
+        };
+      };
+
+      timers = {
+        notifier = {
+          description = "Notifier Service Timer";
+          timerConfig = {
+            OnBootSec = "1min";
+            OnUnitActiveSec = "1min";
+            Persistent = true;
+            Unit = "notifier.service";
+          };
+          wantedBy = ["timers.target"];
+        };
+      };
     };
-    wantedBy = ["timers.target"];
   };
 }
