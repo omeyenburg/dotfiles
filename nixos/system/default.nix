@@ -25,7 +25,7 @@
 
       # Optimise store during each build.
       # Can also be done manually: nix-store --optimise
-      auto-optimise-store = true;
+      # auto-optimise-store = true;
     };
 
     # Automatic garbage collection.
@@ -33,7 +33,15 @@
       automatic = true;
       dates = "weekly";
     };
+
+    # Optimise only after garbage collection.
+    optimise = {
+      automatic = true;
+    };
   };
+
+  # Enable zram. Try to disable for now, maybe this causes problems?
+  # zramSwap.enable = true;
 
   # Whether to enable the RealtimeKit system service, which hands
   # out realtime scheduling priority to user processes on demand.
@@ -168,6 +176,8 @@
 
     MOZ_WEBRENDER = "1";
     MOZ_ACCELERATED = "1";
+    MOZ_DISABLE_RDD_SANDBOX = 1;
+    MOZ_LOG = "PlatformDecoderModule:5";
 
     # Wayland
     MOZ_ENABLE_WAYLAND = "1";
