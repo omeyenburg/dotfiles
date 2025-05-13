@@ -16,10 +16,10 @@
 
       "x-scheme-handler/ssh" = "com.mitchellh.ghostty.desktop";
 
-      "x-scheme-handler/http" = "librewolf.desktop";
-      "x-scheme-handler/https" = "librewolf.desktop";
+      "x-scheme-handler/http" = "chromium.desktop";
+      "x-scheme-handler/https" = "chromium.desktop";
 
-      "application/pdf" = "librewolf.desktop";
+      "application/pdf" = "org.pwmt.zathura.desktop";
 
       "application/javascript" = "nvim.desktop";
       "application/json" = "nvim.desktop";
