@@ -17,6 +17,7 @@
       cmake-language-server
       haskell-language-server
       python312Packages.jedi-language-server
+      unstable.awk-language-server
 
       # Linters
       python312Packages.flake8
