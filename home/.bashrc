@@ -4,6 +4,8 @@
 [[ $- == *i* ]] || return
 
 export EDITOR=nvim
+export MANPAGER="nvim +Man!"
+
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PATH="$PATH:$HOME/.local/bin"
