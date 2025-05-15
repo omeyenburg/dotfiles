@@ -30,7 +30,7 @@ local function create_floating_window(opts)
         height = height,
         col = col,
         row = row,
-        style = 'minimal', -- No borders or extra UI elements
+        style = 'minimal',
         border = 'rounded',
     }
 
@@ -40,7 +40,7 @@ local function create_floating_window(opts)
     return { buf = buf, win = win }
 end
 
-local toggle_terminal = function()
+local function toggle_terminal()
     if not vim.api.nvim_win_is_valid(state.floating.win) then
         state.floating = create_floating_window { buf = state.floating.buf }
         if vim.bo[state.floating.buf].buftype ~= 'terminal' then
@@ -53,7 +53,7 @@ local toggle_terminal = function()
 end
 
 -- Toggle inspect tree
-local toggle_inspect_tree = function()
+local function toggle_inspect_tree()
     if vim.fn.bufexists 'Syntax tree' ~= 0 then
         vim.api.nvim_buf_delete(vim.fn.bufnr 'Syntax tree', {})
     else
@@ -70,69 +70,88 @@ local toggle_inspect_tree = function()
     end
 end
 
--- Centered half page scrolling
-vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true, desc = 'Scroll down' })
-vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true, desc = 'Scroll up' })
+local function keymap(mode, lhs, rhs, desc, opts)
+    if opts then
+        opts['desc'] = desc
+    else
+        opts = { desc = desc }
+    end
 
--- Mappings to make life easier when wrap is set
--- vim.keymap.set('n', 'j', 'gj', { noremap = true, silent = true, desc = 'Down' })
--- vim.keymap.set('n', 'k', 'gk', { noremap = true, silent = true, desc = 'Up' })
+    opts['silent'] = opts['silent'] or true
+    opts['noremap'] = opts['noremap'] or true
 
--- Mappings to make life harder
-vim.keymap.set('n', 'h', function() return vim.v.count > 0 and 'h' or print("no") end, { expr = true, noremap = true, silent = true, desc = "Right"})
-vim.keymap.set('n', 'j', function() return vim.v.count > 0 and 'j' or print("no") end, { expr = true, noremap = true, silent = true, desc = "Down"})
-vim.keymap.set('n', 'k', function() return vim.v.count > 0 and 'k' or print("no") end, { expr = true, noremap = true, silent = true, desc = "Up"})
-vim.keymap.set('n', 'l', function() return vim.v.count > 0 and 'l' or print("no") end, { expr = true, noremap = true, silent = true, desc = "Left"})
+    vim.keymap.set(mode, lhs, rhs, opts)
+end
 
--- Shortcuts for switching between windows
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { noremap = true, silent = true, desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { noremap = true, silent = true, desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { noremap = true, silent = true, desc = 'Move focus to the upper window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { noremap = true, silent = true, desc = 'Move focus to the right window' })
-
--- Remove search highlight with escape
-vim.keymap.set('n', '<Esc>', '<CMD>nohlsearch<CR>', { noremap = true, silent = true, desc = 'Clear search highlight' })
-
--- Quick indentation
-vim.keymap.set('n', '<S-Tab>', '<<', { noremap = true, silent = true, desc = 'Dedent line' })
-vim.keymap.set('n', '<Tab>', '>>', { noremap = true, silent = true, desc = 'Indent line' })
-vim.keymap.set('v', '<S-Tab>', '<gv', { noremap = true, silent = true, desc = 'Dedent selection' })
-vim.keymap.set('v', '<Tab>', '>gv', { noremap = true, silent = true, desc = 'Indent selection' })
-
--- Open Netrw
-vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { noremap = true, silent = true, desc = 'Open explorer' })
-
--- Create lines but stay in normal mode
-vim.keymap.set('n', '<leader>O', 'O<Esc>j', { noremap = true, silent = true, desc = 'Create line above' })
-vim.keymap.set('n', '<leader>o', 'o<Esc>k', { noremap = true, silent = true, desc = 'Create line below' })
-
--- Join lines and keep cursor position
-vim.keymap.set('n', 'J', 'mzJ`z', { noremap = true, silent = true, desc = 'Join lines' })
-
--- Centered searching
-vim.keymap.set('n', 'N', 'Nzzzv', { noremap = true, silent = true, desc = 'Search previous occurence' })
-vim.keymap.set('n', 'n', 'nzzzv', { noremap = true, silent = true, desc = 'Search next occurence' })
+local function move(direction)
+    return function()
+        return vim.v.count > 0 and direction or print 'Maybe use another motion?'
+    end
+end
 
 -- Escape in terminal
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true, desc = 'Terminal normal mode' })
+keymap('t', '<Esc>', '<C-\\><C-n>', 'Terminal normal mode')
 
--- Move selected lines
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = 'Shift selection down' })
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = 'Shift selection up' })
+-- Remove search highlight with escape
+keymap('n', '<Esc>', '<CMD>nohlsearch<CR>', 'Clear search highlight')
 
--- Paste but keep register
-vim.keymap.set('x', '<leader>p', '"_dP', { noremap = true, silent = true, desc = 'Paste and keep register' })
+-- Toggles
+keymap('n', '<leader>tt', toggle_terminal, 'Toggle terminal')
+keymap('n', '<leader>tr', toggle_inspect_tree, 'Toggle inspect tree')
+keymap('n', '<leader>e', vim.cmd.Ex, 'Open explorer')
+
+--- Navigation ---
+
+-- Centered half page scrolling
+keymap('n', '<C-d>', '<C-d>zz', 'Scroll down')
+keymap('n', '<C-u>', '<C-u>zz', 'Scroll up')
+
+-- Mappings to make life easier when wrap is set
+-- keymap('n', 'j', 'gj', 'Down')
+-- keymap('n', 'k', 'gk', 'Up')
+
+-- Mappings to make life harder
+keymap('n', 'h', move 'h', 'Right', { expr = true })
+keymap('n', 'j', move 'j', 'Down', { expr = true })
+keymap('n', 'k', move 'k', 'Up', { expr = true })
+keymap('n', 'l', move 'l', 'Left', { expr = true })
+
+-- Shortcuts for switching between windows
+keymap('n', '<C-h>', '<C-w><C-h>', 'Move focus to the left window')
+keymap('n', '<C-j>', '<C-w><C-j>', 'Move focus to the lower window')
+keymap('n', '<C-k>', '<C-w><C-k>', 'Move focus to the upper window')
+keymap('n', '<C-l>', '<C-w><C-l>', 'Move focus to the right window')
+
+-- Centered searching
+keymap('n', 'N', 'Nzzzv', 'Search previous occurence')
+keymap('n', 'n', 'nzzzv', 'Search next occurence')
 
 -- Cycle through buffers
 -- Cycle through harpoon files with <C-n> / <C-p>
-vim.keymap.set('n', '<C-S-n>', ':bnext<CR>', { noremap = true, silent = true, desc = 'Paste and keep register' })
-vim.keymap.set('n', '<C-S-p>', ':bprev<CR>', { noremap = true, silent = true, desc = 'Paste and keep register' })
+keymap('n', '<C-S-n>', ':bnext<CR>', 'Paste and keep register')
+keymap('n', '<C-S-p>', ':bprev<CR>', 'Paste and keep register')
 
--- Toggle terminal
-vim.keymap.set('n', '<leader>tt', toggle_terminal, { noremap = true, silent = true, desc = 'Toggle terminal' })
+--- Editing ---
 
--- Toggle tree-sitter inspect tree
-vim.keymap.set('n', '<leader>tr', toggle_inspect_tree, { noremap = true, silent = true, desc = 'Toggle inspect tree' })
+-- Tab indentation
+keymap('n', '<S-Tab>', '<<', 'Dedent line')
+keymap('n', '<Tab>', '>>', 'Indent line')
+keymap('v', '<S-Tab>', '<gv', 'Dedent selection')
+keymap('v', '<Tab>', '>gv', 'Indent selection')
+
+-- Create lines in normal mode
+keymap('n', '<leader>O', 'O<Esc>', 'Create line above')
+keymap('n', '<leader>o', 'o<Esc>', 'Create line below')
+
+-- Join lines and keep cursor position
+keymap('n', 'J', 'mzJ`z', 'Join lines')
+
+-- Move selected lines
+keymap('v', 'J', ":m '>+1<CR>gv=gv", 'Shift selection down')
+keymap('v', 'K', ":m '<-2<CR>gv=gv", 'Shift selection up')
+
+-- Paste and keep register
+keymap('x', '<leader>p', '"_dP', 'Paste and keep register')
 
 -- Disable unused keymaps
 vim.keymap.set('x', 'Q', '<nop>')
