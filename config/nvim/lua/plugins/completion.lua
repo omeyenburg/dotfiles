@@ -26,11 +26,6 @@ return {
         dependencies = {
             -- Provides snippets for the snippet source
             'rafamadriz/friendly-snippets',
-            { -- Snippet Engine & its associated nvim-cmp source
-                'L3MON4D3/LuaSnip',
-                version = 'v2.*',
-                build = 'make install_jsregexp',
-            },
         },
         opts = {
             -- 'default' for mappings similar to built-in completion
@@ -92,18 +87,16 @@ return {
 
             -- Snippets
             snippets = {
-                -- alternative: preset = 'luasnip'
                 expand = function(snippet)
-                    require('luasnip').lsp_expand(snippet)
-                end,
-                active = function(filter)
-                    if filter and filter.direction then
-                        return require('luasnip').jumpable(filter.direction)
+                    local col = vim.api.nvim_win_get_cursor(0)[2]
+                    local line = vim.api.nvim_get_current_line()
+
+                    if line:sub(col + 1, col + 1) ~= '(' then
+                        vim.snippet.expand(snippet)
+                        return
                     end
-                    return require('luasnip').in_snippet()
-                end,
-                jump = function(direction)
-                    require('luasnip').jump(direction)
+
+                    vim.snippet.expand(string.gsub(snippet, '%(.*', '') .. '$0')
                 end,
             },
 
@@ -126,17 +119,21 @@ return {
                 nerd_font_variant = 'mono',
             },
         },
-        -- allows extending the providers array elsewhere in your config
-        -- without having to redefine it
-        -- opts_extend = { 'sources.default' },
         config = function(_, opts)
             require('blink.cmp').setup(opts)
-            require 'config.luasnip'
 
             -- Change border color from NormalFloat to FloatBorder
             vim.api.nvim_set_hl(0, 'BlinkCmpDocBorder', { link = 'FloatBorder' })
             vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { link = 'FloatBorder' })
             vim.api.nvim_set_hl(0, 'BlinkCmpSignatureHelpBorder', { link = 'FloatBorder' })
+
+            -- Exit snippet when changing mode
+            vim.api.nvim_create_autocmd('ModeChanged', {
+                pattern = '*',
+                callback = function()
+                    vim.snippet.stop()
+                end,
+            })
         end,
     },
 }
