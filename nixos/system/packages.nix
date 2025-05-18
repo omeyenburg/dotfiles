@@ -33,7 +33,6 @@
 
   environment.systemPackages = with pkgs; [
     # General Tools
-    fzf
     git
     vim
     tree
@@ -55,10 +54,6 @@
 
     # Conflicts with tlp
     # powerprofilesctl
-
-    # Man pages
-    man-pages
-    man-pages-posix
 
     # Bluetooth
     bluez

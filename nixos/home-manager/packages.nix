@@ -25,12 +25,18 @@
     btop
     cmake
     figlet
+    fzf
     gitmux
     gnumake
     qmk
+    ripgrep-all
     tmux
     unzip
     wl-clipboard
+
+    # Man pages
+    man-pages
+    man-pages-posix
 
     # Pdf tools
     poppler_utils
