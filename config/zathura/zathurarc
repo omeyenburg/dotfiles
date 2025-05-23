@@ -1,7 +1,4 @@
-set selection-clipboard clipboard
-set highlight-color     rgba(220,220,255,0.7)
-set highlight-fg        "#000000"
-
-# Dark mode (can also be toggled with ctrl+r)
-# set recolor             false
-# set recolor-keephue     false
+set selection-notification  false
+set selection-clipboard     clipboard
+set highlight-fg            "#000000"
+set highlight-color         rgba(220,220,255,0.7)
