@@ -12,8 +12,7 @@ if [ "$mode" = "name" ]; then
     file=$(cat $tmpfile)
 
     if [ -n "$file" ]; then
-        zathura "$file" &
-        disown
+        zathura "$file" --fork
     fi
 elif [ "$mode" = "content" ]; then
     kitty --class pdfsearch sh -c "true | fzf --prompt='🔍 Search PDFs: ' --bind \"change:reload:if [ -n {q} ]; then rga --type pdf --no-heading --color=always {q} $directories; else true; fi || true\" --ansi > $tmpfile"
@@ -22,8 +21,7 @@ elif [ "$mode" = "content" ]; then
     page="${file_with_page##* }"
 
     if [ -n "$file" ] && [ -n "$page" ]; then
-        zathura --page="$page" "$file" &
-        disown
+        zathura --page="$page" "$file" --fork
     fi
 else
     echo "Valid modes are: name, content."
