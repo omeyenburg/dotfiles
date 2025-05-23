@@ -49,6 +49,14 @@ return {
                 -- lua-language-server
                 -- https://luals.github.io/wiki/configuration/#neovim
                 lua_ls = {
+                    root_dir = function(fname)
+                        local nvim_config_realpath = vim.fn.resolve(vim.fn.stdpath 'config')
+
+                        if fname:find(nvim_config_realpath, 1, true) == 1 then
+                            return nvim_config_realpath
+                        end
+                        return require('lspconfig.util').root_pattern('.luarc.json', '.luarc.jsonc', '.git')(fname)
+                    end,
                     settings = {
                         Lua = {
                             workspace = {
@@ -76,9 +84,18 @@ return {
                 -- https://github.com/latex-lsp/texlab/wiki/Configuration
                 texlab = {},
 
+                -- typescript-language-server
+                ts_ls = {},
+
                 -- rust-analyzer
                 -- https://rust-analyzer.github.io/book/configuration.html
                 rust_analyzer = {
+                    cargo = {
+                        allFeatures = true,
+                    },
+                    procMacro = {
+                        enable = false,
+                    },
                     cachePriming = {
                         enable = false,
                     },
@@ -140,7 +157,10 @@ return {
                         vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
                     end
 
-                    map('K', vim.lsp.buf.hover, 'Hover Documentation')
+                    map('K', function()
+                        vim.lsp.buf.hover { border = 'rounded' }
+                    end, 'Hover Documentation')
+
                     map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
                     map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
                     map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -204,11 +224,6 @@ return {
                 config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
                 lspconfig[server].setup(config)
             end
-
-            -- Add rounded borders to hover menu
-            vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-                border = 'rounded',
-            })
 
             -- Enable inlay hints, e.g. implicit types
             vim.lsp.inlay_hint.enable(true)
