@@ -34,12 +34,12 @@
   environment.systemPackages = with pkgs; [
     # Tools
     git
-    vim
-    tree
-    subversion
     intel-gpu-tools
     libva-utils
+    subversion
+    tree
     vdpauinfo
+    vim
 
     # Disk
     cryptsetup

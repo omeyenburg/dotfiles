@@ -8,7 +8,7 @@
     libreoffice-qt
     obsidian
     spotify
-    unstable.gimp3
+    gimp3
     # logisim
     # logisim-evolution
     # mars-mips

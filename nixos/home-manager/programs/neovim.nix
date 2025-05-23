@@ -9,37 +9,37 @@
     withRuby = false;
     extraPackages = with pkgs; [
       # Language Servers
-      nixd
-      rust-analyzer
-      glsl_analyzer
-      lua-language-server
+      awk-language-server
       bash-language-server
       cmake-language-server
+      glsl_analyzer
       haskell-language-server
+      lua-language-server
+      nixd
       python312Packages.jedi-language-server
-      unstable.awk-language-server
+      rust-analyzer
 
       # Linters
       python312Packages.flake8
 
       # Formatters
-      jq
-      black
-      shfmt
-      taplo
-      stylua
-      indent
-      rustfmt
       alejandra
+      black
+      indent
+      jq
+      rustfmt
+      shfmt
+      stylua
+      taplo
 
       # Tools
+      cargo
+      clang-tools # Provides clangd, clang-format & clang-tidy
       fd
       fzf
       ripgrep
       tree-sitter
       wl-clipboard
-      rustup # Provides cargo & rust-analyzer
-      unstable.clang-tools # Provides clangd, clang-format & clang-tidy
     ];
   };
 }
