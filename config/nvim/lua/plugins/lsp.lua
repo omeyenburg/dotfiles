@@ -91,44 +91,44 @@ return {
                 -- https://rust-analyzer.github.io/book/configuration.html
                 rust_analyzer = {
                     cargo = {
-                        allFeatures = true,
+                        -- features = [],
                     },
-                    procMacro = {
-                        enable = false,
-                    },
-                    cachePriming = {
-                        enable = false,
-                    },
+                    procMacro = { enable = true },
+                    cachePriming = { enable = false },
                     check = {
                         command = 'clippy',
+                        extraArgs = { '--no-deps' },
                     },
                     checkOnSave = true,
-                    completion = {
-                        fullFunctionSignatures = {
-                            enable = true,
-                        },
-                    },
+                    completion = { fullFunctionSignatures = { enable = true } },
                     diagnostics = {
                         disabled = { 'unlinked-file' },
+                        experimental = { enable = true },
+                        styleLints = { enable = true },
+                    },
+                    highlightInactiveCode = true,
+                    semanticHighlighting = {
+                        punctuation = {
+                            enable = true,
+                            separate = { macro = { bang = true } },
+                            specialization = { enable = true },
+                        },
+                        operator = { specialization = { enable = true } },
                     },
                     inlayHints = {
-                        closureCaptureHints = {
-                            enable = true,
-                        },
-                        closureReturnTypeHints = {
-                            enable = 'always',
-                        },
-                        implicitDrops = {
-                            enable = true,
-                        },
-                        genericParameterHints = {
-                            lifetime = {
-                                enable = true,
-                            },
-                            type = {
-                                enable = true,
-                            },
-                        },
+                        enable = true,
+                        maxLength = 50,
+                        chainingHints = { enable = true },
+                        closureCaptureHints = { enable = true },
+                        bindingModeHints = { enable = true },
+                        closureReturnTypeHints = { enable = 'always' },
+                        discriminantHints = { enable = 'always' },
+                        expressionAdjustmentHints = { enable = 'always' },
+                        genericParameterHints = { lifetime = { enable = true }, type = { enable = true } },
+                        implicitDrops = { enable = true },
+                        lifetimeElisionHints = { enable = 'always', useParameterNames = true },
+                        rangeExclusiveHints = { enable = true },
+                        reborrowHints = { enable = 'always' },
                     },
                 },
 
@@ -219,14 +219,19 @@ return {
 
             -- Configure language servers
             for server, config in pairs(opts.servers) do
-                -- passing config.capabilities to blink.cmp merges with the capabilities in your
-                -- `opts[server].capabilities, if you've defined it
                 config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
                 lspconfig[server].setup(config)
             end
 
-            -- Enable inlay hints, e.g. implicit types
+            -- Enable inlay hints, virtual text, etc.
             vim.lsp.inlay_hint.enable(true)
+            vim.diagnostic.config {
+                virtual_text = true,
+                signs = true,
+                underline = true,
+                update_in_insert = true,
+                severity_sort = true,
+            }
         end,
     },
 }
