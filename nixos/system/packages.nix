@@ -32,11 +32,14 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # General Tools
+    # Tools
     git
     vim
     tree
     subversion
+    intel-gpu-tools
+    libva-utils
+    vdpauinfo
 
     # Disk
     cryptsetup
@@ -63,5 +66,13 @@
     sane-airscan
     sane-backends
     simple-scan
+
+    # Hyprland
+    hypridle
+    hyprlock
+    hyprpaper
+    hyprpicker
+    hyprshot
+    hyprsunset
   ];
 }

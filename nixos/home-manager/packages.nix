@@ -15,7 +15,6 @@
 
     # Yubikey
     yubikey-manager
-    yubikey-manager-qt
     yubikey-personalization
     yubikey-personalization-gui
     pinentry-curses
@@ -50,13 +49,9 @@
     graalvm-ce
     python312Full
 
-    # Hyprland
-    hypridle
-    hyprlock
-    hyprpaper
-    hyprpicker
-    hyprshot
+    # Desktop tools
     mako
+    playerctl
     pw-volume
     pywal
     waybar
