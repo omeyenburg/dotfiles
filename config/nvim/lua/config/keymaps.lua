@@ -100,6 +100,9 @@ keymap('n', '<leader>tt', toggle_terminal, 'Toggle terminal')
 keymap('n', '<leader>tr', toggle_inspect_tree, 'Toggle inspect tree')
 keymap('n', '<leader>e', vim.cmd.Ex, 'Open explorer')
 
+-- Repeat last command
+keymap('n', '+', ':@:<CR>', 'Repeat last command')
+
 --- Navigation ---
 
 -- Centered half page scrolling

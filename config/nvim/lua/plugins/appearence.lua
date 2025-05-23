@@ -160,6 +160,14 @@ return {
         'folke/snacks.nvim',
         priority = 1000,
         lazy = false,
+        keys = {
+            {
+                '-',
+                ":lua Snacks.dashboard.pick('oldfiles')<CR>",
+                desc = 'Open recent files',
+                mode = 'n',
+            },
+        },
         opts = {
             bigfile = { enabled = true }, -- Disable lsp etc. in large files
             dashboard = {
