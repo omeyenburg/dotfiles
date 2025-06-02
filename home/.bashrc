@@ -41,29 +41,6 @@ elif [ "$SHELL" = "/bin/zsh" ]; then
     setopt HIST_IGNORE_ALL_DUPS
 fi
 
-# initialize direnv
-if command -v direnv &>/dev/null; then
-    eval "$(direnv hook bash)"
-    export DIRENV_LOG_FORMAT=""
-fi
-
-# initialize zoxide
-if command -v zoxide &>/dev/null; then
-    eval "$(zoxide init bash --cmd cd)"
-    alias z=__zoxide_z
-    alias zi=__zoxide_zi
-    alias b="cd -"
-fi
-
-alias git="LANG=en_GB git"
-alias la="ls -A"
-alias ll="ls -alF"
-alias books="xdg-open file:///home/oskar/books && exit"
-
-# Tmux sessions
-alias t=~/.config/tmux/t.sh
-complete -W "exit kill $(t list)" t
-
 # Obsidian vaults
 obsidianopen() {
     obsidian "obsidian://open?vault=$1" &
@@ -191,5 +168,45 @@ parse_root() {
     fi
 }
 
-export PROMPT_DIRTRIM=3
-export PS1="${bold_cyan}\w\$(parse_git_branch)\$(parse_nix_shell)\$(parse_root)\n${bold_green}❯${default_color} "
+create_prompt() {
+    PROMPT_DIRTRIM=3
+    PS1="${bold_cyan}\w\$(parse_git_branch)\$(parse_nix_shell)\$(parse_root)\n${bold_green}❯${default_color} "
+}
+
+PROMPT_COMMAND='create_prompt'
+
+# Program settings & aliases
+if command -v direnv &>/dev/null; then
+    eval "$(direnv hook bash)"
+    export DIRENV_LOG_FORMAT=""
+fi
+
+if command -v zoxide &>/dev/null; then
+    eval "$(zoxide init bash --cmd cd)"
+    alias z=__zoxide_z
+    alias zi=__zoxide_zi
+    alias b="cd -"
+fi
+
+if command -v bat &>/dev/null; then
+    export BAT_THEME="Catppuccin Mocha"
+    alias cat="bat"
+fi
+
+if command -v eza &>/dev/null; then
+    alias ls="eza"
+fi
+
+if command -v git &>/dev/null; then
+    gitdiff() {
+        git diff --color $@ | less
+    }
+    alias git="LANG=en_GB git"
+fi
+
+if command -v tmux &>/dev/null; then
+    alias t=~/.config/tmux/t.sh
+    complete -W "exit kill $(t list)" t
+fi
+
+alias la="ls -A"
