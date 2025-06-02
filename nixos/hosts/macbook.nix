@@ -54,9 +54,17 @@
       vaapiVdpau
       libvdpau-va-gl
       intel-media-driver
-      intel-vaapi-driver
+      # intel-vaapi-driver
+
+      # OpenCL or something
       intel-compute-runtime
-      intel-ocl
+      # intel-ocl
+
+      # Quick Sync Video
+      # https://nixos.wiki/wiki/Intel_Graphics
+      # vpl-gpu-rt # for newer GPUs on NixOS >24.05 or unstable
+      # onevpl-intel-gpu  # for newer GPUs on NixOS <= 24.05
+      intel-media-sdk   # for older GPUs
     ];
 
     # Improve bluetooth stability
@@ -108,7 +116,8 @@
   # Video acceleration
   environment.sessionVariables = {
     # iHD for newer and i965 for older Intel GPUs
-    # LIBVA_DRIVER_NAME = "i965";
-    # VDPAU_DRIVER = "va_gl";
+    LIBVA_DRIVER_NAME = "iHD";
+    VDPAU_DRIVER = "va_gl";
+    ANV_VIDEO_DECODE = 1;
   };
 }

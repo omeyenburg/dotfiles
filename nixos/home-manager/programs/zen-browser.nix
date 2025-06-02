@@ -15,6 +15,7 @@
       DisableFirefoxStudies = true;
       DisablePasswordReveal = true;
       DisablePocket = true;
+      DisableCrashReporter = true;
       DisableSetDesktopBackground = true;
       DisableTelemetry = true;
       DontCheckDefaultBrowser = true;
@@ -29,6 +30,12 @@
       SkipTermsOfUse = true;
       StartDownloadsInTempDirectory = false;
       TranslateEnabled = false;
+
+      # To disable background probing
+      # Might interfere with automatic network login
+      # CaptivePortal = false;
+      # Proxy = { Mode = "none"; };
+
       # find more options here: https://mozilla.github.io/policy-templates/
     };
   };
