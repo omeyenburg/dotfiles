@@ -41,14 +41,14 @@ button {
     font-size: 12px;
     font-style: normal;
     font-weight: bold;
-    margin: 2px 0px 0px 0px;
+    margin: 0px 0px 2px 0px;
     background-color: transparent;
 }
 
 .module, .custom {
     border-radius: 12px;
     padding: 0px 10px;
-    margin: 0px 5px;
+    margin: 0px 2px;
     background-color: @transparentbackground;
     color: @textnormal;
     opacity: 0.8;
@@ -120,8 +120,13 @@ tooltip label {
  * Modules
  * ----------------------------------------------------- */
 
+#clock {
+    margin-left: 0px;
+}
+
 #custom-power {
     padding-right: 8px;
+    margin-right: 0px;
 }
 
 #bluetooth, #backlight {
