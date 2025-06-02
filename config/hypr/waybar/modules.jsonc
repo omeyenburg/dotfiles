@@ -1,9 +1,26 @@
 {
     // Left side
     "clock": {
-        "format": "<b>{:%H:%M}</b>",
-        "tooltip-format": "{:%A,%n%d. %b %Y%n%Z %z}",
-        "tooltip": true
+        "format": "<b>{:%H:%M, %d.%m}</b>",
+        "tooltip-format": "{calendar}",
+        "calendar": {
+            "mode"          : "month",
+            "weeks-pos"     : "right",
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "",
+            "on-scroll-up": "",
+            "on-scroll-down": "",
+            "on-scroll-up": "",
+            "on-scroll-down": ""
+        }
     },
     "custom/battery": {
         "exec": "~/.config/hypr/waybar/scripts/battery_module.sh",
@@ -80,16 +97,11 @@
         },
         "on-click": "pkill pavucontrol || pavucontrol"
     },
-    "custom/pipewire": {
-        "format": "{icon}",
-        "return-type": "json",
-        "signal": 8,
-        "interval": "once",
-        "format-icons": {
-            "mute": "",
-            "default": ["", "", ""]
-        },
-        "exec": "pw-volume status"
+    "wireplumber": {
+        "format": "{volume}%",
+        "format-muted": " ",
+        "max-volume": 150,
+        "scroll-step": 1
     },
 
     // Center

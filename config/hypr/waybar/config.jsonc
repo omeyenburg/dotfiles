@@ -8,12 +8,13 @@
     "modules-left": [
         "clock",
         "custom/battery",
+        "custom/pipewire",
+        "wireplumber",
         "hyprland/workspaces"
         // "battery",
         // "power-profiles-daemon",
         // "backlight",
         // "custom/brightness",
-        // "custom/pipewire",
         // "pulseaudio"
     ],
     "modules-center": [
