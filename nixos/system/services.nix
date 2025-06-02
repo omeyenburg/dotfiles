@@ -145,4 +145,23 @@
       };
     };
   };
+
+  environment.etc."NetworkManager/dispatcher.d/60-mute-on-eduroam".source = pkgs.writeScript "mute-on-eduroam" ''
+    #!/bin/sh
+
+    # Check if the event is "up"
+    if [ "$2" = "up" ]; then
+      # Get SSID
+      SSID=$(/run/current-system/sw/bin/nmcli -t -f NAME con show --active | head -1)
+
+      # Set user runtime dir for dbus connection
+      export XDG_RUNTIME_DIR=$(ls -d /run/user/[0-9]* 2>/dev/null | head -1)
+
+      # Match specific SSID
+      if [ "$SSID" = "eduroam" ]; then
+        # Run wpctl command (mute audio)
+        /run/current-system/sw/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
+      fi
+    fi
+  '';
 }
