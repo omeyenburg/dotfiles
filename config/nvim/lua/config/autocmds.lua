@@ -16,15 +16,15 @@ create_autocmd {
         vim.opt_local.breakindent = true -- Indent wrapped lines like parent line
         vim.opt_local.linebreak = true -- Don't split words
 
-        -- Go to next heading
-        vim.keymap.set('n', '<C-n>', function()
-            vim.fn.search('^#', '')
-        end, { buffer = 0, desc = 'Go to next heading' })
+        -- -- Go to next heading
+        -- vim.keymap.set('n', '<C-n>', function()
+        --     vim.fn.search('^#', '')
+        -- end, { buffer = 0, desc = 'Go to next heading' })
 
-        -- Go to last heading
-        vim.keymap.set('n', '<C-S-n>', function()
-            vim.fn.search('^#', 'b')
-        end, { buffer = 0, desc = 'Go to last heading' })
+        -- -- Go to last heading
+        -- vim.keymap.set('n', '<C-p>', function()
+        --     vim.fn.search('^#', 'b')
+        -- end, { buffer = 0, desc = 'Go to last heading' })
 
         -- Latex and custom mappings
         local mappings = require 'config.latex_symbols'
@@ -54,15 +54,6 @@ create_autocmd {
 
         vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
     end,
-}
-
--- Move to next headline in .md files
-create_autocmd {
-    event = { 'BufReadPre', 'BufNewFile' },
-    group = 'nvim-markdown-jump',
-    pattern = '*.md',
-    desc = 'Move to next headline in .md files',
-    callback = function() end,
 }
 
 -- Highlight when yanking text
