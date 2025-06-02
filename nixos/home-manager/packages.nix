@@ -21,8 +21,12 @@
 
     # Tools
     bash-completion
+    bat
     btop
     cmake
+    du-dust
+    dua
+    eza
     figlet
     fzf
     gitmux
@@ -48,6 +52,7 @@
     gdb
     graalvm-ce
     python312Full
+    python312Packages.numpy
 
     # Desktop tools
     mako
