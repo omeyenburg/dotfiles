@@ -43,11 +43,20 @@
   # Enable zram. Try to disable for now, maybe this causes problems?
   # zramSwap.enable = true;
 
-  # Whether to enable the RealtimeKit system service, which hands
-  # out realtime scheduling priority to user processes on demand.
-  # Used by PulseAudio and PipeWire to acquire realtime priority.
-  # Might reduce audio latency.
-  security.rtkit.enable = true;
+  security = {
+    # Whether to enable the RealtimeKit system service, which hands
+    # out realtime scheduling priority to user processes on demand.
+    # Used by PulseAudio and PipeWire to acquire realtime priority.
+    # Might reduce audio latency.
+    rtkit.enable = true;
+
+    wrappers.btop = {
+      source = "${pkgs.btop}/bin/btop";
+      capabilities = "cap_sys_admin+ep";
+      owner = "root";
+      group = "root";
+    };
+  };
 
   boot = {
     # Clean temporary files in /tmp on every boot.
@@ -147,6 +156,9 @@
 
     # Enable printer airscanning.
     sane.extraBackends = [pkgs.sane-airscan];
+
+    # Enable intel gpu tools
+    intel-gpu-tools.enable = true;
   };
 
   # Define a user account.
@@ -162,6 +174,7 @@
       "plugdev"
       "storage" # Allow writing to external devices like usb drives.
       "wheel" # Enable ‘sudo’ for the user.
+      "video" # # Enable intel-gpu-tools without root
     ];
   };
 
