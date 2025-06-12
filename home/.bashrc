@@ -3,9 +3,6 @@
 # If not running interactively, don't do anything
 [[ $- == *i* ]] || return
 
-export EDITOR=nvim
-export MANPAGER="nvim +Man!"
-
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PATH="$PATH:$HOME/.local/bin"
@@ -19,7 +16,7 @@ if [ "$(uname)" = "Darwin" ]; then
     [[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
 fi
 
-# shell specific settings
+# Shell specific settings
 if [[ "$SHELL" = */bin/bash ]]; then
     # Ignore duplicate commands in command history
     export HISTCONTROL=ignoredups:erasedups
@@ -40,22 +37,6 @@ elif [ "$SHELL" = "/bin/zsh" ]; then
     # Ignore duplicate commands in command history
     setopt HIST_IGNORE_ALL_DUPS
 fi
-
-# Obsidian vaults
-obsidianopen() {
-    obsidian "obsidian://open?vault=$1" &
-    disown
-}
-
-# Yazi
-y() {
-    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-    yazi "$@" --cwd-file="$tmp"
-    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        builtin cd -- "$cwd"
-    fi
-    rm -f -- "$tmp"
-}
 
 # Short git log output
 gitlog() {
@@ -206,7 +187,25 @@ fi
 
 if command -v tmux &>/dev/null; then
     alias t=~/.config/tmux/t.sh
-    complete -W "exit kill $(t list)" t
+    complete -W "exit kill $(~/.config/tmux/t.sh list)" t
+fi
+
+if command -v nvim &>/dev/null; then
+    export EDITOR=nvim
+    export MANPAGER="nvim +Man!"
+elif command -v vim &>/dev/null; then
+    export EDITOR=vim
+fi
+
+if command -v yazi &>/dev/null; then
+    y() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+        yazi "$@" --cwd-file="$tmp"
+        if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+            builtin cd -- "$cwd"
+        fi
+        rm -f -- "$tmp"
+    }
 fi
 
 alias la="ls -A"
