@@ -1,9 +1,6 @@
 #!/bin/sh
 # shellcheck shell=bash
 
-# Credit:
-# https://github.com/hyprwm/Hyprland/issues/3835
-
 handle() {
     case $1 in
       windowtitle*)
@@ -23,20 +20,22 @@ handle() {
 
             # Check if window is from Bitwarden
             if [[ "$window_title" == *"(Bitwarden Password Manager)"* ]]; then
+
                 # Calculate monitor center
                 monitors=$(hyprctl monitors -j)
-                x=$(echo "$monitors" | jq -r '.[].x')
-                y=$(echo "$monitors" | jq -r '.[].y')
-                w=$(echo "$monitors" | jq -r '.[].width')
-                h=$(echo "$monitors" | jq -r '.[].height')
-                s=$(echo "$monitors" | jq -r '.[].scale')
+                monitor_id=$(hyprctl activeworkspace -j | jq '.monitorID')
+                x=$(echo "$monitors" | jq -r ".[$monitor_id].x")
+                y=$(echo "$monitors" | jq -r ".[$monitor_id].y")
+                w=$(echo "$monitors" | jq -r ".[$monitor_id].width")
+                h=$(echo "$monitors" | jq -r ".[$monitor_id].height")
+                s=$(echo "$monitors" | jq -r ".[$monitor_id].scale")
 
-                cx=$(echo "$x / $s + $w / 2" | bc)
-                cy=$(echo "$y / $s + $h / 2" | bc)
+                cx=$(echo "$x / $s + $w / $s / 2" | bc)
+                cy=$(echo "$y / $s + $h / $s / 2" | bc)
 
                 hyprctl dispatch movecursor "$cx" "$cy"
                 hyprctl dispatch setfloating address:0x"$window_id"
-                hyprctl dispatch resizewindowpixel exact 20% 50%,address:0x"$window_id"
+                hyprctl dispatch resizewindowpixel exact 25% 60%,address:0x"$window_id"
                 hyprctl dispatch centerwindow address:0x"$window_id"
             fi
         fi
@@ -49,21 +48,22 @@ handle() {
         floating=$(echo "${1#*>>}" | sed 's/^.*\(.\)/\1/;s/0/false/;s/1/true/')
 
         if [ "$floating" = "true" ]; then
+            monitor_id=$(hyprctl activeworkspace -j | jq '.monitorID')
 
             # Fetch the list of windows and parse it using jq to find the window by its decimal ID
-            window_info=$(hyprctl clients -j | jq --arg id "0x$window_id" '.[] | select(.address == ($id))')
+            window_info=$(hyprctl clients -j | jq --arg id "0x$window_id" ".[] | select(.address == (\$id))")
 
             # Get size
-            monitor_scale=$(hyprctl monitors -j | jq -r '.[].scale')
+            monitor_scale=$(hyprctl monitors -j | jq -r ".[$monitor_id].scale")
 
             # Get current window and monitor size
             window_width=$(echo "$window_info" | jq -r '.size.[0]')
-            monitor_width=$(hyprctl monitors -j | jq -r '.[].width')
-            max_width=$(echo "$monitor_width/$monitor_scale - 20" | bc)
+            monitor_width=$(hyprctl monitors -j | jq -r ".[$monitor_id].width")
+            max_width=$(echo "scale=0;$monitor_width/$monitor_scale - 20" | bc)
 
-            window_height=$(echo "$window_info" | jq -r '.size.[1]')
-            monitor_height=$(hyprctl monitors -j | jq -r '.[].height')
-            max_height=$(echo "$monitor_height/$monitor_scale - 20" | bc)
+            window_height=$(echo "$window_info" | jq -r ".size.[1]")
+            monitor_height=$(hyprctl monitors -j | jq -r ".[$monitor_id].height")
+            max_height=$(echo "scale=0;$monitor_height/$monitor_scale - 20" | bc)
 
             # Decrease window size above threshold
             if [ "$window_width" -ge "$max_width" ] || [ "$window_height" -ge "$max_height" ]; then
