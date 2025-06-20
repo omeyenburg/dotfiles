@@ -130,9 +130,8 @@ keymap('n', 'N', 'Nzzzv', 'Search previous occurence')
 keymap('n', 'n', 'nzzzv', 'Search next occurence')
 
 -- Cycle through buffers
--- Cycle through harpoon files with <C-n> / <C-p>
-keymap('n', '<C-S-n>', ':bnext<CR>', 'Paste and keep register')
-keymap('n', '<C-S-p>', ':bprev<CR>', 'Paste and keep register')
+keymap('n', '<C-S-n>', ':bn<CR>', 'Next buffer')
+keymap('n', '<C-S-p>', ':bp<CR>', 'Previous buffer')
 
 --- Editing ---
 

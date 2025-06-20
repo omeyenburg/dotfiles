@@ -132,8 +132,13 @@ return {
             vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
             vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
             vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-            vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-            vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+            vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files' })
+            vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'Find existing buffers' })
+
+            vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = '[G]it [F]iles' })
+            vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = '[G]it [C]ommits' })
+            vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = '[G]it [S]tatus' })
+            vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = '[G]it [B]tatus' })
 
             -- Search in current buffer
             vim.keymap.set('n', '<leader>/', function()
@@ -141,7 +146,7 @@ return {
                     winblend = 10,
                     previewer = false,
                 })
-            end, { desc = '[/] Fuzzily search in current buffer' })
+            end, { desc = 'Fuzzily search in current buffer' })
 
             -- Search in opened files
             vim.keymap.set('n', '<leader>s/', function()
@@ -149,7 +154,7 @@ return {
                     grep_open_files = true,
                     prompt_title = 'Live Grep in Open Files',
                 }
-            end, { desc = '[S]earch [/] in Open Files' })
+            end, { desc = '[S]earch in Open Files' })
 
             -- Search in Neovim configuration files
             vim.keymap.set('n', '<leader>sn', function()
