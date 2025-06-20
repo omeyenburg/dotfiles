@@ -43,7 +43,8 @@
             "class<spotify>": "",
             "class<discord>": "",
             "class<.*zathura": "",
-            "class<Brave-browser>": "",
+            "class<brave-browser>": "",
+            "class<zen-beta>": "",
             "class<.*libreoffice.*>": "󰏆",
             "class<org.gnome.Nautilus>": "",
             "class<kitty>": "",
@@ -109,10 +110,11 @@
         "format": "{}",
         "rewrite": {
             ".*Bitwarden Password Manager.*": "Bitwarden",
+            "^(?!.*Bitwarden Password Manager).* Zen": "Zen",
             "^(?!.*Bitwarden Password Manager).* Brave": "Brave",
             "^(?!.*Bitwarden Password Manager).* Mozilla Firefox": "Firefox",
             "^(?!.*Bitwarden Password Manager).* Librewolf": "Librewolf",
-            "vim (.*)": "NeoVim: $1",
+            "vim (.*)": "$1",
             "Spotify.*": "Spotify",
             "kitty.*": "",
             "bash.*": "",
@@ -151,18 +153,16 @@
         "format-linked": "{ifname} (No IP) 󰌹 ",
         "format-disconnected": "N/A 󱚵 ",
         "tooltip-format": "{ifname} via {gwaddr} ({essid})",
-        //"on-click": "pkill nmtui || ghostty -e nmtui"
         "on-click": "pkill nmtui || kitty -o confirm_os_window_close=0 nmtui"
     },
     "cpu": {
         "format": "{usage}% ",
-        //"on-click": "pkill btop || ghostty -e btop",
         "on-click": "pkill btop || kitty -o confirm_os_window_close=0 -o font_size=10 btop",
+        "interval": 3,
         "tooltip": true
     },
     "memory": {
         "format": "{}% ",
-        //"on-click": "pkill btop || ghostty -e btop",
         "on-click": "pkill btop || kitty -o confirm_os_window_close=0 -o font_size=10 btop",
         "tooltip": true
     },
@@ -170,7 +170,6 @@
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", "", "", ""],
-        //"on-click": "pkill btop || ghostty -e btop",
         "on-click": "pkill btop || kitty -o confirm_os_window_close=0 -o font_size=10 btop",
         "tooltip": false
     },
