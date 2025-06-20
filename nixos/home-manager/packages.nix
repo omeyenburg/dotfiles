@@ -3,12 +3,13 @@
     # Apps
     anki
     discord
+    gimp3
     inkscape
     kitty
     libreoffice-qt
     obsidian
+    prismlauncher
     spotify
-    gimp3
     # logisim
     # logisim-evolution
     # mars-mips
@@ -23,7 +24,6 @@
     bash-completion
     bat
     btop
-    cmake
     du-dust
     dua
     eza

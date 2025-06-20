@@ -1,9 +1,6 @@
 {pkgs, ...}: {
   programs = {
-    # Enable kdeconnect.
     kdeconnect.enable = true;
-
-    # Enable firefox.
     firefox.enable = true;
 
     # Install gamemode wrapper for games.
@@ -19,13 +16,9 @@
       };
     };
 
-    # Install hyprland.
     # xdg-desktop-portal-hyprland is automatically started with hyprland.
-    hyprland = {
-      enable = true;
-    };
+    hyprland.enable = true;
 
-    # Install steam.
     steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -45,7 +38,6 @@
       };
     };
 
-    # Install thunderbird.
     thunderbird = {
       enable = true;
       preferences = {};

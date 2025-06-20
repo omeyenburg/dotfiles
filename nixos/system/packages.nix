@@ -33,8 +33,12 @@
 
   environment.systemPackages = with pkgs; [
     # Tools
+    bc
     git
+    git-crypt
+    git-remote-gcrypt
     intel-gpu-tools
+    jq
     libva-utils
     subversion
     tree
@@ -54,6 +58,7 @@
     acpi
     brightnessctl
     glfw
+    socat
 
     # Conflicts with tlp
     # powerprofilesctl
