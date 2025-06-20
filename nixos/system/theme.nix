@@ -1,4 +1,8 @@
-{pkgs, inputs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     inputs.catppuccin.nixosModules.catppuccin
   ];
@@ -6,17 +10,12 @@
   # Enable catppuccin globally.
   catppuccin.enable = true;
 
-  # Configure qt theme.
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
-  };
-
   environment.sessionVariables = {
-    # GTK_THEME = "Adwaita-dark";
+    # QT
+    QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+    QT_QPA_PLATFORMTHEME = "qt5ct";
 
-    # Configure nmtui colors.
+    # nmtui colors
     # Elements: root, border, window, shadow, title, button, actbutton, checkbox, actcheckbox, entry, label, listbox, actlistbox, textbox, acttextbox, helpline, roottext, emptyscale, fullscale, disentry, compactbutton, actsellistbox, sellistbox
     # Syntax: <element>=<fg>,<bg>
     NEWT_COLORS = ''

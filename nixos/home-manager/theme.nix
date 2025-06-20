@@ -15,24 +15,36 @@
   #   spotify-player.enable = true;
   # };
 
+  home.packages = with pkgs; [
+    adwaita-qt
+    adwaita-qt6
+    gnome-themes-extra
+    libsForQt5.qt5ct
+  ];
+
   gtk = {
     enable = true;
     theme = {
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
-      # adwaita-qt adwaita-qt6
     };
-    #cursorTheme = ...
-    #iconTheme = ...
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.gnome-themes-extra;
+    };
+    cursorTheme = {
+      name = "Adwaita";
+      size = 24;
+      package = pkgs.gnome-themes-extra;
+    };
   };
 
   qt = {
     enable = true;
-    # platformTheme.name = "kvantum";
-    # style.name = "kvantum";
-    platformTheme.name = "gtk";
-    style.name = "adwaita-dark";
-    # style.package = pkgs.adwaita-qt;
+    style = {
+      name = "adwaita-dark";
+      package = pkgs.adwaita-qt;
+    };
   };
 
   dconf.settings = {

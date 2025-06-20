@@ -187,20 +187,29 @@
 
     EDITOR = "nvim";
 
+    # Wayland
+    MOZ_ENABLE_WAYLAND = "1";
+    NIXOS_OZONE_WL = "1";
+    SDL_VIDEODRIVER = "wayland";
+    CLUTTER_BACKEND = "wayland";
+    GDK_BACKEND = "wayland,x11,*";
+    QT_QPA_PLATFORM = "wayland;xcb";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+
+    # Mozilla
     MOZ_WEBRENDER = "1";
     MOZ_ACCELERATED = "1";
     MOZ_DISABLE_RDD_SANDBOX = 1;
     MOZ_LOG = "PlatformDecoderModule:5";
+  };
 
-    # Wayland
-    MOZ_ENABLE_WAYLAND = "1";
-    NIXOS_OZONE_WL = "1";
-    GDK_BACKEND = "wayland,x11,*";
-    QT_QPA_PLATFORM = "wayland;xcb";
-    SDL_VIDEODRIVER = "wayland";
-    CLUTTER_BACKEND = "wayland";
-    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+    ];
+    config.common.default = "*";
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
