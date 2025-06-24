@@ -13,8 +13,9 @@ https://github.com/nvim-treesitter/nvim-treesitter-context
 return {
     { -- Syntax parser
         'nvim-treesitter/nvim-treesitter',
-        lazy = true,
-        event = { 'BufReadPost', 'BufNewFile' },
+        lazy = false,
+        branch = 'main',
+        -- event = { 'BufReadPost', 'BufNewFile' },
         build = ':TSUpdate',
         opts = {
             ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'rust', 'python' },
@@ -37,25 +38,32 @@ return {
         config = function(_, opts)
             require('nvim-treesitter.install').prefer_git = true
 
-            local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-            parser_config.mips = {
-                install_info = {
-                    -- url = 'https://github.com/omeyenburg/tree-sitter-mips', -- You can use a local path for url if you prefer
-                    url = vim.fn.expand '$HOME/git/tree-sitter-mips',
-                    branch = 'main',
-                    files = { 'src/parser.c' },
-                    generate_requires_npm = false,
-                    requires_generate_from_grammar = false,
-                },
-                filetype = 'asm',
-            }
-
-            -- Fix treesitter not attaching, when opening files via Snacks
-            vim.api.nvim_create_autocmd('BufWinEnter', {
+            vim.api.nvim_create_autocmd('FileType', {
+                pattern = { '<filetype>' },
                 callback = function()
-                    vim.cmd 'TSBufEnable highlight'
+                    vim.treesitter.start()
                 end,
             })
+
+            -- local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+            -- parser_config.mips = {
+            --     install_info = {
+            --         url = 'https://github.com/omeyenburg/tree-sitter-mips', -- You can use a local path for url if you prefer
+            --         -- url = vim.fn.expand '$HOME/git/tree-sitter-mips',
+            --         branch = 'main',
+            --         files = { 'src/parser.c' },
+            --         generate_requires_npm = false,
+            --         requires_generate_from_grammar = false,
+            --     },
+            --     filetype = 'asm',
+            -- }
+
+            -- Fix treesitter not attaching, when opening files via Snacks
+            -- vim.api.nvim_create_autocmd('BufWinEnter', {
+            --     callback = function()
+            --         vim.cmd 'TSBufEnable highlight'
+            --     end,
+            -- })
         end,
     },
 
