@@ -67,14 +67,23 @@ return {
         end,
     },
 
-    -- {
-    --     'nvim-treesitter/nvim-treesitter-context',
-    --     lazy = false,
-    --     opts = {
-    --         enable = true,
-    --         max_lines = 3,
-    --         min_window_height = 40,
-    --         separator = nil,
-    --     },
-    -- },
+    {
+        'nvim-treesitter/nvim-treesitter-context',
+        lazy = false,
+        opts = {
+            enable = true,
+            separator = nil,
+            line_numbers = true,
+            mode = "cursor",
+            max_lines = 1,
+            min_window_height = 40,
+            multiline_threshold = 1,
+        },
+        config = function(_, opts)
+            require("treesitter-context").setup(opts)
+
+            vim.api.nvim_set_hl(0, "TreesitterContextBottom", { link = "Visual" })
+            vim.api.nvim_set_hl(0, "TreesitterContextLineNumberBottom", { link = "Normal" })
+        end
+    },
 }
