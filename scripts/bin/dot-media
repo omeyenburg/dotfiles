@@ -78,7 +78,13 @@ if [ ! -p "$pipe" ]; then
 fi
 
 # Reset the timeout
-pkill -f .config/hypr/scripts/timeout.sh
+if [ -f /tmp/yad_timeout.pid ]; then
+    old_pid=$(cat /tmp/yad_timeout.pid)
+    if kill -0 "$old_pid" 2>/dev/null; then
+        kill "$old_pid"
+    fi
+    rm /tmp/yad_timeout.pid
+fi
 
 # Write to pipe
 echo "$percent" > $pipe & # Write in background waiting for read
@@ -99,4 +105,8 @@ if [ -z "$yad_pid" ]; then
 fi
 
 # Create new timeout
-"$HOME/.config/hypr/scripts/timeout.sh" "$timeout" "yad.*--title $title" &
+(
+    sleep "$timeout"
+    pkill -f "yad.*--title $title"
+) &
+echo $! > /tmp/yad_timeout.pid

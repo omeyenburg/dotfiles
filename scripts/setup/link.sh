@@ -2,48 +2,73 @@
 
 CONFDIR="${DOTFILES}config"
 HOMEDIR="${DOTFILES}home"
+BINDIR="${DOTFILES}scripts/bin"
 NIXOS=$([ -d /nix ] && echo true || echo false)
 
-for file in $(ls -a "$CONFDIR"); do
-    if [ "$file" = "." ] || [ "$file" = ".." ]; then
-        continue
-    fi
+mkdir -p "$HOME/.config"
+for file in "$CONFDIR"/*; do
+    [ -e "$file" ] || continue
+    name=$(basename "$file")
 
     if [ "$NIXOS" = true ]; then
-        case "$file" in
+        case "$name" in
         *gtk*)
-            echo "Skipping $file (written by home manager)"
+            echo "Skipping $name (written by home manager)"
             continue
             ;;
         esac
     fi
 
-    echo "Linking $file"
-    source="$CONFDIR/$file"
-    dest="$HOME/.config/$file"
+    echo "Linking $name"
+    dest="$HOME/.config/$name"
+
+    if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+        backup="${dest}.backup"
+        echo "Backing up existing $name to $name.backup"
+        mv "$dest" "$backup"
+    else
+        rm -rf "$dest"
+    fi
 
     rm -rf "$dest"
-    ln -sfn "$source" "$dest"
+    ln -sfn "$file" "$dest"
 done
 
-for file in $(ls -a "$HOMEDIR"); do
-    if [ "$file" = "." ] || [ "$file" = ".." ]; then
-        continue
-    fi
+for file in "$HOMEDIR"/.*; do
+    [ -e "$file" ] || continue
+    name=$(basename "$file")
 
     if [ "$NIXOS" = true ]; then
-        case "$file" in
+        case "$name" in
         *gtk*)
-            echo "Skipping $file (written by home manager)"
+            echo "Skipping $name (written by home manager)"
             continue
             ;;
         esac
     fi
 
-    echo "Linking $file"
-    source="$HOMEDIR/$file"
-    dest="$HOME/$file"
+    echo "Linking $name"
+    dest="$HOME/$name"
+
+    if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+        backup="${dest}.backup"
+        echo "Backing up existing $name to $name.backup"
+        mv "$dest" "$backup"
+    else
+        rm -rf "$dest"
+    fi
 
     rm -rf "$dest"
-    ln -sfn "$source" "$dest"
+    ln -sfn "$file" "$dest"
+done
+
+mkdir -p "$HOME/.local/bin"
+for file in "$BINDIR"/*; do
+    [ -e "$file" ] || continue
+    name=$(basename "$file")
+
+    echo "Linking $name"
+    dest="$HOME/.local/bin/$name"
+
+    ln -sfn "$file" "$dest"
 done

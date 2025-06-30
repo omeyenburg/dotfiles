@@ -30,9 +30,12 @@ qmk:
 
 # Link css theme files for hyprland
 hypr:
-	@ln -s ~/.config/hypr/themes/catppuccin.css ~/.config/hypr/themes/current.css
-	@ln -s ~/.cache/wal/colors-waybar.css ~/.config/hypr/themes/pywal.css
+	@sh "$(DOTFILES)scripts/setup/hypr.sh"
 
 # Copy nixos configuration to ./nixos
 nixos-backup:
 	@cp -r /etc/nixos/* "$(DOTFILES)/nixos"
+
+# Generate user.js for firefox
+firefox-config:
+	@sh "$(DOTFILES)scripts/build/firefox.sh"
