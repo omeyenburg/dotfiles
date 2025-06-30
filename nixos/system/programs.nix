@@ -1,7 +1,45 @@
 {pkgs, ...}: {
   programs = {
     kdeconnect.enable = true;
-    firefox.enable = true;
+
+    # Firefox
+    firefox = {
+      enable = true;
+      package = pkgs.firefox-wayland;
+      policies = {
+        AppAutoUpdate = false;
+        AutofillAddressEnabled = false;
+        AutofillCreditCardEnabled = false;
+        DisableAppUpdate = true;
+        DisableCrashReporter = true;
+        DisableFeedbackCommands = true;
+        DisableFirefoxAccounts = true;
+        DisableFirefoxStudies = true;
+        DisablePasswordReveal = true;
+        DisablePocket = true;
+        DisableSetDesktopBackground = true;
+        DisableTelemetry = true;
+        DontCheckDefaultBrowser = true;
+        EnableTrackingProtection = true;
+        ExtensionUpdate = true;
+        HardwareAcceleration = true;
+        ManualAppUpdateOnly = true;
+        NetworkPrediction = false;
+        NoDefaultBookmarks = true;
+        OfferToSaveLogins = false;
+        PasswordManagerEnabled = false;
+        SearchSuggestEnabled = false;
+        SkipTermsOfUse = true;
+        TranslateEnabled = false;
+        DefaultSearchProvider = {
+          Name = "DuckDuckGo";
+          SearchURL = "https://www.duckduckgo.com/?q={searchTerms}";
+        };
+        SearchEngines = {
+          Default = "DuckDuckGo";
+        };
+      };
+    };
 
     # Install gamemode wrapper for games.
     gamemode = {
