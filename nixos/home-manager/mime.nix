@@ -16,14 +16,18 @@
 
       "x-scheme-handler/ssh" = "com.mitchellh.ghostty.desktop";
 
-      "x-scheme-handler/http" = "userapp-Zen-XQU762.desktop";
-      "x-scheme-handler/https" = "userapp-Zen-XQU762.desktop";
-      "x-scheme-handler/chrome" = "userapp-Zen-XQU762.desktop";
-      "application/x-extension-htm" = "userapp-Zen-XQU762.desktop";
-      "application/x-extension-html" = "userapp-Zen-XQU762.desktop";
-      "application/x-extension-shtml" = "userapp-Zen-XQU762.desktop";
-      "application/x-extension-xhtml" = "userapp-Zen-XQU762.desktop";
-      "application/x-extension-xht" = "userapp-Zen-XQU762.desktop";
+      "default-web-browser" = "zen-beta.desktop";
+      "text/html" = "zen-beta.desktop";
+      "text/htmlh" = "zen-beta.desktop";
+      "text/xml" = "zen-beta.desktop";
+      "x-scheme-handler/http" = "zen-beta.desktop";
+      "x-scheme-handler/https" = "zen-beta.desktop";
+      "x-scheme-handler/chrome" = "zen-beta.desktop";
+      "application/x-extension-htm" = "zen-beta.desktop";
+      "application/x-extension-html" = "zen-beta.desktop";
+      "application/x-extension-shtml" = "zen-beta.desktop";
+      "application/x-extension-xhtml" = "zen-beta.desktop";
+      "application/x-extension-xht" = "zen-beta.desktop";
 
       "application/pdf" = "org.pwmt.zathura.desktop";
 
@@ -55,8 +59,6 @@
       "text/csv-schema" = "nvim.desktop";
       "text/csv" = "nvim.desktop";
       "text/enriched" = "nvim.desktop";
-      "text/html" = "nvim.desktop";
-      "text/htmlh" = "nvim.desktop";
       "text/javascript" = "nvim.desktop";
       "text/jscript.encode" = "nvim.desktop";
       "text/julia" = "nvim.desktop";
