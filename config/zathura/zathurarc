@@ -2,3 +2,8 @@ set selection-notification  false
 set selection-clipboard     clipboard
 set highlight-fg            "#000000"
 set highlight-color         rgba(220,220,255,0.7)
+
+map j navigate next
+map k navigate previous
+map J scroll down
+map K scroll up
