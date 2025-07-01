@@ -1,19 +1,19 @@
 # dotfiles
 
-My personal dotfiles.<br>
-OS: NixOS<br>
-WM: Hyprland<br>
-Shell: Bash<br>
-Editor: NeoVim<br>
-Theme: Catppuccin
+My personal dotfiles.
 
-QMK has also some configuration for a custom keyboard.
+- OS: NixOS
+- WM: Hyprland
+- Shell: Bash
+- Editor: NeoVim
+- Theme: Catppuccin
+- Browser: Zen-Browser
+
+Additionally, there are QMK configuration files for the Cheapino keyboard.
 
 ## Installation
 
-- `make link`   - Link the config files.
-- `make shell`  - Add the shell config to .bashrc.
-- `make git`    - Set up git.
-- `make tmux`   - Install tpm. (Install plugins by pressing `<leader>+I` within tmux)
-- `make theme`  - Install the FiraCode font & Catppuccin theme for bat.
-- `make hypr`   - Link css theme files for hyprland
+Setup is managed via a Makefile. To view available commands and usage details, run:
+```sh
+make help
+```
