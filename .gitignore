@@ -4,6 +4,9 @@
 # Nvim lock file
 lazy-lock.json
 
+# Firefox generated config
+firefox/*-user.js
+
 # Emacs generated config
 config/emacs/auto-save-list/
 config/emacs/config.el
