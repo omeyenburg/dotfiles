@@ -176,7 +176,7 @@
     "custom/power": {
         "format": "⏻ ",
         "tooltip": false,
-        "on-click": "~/.config/hypr/scripts/logout.sh"
+        "on-click": "~/.local/bin/dot-logout"
     },
     // "battery": {
         // "states": {

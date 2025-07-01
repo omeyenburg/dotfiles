@@ -102,7 +102,7 @@ rgb_percent="RGB: $((r * 100 / 255))%, $((g * 100 / 255))%, $((b * 100 / 255))%"
 hsl_format="HSL: $(printf "%.0f%%" $l_percent) lightness"
 
 # Send notification
-~/.config/hypr/scripts/notify.sh "notitle" "" \
+~/.local/bin/dot-notify "notitle" "" \
     "<span background='$hex'>        </span> $hex_format
 <span background='$hex'>        </span> $rgb_format
 <span background='$hex'>        </span> $rgb_percent

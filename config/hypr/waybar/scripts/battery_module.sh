@@ -16,7 +16,7 @@ send_battery_warning() {
     fi
 
     # Send notification and save new id
-    id=$(~/.config/hypr/scripts/notify.sh "battery-status" "$1" "$message" 20000 "$2" "$id")
+    id=$(~/.local/bin/dot-notify "battery-status" "$1" "$message" 20000 "$2" "$id")
     echo "$id" > "$id_cache"
 
     # Set power profile to power-saver

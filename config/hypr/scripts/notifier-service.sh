@@ -5,9 +5,9 @@
 network=$(nmcli -t -f NAME con show --active | head -1)
 
 if [ "$network" = "eduroam" ] || [ "$network" = "WIFI@DB" ]; then
-    if ! .config/hypr/scripts/media.sh volume get | grep -q "MUTED"; then
-        ~/.config/hypr/scripts/media.sh volume toggle silent
-        ~/.config/hypr/scripts/notify.sh "mute-warning" "Connected to network $network" "Volume is now muted" 4000 0 >/dev/null
+    if ! ~/.local/bin/dot-media volume get | grep -q "MUTED"; then
+        ~/.local/bin/dot-media volume toggle silent
+        ~/.local/bin/dot-notify "mute-warning" "Connected to network $network" "Volume is now muted" 4000 0 >/dev/null
     fi
 fi
 
@@ -60,6 +60,6 @@ sed 's/ /\n/g' ~/.netrc | sed '/machine/{n;p}' -n | while read -r server; do
         decoded_subject=$(decode "$subject")
 
         notification=$(printf "By: %s\nTo: %s\n" "$decoded_from" "$decoded_to")
-        ~/.config/hypr/scripts/notify.sh "mail" "$decoded_subject" "$notification" 5000 0 >/dev/null
+        ~/.local/bin/dot-notify "mail" "$decoded_subject" "$notification" 5000 0 >/dev/null
     done
 done
