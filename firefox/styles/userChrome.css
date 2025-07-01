@@ -1,0 +1,12 @@
+/* Remove window close button */
+.titlebar-button.titlebar-close {
+  display: none !important;
+}
+
+/* Remove bookmark page button */
+/* using visibility:collapse or display:none messes up bookmark popup location */
+#star-button-box {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+}
