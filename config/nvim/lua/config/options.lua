@@ -72,7 +72,7 @@ vim.opt.writebackup = false
 
 ----- Folding Options -----
 -- Enable folding
-vim.opt.foldmethod = 'marker'
+-- vim.opt.foldmethod = 'marker'
 
 -- Remove Folded section highlighting
 vim.api.nvim_set_hl(0, 'Folded', { fg = 'NONE', bg = 'NONE', bold = true })

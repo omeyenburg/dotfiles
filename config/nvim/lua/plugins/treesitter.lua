@@ -37,6 +37,22 @@ return {
         config = function(_, opts)
             require('nvim-treesitter').setup(opts)
 
+            -- Enable folding
+            vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+            vim.wo.foldmethod = 'expr'
+            vim.wo.foldlevel = 100
+
+            vim.keymap.set("n", "z0", ":set foldlevel=100<cr>")
+            vim.keymap.set("n", "z1", ":set foldlevel=0<cr>")
+            vim.keymap.set("n", "z2", ":set foldlevel=1<cr>")
+            vim.keymap.set("n", "z3", ":set foldlevel=2<cr>")
+            vim.keymap.set("n", "z4", ":set foldlevel=3<cr>")
+            vim.keymap.set("n", "z5", ":set foldlevel=4<cr>")
+            vim.keymap.set("n", "z6", ":set foldlevel=5<cr>")
+            vim.keymap.set("n", "z7", ":set foldlevel=6<cr>")
+            vim.keymap.set("n", "z8", ":set foldlevel=7<cr>")
+            vim.keymap.set("n", "z9", ":set foldlevel=8<cr>")
+
             -- Enable highlighting
             vim.api.nvim_create_autocmd('BufReadPost', {
                 callback = function()
