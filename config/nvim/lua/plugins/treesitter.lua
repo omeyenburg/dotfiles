@@ -11,15 +11,14 @@ https://github.com/nvim-treesitter/nvim-treesitter-context
 --]]
 
 return {
-    { -- Syntax parser
+    {
         'nvim-treesitter/nvim-treesitter',
         lazy = false,
         branch = 'main',
-        -- event = { 'BufReadPost', 'BufNewFile' },
         build = ':TSUpdate',
         opts = {
             ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'rust', 'python' },
-            ignore_install = { 'latex', 'asm' }, -- Disable latex, because it requires nodejs
+            ignore_install = { 'latex', 'asm' },
             auto_install = true,
             highlight = {
                 enable = true,
@@ -36,12 +35,16 @@ return {
             },
         },
         config = function(_, opts)
-            require('nvim-treesitter.install').prefer_git = true
+            require('nvim-treesitter').setup(opts)
 
-            vim.api.nvim_create_autocmd('FileType', {
-                pattern = { '<filetype>' },
+            -- Enable highlighting
+            vim.api.nvim_create_autocmd('BufReadPost', {
                 callback = function()
-                    vim.treesitter.start()
+                    local buf = vim.api.nvim_get_current_buf()
+                    local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
+                    if lang and not vim.treesitter.highlighter.active[buf] then
+                        vim.treesitter.start(buf, lang)
+                    end
                 end,
             })
 
@@ -57,13 +60,6 @@ return {
             --     },
             --     filetype = 'asm',
             -- }
-
-            -- Fix treesitter not attaching, when opening files via Snacks
-            -- vim.api.nvim_create_autocmd('BufWinEnter', {
-            --     callback = function()
-            --         vim.cmd 'TSBufEnable highlight'
-            --     end,
-            -- })
         end,
     },
 
@@ -74,16 +70,16 @@ return {
             enable = true,
             separator = nil,
             line_numbers = true,
-            mode = "cursor",
+            mode = 'cursor',
             max_lines = 1,
             min_window_height = 40,
             multiline_threshold = 1,
         },
         config = function(_, opts)
-            require("treesitter-context").setup(opts)
+            require('treesitter-context').setup(opts)
 
-            vim.api.nvim_set_hl(0, "TreesitterContextBottom", { link = "Visual" })
-            vim.api.nvim_set_hl(0, "TreesitterContextLineNumberBottom", { link = "Normal" })
-        end
+            vim.api.nvim_set_hl(0, 'TreesitterContextBottom', { link = 'Visual' })
+            vim.api.nvim_set_hl(0, 'TreesitterContextLineNumberBottom', { link = 'Normal' })
+        end,
     },
 }
