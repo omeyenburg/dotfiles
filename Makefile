@@ -36,7 +36,7 @@ qmk:
 
 # Generate user.js for firefox
 firefox-config:
-	@sh "$(DOTFILES)scripts/build/firefox.sh"
+	@sh "$(DOTFILES)scripts/build/firefox-config.sh"
 
 # Copy nixos configuration to ./nixos
 nixos-backup:

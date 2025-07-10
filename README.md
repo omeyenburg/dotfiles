@@ -45,7 +45,7 @@ My personal dotfiles.
   </tr>
 </table>
 
-Additionally there are QMK configuration files for the Cheapino keyboard.
+![Preview](assets/preview.png)
 
 ## Installation
 
