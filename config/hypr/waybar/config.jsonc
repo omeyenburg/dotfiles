@@ -11,11 +11,6 @@
         "custom/pipewire",
         "wireplumber",
         "hyprland/workspaces"
-        // "battery",
-        // "power-profiles-daemon",
-        // "backlight",
-        // "custom/brightness",
-        // "pulseaudio"
     ],
     "modules-center": [
         "hyprland/window"

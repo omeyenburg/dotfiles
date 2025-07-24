@@ -1,17 +1,19 @@
+// -*- mode: jsonc -*-
 {
-    // Left side
+    // Left
     "clock": {
         "format": "<b>{:%H:%M, %d.%m}</b>",
         "tooltip-format": "{calendar}",
+        "locale": "en_DK.UTF-8", // English week names & Monday as first day of the week
         "calendar": {
-            "mode"          : "month",
-            "weeks-pos"     : "right",
+            "mode": "month",
+            "weeks-pos": "right",
             "format": {
-                "months":     "<span color='#ffead3'><b>{}</b></span>",
-                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
             }
         },
         "actions": {
@@ -28,49 +30,13 @@
         "return-type": "json",
         "interval": 10,
         "signal": 8,
-        "tooltip": true,
+        "tooltip": true
     },
     "hyprland/workspaces": {
         "on-click": "activate",
         "active-only": false,
         "all-outputs": true,
         "format": "{}",
-        //"format": "{id}:{windows} ",
-        "format-window-separator": " ",
-        "window-rewrite-default": "",
-        "window-rewrite": {
-            "class<gimp>": "",
-            "class<spotify>": "",
-            "class<discord>": "",
-            "class<.*zathura": "",
-            "class<brave-browser>": "",
-            "class<zen-beta>": "",
-            "class<.*libreoffice.*>": "󰏆",
-            "class<org.gnome.Nautilus>": "",
-            "class<kitty>": "",
-            "class<kitty> title<btop>": "",
-            "class<kitty> title<Yazi.*>": "",
-            "class<kitty> title<.*vim.*>": "",
-            "class<firefox>": "󰈹",
-            "class<firefox> title<.*Github.*>": "",
-            "class<firefox> title<.*youtube.*>": "",
-            "class<firefox> title<.*netflix.*>": "󰝆",
-            "class<firefox> title<.*whatsapp.*>": "",
-            "class<firefox> title<.*gmail.*>": "󰊫",
-            "class<firefox> title<Stack Overflow.*>": "",
-            "class<librewolf>": "󰈹",
-            "class<librewolf> title<.*Github.*>": "",
-            "class<librewolf> title<.*youtube.*>": "",
-            "class<librewolf> title<.*netflix.*>": "󰝆",
-            "class<librewolf> title<.*whatsapp.*>": "",
-            "class<librewolf> title<.*gmail.*>": "󰊫",
-            "class<librewolf> title<Stack Overflow.*>": "",
-	},
-        "format-icons": {
-            "urgent": "",
-            "active": "",
-            "default": ""
-        },
         "persistent-workspaces": {
             "*": 3
         }
@@ -80,7 +46,7 @@
         "return-type": "json",
         "interval": 10,
         "signal": 8,
-        "tooltip": true,
+        "tooltip": true
     },
     "pulseaudio": {
         "format": "{volume}% {icon}",
@@ -114,15 +80,15 @@
             "^(?!.*Bitwarden Password Manager).* Brave": "Brave",
             "^(?!.*Bitwarden Password Manager).* Mozilla Firefox": "Firefox",
             "^(?!.*Bitwarden Password Manager).* Librewolf": "Librewolf",
-            "vim (.*)": "$1",
             "Spotify.*": "Spotify",
+            "vim (.*)": "$1",
             "kitty.*": "",
             "bash.*": "",
             "(.*)@(.*):(.*)": "$3"
         }
     },
 
-    // Right side
+    // Right
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
@@ -132,8 +98,6 @@
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
-        // "format": "󰂯 {status}",
-        // format-* handles every state, so default format is not necessary.
         "format-on": "󰂯",
         "format-off": "󰂲",
         "format-disabled": "󰂲", // an empty format will hide the module
@@ -177,7 +141,7 @@
         "format": "⏻ ",
         "tooltip": false,
         "on-click": "~/.local/bin/dot-logout"
-    },
+    }
     // "battery": {
         // "states": {
             // "good": 90,
@@ -205,16 +169,4 @@
         // "power-saver": ""
       // }
     // },
-    // "hyprland/language": {
-        // "format": "{}",
-        // "format-de": "German",
-        // "format-en": "English"
-    // },
-    // "tray": {
-        // "icon-size": 16,       // Size of the icons in pixels
-        // "scale": false,        // Whether to scale the tray icons based on the output scaling
-        // "spacing": 10,         // Space between tray icons
-        // "reverse": false,      // Reverse the order of the tray icons
-        // "always-show": true    // Always show the tray (even when no icons are present)
-    // }
 }
