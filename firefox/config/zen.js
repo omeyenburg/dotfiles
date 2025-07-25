@@ -39,6 +39,9 @@ user_pref("zen.urlbar.behavior", "normal");
 // Sidebar expansion animation
 user_pref("zen.view.compact.animate-sidebar", false);
 
+// Pin shortcuts version
+user_pref("zen.keyboard.shortcuts.version", 9);
+
 // Disable preload of unused new tab page
 user_pref("browser.newtab.preload", false);
 

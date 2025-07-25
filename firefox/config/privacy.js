@@ -47,8 +47,8 @@ user_pref("layout.css.font-visibility", 0);
 
 // Safe browsing
 user_pref("browser.safebrowsing.downloads.enabled", false);
-user_pref("browser.safebrowsing.malware.enabled", true);
-user_pref("browser.safebrowsing.phishing.enabled", true);
+user_pref("browser.safebrowsing.malware.enabled", false);
+user_pref("browser.safebrowsing.phishing.enabled", false);
 
 // Disable weak ciphersuites
 user_pref("security.ssl3.ecdhe_ecdsa_aes_128_sha", false);
@@ -74,3 +74,8 @@ user_pref("security.tls.enable_delegated_credentials", true);
 // user_pref("network.dns.http3_echconfig.enabled", true);
 // user_pref("network.dns.use_https_rr_as_altsvc", true);
 // user_pref("security.tls.ech.grease_http3", true);
+
+// Disable captive portals and proxies
+// captive protal must be enabled to get network notice in train
+// user_pref("network.captive-portal-service.enabled", true);
+// user_pref("network.notify.checkForProxies", true);
