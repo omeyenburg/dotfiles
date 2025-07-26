@@ -12,10 +12,6 @@ https://github.com/lewis6991/gitsigns.nvim
 LSP status updates
 https://github.com/'j-hui/fidget.nvim'
 
-# Tokyonight
-Variants: tokyonight-night, tokyonight-day, tokyonight-moon, tokyonight-storm
-https://github.com/folke/tokyonight.nvim
-
 # Catppuccin
 Variants: catppuccin-frappe, catppuccin-latte, catppuccin-macchiato, catppuccin-mocha
 https://github.com/catppuccin/nvim
@@ -74,18 +70,6 @@ return {
             },
         },
     },
-
-    -- { -- Tokyonight colorscheme
-    --     'folke/tokyonight.nvim',
-    --     enable = false,
-    --     lazy = false,
-    --     priority = 1000,
-    --     event = 'VimEnter',
-    --     init = function()
-    --         vim.cmd.colorscheme 'tokyonight-night'
-    --         vim.cmd.hi 'Comment gui=none guifg=#8C7DA6'
-    --     end,
-    -- },
 
     os.getenv 'COLORTERM' == 'truecolor'
             and { -- Catppuccin colorscheme
