@@ -6,7 +6,7 @@ COLOR_DEFAULT := \033[0m
 DOTFILES := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 export DOTFILES
 
-# Info
+# Print info
 help:
 	@sh "$(DOTFILES)scripts/utils/help.sh"
 
@@ -18,7 +18,7 @@ git:
 tmux:
 	@sh "$(DOTFILES)scripts/setup/tmux.sh"
 
-# Link configuration files
+# Link configuration files and scripts in config/, home/ and scripts/bin/
 link:
 	@sh "$(DOTFILES)scripts/setup/link.sh"
 
