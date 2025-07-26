@@ -20,4 +20,5 @@ prepend_keymap = [
     # Goto
     { on = [ "g", "t" ], run = "cd ~/git", desc = "Go into ~/git" },
     { on = [ "g", "f" ], run = "follow", desc = "Follow hovered symlink" },
+    { on = [ "g", "m" ], run = "cd /run/media/oskar/", desc = "Go into /run/media/oskar/" },
 ]
