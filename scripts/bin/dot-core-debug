@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 program=$1
 CRASHDIR=/var/crash

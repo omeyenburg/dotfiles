@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Installes the Catppuccin Mocha theme for bat
 mkdir -p "$(bat --config-dir)/themes"

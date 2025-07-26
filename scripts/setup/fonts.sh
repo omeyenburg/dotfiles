@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if [ -d /etc/nixos ]; then
     echo Consider using the nixos config to install fonts.

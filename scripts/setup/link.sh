@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 CONFDIR="${DOTFILES}config"
 HOMEDIR="${DOTFILES}home"

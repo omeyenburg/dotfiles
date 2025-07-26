@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 tmpfile=/tmp/pdfsearch
 directories="$HOME/books/ $HOME/Downloads/ $HOME/git/university/"

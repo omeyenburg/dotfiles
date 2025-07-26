@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 bluetoothctl devices | grep Device | while read -r _ MAC _; do
     bluetoothctl disconnect "$MAC"

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 append() {
     # arg1: file

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 config=~/.ssh/config
 echo "Creating new host in $config"

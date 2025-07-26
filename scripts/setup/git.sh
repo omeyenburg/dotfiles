@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Set up git configuration
 git config --global user.name "omeyemburg"

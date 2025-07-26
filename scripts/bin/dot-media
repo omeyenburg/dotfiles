@@ -1,5 +1,4 @@
-#!/bin/sh
-# shellcheck shell=bash
+#!/usr/bin/env bash
 
 # Arguments
 # type: volume | display-brightness | keyboard-brightness
