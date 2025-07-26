@@ -1,0 +1,386 @@
+#!/usr/bin/env bash
+
+menu() {
+    local title="$1"
+    cat | fzf --no-input --reverse --delimiter="\t" --header="$title" --header-border=bottom --bind="j:Down,k:Up,G:Last,g:First,q:Cancel,y:Accept"
+}
+
+get_devices() {
+    local info drives decrypted
+    drives=$(lsblk -rpno "NAME,TYPE,RM,SIZE,UUID,MOUNTPOINT,FSTYPE" | awk '{ gsub(/ /, "|"); print }')
+
+    # Get decrypted LUKS UUIDs
+    if ls /dev/disk/by-id/dm-uuid-CRYPT-LUKS2-* 2>/dev/null | head -1 >/dev/null; then
+        decrypted=$(find /dev/disk/by-id/dm-uuid-CRYPT-LUKS2-* 2>/dev/null | sed "s|.*LUKS2-||;s|-.*||")
+    fi
+
+    # Process each LUKS drive
+    while read -r line; do
+        local name dtype removable size uuid mountpoint fstype
+        name=$(echo "$line" | awk -F'|' '{ print $1 }')
+        dtype=$(echo "$line" | awk -F'|' '{ print $2 }')
+        removable=$(echo "$line" | awk -F'|' '{ print $3 }')
+        size=$(echo "$line" | awk -F'|' '{ print $4 }')
+        uuid=$(echo "$line" | awk -F'|' '{ print $5 }')
+        mountpoint=$(echo "$line" | awk -F'|' '{ print $6 }')
+        fstype=$(echo "$line" | awk -F'|' '{ print $7 }')
+
+        if [ "$removable" != "1" ]; then
+            continue
+        fi
+
+        local state
+        if [ "$dtype" = "disk" ]; then
+            # Disk
+            state="disk"
+        elif [ "$fstype" = "crypto_LUKS" ]; then
+            # LUKS partition
+            local is_unlocked=false
+            if [[ -n "$decrypted" ]]; then
+                while IFS= read -r open_uuid; do
+                    if [[ "${uuid//-/}" = "$open_uuid" ]]; then
+                        is_unlocked=true
+                        break
+                    fi
+                done <<<"$decrypted"
+            fi
+
+            if $is_unlocked; then
+                mountpoint=$(lsblk -rno "TYPE,MOUNTPOINT" "$name" 2>/dev/null | awk '$1 == "crypt" { print $2 }' | head -1)
+                if [ -z "$mountpoint" ]; then
+                    state="unlocked"
+                else
+                    state="unlocked & mounted"
+                fi
+            else
+                state="locked"
+            fi
+        else
+            # Normal partition
+            if [ -z "$mountpoint" ]; then
+                state="not mounted"
+            else
+                state="mounted"
+            fi
+        fi
+
+        info+="$name|${state// /},$name,$size,$(basename "$mountpoint"),[$state]\n"
+    done <<<"$drives"
+
+    echo -e "$info" | column -ts, | awk '{ sub(/  +/, "|"); print }'
+}
+
+is_device_unlocked() {
+    local device="$1"
+    local uuid
+
+    uuid=$(cryptsetup luksUUID "$device" 2>/dev/null || echo "")
+    [[ -z "$uuid" ]] && return 1
+
+    # Check if UUID exists in decrypted list
+    if ls /dev/disk/by-id/dm-uuid-CRYPT-LUKS2-* 2>/dev/null | head -1 >/dev/null; then
+        local decrypted
+        decrypted=$(find /dev/disk/by-id/dm-uuid-CRYPT-LUKS2-* 2>/dev/null | sed "s|.*LUKS2-||;s|-.*||")
+        while IFS= read -r open_uuid; do
+            [[ "${uuid//-/}" = "$open_uuid" ]] && return 0
+        done <<<"$decrypted"
+    fi
+
+    return 1
+}
+
+mount_device() {
+    local mapper_device="$1"
+
+    if ! udisksctl mount -b "$mapper_device" 2 &>/dev/null; then
+        echo "Warning: Could not mount $mapper_device" >&2
+        read -rsn1
+        return 1
+    fi
+
+    return 0
+}
+
+unmount_device() {
+    local mapper_device="$1"
+
+    if ! udisksctl unmount -b "$mapper_device" 2 &>/dev/null; then
+        echo "Warning: Could not unmount $mapper_device" >&2
+        read -rsn1
+        return 1
+    fi
+
+    return 0
+}
+
+lock_device() {
+    local device="$1"
+    local name
+    name=$(echo "$device" | awk -F"\t" '{ print $1 }')
+
+    if ! udisksctl lock -b "$name" 2 &>/dev/null; then
+        echo "Failed to lock $name" >&2
+        read -rsn1
+        return 1
+    fi
+
+    return 0
+}
+
+open_device() {
+    local mapper_device="$1"
+    local cmd=${2:""}
+    local mountpoint
+    mountpoint=$(findmnt -n -o TARGET --source "$mapper_device")
+
+    if [[ -z "$mountpoint" ]]; then
+        echo "Device $mapper_device is not mounted." >&2
+        read -rsn1
+        return 1
+    fi
+
+    if [ -z "$cmd" ]; then
+        setsid kitty -d "$mountpoint" >/dev/null 2>&1 &
+    else
+        setsid kitty -d "$mountpoint" -e "$cmd" >/dev/null 2>&1 &
+    fi
+    sleep 0.2
+    exit 0
+}
+
+menu_disk() {
+    local name="$1"
+
+    # Find all child partitions
+    local children
+    children=$(lsblk -rpno NAME,UUID "$name" | tail -n +2)
+
+    if [[ -z "$children" ]]; then
+        echo "No partitions found under $name"
+        return 1
+    fi
+
+    local mounted=0
+    local luks_open=0
+    local to_lock=()
+
+    local decrypted=""
+    if ls /dev/disk/by-id/dm-uuid-CRYPT-LUKS2-* 2>/dev/null | head -1 >/dev/null; then
+        decrypted=$(find /dev/disk/by-id/dm-uuid-CRYPT-LUKS2-* 2>/dev/null | sed "s|.*LUKS2-||;s|-.*||")
+    fi
+
+    while read -r part; do
+        local name uuid
+        name=$(echo "$part" | awk '{ print $1 }')
+        uuid=$(echo "$part" | awk '{ print $2 }')
+
+        if findmnt "$name" >/dev/null 2>&1; then
+            mounted=1
+        fi
+
+        local is_unlocked=false
+        if [[ -n "$decrypted" ]]; then
+            while IFS= read -r open_uuid; do
+                if [[ "${uuid//-/}" = "$open_uuid" ]]; then
+                    is_unlocked=true
+                    break
+                fi
+            done <<<"$decrypted"
+        fi
+
+        if $is_unlocked; then
+            luks_open=1
+            to_lock+=("$name")
+        fi
+    done <<<"$children"
+
+    local options=""
+    if [[ $mounted -eq 0 && $luks_open -eq 0 ]]; then
+        options="Eject disk"
+    elif [[ $mounted -eq 1 && $luks_open -eq 0 ]]; then
+        options="Unmount all partitions"
+    elif [[ $mounted -eq 0 && $luks_open -eq 1 ]]; then
+        options="Lock all LUKS partitions"
+    else
+        options="Unmount all partitions\nLock all LUKS partitions"
+    fi
+
+    local action
+    action=$(echo -e "$options" | menu "Select action")
+    [[ -z "$action" ]] && return 0
+
+    case "$action" in
+    "Unmount all partitions")
+        while read -r part; do
+            local name
+            name=$(echo "$part" | awk '{ print $1 }')
+            findmnt "$name" >/dev/null && unmount_device "$name"
+        done <<<"$children"
+        ;;
+    "Lock all LUKS partitions")
+        for part in "${to_lock[@]}"; do
+            local mapper
+            mapper=$(lsblk -rno NAME,TYPE "$part" | awk '$2 == "crypt" { print "/dev/mapper/" $1 }' | head -n1)
+            [[ -n "$mapper" ]] && findmnt "$mapper" >/dev/null && unmount_device "$mapper"
+            lock_device "$part"
+        done
+        ;;
+    "Eject disk")
+        if ! udisksctl power-off -b "$name"; then
+            echo "Failed to eject $name" >&2
+            return 1
+        fi
+        exit 0
+        ;;
+    esac
+}
+
+menu_partition() {
+    local name="$1"
+
+    local mounted=false
+    if findmnt "$name" >/dev/null 2>&1; then
+        mounted=true
+    fi
+
+    local options
+    if $mounted; then
+        options="Open\nOpen with yazi\nUnmount device"
+    else
+        options="Mount device"
+    fi
+
+    local action
+    action=$(echo -e "$options" | menu "Select action")
+    clear
+
+    case "$action" in
+    "Open")
+        open_device "$name"
+        ;;
+    "Open with yazi")
+        open_device "$name" "yazi"
+        ;;
+    "Mount device")
+        mount_device "$name"
+        ;;
+    "Unmount device")
+        unmount_device "$name"
+        ;;
+    esac
+}
+
+menu_luks_locked() {
+    local name="$1"
+
+    echo "Enter passphrase."
+    while true; do
+        if udisksctl unlock -b "$name" 2>&1; then
+            break
+        fi
+
+        clear
+        echo "Wrong passphrase. Retrying..."
+    done
+
+    # Mount the unlocked device
+    local mapper_device
+    mapper_device=$(lsblk -rno NAME,TYPE "$name" 2>/dev/null | awk '$2 == "crypt" { print "/dev/mapper/" $1 }' | head -n1)
+    [[ -z "$mapper_device" ]] && return 1
+    mount_device "$mapper_device"
+
+    return 0
+}
+
+menu_luks_unlocked() {
+    local name="$1"
+
+    # Get mapper device of the encrypted partition asscociated with device
+    local mapper_device
+    mapper_device=$(lsblk -rno NAME,TYPE "$name" 2>/dev/null | awk '$2 == "crypt" { print "/dev/mapper/" $1 }' | head -n1)
+
+    if [ -z "$mapper_device" ]; then
+        echo "Could not find mapper device for $name" >&2
+        read -rsn1
+        return 1
+    fi
+
+    local mounted=false
+    if findmnt "$mapper_device" >/dev/null 2>&1; then
+        mounted=true
+    fi
+
+    local options
+    if $mounted; then
+        options="Open\nOpen with yazi\nUnmount device\nLock device"
+    else
+        options="Mount device\nLock device"
+    fi
+
+    local action
+    action=$(echo -e "$options" | menu "Select action")
+    clear
+
+    case "$action" in
+    "Open")
+        open_device "$mapper_device"
+        ;;
+    "Open with yazi")
+        open_device "$mapper_device" "yazi"
+        ;;
+    "Mount device")
+        mount_device "$mapper_device"
+        ;;
+    "Unmount device")
+        unmount_device "$mapper_device"
+        ;;
+    "Lock device")
+        if $mounted; then
+            unmount_device "$mapper_device"
+        fi
+        lock_device "$name"
+        ;;
+    esac
+}
+
+main() {
+    while true; do
+        local devices
+        devices=$(get_devices)
+
+        # Exit if no devices are connected
+        if [ "$devices" = "" ]; then
+            echo "No devices found" >&2
+            read -rsn1
+            exit 0
+        fi
+
+        # Select device
+        local device
+        device=$(echo -e "$devices" | fzf --no-input --reverse --delimiter="|" --with-nth=3 --header="Select device" --header-border=bottom --bind="j:Down,k:Up,G:Last,g:First,q:Cancel,y:Accept")
+        clear
+
+        # Exit if no device is selected
+        [[ -z "$device" ]] && exit 0
+
+        if [ "$device" = "reload" ]; then
+            continue
+        fi
+
+        local name state
+        name=$(echo "$device" | awk -F'|' '{ print $1 }')
+        state=$(echo "$device" | awk -F'|' '{ print $2 }')
+
+        if [ "$state" = "disk" ]; then
+            menu_disk "$name"
+        elif [ "$state" = "locked" ]; then
+            menu_luks_locked "$name"
+        elif [ "$state" = "unlocked" ] || [ "$state" = "unlocked&mounted" ]; then
+            menu_luks_unlocked "$name"
+        else
+            menu_partition "$name"
+        fi
+    done
+}
+
+main
