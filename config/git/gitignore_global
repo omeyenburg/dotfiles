@@ -1,5 +1,5 @@
-### Global gitignore file
-# Register file: git config --global core.excludesfile ~/.gitignore_global
+# Global gitignore file
+# git config --global core.excludesfile ~/.config/git/gitignore_global
 
 # MacOS system files
 .DS_Store
@@ -8,7 +8,6 @@
 build/
 
 # Binaries
-bin/
 lib/
 lib64
 
@@ -33,6 +32,7 @@ pyvenv.cfg
 node_modules/
 
 # Compiled Python files
+.pypirc
 *.pyc
 *.pyo
 
@@ -48,12 +48,13 @@ node_modules/
 *.temp
 *.swp
 
+# Credentials
+*auth*
+env*
+.env*
+.ssh
+
 # Others
 .local
-.ssh
 .cache
-.pypirc
-.env*
-env*
-*auth*
 *.log
