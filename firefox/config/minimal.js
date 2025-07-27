@@ -16,7 +16,6 @@ user_pref("browser.aboutConfig.showWarning", false);
 user_pref("browser.search.defaultenginename", "DuckDuckGo");
 user_pref("browser.shell.didSkipDefaultBrowserCheckOnFirstRun", true);
 user_pref("browser.startup.homepage", "about:blank");
-user_pref("browser.startup.homepage_override.mstone", "139.0.4");
 user_pref("browser.startup.lastColdStartupCheck", 1750951115);
 user_pref("browser.warnOnQuit", false);
 user_pref("browser.warnOnQuitShortcut", false);
