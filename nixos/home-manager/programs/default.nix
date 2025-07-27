@@ -1,6 +1,5 @@
 {
   imports = [
-    ./chromium.nix
     ./librewolf.nix
     ./neovim.nix
     ./zen-browser.nix
