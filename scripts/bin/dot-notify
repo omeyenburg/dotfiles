@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Notification app name
 appname=${1:-"default_app"}
@@ -30,4 +30,4 @@ message_id=$(busctl --user call \
     "$timeout")
 
 # Return id of notification
-echo "$message_id" | sed "s/u\s//"
+echo "${message_id//u\s/}"

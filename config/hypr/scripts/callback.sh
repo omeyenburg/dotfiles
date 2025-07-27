@@ -1,5 +1,4 @@
-#!/bin/sh
-# shellcheck shell=bash
+#!/usr/bin/env bash
 
 handle() {
     case $1 in

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 session=mcli
 repo=~/git/mcli/
