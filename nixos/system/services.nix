@@ -1,4 +1,7 @@
 {pkgs, ...}: {
+  # Enable docker
+  virtualisation.docker.enable = true;
+
   # Disable waiting for Network Manager at boot.
   systemd.services.NetworkManager-wait-online.enable = false;
 
@@ -91,45 +94,9 @@
     };
   };
 
-  systemd = {
-    user = {
-      services = {
-        # Define notification service.
-        notifier = {
-          description = "Notifier Service";
-          path = with pkgs; [
-            curl
-            gawk
-            networkmanager
-            python3
-            wireplumber
-          ];
-          serviceConfig = {
-            Type = "oneshot";
-            ExecStart = "%h/.config/hypr/scripts/notifier-service.sh";
-          };
-          wantedBy = ["default.target"];
-        };
-      };
-
-      timers = {
-        notifier = {
-          description = "Notifier Service Timer";
-          timerConfig = {
-            OnBootSec = "1min";
-            OnUnitActiveSec = "1min";
-            Persistent = true;
-            Unit = "notifier.service";
-          };
-          wantedBy = ["timers.target"];
-        };
-      };
-    };
-  };
-
   # Mute volume when connecting to a wifi network
   environment.etc."NetworkManager/dispatcher.d/60-mute-on-network-connection".source = pkgs.writeScript "mute-on-network-connection" ''
-    #!/bin/sh
+    #!/usr/bin/env bash
 
     # Check if the event is "up"
     if [ "$2" = "up" ]; then
