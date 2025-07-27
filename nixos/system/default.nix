@@ -126,7 +126,14 @@
 
   # Select internationalisation properties.
   time.timeZone = "Europe/Berlin";
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    supportedLocales = [
+      "en_US.UTF-8/UTF-8"
+      "en_DK.UTF-8/UTF-8"
+      "de_DE.UTF-8/UTF-8"
+    ];
+  };
 
   # Inherit console keymap from XServer. See services.
   console = {
@@ -135,8 +142,7 @@
   };
 
   hardware = {
-    # Enable redistributable firmware (helps with most missing firmware issues).
-    enableRedistributableFirmware = true;
+    # Enable all firmware. Alternative: enableRedistributableFirmware
     enableAllFirmware = true;
 
     # Enable OpenGL.
@@ -174,7 +180,8 @@
       "plugdev"
       "storage" # Allow writing to external devices like usb drives.
       "wheel" # Enable ‘sudo’ for the user.
-      "video" # # Enable intel-gpu-tools without root
+      "video" # Enable intel-gpu-tools without root
+      "docker"
     ];
   };
 
@@ -199,14 +206,12 @@
     # Mozilla
     MOZ_WEBRENDER = "1";
     MOZ_ACCELERATED = "1";
-    MOZ_DISABLE_RDD_SANDBOX = 1;
     MOZ_LOG = "PlatformDecoderModule:5";
   };
 
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
     ];
     config.common.default = "*";
