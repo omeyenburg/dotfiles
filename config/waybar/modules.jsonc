@@ -25,8 +25,8 @@
         }
     },
     "custom/battery": {
-        "exec": "~/.config/hypr/waybar/scripts/battery_module.sh",
-        "on-click": "~/.config/hypr/waybar/scripts/battery_profile.sh",
+        "exec": "~/.config/waybar/scripts/battery_module.sh",
+        "on-click": "~/.config/waybar/scripts/battery_profile.sh",
         "return-type": "json",
         "interval": 10,
         "signal": 8,
@@ -42,7 +42,7 @@
         }
     },
     "custom/brightness": {
-        "exec": "~/.config/hypr/waybar/scripts/brightness_module.sh",
+        "exec": "~/.config/waybar/scripts/brightness_module.sh",
         "return-type": "json",
         "interval": 10,
         "signal": 8,

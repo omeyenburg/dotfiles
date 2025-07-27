@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-echo "
-My dotfiles setup utility
+echo "My dotfiles setup utility
 
 Available commands:
 
@@ -16,10 +15,14 @@ Available commands:
   make link
     Create symbolic links for dotfiles in ~/, ~/.config/, and ~/.local/bin.
 
-  make theme
+  make fonts
     Install FiraCode and FiraMono fonts.
+
+  make theme-install
     Install the Catppuccin Mocha theme for bat.
-    Link CSS theme files for Hyprland.
+
+  make theme-update
+    Generate CSS files for Waybar and Wofi.
 
   make qmk
     Link QMK configuration for the Cheapino keyboard.

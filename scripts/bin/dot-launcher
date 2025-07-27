@@ -6,4 +6,6 @@ if pgrep wofi; then
 fi
 
 cd "$HOME" || exit
-wofi --show drun --conf "$HOME"/.config/hypr/wofi/apps/config.toml --style "$HOME"/.config/hypr/wofi/apps/style.css
+conf=$HOME/.config/wofi/apps/config.toml
+style=$HOME/.config/wofi/apps/style.css
+wofi --show drun --conf "$conf" --style "$style"

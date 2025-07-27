@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Get current power profile
 power_profile=$(powerprofilesctl get || exit)

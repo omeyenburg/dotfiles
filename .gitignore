@@ -14,3 +14,8 @@ config/emacs/config.org~
 config/emacs/eln-cache/
 config/emacs/elpa/
 config/emacs/elpaca/
+
+# Generated styles
+config/waybar/style.css
+config/wofi/apps/style.css
+config/wofi/logout/style.css

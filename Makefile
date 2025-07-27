@@ -1,4 +1,4 @@
-.PHONY: help git tmux link theme qmk firefox-config nixos-backup
+.PHONY: help git tmux link fonts theme-install theme-update qmk firefox-config nixos-backup
 
 COLOR_RED := \033[0;31m
 COLOR_DEFAULT := \033[0m
@@ -23,12 +23,16 @@ link:
 	@sh "$(DOTFILES)scripts/setup/link.sh"
 
 # Install FiraCode and FiraMono font
-# Install Catppuccin Mocha theme for bat
-# Link css theme files for hyprland
-theme:
-	@sh "$(DOTFILES)scripts/setup/bat.sh"
+fonts:
 	@sh "$(DOTFILES)scripts/setup/fonts.sh"
-	@sh "$(DOTFILES)scripts/setup/hypr.sh"
+
+# Install Catppuccin Mocha theme for bat
+theme-install: theme-update
+	@sh "$(DOTFILES)scripts/setup/theme-install.sh"
+
+# Generate CSS files
+theme-update:
+	@sh "$(DOTFILES)scripts/setup/theme-update.sh"
 
 # Link qmk keyboards
 qmk:

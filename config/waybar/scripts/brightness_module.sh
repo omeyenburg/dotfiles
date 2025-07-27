@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 display_current=$(brightnessctl g)
 display_maximum=$(brightnessctl m)

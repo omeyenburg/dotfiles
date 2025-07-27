@@ -4,7 +4,8 @@
 
 start() {
     (
-        waybar --config "$HOME/.config/hypr/waybar/config.jsonc" --style "$HOME/.config/hypr/waybar/style.css" &
+        cd
+        waybar --config "$HOME/.config/waybar/config.jsonc" --style "$HOME/.config/waybar/style.css" &
         disown
     )
 }

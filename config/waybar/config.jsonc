@@ -25,6 +25,6 @@
         "custom/power"
     ],
     "include": [
-        "$HOME/.config/hypr/waybar/modules.jsonc"
+        "$HOME/.config/waybar/modules.jsonc"
     ]
 }

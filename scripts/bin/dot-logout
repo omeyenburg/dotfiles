@@ -10,8 +10,8 @@ s1="      Logout"
 s2="      Reboot"
 s3="    Shutdown"
 
-conf=$HOME/.config/hypr/wofi/logout/config.toml
-style=$HOME/.config/hypr/wofi/logout/style.css
+conf=$HOME/.config/wofi/logout/config.toml
+style=$HOME/.config/wofi/logout/style.css
 output=$(echo -e "$s0\n$s1\n$s2\n$s3" | wofi --show dmenu --conf "$conf" --style "$style")
 
 case "$output" in

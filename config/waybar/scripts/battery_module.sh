@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Positional arguments:
 # title
 # type (normal=0, warning=1, critical=2)
 send_battery_warning() {
-    id_cache="$HOME/.cache/waybar_battery_notification"
+    id_cache="/tmp/battery-notification-id"
 
     # Get last used id
     id=$(cat "$id_cache" || echo "0")
