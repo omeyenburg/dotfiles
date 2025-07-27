@@ -24,68 +24,67 @@ return {
         event = 'VeryLazy',
         version = '*',
         dependencies = {
-            -- Provides snippets for the snippet source
             'rafamadriz/friendly-snippets',
         },
         opts = {
-            -- 'default' for mappings similar to built-in completion
-            -- Available commands:
-            --   show, hide, cancel, accept, select_and_accept, select_prev, select_next, show_documentation, hide_documentation,
-            --   scroll_documentation_up, scroll_documentation_down, snippet_forward, snippet_backward, fallback
-            -- 'default' keymap
-            --   ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-            --   ['<C-e>'] = { 'hide' },
-            --   ['<C-y>'] = { 'select_and_accept' },
-            --
-            --   ['<C-p>'] = { 'select_prev', 'fallback' },
-            --   ['<C-n>'] = { 'select_next', 'fallback' },
-            --
-            --   ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-            --   ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-            --
-            --   ['<Tab>'] = { 'snippet_forward', 'fallback' },
-            --   ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
-            keymap = { preset = 'default' },
-
+            keymap = {
+                preset = 'none',
+                ['<Tab>'] = {
+                    function(cmp)
+                        if cmp.snippet_active() then
+                            if cmp.snippet_active { direction = -1 } then
+                                vim.snippet.stop()
+                                return
+                            end
+                            return cmp.snippet_forward()
+                        else
+                            return cmp.show_and_insert()
+                        end
+                    end,
+                    'insert_next',
+                    'fallback',
+                },
+                ['<S-Tab>'] = { 'snippet_backward', 'insert_prev', 'fallback' },
+                ['<Up>'] = { 'fallback' },
+                ['<Down>'] = { 'fallback' },
+                ['<C-y>'] = { 'select_and_accept' },
+                ['<C-k>'] = { 'fallback' },
+                ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
+                ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+                ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+                ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+            },
+            appearance = { nerd_font_variant = 'mono' },
             completion = {
                 menu = {
                     auto_show = true,
                     border = 'rounded',
+                    draw = { treesitter = { 'lsp' } },
                 },
-                accept = {
-                    -- Experimental auto-brackets support
-                    -- Seems to only create brackets after completing functions
-                    auto_brackets = {
-                        enabled = true,
-                    },
-                },
+                accept = { auto_brackets = { enabled = true } },
                 keyword = {
                     -- 'prefix' will fuzzy match on the text before the cursor
                     -- 'full' will fuzzy match on the text before *and* after the cursor
-                    range = 'prefix',
+                    range = 'full',
                 },
                 documentation = {
                     auto_show = true,
-                    auto_show_delay_ms = 500,
-                    window = {
-                        border = 'rounded',
-                    },
+                    window = { border = 'rounded' },
                 },
-                -- Displays a preview of the selected item on the current line
-                ghost_text = {
-                    enabled = false,
-                },
+                list = { selection = { preselect = false, auto_insert = true } },
+                trigger = { show_on_insert_on_trigger_character = true },
+                ghost_text = { enabled = true },
             },
-
-            -- Experimental signature help support
             signature = {
                 enabled = true,
-                window = {
-                    border = 'rounded',
+                window = { border = 'rounded' },
+            },
+            cmdline = {
+                completion = {
+                    menu = { auto_show = true },
+                    list = { selection = { preselect = false, auto_insert = true } },
                 },
             },
-
-            -- Snippets
             snippets = {
                 expand = function(snippet)
                     local col = vim.api.nvim_win_get_cursor(0)[2]
@@ -99,24 +98,9 @@ return {
                     vim.snippet.expand(string.gsub(snippet, '%(.*', '') .. '$0')
                 end,
             },
-
-            -- Default list of enabled providers defined so that you can extend it
-            -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
                 providers = { snippets = { min_keyword_length = 4 } },
-                -- optionally disable cmdline completions
-                -- cmdline = {},
-            },
-
-            appearance = {
-                -- Sets the fallback highlight groups to nvim-cmp's highlight groups
-                -- Useful for when your theme doesn't support blink.cmp
-                -- will be removed in a future release
-                use_nvim_cmp_as_default = true,
-                -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-                -- Adjusts spacing to ensure icons are aligned
-                nerd_font_variant = 'mono',
             },
         },
         config = function(_, opts)
@@ -130,8 +114,20 @@ return {
             -- Exit snippet when changing mode
             vim.api.nvim_create_autocmd('ModeChanged', {
                 pattern = '*',
-                callback = function()
-                    vim.snippet.stop()
+                callback = function(args)
+                    local from = vim.v.event.old_mode
+                    local to = vim.v.event.new_mode
+
+                    -- Only stop if we leave insert/select *and* don't return immediately
+                    if (from:match '^i' or from:match '^s') and not to:match '^[is]' then
+                        -- Defer slightly to avoid breaking field jumps
+                        vim.defer_fn(function()
+                            local mode = vim.api.nvim_get_mode().mode
+                            if not mode:match '^[is]' then
+                                vim.snippet.stop()
+                            end
+                        end, 20)
+                    end
                 end,
             })
         end,
