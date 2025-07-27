@@ -10,6 +10,15 @@ https://github.com/saghen/blink.cmp
 
 ]]
 
+local function completable()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    if cursor[2] == 0 then
+        return false
+    end
+    local char = vim.api.nvim_buf_get_text(0, cursor[1] - 1, cursor[2] - 1, cursor[1] - 1, cursor[2], {})[1]
+    return char:match '%S' ~= nil and char ~= ')' and char ~= '}'
+end
+
 return {
     { -- Auto brackets and quotes
         'windwp/nvim-autopairs',
@@ -32,27 +41,43 @@ return {
                 ['<Tab>'] = {
                     function(cmp)
                         if cmp.snippet_active() then
-                            if cmp.snippet_active { direction = -1 } then
+                            if cmp.snippet_active { direction = 1 } == false then
                                 vim.snippet.stop()
-                                return
+                                cmp.cancel()
+                                return true
                             end
                             return cmp.snippet_forward()
-                        else
-                            return cmp.show_and_insert()
+                        elseif cmp.is_visible() then
+                            return cmp.select_next()
+                        elseif vim.bo.buftype ~= 'prompt' and completable() then
+                            return cmp.show()
                         end
                     end,
-                    'insert_next',
                     'fallback',
                 },
-                ['<S-Tab>'] = { 'snippet_backward', 'insert_prev', 'fallback' },
-                ['<Up>'] = { 'fallback' },
-                ['<Down>'] = { 'fallback' },
+                ['<S-Tab>'] = {
+                    function(cmp)
+                        if cmp.snippet_active() then
+                            if cmp.snippet_active { direction = -1 } == false then
+                                return true
+                            end
+                            return cmp.snippet_backward()
+                        elseif cmp.is_visible() then
+                            return cmp.select_prev()
+                        elseif vim.bo.buftype ~= 'prompt' and completable() then
+                            return cmp.show()
+                        end
+                    end,
+                    'fallback',
+                },
+                ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+                ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+                ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+                ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
                 ['<C-y>'] = { 'select_and_accept' },
                 ['<C-k>'] = { 'fallback' },
-                ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
-                ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
-                ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
-                ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+                ['<Up>'] = { 'fallback' },
+                ['<Down>'] = { 'fallback' },
             },
             appearance = { nerd_font_variant = 'mono' },
             completion = {
