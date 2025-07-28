@@ -37,12 +37,6 @@
     ];
   };
 
-  # services = {
-  #   mbpfan = {
-  #     enable = false;
-  #   };
-  # };
-
   hardware = {
     graphics.extraPackages = with pkgs; [
       vaapiVdpau
@@ -77,13 +71,29 @@
     VDPAU_DRIVER = "va_gl";
   };
 
-  # Reload wifi after suspend
-  powerManagement.powerUpCommands = ''
-    broken=$(lsmod | awk '$1=="brcmfmac" { found=1; if ($3=="0") { print "true"; exit } } END { if (!found) print "true" }')
-    if [ "$broken" ]; then
-      echo 1 > /sys/bus/pci/devices/0000:03:00.0/remove
-      sleep 1
-      echo 1 > /sys/bus/pci/rescan
-    fi
-  '';
+  systemd.services = {
+    reload-wifi-after-suspend = {
+      description = "Reload Broadcom wifi after suspend";
+      path = with pkgs; [
+        kmod
+        gawk
+      ];
+      script = ''
+        broken=$(lsmod | awk '$1=="brcmfmac" { found=1; if ($3=="0") { print "true"; exit } } END { if (!found) print "true" }')
+        if [ "$broken" ]; then
+          echo 1 > /sys/bus/pci/devices/0000:03:00.0/remove
+          sleep 1
+          echo 1 > /sys/bus/pci/rescan
+        fi
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = false;
+      };
+    };
+
+    "systemd-suspend".serviceConfig.ExecStartPost = [
+      "+${pkgs.systemd}/bin/systemctl start reload-wifi-after-suspend.service"
+    ];
+  };
 }
