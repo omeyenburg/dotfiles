@@ -96,7 +96,7 @@
 
   # Mute volume when connecting to a wifi network
   environment.etc."NetworkManager/dispatcher.d/60-mute-on-network-connection".source = pkgs.writeScript "mute-on-network-connection" ''
-    #!/usr/bin/env bash
+    #!/bin/sh
 
     # Check if the event is "up"
     if [ "$2" = "up" ]; then
