@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+REMOTE_PATH='gdrive-notes:'
+LOCAL_REMOTE_PATH="$HOME/.cache/remote-notes"
+
+if [[ "$(cd; pwd)" = "/data/data/com.termux/files/home/storage" ]]; then
+    LOCAL_NOTES_PATH="$HOME/storage/documents/notes"
+else
+    LOCAL_NOTES_PATH="$HOME/git/notes"
+fi
+
+UNISON_IGNORE=(
+  -ignore "Name .git"
+  -ignore "Name .git-crypt"
+  -ignore "Name .gitattributes"
+  -ignore "Name .gitignore"
+  -ignore "Name .obsidian"
+)
+
+MAX_RETRIES=5
+retry_count=0
+
+set -e
+echo "Pulling from remote..."
+rclone sync "$REMOTE_PATH" "$LOCAL_REMOTE_PATH" --progress
+
+set +e
+echo "Syncing with local vault..."
+unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_IGNORE[@]}" -batch -silent
+while [ $? -ne 0 ] && [ $retry_count -lt $MAX_RETRIES ]; do
+    echo "Encountered a conflict!"
+    retry_count=$((retry_count+1))
+    unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_IGNORE[@]}" -auto
+done
+
+set -e
+echo "Pushing to remote..."
+rclone sync "$LOCAL_REMOTE_PATH" "$REMOTE_PATH" --progress
+echo "Sync complete!"
