@@ -34,7 +34,7 @@ for file in "$CONFDIR"/*; do
     ln -sfn "$file" "$dest"
 done
 
-for file in "$HOMEDIR"/.*; do
+for file in "$HOMEDIR"/.[!.]* "$HOMEDIR"/.??*; do
     [ -e "$file" ] || continue
     name=$(basename "$file")
 
