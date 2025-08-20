@@ -24,19 +24,14 @@ set -e
 echo "Pulling from remote..."
 rclone sync "$REMOTE_PATH" "$LOCAL_REMOTE_PATH" --progress
 
-if [[ "$PREFIX" == *"com.termux"* ]]; then
-    rsync -av --update "$LOCAL_REMOTE_PATH/" "$LOCAL_NOTES_PATH/"
-    rsync -av --update "$LOCAL_NOTES_PATH/" "$LOCAL_REMOTE_PATH/"
-else
-    set +e
-    echo "Syncing with local vault..."
-    unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_IGNORE[@]}" -batch -silent
-    while [ $? -ne 0 ] && [ $retry_count -lt $MAX_RETRIES ]; do
-        echo "Encountered a conflict!"
-        retry_count=$((retry_count+1))
-        unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_IGNORE[@]}" -auto
-    done
-fi
+set +e
+echo "Syncing with local vault..."
+unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_IGNORE[@]}" -batch -silent
+while [ $? -ne 0 ] && [ $retry_count -lt $MAX_RETRIES ]; do
+    echo "Encountered a conflict!"
+    retry_count=$((retry_count+1))
+    unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_IGNORE[@]}" -auto
+done
 
 set -e
 echo "Pushing to remote..."
