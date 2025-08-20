@@ -3,7 +3,7 @@
 REMOTE_PATH='gdrive-notes:'
 LOCAL_REMOTE_PATH="$HOME/.cache/remote-notes"
 
-if [[ "$(cd; pwd)" = "/data/data/com.termux/files/home/storage" ]]; then
+if [[ "$PREFIX" == *"com.termux"* ]]; then
     LOCAL_NOTES_PATH="$HOME/storage/documents/notes"
 else
     LOCAL_NOTES_PATH="$HOME/git/notes"
@@ -24,7 +24,7 @@ set -e
 echo "Pulling from remote..."
 rclone sync "$REMOTE_PATH" "$LOCAL_REMOTE_PATH" --progress
 
-if [[ "$(cd; pwd)" = "/data/data/com.termux/files/home/storage" ]]; then
+if [[ "$PREFIX" == *"com.termux"* ]]; then
     rsync -av --update "$LOCAL_REMOTE_PATH/" "$LOCAL_NOTES_PATH/"
     rsync -av --update "$LOCAL_NOTES_PATH/" "$LOCAL_REMOTE_PATH/"
 else
