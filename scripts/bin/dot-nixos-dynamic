@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <elf-file>"
+    exit 1
+fi
+
+elf="$1"
+interpreter=$(ldd "$(which bash)" | grep "ld-linux-x86-64.so.2" | awk '{ print $1 }')
+
+echo "Using interpreter: $interpreter"
+echo "Press enter to accept"
+read -r
+
+patchelf --set-interpreter "$interpreter" "$elf"
