@@ -22,7 +22,7 @@ retry_count=0
 
 set -e
 echo "Pulling from remote..."
-rclone sync "$REMOTE_PATH" "$LOCAL_REMOTE_PATH" --progress
+rclone sync "$REMOTE_PATH" "$LOCAL_REMOTE_PATH" --progress --exclude ".unison/**"
 
 set +e
 echo "Syncing with local vault..."
@@ -35,5 +35,5 @@ done
 
 set -e
 echo "Pushing to remote..."
-rclone sync "$LOCAL_REMOTE_PATH" "$REMOTE_PATH" --progress
+rclone sync "$LOCAL_REMOTE_PATH" "$REMOTE_PATH" --progress --exclude ".unison/**"
 echo "Sync complete!"
