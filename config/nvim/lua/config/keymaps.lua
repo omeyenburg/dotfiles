@@ -4,6 +4,14 @@ local state = {
         buf = -1,
         win = -1,
     },
+    preview = {
+        enabled = false,
+        cursorline = false,
+        number = false,
+        relativenumber = false,
+        visual_bg = "",
+        cursor_bg = "",
+    }
 }
 
 local function create_floating_window(opts)
@@ -52,7 +60,45 @@ local function toggle_terminal()
     end
 end
 
--- Toggle inspect tree
+-- Preview mode
+local ffi = require("ffi")
+
+ffi.cdef([[
+void ui_busy_start(void);
+void ui_busy_stop(void);
+]])
+
+local function toggle_preview_mode()
+    if not state.preview.enabled then
+        ffi.C.ui_busy_start()
+
+        state.preview.cursorline = vim.wo.cursorline
+        state.preview.number = vim.wo.number
+        state.preview.relativenumber = vim.wo.relativenumber
+        vim.wo.cursorline = false
+        vim.wo.number = false
+        vim.wo.relativenumber = false
+
+        state.preview.visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
+        vim.api.nvim_set_hl(0, "Visual", { fg = "NONE" })
+
+        Snacks.indent.disable()
+    else
+        ffi.C.ui_busy_stop()
+
+        vim.wo.cursorline = state.preview.cursorline
+        vim.wo.number = state.preview.number
+        vim.wo.relativenumber = state.preview.relativenumber
+
+        vim.api.nvim_set_hl(0, "Visual", { bg = state.preview.visual_bg })
+
+        Snacks.indent.enable()
+    end
+
+    state.preview.enabled = not state.preview.enabled
+end
+
+-- Tree sitter syntax tree
 local function toggle_inspect_tree()
     if vim.fn.bufexists 'Syntax tree' ~= 0 then
         vim.api.nvim_buf_delete(vim.fn.bufnr 'Syntax tree', {})
@@ -83,12 +129,6 @@ local function keymap(mode, lhs, rhs, desc, opts)
     vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-local function move(direction)
-    return function()
-        return vim.v.count > 0 and direction or print 'Maybe use another motion?'
-    end
-end
-
 -- Escape in terminal
 keymap('t', '<Esc>', '<C-\\><C-n>', 'Terminal normal mode')
 
@@ -97,6 +137,7 @@ keymap('n', '<Esc>', '<CMD>nohlsearch<CR>', 'Clear search highlight')
 
 -- Toggles
 keymap('n', '<leader>tt', toggle_terminal, 'Toggle terminal')
+keymap('n', '<leader>tp', toggle_preview_mode, 'Toggle preview mode')
 keymap('n', '<leader>tr', toggle_inspect_tree, 'Toggle inspect tree')
 keymap('n', '<leader>e', vim.cmd.Ex, 'Open explorer')
 
@@ -112,12 +153,6 @@ keymap('n', '<C-u>', '<C-u>zz', 'Scroll up')
 -- Mappings to make life easier when wrap is set
 -- keymap('n', 'j', 'gj', 'Down')
 -- keymap('n', 'k', 'gk', 'Up')
-
--- Mappings to make life harder
-keymap('n', 'h', move 'h', 'Right', { expr = true })
-keymap('n', 'j', move 'j', 'Down', { expr = true })
-keymap('n', 'k', move 'k', 'Up', { expr = true })
-keymap('n', 'l', move 'l', 'Left', { expr = true })
 
 -- Shortcuts for switching between windows
 keymap('n', '<C-h>', '<C-w><C-h>', 'Move focus to the left window')
