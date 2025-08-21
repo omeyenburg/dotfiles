@@ -9,6 +9,8 @@ UNISON_EXTRA_ARGS=(
   -ignore "Name .gitattributes"
   -ignore "Name .gitignore"
   -ignore "Name .obsidian"
+  -terse
+  -auto
 )
 
 if [[ "$PREFIX" == *"com.termux"* ]]; then
@@ -24,12 +26,12 @@ fi
 set -e
 
 echo "Pulling from remote..."
-rclone sync "$REMOTE_PATH" "$LOCAL_REMOTE_PATH" --progress --exclude ".unison/**"
+rclone sync "$REMOTE_PATH" "$LOCAL_REMOTE_PATH" --exclude ".unison/**"
 
 echo "Syncing with local vault..."
-unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_EXTRA_ARGS[@]}" -auto
+unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_EXTRA_ARGS[@]}"
 
 echo "Pushing to remote..."
-rclone sync "$LOCAL_REMOTE_PATH" "$REMOTE_PATH" --progress --exclude ".unison/**"
+rclone sync "$LOCAL_REMOTE_PATH" "$REMOTE_PATH" --exclude ".unison/**"
 
 echo "Sync complete!"
