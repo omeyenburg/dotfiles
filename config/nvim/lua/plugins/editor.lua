@@ -19,9 +19,24 @@ https://github.com/folke/trouble.nvim
 Collection of various small independent plugins/modules
 https://github.com/echasnovski/mini.nvim
 
+# Comment
+Detect comment style appropriate for the language and context
+https://github.com/numToStr/Comment.nvim
+
 --]]
 
 return {
+    { -- Linkie
+        dev = true,
+        dir = '/home/oskar/git/linkie.nvim',
+        lazy = true,
+        cmd = 'LinkieOpen',
+        keys = {
+            { '<leader>tk', '<cmd>LinkieOpen<cr>', desc = 'Open link', mode = 'n' },
+        },
+        opts = {},
+    },
+
     { -- Undotree
         'mbbill/undotree',
         lazy = true,
@@ -119,6 +134,18 @@ return {
                     suffix_last = 'l', -- Suffix to search with "prev" method
                     suffix_next = 'n', -- Suffix to search with "next" method
                 },
+            }
+        end,
+    },
+
+    {
+        'numToStr/Comment.nvim',
+        lazy = false, -- so it loads immediately
+        config = function()
+            require('Comment').setup {
+                padding = true, -- adds space between `//` and the comment text
+                sticky = true, -- keeps comment in place after moving line
+                ignore = '^$', -- ignore empty lines
             }
         end,
     },
