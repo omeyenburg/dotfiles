@@ -45,6 +45,26 @@ return {
         'lewis6991/gitsigns.nvim',
         lazy = true,
         event = 'VeryLazy',
+        keys = {
+            {
+                '<leader>gp',
+                ':Gitsigns preview_hunk_inline<CR>',
+                desc = '[G]it [P]review hunk',
+                mode = 'n',
+            },
+            {
+                '<leader>gd',
+                function()
+                    if vim.wo.diff then
+                        vim.cmd 'diffoff | only'
+                    else
+                        require('gitsigns').diffthis()
+                    end
+                end,
+                desc = '[G]it [D]iff',
+                mode = 'n',
+            },
+        },
         opts = {
             signs = {
                 add = { text = '+' },
@@ -78,6 +98,14 @@ return {
                 lazy = false,
                 priority = 1000,
                 event = 'VimEnter',
+                opts = {
+                    integrations = {
+                        blink_cmp = {
+                            enabled = true,
+                            style = 'bordered',
+                        },
+                    },
+                },
                 init = function()
                     vim.cmd.colorscheme 'catppuccin'
                     vim.api.nvim_set_hl(0, 'Normal', { bg = '#1c1c2b' })
