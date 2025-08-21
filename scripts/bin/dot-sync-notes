@@ -3,44 +3,33 @@
 REMOTE_PATH='gdrive-notes:'
 LOCAL_REMOTE_PATH="$HOME/.cache/remote-notes"
 
+UNISON_EXTRA_ARGS=(
+  -ignore "Name .git"
+  -ignore "Name .git-crypt"
+  -ignore "Name .gitattributes"
+  -ignore "Name .gitignore"
+  -ignore "Name .obsidian"
+)
+
 if [[ "$PREFIX" == *"com.termux"* ]]; then
     LOCAL_NOTES_PATH="$HOME/storage/documents/notes"
-    UNISON_EXTRA_ARGS=(
-      -ignore "Name .git"
-      -ignore "Name .git-crypt"
-      -ignore "Name .gitattributes"
-      -ignore "Name .gitignore"
-      -ignore "Name .obsidian"
+    UNISON_EXTRA_ARGS+=(
       -ignorelocks
+      -perms=0
     )
 else
     LOCAL_NOTES_PATH="$HOME/git/notes"
-    UNISON_EXTRA_ARGS=(
-      -ignore "Name .git"
-      -ignore "Name .git-crypt"
-      -ignore "Name .gitattributes"
-      -ignore "Name .gitignore"
-      -ignore "Name .obsidian"
-    )
 fi
 
-MAX_RETRIES=5
-retry_count=0
-
 set -e
+
 echo "Pulling from remote..."
 rclone sync "$REMOTE_PATH" "$LOCAL_REMOTE_PATH" --progress --exclude ".unison/**"
 
-set +e
 echo "Syncing with local vault..."
-unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_EXTRA_ARGS[@]}" -batch -silent
-while [ $? -ne 0 ] && [ $retry_count -lt $MAX_RETRIES ]; do
-    echo "Encountered a conflict!"
-    retry_count=$((retry_count+1))
-    unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_EXTRA_ARGS[@]}" -auto
-done
+unison "$LOCAL_REMOTE_PATH" "$LOCAL_NOTES_PATH" "${UNISON_EXTRA_ARGS[@]}" -auto
 
-set -e
 echo "Pushing to remote..."
 rclone sync "$LOCAL_REMOTE_PATH" "$REMOTE_PATH" --progress --exclude ".unison/**"
+
 echo "Sync complete!"
