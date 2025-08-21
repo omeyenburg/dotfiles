@@ -78,20 +78,18 @@ return {
                 ['<C-k>'] = { 'fallback' },
                 ['<Up>'] = { 'fallback' },
                 ['<Down>'] = { 'fallback' },
+                ['<Left>'] = { 'fallback' },
+                ['<Right>'] = { 'fallback' },
             },
             appearance = { nerd_font_variant = 'mono' },
             completion = {
                 menu = {
                     auto_show = true,
                     border = 'rounded',
-                    draw = { treesitter = { 'lsp' } },
+                    -- draw = { treesitter = { 'lsp' } },
                 },
                 accept = { auto_brackets = { enabled = true } },
-                keyword = {
-                    -- 'prefix' will fuzzy match on the text before the cursor
-                    -- 'full' will fuzzy match on the text before *and* after the cursor
-                    range = 'full',
-                },
+                keyword = { range = 'prefix' },
                 documentation = {
                     auto_show = true,
                     window = { border = 'rounded' },
@@ -105,6 +103,16 @@ return {
                 window = { border = 'rounded' },
             },
             cmdline = {
+                keymap = {
+                    preset = 'none',
+                    ['<Tab>'] = { 'select_prev' },
+                    ['<Up>'] = { 'select_prev' },
+                    ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+                    ['<S-Tab>'] = { 'select_next' },
+                    ['<Down>'] = { 'select_next' },
+                    ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+                    ['<C-y>'] = { 'select_and_accept' },
+                },
                 completion = {
                     menu = { auto_show = true },
                     list = { selection = { preselect = false, auto_insert = true } },
