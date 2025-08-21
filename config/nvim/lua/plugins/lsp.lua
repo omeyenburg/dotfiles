@@ -40,7 +40,15 @@ return {
 
                 -- clang-tools for C/C++/Objective-C/Objective-C++
                 -- https://clangd.llvm.org/config
-                clangd = {},
+                clangd = {
+                    cmd = {
+                        'clangd',
+                        '--clang-tidy',
+                        '--completion-style=detailed',
+                        '--header-insertion=iwyu',
+                        '--all-scopes-completion',
+                    },
+                },
 
                 -- glsl-analyzer
                 -- https://github.com/nolanderc/glsl_analyzer?tab=readme-ov-file#neovim
@@ -161,26 +169,22 @@ return {
                         vim.lsp.buf.hover { border = 'rounded' }
                     end, 'Hover Documentation')
 
-                    map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
                     map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+                    map('gt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
                     map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-                    map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-
-                    -- Jump to the type of the word under your cursor.
-                    map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+                    map('gi', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
                     -- Fuzzy find all the symbols in your current document.
-                    map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+                    map('<leader>ld', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
 
                     -- Fuzzy find all the symbols in your current workspace.
-                    map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-                    -- Rename the variable under your cursor.
-                    map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+                    map('<leader>lw', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
                     -- Execute a code action, usually your cursor needs to be on top of an error
                     -- or a suggestion from your LSP for this to activate.
-                    map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+                    map('<leader>la', vim.lsp.buf.code_action, 'Code [A]ction')
+
+                    map('<leader>lr', vim.lsp.buf.rename, 'Lsp [R]ename')
 
                     -- Should prevent rust-analyzer from crashing with code -32802
                     for _, method in ipairs { 'textDocument/diagnostic', 'workspace/diagnostic' } do
@@ -219,9 +223,17 @@ return {
 
             -- Configure language servers
             for server, config in pairs(opts.servers) do
-                config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-                lspconfig[server].setup(config)
+                if lspconfig[server] then
+                    local cmd = lspconfig[server].document_config.default_config.cmd
+
+                    if vim.fn.executable(cmd[1]) == 1 then
+                        config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+                        lspconfig[server].setup(config)
+                    end
+                end
             end
+
+            vim.lsp.set_log_level 'debug'
 
             -- Enable inlay hints, virtual text, etc.
             vim.lsp.inlay_hint.enable(true)
