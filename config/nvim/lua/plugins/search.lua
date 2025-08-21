@@ -138,7 +138,7 @@ return {
             vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = '[G]it [F]iles' })
             vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = '[G]it [C]ommits' })
             vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = '[G]it [S]tatus' })
-            vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = '[G]it [B]tatus' })
+            vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = '[G]it [B]ranch' })
 
             -- Search in current buffer
             vim.keymap.set('n', '<leader>/', function()
