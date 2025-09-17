@@ -26,17 +26,6 @@ https://github.com/numToStr/Comment.nvim
 --]]
 
 return {
-    { -- Linkie
-        dev = true,
-        dir = '/home/oskar/git/linkie.nvim',
-        lazy = true,
-        cmd = 'LinkieOpen',
-        keys = {
-            { '<leader>tk', '<cmd>LinkieOpen<cr>', desc = 'Open link', mode = 'n' },
-        },
-        opts = {},
-    },
-
     { -- Undotree
         'mbbill/undotree',
         lazy = true,
