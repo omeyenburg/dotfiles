@@ -9,6 +9,7 @@ UNISON_EXTRA_ARGS=(
   -ignore "Name .gitattributes"
   -ignore "Name .gitignore"
   -ignore "Name .obsidian"
+  -ignore "Name .trash"
   -terse
   -auto
 )
