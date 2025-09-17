@@ -26,6 +26,12 @@ return {
                 -- https://haskell-language-server.readthedocs.io/en/latest/configuration.html
                 hls = {},
 
+                -- vscode-langservers-extracted for html, css and js
+                -- https://github.com/hrsh7th/vscode-langservers-extracted
+                html = {},
+                cssls = {},
+                eslint = {},
+
                 -- nix-language-server
                 -- https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md
                 nixd = {
@@ -233,7 +239,7 @@ return {
                 end
             end
 
-            vim.lsp.set_log_level 'debug'
+            -- vim.lsp.set_log_level 'debug'
 
             -- Enable inlay hints, virtual text, etc.
             vim.lsp.inlay_hint.enable(true)
