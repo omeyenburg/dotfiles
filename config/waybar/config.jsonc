@@ -21,7 +21,7 @@
         "network",
         "cpu",
         "memory",
-        "temperature",
+        "disk",
         "custom/power"
     ],
     "include": [

@@ -130,16 +130,16 @@ tooltip label {
     padding-right: 7px;
 }
 
-#temperature {
+#disk {
     border-radius: 0 8px 8px 0;
     margin-left: 0px;
 }
 
-#cpu.warning, #memory.warning, #temperature.warning {
+#cpu.warning, #memory.warning, #disk.warning {
     color: @textwarning;
 }
 
-#cpu.critical, #memory.critical, #temperature.warning {
+#cpu.critical, #memory.critical, #disk.warning {
     color: @textcritical;
 }
 

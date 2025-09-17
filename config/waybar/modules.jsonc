@@ -130,12 +130,17 @@
         "on-click": "pkill btop || kitty -o confirm_os_window_close=0 -o font_size=10 btop",
         "tooltip": true
     },
-    "temperature": {
-        "critical-threshold": 80,
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", "", "", ""],
+    // "temperature": {
+    //     "critical-threshold": 80,
+    //     "format": "{temperatureC}°C {icon}",
+    //     "format-icons": ["", "", "", "", ""],
+    //     "on-click": "pkill btop || kitty -o confirm_os_window_close=0 -o font_size=10 btop",
+    //     "tooltip": false
+    // },
+    "disk": {
+        "interval": 30,
+        "format": "{percentage_used}% ",
         "on-click": "pkill btop || kitty -o confirm_os_window_close=0 -o font_size=10 btop",
-        "tooltip": false
     },
     "custom/power": {
         "format": "⏻ ",
