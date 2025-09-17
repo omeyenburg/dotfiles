@@ -1,43 +1,90 @@
-;; Highlight directives
-(meta) @keyword
-(attribute) @tag
-
-;; Highlight labels
-(label) @function
-
-;; Highlight opcodes
-(opcode) @function.builtin
-
-;; Highlight registers
-(register) @variable.builtin
-
-;; Highlight macros
+;; Directives
 [
-  (macro)
+  (macro_mnemonic)
+  (integer_mnemonic)
+  (float_mnemonic)
+  (string_mnemonic)
+  (control_mnemonic)
+] @keyword
+
+(section_type) @type
+(option_flag) @character.special
+
+;; Labels & symbols
+[
+  (global_label)
+  (local_label)
+  (local_label_reference)
+  (global_numeric_label)
+  (local_numeric_label)
+  (local_numeric_label_reference)
+  (symbol)
+] @label
+
+;; Instructions
+(opcode) @function
+(register) @parameter
+(relocation_type) @type
+
+;; Macros
+(macro_name) @label
+[
   (macro_variable)
-] @tag
+  (macro_parameter)
+] @parameter
 
-;; Highlight addresses
-(address) @variable.parameter
-
-;; Highlight primitives
+;; Primitives
 [
-  (char)
-  (float)
   (octal)
+  (binary)
   (decimal)
   (hexadecimal)
 ] @number
+
+(float) @number.float
+(char) @character
 (string) @string
 
-;; Highlight errors
 (ERROR) @error
+(ERROR (_) @error)
 
-;; Highlight comments
-(comment) @comment
+[
+  (line_comment)
+  (block_comment)
+  (preprocessor)
+] @comment
 
-; Highlight punctuation
 [
   ","
   ";"
 ] @punctuation.delimiter
+
+[
+  "("
+  ")"
+] @punctuation.bracket
+
+[
+  "|"
+  "||"
+  "&"
+  "&&"
+  "^"
+  "<"
+  "<<"
+  ">"
+  ">>"
+  "+"
+  "-"
+  "*"
+  "~"
+  "!"
+  "=="
+  "!="
+  "<="
+  ">="
+  "%"
+  "="
+  (modulo_operator)
+  (division_operator)
+] @operator
