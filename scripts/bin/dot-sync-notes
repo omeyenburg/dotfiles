@@ -10,6 +10,12 @@ UNISON_EXTRA_ARGS=(
   -ignore "Name .gitignore"
   -ignore "Name .obsidian"
   -ignore "Name .trash"
+  -ignore "Name *.aux"
+  -ignore "Name *.fdb_latexmk"
+  -ignore "Name *.fls"
+  -ignore "Name *.log"
+  -ignore "Name *.out"
+  -ignore "Name *.synctex.gz"
   -terse
   -auto
 )
