@@ -2,6 +2,9 @@
   programs = {
     kdeconnect.enable = true;
 
+    # Android debug bridge
+    adb.enable = true;
+
     # Firefox
     firefox = {
       enable = true;

@@ -20,6 +20,7 @@
       "text/html" = "zen-beta.desktop";
       "text/htmlh" = "zen-beta.desktop";
       "text/xml" = "zen-beta.desktop";
+      "x-www-browser" = "zen-beta-browser";
       "x-scheme-handler/http" = "zen-beta.desktop";
       "x-scheme-handler/https" = "zen-beta.desktop";
       "x-scheme-handler/chrome" = "zen-beta.desktop";

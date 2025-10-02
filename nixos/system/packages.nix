@@ -34,16 +34,21 @@
   environment.systemPackages = with pkgs; [
     # Tools
     bc
-    git
-    git-crypt
-    git-remote-gcrypt
+    file
     intel-gpu-tools
     jq
     libva-utils
+    patchelf
     subversion
     tree
     vdpauinfo
     vim
+
+    # Git
+    git
+    git-crypt
+    git-filter-repo
+    git-remote-gcrypt
 
     # Disk
     cryptsetup

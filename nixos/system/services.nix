@@ -1,6 +1,11 @@
 {pkgs, ...}: {
-  # Enable docker
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    # Enable docker
+    docker.enable = true;
+
+    # Enable waydroid
+    waydroid.enable = true;
+  };
 
   # Disable waiting for Network Manager at boot.
   systemd.services.NetworkManager-wait-online.enable = false;

@@ -18,6 +18,8 @@
       nixd
       python312Packages.jedi-language-server
       rust-analyzer
+      typescript-language-server
+      vscode-langservers-extracted
 
       # Linters
       python312Packages.flake8
@@ -27,19 +29,15 @@
       black
       indent
       jq
+      nodePackages.prettier
       rustfmt
       shfmt
       stylua
       taplo
 
       # Tools
-      cargo
       clang-tools # Provides clangd, clang-format & clang-tidy
-      fd
-      fzf
-      ripgrep
       tree-sitter
-      wl-clipboard
     ];
   };
 }

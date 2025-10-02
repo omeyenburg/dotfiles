@@ -2,17 +2,19 @@
   home.packages = with pkgs; [
     # Apps
     anki
-    discord
     gimp3
-    inkscape
     kitty
     libreoffice-qt
-    obsidian
-    prismlauncher
     spotify
+    ungoogled-chromium
+
+    # discord
+    # inkscape
+    # prismlauncher
     # logisim
     # logisim-evolution
     # mars-mips
+    # graalvm-ce
 
     # Yubikey
     yubikey-manager
@@ -27,15 +29,21 @@
     du-dust
     dua
     eza
-    figlet
+    fd
     fzf
     gitmux
     gnumake
     qmk
+    ripgrep
     ripgrep-all
     tmux
     unzip
     wl-clipboard
+
+    # Notes
+    unison
+    rclone
+    obsidian
 
     # Man pages
     man-pages
@@ -47,12 +55,15 @@
     texliveFull
     zathura
 
-    # Languages & Compilers
+    # Language-specific tools
     gcc
     gdb
-    graalvm-ce
-    python312Full
-    python312Packages.numpy
+    lldb
+    nodejs
+    rustup
+    (pkgs.python312.withPackages (p: [
+      p.numpy
+    ]))
 
     # Desktop tools
     mako

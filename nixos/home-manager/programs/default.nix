@@ -1,6 +1,5 @@
 {
   imports = [
-    ./librewolf.nix
     ./neovim.nix
     ./zen-browser.nix
   ];

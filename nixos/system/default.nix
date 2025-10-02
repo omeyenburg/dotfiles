@@ -59,14 +59,16 @@
   };
 
   boot = {
-    # Clean temporary files in /tmp on every boot.
-    tmp.cleanOnBoot = true;
-
     # Select Linux kernel.
     # kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_hardended;
     # kernelPackages = pkgs.linuxPackages_zen;
     kernelPackages = pkgs.linuxPackages_xanmod;
+
+    kernelModules = [
+      "binder_linux"
+      "ashmem_linux"
+    ];
 
     # Location to save core crash files. Placeholders:
     kernel.sysctl = {
@@ -96,6 +98,9 @@
       };
       timeout = 5;
     };
+
+    # Clean temporary files in /tmp on every boot.
+    tmp.cleanOnBoot = true;
   };
 
   networking = {
@@ -182,6 +187,9 @@
       "wheel" # Enable ‘sudo’ for the user.
       "video" # Enable intel-gpu-tools without root
       "docker"
+      "adbusers" # Android debug bridge
+      "kvm"
+      "waydroid"
     ];
   };
 
