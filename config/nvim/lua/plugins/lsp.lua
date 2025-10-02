@@ -30,7 +30,9 @@ return {
                 -- https://github.com/hrsh7th/vscode-langservers-extracted
                 html = {},
                 cssls = {},
-                eslint = {},
+                eslint = {
+                    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "vue", "svelte", "astro", "htmlangular" }
+                },
 
                 -- nix-language-server
                 -- https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md
