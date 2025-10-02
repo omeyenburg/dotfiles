@@ -29,6 +29,9 @@ if [[ "$SHELL" = */bin/bash ]]; then
     shopt -s globstar
     shopt -s checkjobs
 
+    # Disable history expansion with ! that I don't use.
+    set +H
+
     # Source /etc/bashrc for interactive shell configurations
     if [ -z "$__ETC_BASHRC_SOURCED" ] && [ -f /etc/bashrc ]; then
         . /etc/bashrc
