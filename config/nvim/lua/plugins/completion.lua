@@ -134,6 +134,9 @@ return {
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
                 providers = { snippets = { min_keyword_length = 4 } },
+                per_filetype = {
+                    tex = { 'lsp', 'path', 'buffer' },
+                },
             },
         },
         config = function(_, opts)
