@@ -31,7 +31,7 @@ return {
                 html = {},
                 cssls = {},
                 eslint = {
-                    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "vue", "svelte", "astro", "htmlangular" }
+                    filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'vue', 'svelte', 'astro', 'htmlangular' },
                 },
 
                 -- nix-language-server
@@ -98,7 +98,15 @@ return {
 
                 -- latex-language-server
                 -- https://github.com/latex-lsp/texlab/wiki/Configuration
-                texlab = {},
+                texlab = {
+                    settings = {
+                        texlab = {
+                            latexindent = {
+                                ["local"] = "/home/oskar/.config/latexindent/config.yaml",
+                            },
+                        },
+                    },
+                },
 
                 -- typescript-language-server
                 ts_ls = {},
