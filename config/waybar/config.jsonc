@@ -9,11 +9,10 @@
         "clock",
         "custom/battery",
         "custom/pipewire",
-        "wireplumber",
-        "hyprland/workspaces"
+        "wireplumber"
     ],
     "modules-center": [
-        "hyprland/window"
+        "hyprland/workspaces"
     ],
     "modules-right": [
         "idle_inhibitor",
