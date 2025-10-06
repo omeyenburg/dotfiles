@@ -133,7 +133,10 @@ return {
             },
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
-                providers = { snippets = { min_keyword_length = 4 } },
+                providers = {
+                    snippets = { min_keyword_length = 4 },
+                    lsp = { fallbacks = {} },
+                },
                 per_filetype = {
                     tex = { 'lsp', 'path', 'buffer' },
                 },
